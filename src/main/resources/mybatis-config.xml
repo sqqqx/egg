@@ -21,6 +21,6 @@
 			<typeAlias type="egg.finalproject.member.MemberDTO" alias="memberDTO"/>
 			<typeAlias type="egg.finalproject.product.ProductDTO" alias="productDTO"/>
 			<typeAlias type="egg.finalproject.career.CareerDTO" alias="careerDTO"/>
-			<typeAlias type="egg.finalproject.export_category.Expert_categoryDTO" alias="expert_categoryDTO"/>
+			<typeAlias type="egg.finalproject.expert_category.Expert_categoryDTO" alias="expert_categoryDTO"/>
 		</typeAliases>
 	</configuration>
