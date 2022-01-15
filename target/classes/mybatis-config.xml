@@ -18,6 +18,7 @@
 			<typeAlias type="egg.finalproject.order.OrderDTO" alias="orderDTO"/>
 			<typeAlias type="egg.finalproject.payment.PaymentDTO" alias="paymentDTO"/>
 			<typeAlias type="egg.finalproject.post.PostDTO" alias="postDTO"/>
-			<typeAlias type="egg.finalproject.user.UserDTO" alias="userDTO"/>
+			<typeAlias type="egg.finalproject.member.MemberDTO" alias="memberDTO"/>
+			<typeAlias type="egg.finalproject.product.ProductDTO" alias="productDTO"/>
 		</typeAliases>
 	</configuration>

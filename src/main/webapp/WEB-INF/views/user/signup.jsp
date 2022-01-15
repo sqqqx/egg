@@ -37,6 +37,7 @@
     </style>
 </head>
 <body>
+	<form>
     <div class="container">
         <div class="row mb-3 photoBox">
             <div class="col">
@@ -165,13 +166,14 @@
         <!--버튼 영역-->
         <div class="row my-5 btnBox">
             <div class="col-6">
-                <button class="btn btn-dark btn-lg clsBtn" type="button" id="submitBtn">가입 완료</button>
+                <button type="submit" class="btn btn-dark btn-lg clsBtn" type="button" id="submitBtn">가입 완료</button>
             </div>
             <div class="col-6">
-                <button class="btn btn-secondary btn-lg clsBtn" type="button" id="backBtn">뒤로 가기</button>
+                <button type="button" class="btn btn-secondary btn-lg clsBtn" type="button" id="backBtn">뒤로 가기</button>
             </div>
         </div>
     </div>
+    </form>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
