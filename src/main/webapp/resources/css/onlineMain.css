@@ -1,0 +1,124 @@
+*{margin:0;}
+body{
+    width:1800px;
+    height: 1000px;
+    margin:0 auto;
+}
+.header{
+    height: 100px;    
+}
+.header>div{
+    line-height: 100px;
+}
+.imgBox>img{
+    width:34%;
+    height: 100%;
+    margin-left: 30%;
+}
+.searchBox{
+    width: 41%;
+    padding-top: 20px;
+}
+.searchBox>*{
+    height: 60px;
+}
+.header>div>svg{
+    margin-left: 35px;
+    cursor: pointer;
+}
+.accountBox{
+   position: relative;
+}
+#accountInfoBox{
+   background-color: white;
+   position: absolute;
+   width:12%;
+   right: 40px;
+   display:none;
+   z-index: 2;
+}
+#accountInfoBox>div{
+   height: 60px;
+   border: 1px solid gray;
+   text-align: center;
+   padding-top:15px;
+   cursor:pointer;
+}
+#accountInfoBox>div:hover{
+   background-color: black;
+   color:white;
+}
+.categoryBox{
+   height: 50px;
+   background-color: gray; 
+}
+.category_big>div{
+   height: 50px;
+   width:100%;
+   text-align: center;
+   padding-top: 13px;
+   color:white;
+   border: 1px solid white;
+}
+.category_small{
+   background-color: #80808090;
+   position: absolute;
+   width:1777px;
+   height:auto;
+    z-index: 1;
+   text-align: center;
+   top:150px;
+   display: none;
+}
+.category_small>div>ul>li{
+   height: 40px;
+   padding-top:5px;
+   list-style: none;
+   padding-right: 30px;
+}
+.category_small>div>ul>li:hover{
+   color: white;
+}
+.slidePhoto{
+   width:100%;
+   height: 700px;
+}
+/*캐러샐 화살표영역(메뉴바 영역에 걸려서 선택이 안될시 조정할것)*/
+.iconBox{
+   margin-top: 200px;
+}
+.iconPosition{
+   margin-bottom: 250px;
+}
+
+.main{
+   width: 100%;
+   height: auto;
+}
+.class{
+   height: 500px;
+   border: 1px solid red;
+}
+.class>div>div{
+   float: left;
+   border:1px solid blue;
+   height: 450px;
+   margin: 10px;
+}
+.mediaPhoto{
+   height: 70%;
+   border: 1px solid black;
+}
+.mediaText{
+   height: 30%;
+}
+.itemBox{
+height: 450px;
+background-color: rgb(241, 234, 234);
+}
+.itemBox>div>div{
+   float: left;
+   border:1px solid black;
+   height: 350px;
+   margin: 10px;
+}
