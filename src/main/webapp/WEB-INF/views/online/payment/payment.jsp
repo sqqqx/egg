@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div>테스트입니다.</div>
+	<button type="button">결제버튼</button>
 </body>
 </html>
