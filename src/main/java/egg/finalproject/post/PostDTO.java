@@ -4,34 +4,34 @@ import java.sql.Date;
 
 public class PostDTO {
 	
-	private int post_no;
-	private int type;
-	private String nickname;
-	private String title;
-	private String content;
-	private int view_count;
-	private Date written_date;
-	private String reservation_time;
-	private int category_no;
-	private String user_id;
-	private int product_no;
-	
+	   private int post_no;
+	   private int type;
+	   private String user_id;
+	   private String user_nickname;
+	   private int category_no;
+	   private String title;
+	   private String content;
+	   private int product_no;
+	   private int view_count;
+	   private Date written_date;
+	   private String reservation_time;
+
 	public PostDTO() {}
 
-	public PostDTO(int post_no, int type, String nickname, String title, String content, int view_count,
-			Date written_date, String reservation_time, int category_no, String user_id, int product_no) {
+	public PostDTO(int post_no, int type, String user_id, String user_nickname, int category_no, String title,
+			String content, int product_no, int view_count, Date written_date, String reservation_time) {
 		super();
 		this.post_no = post_no;
 		this.type = type;
-		this.nickname = nickname;
+		this.user_id = user_id;
+		this.user_nickname = user_nickname;
+		this.category_no = category_no;
 		this.title = title;
 		this.content = content;
+		this.product_no = product_no;
 		this.view_count = view_count;
 		this.written_date = written_date;
 		this.reservation_time = reservation_time;
-		this.category_no = category_no;
-		this.user_id = user_id;
-		this.product_no = product_no;
 	}
 
 	public int getPost_no() {
@@ -50,12 +50,28 @@ public class PostDTO {
 		this.type = type;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public String getUser_id() {
+		return user_id;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+
+	public String getUser_nickname() {
+		return user_nickname;
+	}
+
+	public void setUser_nickname(String user_nickname) {
+		this.user_nickname = user_nickname;
+	}
+
+	public int getCategory_no() {
+		return category_no;
+	}
+
+	public void setCategory_no(int category_no) {
+		this.category_no = category_no;
 	}
 
 	public String getTitle() {
@@ -72,6 +88,14 @@ public class PostDTO {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public int getProduct_no() {
+		return product_no;
+	}
+
+	public void setProduct_no(int product_no) {
+		this.product_no = product_no;
 	}
 
 	public int getView_count() {
@@ -97,31 +121,6 @@ public class PostDTO {
 	public void setReservation_time(String reservation_time) {
 		this.reservation_time = reservation_time;
 	}
-
-	public int getCategory_no() {
-		return category_no;
-	}
-
-	public void setCategory_no(int category_no) {
-		this.category_no = category_no;
-	}
-
-	public String getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
-	}
-
-	public int getProduct_no() {
-		return product_no;
-	}
-
-	public void setProduct_no(int product_no) {
-		this.product_no = product_no;
-	}
 	
 	
-
 }
