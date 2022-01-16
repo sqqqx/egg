@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>결제화면</title>
 </head>
 <body>
-
+	<p>결제화면입니다.</p>
 </body>
 </html>
