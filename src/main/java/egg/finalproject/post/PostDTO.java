@@ -6,7 +6,7 @@ public class PostDTO {
 	
 	private int post_no;
 	private int type;
-	private String nickname;
+	private String user_nickname;
 	private String title;
 	private String content;
 	private int view_count;
@@ -18,12 +18,12 @@ public class PostDTO {
 	
 	public PostDTO() {}
 
-	public PostDTO(int post_no, int type, String nickname, String title, String content, int view_count,
+	public PostDTO(int post_no, int type, String user_nickname, String title, String content, int view_count,
 			Date written_date, String reservation_time, int category_no, String user_id, int product_no) {
 		super();
 		this.post_no = post_no;
 		this.type = type;
-		this.nickname = nickname;
+		this.user_nickname = user_nickname;
 		this.title = title;
 		this.content = content;
 		this.view_count = view_count;
@@ -50,12 +50,12 @@ public class PostDTO {
 		this.type = type;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public String getUser_nickname() {
+		return user_nickname;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setUser_nickname(String user_nickname) {
+		this.user_nickname = user_nickname;
 	}
 
 	public String getTitle() {
