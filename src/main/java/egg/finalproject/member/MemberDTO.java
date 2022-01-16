@@ -8,6 +8,7 @@ public class MemberDTO {
 	private String password;
 	private String nickname;
 	private String phone;
+	private String email;
 	private String address;
 	private Date signup_date;
 	private String profile_path;
@@ -16,13 +17,14 @@ public class MemberDTO {
 	
 	public MemberDTO() {}
 
-	public MemberDTO(String user_id, String password, String nickname, String phone, String address, Date signup_date,
-			String profile_path, int type, int blacklist) {
+	public MemberDTO(String user_id, String password, String nickname, String phone, String email, String address,
+			Date signup_date, String profile_path, int type, int blacklist) {
 		super();
 		this.user_id = user_id;
 		this.password = password;
 		this.nickname = nickname;
 		this.phone = phone;
+		this.email = email;
 		this.address = address;
 		this.signup_date = signup_date;
 		this.profile_path = profile_path;
@@ -60,6 +62,14 @@ public class MemberDTO {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getAddress() {
@@ -101,6 +111,7 @@ public class MemberDTO {
 	public void setBlacklist(int blacklist) {
 		this.blacklist = blacklist;
 	}
+
 	
 	
 }

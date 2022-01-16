@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
- <title>admin</title>
+ <title>Member Management</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <style>
         *{margin:0;}
@@ -86,12 +87,8 @@
         <!--관리자 메인영역(여기 쓰시면 됩니다)-->
         <div class="row main">
         
-                <a href="${pageContext.request.contextPath}/admin/test">test</a>
         
-        <a href="${pageContext.request.contextPath}/admin/toMemberManagement">회원 관리</a>
-        <a href="${pageContext.request.contextPath}/admin/toPostManagement">게시글 관리</a>
-        <a href="${pageContext.request.contextPath}/admin/toReportManagement">신고 관리</a>
-		
+		${list}
         
 
         </div>
