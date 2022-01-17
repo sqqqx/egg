@@ -1,9 +1,15 @@
 package egg.finalproject.admin;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import egg.finalproject.member.MemberDTO;
 
 @Controller
 @RequestMapping("/admin")
@@ -23,7 +29,7 @@ public class AdminController {
 	// 회원 관리 페이지 이동
 	@RequestMapping("/toMemberManagement")
 	public String toMemberManagement() throws Exception {
-		return "redirect:/admin/memberSelectAll";
+		return "redirect:/admin/getMemberList?currentIdx="+1;
 	}
 	
 	// 게시글 관리 페이지 이동
@@ -41,17 +47,19 @@ public class AdminController {
 	/********** 회원 관리 **********/
 	
 	// 전체 회원 가져오기
-	@RequestMapping("/memberSelectAll")
-	public String memberSelectAll(Model model) throws Exception {
-		model.addAttribute("list", service.memberSelectAll());
+	@RequestMapping("/getMemberList")
+	public String getMemberList(Model model, int currentIdx) throws Exception {
+		model.addAttribute("list", service.getMemberList(currentIdx));
+		model.addAttribute("map", service.getNavi(currentIdx));
 		return "admin/memberManagement";
 	}
 	
 	// 회원 아이디, 닉네임, 이메일로 검색
 	@RequestMapping("/memberSearch")
-	public String memberSearch(Model model, String searchOption, String searchKeyword) throws Exception {
-		System.out.println("searchOption : " + searchOption + " : " + "searchKeyword : " + searchKeyword);
-		model.addAttribute("list", service.memberSearch(searchOption, searchKeyword));
+	public String memberSearch(Model model, String searchOption, String searchKeyword, int currentIdx) throws Exception {
+		System.out.println("searchOption : " + searchOption + " : " + "searchKeyword : " + searchKeyword + "currentIdx : " + currentIdx);
+		model.addAttribute("list", service.memberSearch(searchOption, searchKeyword, currentIdx));
+		model.addAttribute("map", service.getNavi(currentIdx));
 		return "admin/memberManagement"; 
 	}
 	
@@ -75,5 +83,7 @@ public class AdminController {
 		service.memberBlackListCancel(userCheckBox);
 		return "redirect:/admin/memberSelectAll";
 	}
+	
+	
 
 }

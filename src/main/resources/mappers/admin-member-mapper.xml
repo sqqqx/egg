@@ -6,14 +6,15 @@
 <mapper namespace="adminMemberMapper">
 
 	<!-- 전체 회원 가져오기 -->
-	<select id="memberSelectAll" resultType="memberDTO">
+	<!-- <select id="memberSelectAll" resultType="memberDTO">
 		SELECT * FROM tbl_member
-	</select>
+	</select> -->
 	
 	<!-- 회원 아이디, 닉네임, 이메일로 검색 -->
 	<select id="memberSearch" parameterType="map" resultType="memberDTO">
-		SELECT * FROM tbl_member WHERE 
-			${searchOption} LIKE '%'||#{searchKeyword}||'%'
+		SELECT * FROM (SELECT row_number() OVER (ORDER BY signup_date DESC) AS idx, tbl_member.* FROM tbl_member) 
+		    WHERE idx BETWEEN #{startRange} AND #{endRange}
+		    	AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
 	</select>
 	
 	<!-- 회원 강제 탈퇴-->
@@ -42,5 +43,16 @@
 			#{user_id}
 		</foreach>
 	</update>
+	
+	<!-- 총 회원 수 가져오기 -->
+	<select id="memberCount" resultType="int">
+		SELECT COUNT(*) FROM tbl_member
+	</select>
+	
+	<!-- 전체 회원 가져오기 -->
+	<select id="getMemberList" parameterType="map" resultType="memberDTO">
+		SELECT * FROM (SELECT row_number() OVER (ORDER BY signup_date DESC) AS idx, tbl_member.* FROM tbl_member) 
+		    WHERE idx BETWEEN #{startRange} AND #{endRange}
+	</select>
 
 </mapper>
