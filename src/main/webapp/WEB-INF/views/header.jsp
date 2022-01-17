@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<<<<<<< HEAD
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <style>
 	*{margin:0;}
@@ -91,6 +92,10 @@ body{
    color: white;
 }
 </style>
+=======
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> 
+<link rel="stylesheet" href="/resources/css/header.css"> 
+>>>>>>> c7e0b902bea37e4c36a973ee746ceecf4591ca13
 </head>
 <body>
  <div class="container-fluid">
@@ -102,9 +107,20 @@ body{
                 </a>
             </div>
             <!-- 검색창 -->
+<<<<<<< HEAD
             <div class="input-group searchBox" style="width:740px;">
                 <input type="text" class="form-control" placeholder="검색할 내용을 입력해주세요." aria-describedby="searchText">
                 <button class="btn btn-outline-secondary" type="button" id="searchBtn">검색</button>
+=======
+            <div class="col-5 searchBox">
+            	<div class="col-10">
+            	<input type="text" class="form-control" id="searchInput" placeholder="검색할 내용을 입력해주세요." aria-describedby="searchText">
+            	</div>
+            	<div class="col-2">
+            	<button class="btn btn-outline-secondary" type="button" id="searchBtn">검색</button>       
+            	</div>
+                
+>>>>>>> c7e0b902bea37e4c36a973ee746ceecf4591ca13
             </div>
             <!--오프라인클래스 이동-->
             <div class="col-1">
@@ -129,7 +145,7 @@ body{
                   </svg>
             </div>
             <!--로그인전 (임시로 로그인후에는 hidden처리할것)// 로그인세션활용하여 c:choose처리할것-->
-            <div class="col-1" >
+            <div class="col-1">
                 <button type="button" class="btn btn-outline-dark" id="toLogin">로그인</button>
             </div>
             <!--로그인후 (임시로 로그인전에는 hidden처리할것)// 로그인세션활용하여 c:choose처리할것 -->
@@ -138,20 +154,22 @@ body{
                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                     <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12z"/>
                 </svg>
+                <div id="accountInfoBox" style="display:none;">
+		           <div class="row align-content-center textList1">        		    		
+		           			마이페이지
+		           </div>
+		           <div class="row align-content-center textList2">
+		           			정보 수정
+		           </div>
+		           <div class="row align-content-center textList2">
+		           			로그 아웃
+		           </div>
+       			 </div>
             </div>
+             <!--로그인후 계정아이콘 클릭하면 보이는 창-->
+        
         </div>
-        <!--로그인후 계정아이콘 클릭하면 보이는 창-->
-        <div class="container" id="accountInfoBox">
-           <div class="row">
-               <ul>마이페이지</ul>
-           </div>
-           <div class="row">
-                <ul>정보수정</ul>
-           </div>
-           <div class="row">
-                <ul>로그아웃</ul>
-           </div>
-        </div>
+       
 
         <!--카테고리영역-->
         <div class="container-fluid categoryBox">
@@ -181,7 +199,7 @@ body{
                     대분류
                 </div>
             </div>
-            <div class="row category_small" hidden>
+            <div class="row category_small" style="display:none;">
                 <div class="col">
                     <ul>
                         <li>소분류</li>
@@ -249,7 +267,7 @@ body{
             </div>
         </div>
     </div>
-   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
         $(".account").click(function(){

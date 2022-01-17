@@ -12,7 +12,6 @@
 </head>
 <body>
     <div class="container-fluid">
-     
         <!--캐러샐-->
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
@@ -119,5 +118,6 @@
             푸터
         </div>
     </div> 
+
 </body>
 </html>
