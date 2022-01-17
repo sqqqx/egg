@@ -54,6 +54,11 @@
 		   color:white;
 		}
 
+        /* 관리자 메인 영역 */
+        .searchArea {
+            width: 50%;
+        }
+
     </style>
 </head>
 <body>
@@ -85,13 +90,69 @@
            </div>
         </div>
         <!--관리자 메인영역(여기 쓰시면 됩니다)-->
-        <div class="row main">
-        
-        
-		${list}
-        
-
+        <!-- 회원 검색-->
+        <form id="searchForm" action="${pageContext.request.contextPath}/admin/memberSearch" method="post">
+            <div class="row d-flex justify-content-center searchArea">
+                <div class="col-3">
+                    <select class="form-select" aria-label="Default select example" name="searchOption">
+                        <option selected value="user_id">아이디</option>
+                        <option value="nickname">닉네임</option>
+                        <option value="email">이메일</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <input type="text" class="form-control" name="searchKeyword" placeholder="">
+                </div>
+                <div class="col-3">
+                    <button type="submit" class="btn btn-outline-dark" id="searchBtn">검색</button>
+                </div>
+            </div>
+        </form>
+        <!-- 회원정보 출력 -->
+        <form id="selectCheckbox" method="post">
+            <div class="row">
+                <div class="col">
+                    <table>
+                        <thead>
+                            <th><input type="checkbox" class="userCheckBoxAll" name="userCheckBoxAll" id="userCheckBoxAll"></th>
+                            <th>아이디</th>
+                            <th>닉네임</th>
+                            <th>이메일</th>
+                            <th>회원유형</th>
+                            <th>블랙리스트</th>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${list}" var="dto">
+                                <tr>
+                                    <td><input type="checkbox" value="${dto.user_id}" class="userCheckBox" name="userCheckBox" id="userCheckBox"></td>
+                                    <td>${dto.user_id}</td>
+                                    <td>${dto.nickname}</td>
+                                    <td>${dto.email}</td>
+                                    <c:choose>
+                                        <c:when test="${dto.type eq 0}"><td>관리자</td></c:when>
+                                        <c:when test="${dto.type eq 1}"><td>일반회원</td></c:when>
+                                        <c:when test="${dto.type eq 2}"><td>능력자</td></c:when>
+                                        <c:when test="${dto.type eq 9}"><td>탈퇴회원</td></c:when>
+                                    </c:choose>
+                                    <c:choose>
+                                        <c:when test="${dto.blacklist eq 0}"><td>N</td></c:when>
+                                        <c:otherwise><td>Y</td></c:otherwise>
+                                    </c:choose>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col d-flex justify-content-start">
+                <button type="button" class="btn btn-outline-dark" id="blackListBtn">블랙리스트 추가</button>
+                <button type="button" class="btn btn-outline-dark" id="blackListCancelBtn">블랙리스트 해제</button>
+                <button type="button" class="btn btn-outline-dark" id="expulsionBtn">회원 강제 탈퇴</button>
+            </div>
         </div>
+        <!-- 관리자 메인영역 마무리 -->
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -104,6 +165,44 @@
 			    accountBox.fadeIn();
 			}
         }); 
+    </script>
+     <script>
+        // 전체 체크박스 ON / OFF
+        $("#userCheckBoxAll").on("click", function() {
+            if($("#userCheckBoxAll").is(":checked")) {
+                $("input[name=userCheckBox]").prop("checked", true);
+                return;
+            } 
+            $("input[name=userCheckBox]").prop("checked", false);
+        });
+        // 회원정보 검색
+        $("#searchForm").on("submit", function() {
+            if($("#searchInput").val() == "") {
+                alert("키워드를 정확히 입력하세요");
+                return false;
+            }
+        });
+        // 블랙리스트 추가
+        $("#blackListBtn").on("click", function() {
+            if($(".userCheckBox").is(":checked") && confirm("블랙리스트에 추가하겠습니까?")) {
+                $("form").attr("action", "${pageContext.request.contextPath}/admin/memberBlacklistRegist");
+                $("#selectCheckbox").submit();
+            }
+        });
+        // 블랙리스트 해제
+        $("#blackListCancelBtn").on("click", function() {
+            if($(".userCheckBox").is(":checked") && confirm("블랙리스트를 해제하겠습니까?")) {
+                $("form").attr("action", "${pageContext.request.contextPath}/admin/memberBlackListCancel");
+                $("#selectCheckbox").submit();
+            }
+        });
+        // 회원 강제 탈퇴
+        $("#expulsionBtn").on("click", function() {
+            if($(".userCheckBox").is(":checked") && confirm("강제 탈퇴시키겠습니까?")) {
+                $("form").attr("action", "${pageContext.request.contextPath}/admin/memberExpulsion");
+                $("#selectCheckbox").submit();
+            }
+        });
     </script> 
 </body>
 </html>

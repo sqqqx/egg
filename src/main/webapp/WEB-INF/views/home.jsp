@@ -32,9 +32,9 @@
     </style>
 </head>
 <body>
+	<a href="${pageContext.request.contextPath}/admin/toAdmin">관리자 페이지 이동</a>
     <div class="container-fluid whole">
     <div>테스트</div>
-   	<a href="${pageContext.request.contextPath}/admin/toAdmin">관리자 페이지 이동</a>
         <div class="row">
             <div class="col ctnBox">
                 <img class="img-fluid" src="https://www.urbanbrush.net/web/wp-content/uploads/edd/2020/09/urbanbrush-20200904214249838778.jpg">

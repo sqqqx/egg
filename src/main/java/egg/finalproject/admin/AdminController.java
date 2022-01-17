@@ -50,29 +50,30 @@ public class AdminController {
 	// 회원 아이디, 닉네임, 이메일로 검색
 	@RequestMapping("/memberSearch")
 	public String memberSearch(Model model, String searchOption, String searchKeyword) throws Exception {
+		System.out.println("searchOption : " + searchOption + " : " + "searchKeyword : " + searchKeyword);
 		model.addAttribute("list", service.memberSearch(searchOption, searchKeyword));
 		return "admin/memberManagement"; 
 	}
 	
 	// 회원 강제 탈퇴
 	@RequestMapping("/memberExpulsion")
-	public String memberExpulsion(String[] userList) throws Exception {
-		service.memberExpulsion(userList);
+	public String memberExpulsion(String[] userCheckBox) throws Exception {
+		service.memberExpulsion(userCheckBox);
 		return "redirect:/admin/memberSelectAll";
 	}
 	
 	// 회원 블랙리스트 등록
 	@RequestMapping("/memberBlacklistRegist")
-	public String memberBlacklistRegist(String[] userList) throws Exception {
-		service.memberBlacklistRegist(userList);
+	public String memberBlacklistRegist(String[] userCheckBox) throws Exception {
+		service.memberBlacklistRegist(userCheckBox);
 		return "redirect:/admin/memberSelectAll";
 	}
 	
-	// test
-	@RequestMapping("/test")
-	public String test() throws Exception {
-		service.test();
-		return "/";
+	// 회원 블랙리스트 해제
+	@RequestMapping("/memberBlackListCancel")
+	public String memberBlackListCancel(String[] userCheckBox) throws Exception {
+		service.memberBlackListCancel(userCheckBox);
+		return "redirect:/admin/memberSelectAll";
 	}
 
 }

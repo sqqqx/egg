@@ -29,32 +29,24 @@ public class AdminMemberService {
 	}
 	
 	// 회원 강제 탈퇴
-	public int memberExpulsion(String[] userList) throws Exception {
+	public int memberExpulsion(String[] userCheckBox) throws Exception {
 		Map<String, String[]> map = new HashMap<>();
-		map.put("userList", userList);
+		map.put("userCheckBox", userCheckBox);
 		return dao.memberExpulsion(map);
 	}
 	
 	// 회원 블랙리스트 등록
-	public int memberBlacklistRegist(String[] userList) throws Exception {
+	public int memberBlacklistRegist(String[] userCheckBox) throws Exception {
 		Map<String, String[]> map = new HashMap<>();
-		map.put("userList", userList);
+		map.put("userCheckBox", userCheckBox);
 		return dao.memberBlacklistRegist(map);
 	}
 	
-	// test
-	public int test() throws Exception {
-		MemberDTO dto = new MemberDTO();
-		dto.setUser_id("id11");
-		dto.setPassword("id11");
-		dto.setNickname("nn11");
-		dto.setPhone("phone11");
-		dto.setEmail("em11");
-		dto.setAddress("adress11");
-		dto.setProfile_path("path");
-		dto.setType(1);
-		dto.setBlacklist(0);
-		return dao.test(dto);
+	// 회원 블랙리스트 해제
+	public int memberBlackListCancel(String[] userCheckBox) throws Exception {
+		Map<String, String[]> map = new HashMap<>();
+		map.put("userCheckBox", userCheckBox);
+		return dao.memberBlackListCancel(map);
 	}
 
 }

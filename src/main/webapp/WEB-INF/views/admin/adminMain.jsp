@@ -86,7 +86,7 @@
         <!--관리자 메인영역(여기 쓰시면 됩니다)-->
         <div class="row main">
         
-                <a href="${pageContext.request.contextPath}/admin/test">test</a>
+        <a href="${pageContext.request.contextPath}/admin/test">test</a>
         
         <a href="${pageContext.request.contextPath}/admin/toMemberManagement">회원 관리</a>
         <a href="${pageContext.request.contextPath}/admin/toPostManagement">게시글 관리</a>
