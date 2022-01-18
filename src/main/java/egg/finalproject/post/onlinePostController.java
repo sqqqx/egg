@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import egg.finalproject.product.ProductDTO;
+
 @Controller
 @RequestMapping("/onlinePost")
 public class onlinePostController {
@@ -36,8 +38,13 @@ public class onlinePostController {
 		return list;
 	}
 	
-	@RequestMapping("/searchProduct.do")
-	public String toSearchProduct() {
+	@RequestMapping("/toSearchProduct.do")
+	public String toSearchProduct() throws Exception{
 		return "onlinePost/searchProduct";
+	}
+	
+	@RequestMapping("/searchProduct.do")
+	public List<ProductDTO> searchProduct(String value) throws Exception{
+		return service.searchProduct(value);
 	}
 }

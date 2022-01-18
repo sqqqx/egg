@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import egg.finalproject.category.CategoryDTO;
+import egg.finalproject.product.ProductDTO;
 
 @Service
 public class onlinePostService {
@@ -19,5 +19,9 @@ public class onlinePostService {
 	public List<String> getChildCategory(String bigCategory) throws Exception{
 		System.out.println("getChildCategory service 진입");
 		return dao.getChildCategory(bigCategory);
+	}
+	
+	public List<ProductDTO> searchProduct(String value) throws Exception{
+		return dao.searchProduct(value);
 	}
 }

@@ -143,7 +143,7 @@
 							<td class="contentName">연결 상품</td>
 							<td id="searchProduct">
 							    <input type="text" class="form-control" id="product" placeholder="상품을 검색해 주세요." readonly>
-							    <button type="button" class="btn btn-info">상품 검색</button>
+							    <button type="button" class="btn btn-info" id="searchBtn">상품 검색</button>
 							</td>
 						</tr>
 
@@ -196,10 +196,15 @@
 	     })
 	     
 	     function popup(){
-	    	 var url = "/onlinePost/searchProduct.do";
+	    	 var url = "/onlinePost/toSearchProduct.do";
 	    	 var name = "searchProduct";
 	    	 window.open(url,name, "height=1000,width=1000");
 	     }
+	     
+	     $("#searchBtn").on("click",function(){
+	    	popup(); 
+	     })
+	     
 	</script>
 </body>
 </html>
