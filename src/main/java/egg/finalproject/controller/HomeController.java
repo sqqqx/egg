@@ -11,10 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
 @Controller
 public class HomeController {
-	
 	
 	@RequestMapping(value = "/")
 	public String home() {
@@ -22,12 +20,16 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/toLogin.do")
-		public String toLogin() {
-			return "user/login";
-		}
+	public String toLogin() {
+		return "user/login";
+	}
 	
 	@RequestMapping(value="/toSignup.do")
 	public String toSignup() {
 		return "user/signup";
 	}
+	
+	
+	
+	
 }
