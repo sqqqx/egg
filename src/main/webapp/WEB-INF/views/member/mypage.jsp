@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,34 +17,55 @@
             <div class="col-12">My Page</div>
             <div class="col-12">User님 환영합니다.</div>
         </div>
-        <div class="row info_box">
-            <div class="col-10 row activity_box">
-                <div class="col-9">
-                    <p>내 포인트 : 800p</p>
-                    <p>총 게시글 : 0 개</p>
-                </div>
-                <div class="col-3">
-                    <p><button type="button">충전내역</button></p>
-                </div>
-            </div>
-            <div class="col-2">
-                <button type="button">프로필 바로가기</button>
-            </div>
-        </div>
+        <c:if test="${dto.type eq 2}">
+        	<div class="row expert_box">
+	            <div class="col-10 row activity_box">
+	                <div class="col-8">
+	                    <p>내 포인트 : 800p</p>
+	                    <p>총 게시글 : 0 개</p>
+	                </div>
+	                <div class="col-3">
+	                    <button type="button" class="btn btn-outline-dark">충전내역</button>
+	                </div>
+	            </div>
+	            <div class="col-2">
+	                <button type="button" class="btn btn-dark" id="toProfileBtn">프로필 바로가기</button>
+	            </div>
+       		</div>
+        </c:if>
+        
+        <!-- 능력자 회원 등록이 안되어있어서 임시로 박스 띄워주기. 능력자 회원 생성 시 아래 expert_box 삭제 -->
+        	<div class="row expert_box">
+	            <div class="col-10 row activity_box">
+	                <div class="col-8">
+	                    <p>내 포인트 : 800p</p>
+	                    <p>총 게시글 : 0 개</p>
+	                </div>
+	                <div class="col-3">
+	                    <p><button type="button">충전내역</button></p>
+	                </div>
+	            </div>
+	            <div class="col-2">
+	                <button type="button" id="toProfileBtn" class="btn btn-dark">프로필 바로가기</button>
+	            </div>
+       		</div>
+        
 
         <div class="row box_mp">
             <div class="col-4 menu_mp myInfo">
                 <div>
-                    <img src="https://cdn-icons.flaticon.com/png/512/1144/premium/1144709.png?token=exp=1642398436~hmac=b04c1ca7b28d624347f9e2cd2919def2">
+                	<a href="${pagecontext.request.contextPath}/member/toMyInfo">
+                		<img src="/resources/img/myInfo.png">
+                	</a>
                 </div>
                 <div>
-                    <span>내 정보</span>
+                	<a href="${pagecontext.request.contextPath}/member/toMyInfo"><span>내 정보</span></a>
                 </div>
                 
             </div>
             <div class="col-4 menu_mp msgBox">
                 <div>
-                    <img src="https://cdn-icons.flaticon.com/png/512/873/premium/873360.png?token=exp=1642399525~hmac=0a47f97ee39f9b56d2e68766e4383061">
+                    <img src="/resources/img/message.png">
                 </div>
                 <div>
                     <span>쪽지함</span>
@@ -51,7 +73,7 @@
             </div>
             <div class="col-4 menu_mp likeList">
                 <div>
-                    <img src="https://cdn-icons.flaticon.com/png/512/210/premium/210545.png?token=exp=1642399464~hmac=f1ed8de357260c254be738050442d303">
+                    <img src="/resources/img/like.png">
                 </div>
                 <div>
                     <span>찜한 게시글</span>
@@ -59,7 +81,7 @@
             </div>
             <div class="col-4 menu_mp postList">
                 <div>
-                    <img src="https://cdn-icons.flaticon.com/png/512/1043/premium/1043838.png?token=exp=1642399557~hmac=94246838ea6a91694422b3ceaaa3b835">
+                    <img src="/resources/img/Post.png">
                 </div>
                 <div>
                     <span>내가 쓴 글</span>
@@ -67,7 +89,7 @@
             </div>
             <div class="col-4 menu_mp orderNPayment">
                 <div>
-                    <img src="https://cdn-icons.flaticon.com/png/512/1062/premium/1062962.png?token=exp=1642399669~hmac=4036428830835d267485180eb137d4e1">
+                    <img src="/resources/img/payment.png">
                 </div>
                 <div>
                     <span>주문 결제 조회</span>
@@ -75,7 +97,7 @@
             </div>
             <div class="col-4 menu_mp delivery">
                 <div>
-                    <img src="https://cdn-icons-png.flaticon.com/512/609/609361.png">
+                    <img src="/resources/img/delivery.png">
                 </div>
                 <div>
                     <span>배송 조회</span>

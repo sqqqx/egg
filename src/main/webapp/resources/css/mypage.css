@@ -7,22 +7,27 @@
     text-align: center;
 }
 
-.info_box div {
+.expert_box div {
     text-align: right;
     font-size: 20pt;
+    margin-left: 1px;
+}
+.expert_box div p{
+    float: center;
 }
 .activity_box {
     border: 1px black solid;
+    border-radius: 10px;
     margin-bottom: 10px;
     margin-right: 10px;
     padding: 10px;
 }
-.info_box div p{
-    float: center;
+#toProfileBtn {
+	height: 112px;
 }
-
 .box_mp {
     border: 3px solid grey;
+    border-radius: 10px;
 }
 .menu_mp {
     margin-bottom: 60px;
