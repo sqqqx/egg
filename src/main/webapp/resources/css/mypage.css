@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+.header_mp {
+    font-size: 30pt;
+    margin: 20px 0px 50px 0px;
+    height: 100px;
+    text-align: center;
+}
+
+.info_box div {
+    text-align: right;
+    font-size: 20pt;
+}
+.activity_box {
+    border: 1px black solid;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    padding: 10px;
+}
+.info_box div p{
+    float: center;
+}
+
+.box_mp {
+    border: 3px solid grey;
+}
+.menu_mp {
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.menu_mp img {
+    display: block;
+    padding: 20px;
+    margin: 0 auto;
+    width: 200px;
+}
+.menu_mp span {
+    font-weight: bold;
+    font-size: 20pt;
+}
