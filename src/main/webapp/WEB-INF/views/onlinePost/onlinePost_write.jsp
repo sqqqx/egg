@@ -101,7 +101,7 @@
 		<div class="row">
 			<div class="wrapper">
 				<h2 class="text-center">클래스 등록</h2>
-				<form action="/write" method="post">
+				<form action="/write" method="post" id="writeForm">
 					<table class="table table-striped">
 						<tr>
 							<td class="contentName" id="categories">카테고리</td>
@@ -118,9 +118,7 @@
 		
 							   <select class="form-select category" aria-label="Default select example" id="category2" disabled>
                                     <option selected>소분류</option>
-                                    <option value="1">IT</option>
-                                    <option value="2">미용</option>
-                                    <option value="3">디자인</option>
+                       
                                </select>
 
 							</td>
@@ -143,6 +141,7 @@
 							<td class="contentName">연결 상품</td>
 							<td id="searchProduct">
 							    <input type="text" class="form-control" id="product" placeholder="상품을 검색해 주세요." readonly>
+							    <input type="text" name="product_no" id="product_no" hidden>
 							    <button type="button" class="btn btn-info" id="searchBtn">상품 검색</button>
 							</td>
 						</tr>
@@ -204,6 +203,8 @@
 	     $("#searchBtn").on("click",function(){
 	    	popup(); 
 	     })
+	     
+	     
 	     
 	</script>
 </body>
