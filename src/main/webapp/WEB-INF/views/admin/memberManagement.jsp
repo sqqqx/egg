@@ -94,6 +94,9 @@
         .tableWrapper {
             width: 100%;
         }
+        .cls-toMyPage {
+        	cursor: pointer;
+        }
 
         /* 사이드 바 */
         .cls-sideBar ul {
@@ -213,32 +216,32 @@
                                             <td><input type="checkbox" value="${dto.user_id}" class="userCheckBox"
                                                     name="userCheckBox" id="userCheckBox">
                                             </td>
-                                            <td>${dto.user_id}</td>
-                                            <td>${dto.user_nickname}</td>
-                                            <td>${dto.email}</td>
+                                            <td class="cls-toMypage" id="user_id">${dto.user_id}</td>
+                                            <td class="cls-toMypage">${dto.user_nickname}</td>
+                                            <td class="cls-toMypage">${dto.email}</td>
                                             <c:choose>
                                                 <c:when test="${dto.type eq 0}">
-                                                    <td class="cls-admin">관리자</td>
+                                                    <td class="cls-admin cls-toMypage">관리자</td>
                                                 </c:when>
                                                 <c:when test="${dto.type eq 1}">
-                                                    <td>일반</td>
+                                                    <td class="cls-toMypage">일반</td>
                                                 </c:when>
                                                 <c:when test="${dto.type eq 2}">
-                                                    <td class="cls-expert">능력자</td>
+                                                    <td class="cls-expert cls-toMypage">능력자</td>
                                                 </c:when>
                                                 <c:when test="${dto.type eq 9}">
-                                                    <td>탈퇴</td>
+                                                    <td class="cls-toMypage">탈퇴</td>
                                                 </c:when>
                                             </c:choose>
                                             <c:choose>
                                                 <c:when test="${dto.blacklist eq 0}">
-                                                    <td>N</td>
+                                                    <td class="cls-toMypage">N</td>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <td class="cls-blacklist">Y</td>
+                                                    <td class="cls-blacklist cls-toMypage">Y</td>
                                                 </c:otherwise>
                                             </c:choose>
-                                            <td>${dto.signup_date}</td>
+                                            <td class="cls-toMypage">${dto.signup_date}</td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
@@ -346,6 +349,11 @@
                 $("#selectCheckbox").submit();
             }
         });
+        // 유저 페이지로 이동(미완성)
+        $(".cls-toMypage").on("click", function(e) {
+        	const user_id = $(e.target).parent().find("#user_id").text();
+         	location.href = "${pageContext.request.contextPath}/admin/test?user_id="+user_id;
+         });
     </script>
 </body>
 
