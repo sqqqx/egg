@@ -8,8 +8,8 @@
          SELECT DISTINCT PARENT_GROUP FROM TBL_CATEGORY
     </select>
     
-    <select id="getChildCategory" resultType="String">
-         SELECT CHILD_GROUP FROM TBL_CATEGORY WHERE PARENT_GROUP = #{bigCategory}
+    <select id="getChildCategory" resultType="CategoryDTO">
+         SELECT * FROM TBL_CATEGORY WHERE PARENT_GROUP = #{bigCategory}
     </select>
     
     <!-- <select id="searchProduct" resultType="ProductDTO">
@@ -19,4 +19,8 @@
     <select id="searchProduct" resultType="ProductDTO">
          select * from tbl_product where name like '%'|| #{value} ||'%'
     </select>
+    
+    <insert id="insertFile" parameterType="Map">
+         INSERT INTO TBL_IMAGE VALUES(IMAGE_NO.NEXTVAL, #{ori_name}, #{sys_name},3)
+    </insert>
 </mapper>
