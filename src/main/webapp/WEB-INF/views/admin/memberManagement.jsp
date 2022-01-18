@@ -68,13 +68,28 @@
             color: white;
         }
 
-        /* 관리자 메인 영역 */
+        /*** 관리자 메인 영역 ***/
         .searchArea {
-            width: 50%;
+            width: 80%;
         }
+        .searchArea > div {
+            padding: 0;
+        }
+        .searchArea button {
+            width: 100%;
+        }
+        .tableWrapper table {
+            width: 100%;
+            text-align: center;
+        }
+        .tableWrapper{
+            width: 80%;
+        }
+
+        /* 폰트 관련 */
         .cls-blacklist {
             font-weight: bold;
-            color: red;
+            color: red !important;
         }
         .cls-admin {
             font-weight: bolder;
@@ -118,28 +133,28 @@
         </div>
         <!--관리자 메인영역(여기 쓰시면 됩니다)-->
         <!-- 회원 검색-->
-        <form id="searchForm" action="${pageContext.request.contextPath}/admin/memberSearch?currentIdx=1" method="post">
-            <div class="row searchArea">
-                <div class="col-2">
+        <form id="searchForm" action="${pageContext.request.contextPath}/admin/getMemberList?currentIdx=1" method="post" class="d-flex justify-content-center">
+            <div class="row searchArea pt-5 pb-5">
+                <div class="col-3 d-flex justify-content-end">
                     <select class="form-select" aria-label="Default select example" name="searchOption">
                         <option selected value="user_id">아이디</option>
                         <option value="nickname">닉네임</option>
                         <option value="email">이메일</option>
                     </select>
                 </div>
-                <div class="col-4">
+                <div class="col-6 d-flex justify-content-center">
                     <input type="text" class="form-control" name="searchKeyword" placeholder="">
                 </div>
-                <div class="col-2">
+                <div class="col-3 d-flex justify-content-start">
                     <button type="submit" class="btn btn-outline-dark" id="searchBtn">검색</button>
                 </div>
             </div>
         </form>
         <!-- 회원정보 출력 -->
-        <form id="selectCheckbox" method="post">
-            <div class="row">
-                <div class="col-12">
-                    <table>
+        <form id="selectCheckbox" method="post" class="d-flex justify-content-center">
+            <div class="row tableWrapper">
+                <div class="col-12 px-0">
+                    <table class="table table-striped table-hover">
                         <thead>
                             <th><input type="checkbox" class="userCheckBoxAll" name="userCheckBoxAll"
                                     id="userCheckBoxAll"></th>
@@ -148,6 +163,7 @@
                             <th>이메일</th>
                             <th>회원유형</th>
                             <th>블랙리스트</th>
+                            <th>가입일</th>
                         </thead>
                         <tbody>
                             <c:forEach items="${list}" var="dto">
@@ -179,12 +195,13 @@
                                             <td class="cls-blacklist">Y</td>
                                         </c:otherwise>
                                     </c:choose>
+                                    <td>${dto.signup_date}</td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
                 </div>
-                <div class="col-12">
+                <div class="col-12 d-flex justify-content-center pt-5">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <c:if test="${map.needPrev eq true}">
@@ -199,15 +216,13 @@
                         </ul>
                     </nav>
                 </div>
+                <div class="col-12 d-flex justify-content-end px-0">
+                    <button type="button" class="btn btn-outline-dark" id="blackListBtn">블랙리스트 추가</button>
+                    <button type="button" class="btn btn-outline-dark" id="blackListCancelBtn">블랙리스트 해제</button>
+                    <button type="button" class="btn btn-outline-dark" id="expulsionBtn">회원 강제 탈퇴</button>
+                </div>
             </div>
         </form>
-        <div class="row">
-            <div class="col d-flex justify-content-start">
-                <button type="button" class="btn btn-outline-dark" id="blackListBtn">블랙리스트 추가</button>
-                <button type="button" class="btn btn-outline-dark" id="blackListCancelBtn">블랙리스트 해제</button>
-                <button type="button" class="btn btn-outline-dark" id="expulsionBtn">회원 강제 탈퇴</button>
-            </div>
-        </div>
         <!-- 관리자 메인영역 마무리 -->
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -244,14 +259,14 @@
         // 블랙리스트 추가
         $("#blackListBtn").on("click", function () {
             if ($(".userCheckBox").is(":checked") && confirm("블랙리스트에 추가하겠습니까?")) {
-                $("form").attr("action", "${pageContext.request.contextPath}/admin/memberBlacklistRegist");
+                $("form").attr("action", "${pageContext.request.contextPath}/admin/memberBlackList?idx=1");
                 $("#selectCheckbox").submit();
             }
         });
         // 블랙리스트 해제
         $("#blackListCancelBtn").on("click", function () {
             if ($(".userCheckBox").is(":checked") && confirm("블랙리스트를 해제하겠습니까?")) {
-                $("form").attr("action", "${pageContext.request.contextPath}/admin/memberBlackListCancel");
+                $("form").attr("action", "${pageContext.request.contextPath}/admin/memberBlackList?idx=0");
                 $("#selectCheckbox").submit();
             }
         });

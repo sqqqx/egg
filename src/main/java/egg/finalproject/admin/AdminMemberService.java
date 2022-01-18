@@ -15,17 +15,24 @@ public class AdminMemberService {
 	@Autowired
 	private AdminMemberDAO dao;
 	
-	// 전체 회원 가져오기
-	public List<MemberDTO> memberSelectAll() throws Exception {
-		return dao.memberSelectAll();
+	private int totalCount;
+	
+	// 총 회원 수 가져오기
+	public int memberCount() throws Exception {
+		return dao.memberCount();
 	}
 	
-	// 회원 아이디, 닉네임, 이메일로 검색
-	public List<MemberDTO> memberSearch(String searchOption, String searchKeyword, int currentIdx) throws Exception {
+	// 회원 목록 가져오기
+	public List<MemberDTO> getMemberList(String searchOption, String searchKeyword, int currentIdx) throws Exception {
 		Map<String, Object> map = this.getRange(currentIdx);
-		map.put("searchOption", searchOption);
-		map.put("searchKeyword", searchKeyword);
-		return dao.memberSearch(map);
+		if(searchOption != null & searchKeyword != null) {
+			map.put("searchOption", searchOption);
+			map.put("searchKeyword", searchKeyword);
+		}
+		List<MemberDTO> list = dao.getMemberList(map);
+		totalCount = list.size() < this.memberCount() ? list.size() : this.memberCount();
+		System.out.println("memberSearch totalCount : " + totalCount);
+		return list;
 	}
 	
 	// 회원 강제 탈퇴
@@ -35,30 +42,22 @@ public class AdminMemberService {
 		return dao.memberExpulsion(map);
 	}
 	
-	// 회원 블랙리스트 등록
-	public int memberBlacklistRegist(String[] userCheckBox) throws Exception {
-		Map<String, String[]> map = new HashMap<>();
+	// 블랙리스트 ON / OFF
+	public int memberBlackList(String[] userCheckBox, int idx) throws Exception {
+		Map<String, Object> map = new HashMap<>();
 		map.put("userCheckBox", userCheckBox);
-		return dao.memberBlacklistRegist(map);
+		map.put("idx", idx);
+		return dao.memberBlackList(map);
 	}
 	
-	// 회원 블랙리스트 해제
-	public int memberBlackListCancel(String[] userCheckBox) throws Exception {
-		Map<String, String[]> map = new HashMap<>();
-		map.put("userCheckBox", userCheckBox);
-		return dao.memberBlackListCancel(map);
-	}
+	/********** paging **********/
 	
-	// 총 회원 수 가져오기
-	public int memberCount() throws Exception {
-		return dao.memberCount();
-	}
-	
-	// 페이지 처리
+	// getNavi
 	public Map<String, Object> getNavi(int currentIdx) throws Exception {
-		int rowCnt = this.memberCount(); // 전체 회원 수
+		int rowCnt = this.totalCount; // 전체 회원 수
 		int rowCntPage = 10; // 10명/page
-		int naviCnt = (int)Math.ceil((double)rowCnt/rowCntPage); // 전체 페이지 수(올림처리)
+		
+		int naviCnt = rowCnt % rowCntPage > 0 ? (rowCnt / rowCntPage) + 1 : (rowCnt / rowCntPage);
 		int naviCntPage = 5; // 10navi/page
 		
 		if(currentIdx < 1) {
@@ -71,8 +70,15 @@ public class AdminMemberService {
 		int firstIdx = ((currentIdx - 1) / naviCntPage) * naviCntPage + 1; // 페이지 시작 번호 
 		int lastIdx = firstIdx + naviCntPage - 1; // 페이지 마지막 번호
 		
+		if(lastIdx > naviCnt) {
+			lastIdx = naviCnt;
+		}
+		
 		boolean needPrev = firstIdx == 1 ? false : true;
 		boolean needNext = lastIdx == naviCnt ? false : true; 
+		
+		System.out.println("rowCnt : " + rowCnt);
+		System.out.println("firstIdx : " + firstIdx + " : " + "lastIdx : " + lastIdx + "needPrev : " + needPrev + " : " + "needNext : " + needNext);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("currentIdx", currentIdx);
@@ -83,12 +89,7 @@ public class AdminMemberService {
 		return map;
 	}
 	
-	// 전체 회원 목록 가져오기 
-	public List<MemberDTO> getMemberList(int currentIdx) {
-		return dao.getMemberList(this.getRange(currentIdx));
-	}
-	
-	// startRange, endRange구하기
+	// get startRange, endRange
 	public Map<String, Object> getRange(int currentIdx) {
 		int rowCntPage = 10; // 페이지당 10명
 		int startRange = currentIdx * rowCntPage - (rowCntPage - 1);
@@ -98,6 +99,5 @@ public class AdminMemberService {
 		map.put("endRange", endRange);
 		return map;
 	}
-	
 
 }

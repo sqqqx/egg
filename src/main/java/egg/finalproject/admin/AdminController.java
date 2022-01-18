@@ -46,19 +46,11 @@ public class AdminController {
 	
 	/********** 회원 관리 **********/
 	
-	// 전체 회원 가져오기
+	// 회원 목록 가져오기
 	@RequestMapping("/getMemberList")
-	public String getMemberList(Model model, int currentIdx) throws Exception {
-		model.addAttribute("list", service.getMemberList(currentIdx));
-		model.addAttribute("map", service.getNavi(currentIdx));
-		return "admin/memberManagement";
-	}
-	
-	// 회원 아이디, 닉네임, 이메일로 검색
-	@RequestMapping("/memberSearch")
-	public String memberSearch(Model model, String searchOption, String searchKeyword, int currentIdx) throws Exception {
-		System.out.println("searchOption : " + searchOption + " : " + "searchKeyword : " + searchKeyword + "currentIdx : " + currentIdx);
-		model.addAttribute("list", service.memberSearch(searchOption, searchKeyword, currentIdx));
+	public String getMemberList(Model model, String searchOption, String searchKeyword, int currentIdx) throws Exception {
+		System.out.println("searchOption : " + searchOption + " : " + "searchKeyword : " + searchKeyword + " : " + "currentIdx : " + currentIdx);
+		model.addAttribute("list", service.getMemberList(searchOption, searchKeyword, currentIdx));
 		model.addAttribute("map", service.getNavi(currentIdx));
 		return "admin/memberManagement"; 
 	}
@@ -67,23 +59,14 @@ public class AdminController {
 	@RequestMapping("/memberExpulsion")
 	public String memberExpulsion(String[] userCheckBox) throws Exception {
 		service.memberExpulsion(userCheckBox);
-		return "redirect:/admin/memberSelectAll";
+		return "redirect:/admin/toMemberManagement";
 	}
 	
-	// 회원 블랙리스트 등록
-	@RequestMapping("/memberBlacklistRegist")
-	public String memberBlacklistRegist(String[] userCheckBox) throws Exception {
-		service.memberBlacklistRegist(userCheckBox);
-		return "redirect:/admin/memberSelectAll";
+	// 블랙리스트 ON / OFF
+	@RequestMapping("/memberBlackList")
+	public String memberBlackList(String[] userCheckBox, int idx) throws Exception {
+		service.memberBlackList(userCheckBox, idx);
+		return "redirect:/admin/toMemberManagement";
 	}
-	
-	// 회원 블랙리스트 해제
-	@RequestMapping("/memberBlackListCancel")
-	public String memberBlackListCancel(String[] userCheckBox) throws Exception {
-		service.memberBlackListCancel(userCheckBox);
-		return "redirect:/admin/memberSelectAll";
-	}
-	
-	
 
 }

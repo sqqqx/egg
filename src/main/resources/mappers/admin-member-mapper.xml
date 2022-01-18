@@ -4,17 +4,19 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="adminMemberMapper">
-
-	<!-- 전체 회원 가져오기 -->
-	<!-- <select id="memberSelectAll" resultType="memberDTO">
-		SELECT * FROM tbl_member
-	</select> -->
 	
-	<!-- 회원 아이디, 닉네임, 이메일로 검색 -->
-	<select id="memberSearch" parameterType="map" resultType="memberDTO">
+	<!-- 총 회원 수 가져오기 -->
+	<select id="memberCount" resultType="int">
+		SELECT COUNT(*) FROM tbl_member
+	</select>
+	
+	<!-- 회원 목록 가져오기 -->
+	<select id="getMemberList" parameterType="map" resultType="memberDTO">
 		SELECT * FROM (SELECT row_number() OVER (ORDER BY signup_date DESC) AS idx, tbl_member.* FROM tbl_member) 
 		    WHERE idx BETWEEN #{startRange} AND #{endRange}
+		    <if test ="searchOption != null">
 		    	AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+		    </if>
 	</select>
 	
 	<!-- 회원 강제 탈퇴-->
@@ -26,33 +28,19 @@
 		</foreach>
 	</update>
 	
-	<!-- 회원 블랙리스트 등록 -->
-	<update id="memberBlacklistRegist" parameterType="map">
-		UPDATE tbl_member SET blacklist = 1 
-			WHERE user_id IN
+	<!-- 블랙리스트 ON / OFF -->
+	<update id="memberBlackList" parameterType="map">
+		UPDATE tbl_member SET
+		<if test ="idx == 0">
+	    	blacklist = 0 
+	    </if>
+	    <if test ="idx == 1">
+	    	blacklist = 1 
+	    </if>
+		WHERE user_id IN
 		<foreach collection="userCheckBox" item="user_id" open="(" close=")" separator=",">
 			#{user_id}
 		</foreach>
 	</update>
 	
-	<!-- 회원 블랙리스트 해제 -->
-	<update id="memberBlackListCancel" parameterType="map">
-		UPDATE tbl_member SET blacklist = 0 
-			WHERE user_id IN
-		<foreach collection="userCheckBox" item="user_id" open="(" close=")" separator=",">
-			#{user_id}
-		</foreach>
-	</update>
-	
-	<!-- 총 회원 수 가져오기 -->
-	<select id="memberCount" resultType="int">
-		SELECT COUNT(*) FROM tbl_member
-	</select>
-	
-	<!-- 전체 회원 가져오기 -->
-	<select id="getMemberList" parameterType="map" resultType="memberDTO">
-		SELECT * FROM (SELECT row_number() OVER (ORDER BY signup_date DESC) AS idx, tbl_member.* FROM tbl_member) 
-		    WHERE idx BETWEEN #{startRange} AND #{endRange}
-	</select>
-
 </mapper>
