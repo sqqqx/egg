@@ -4,5 +4,11 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="onlinePostMapper">
-
+    <select id="getParentCategory" resultType="String">
+         SELECT DISTINCT PARENT_GROUP FROM TBL_CATEGORY
+    </select>
+    
+    <select id="getChildCategory" resultType="String">
+         SELECT CHILD_GROUP FROM TBL_CATEGORY WHERE PARENT_GROUP = #{bigCategory}
+    </select>
 </mapper>
