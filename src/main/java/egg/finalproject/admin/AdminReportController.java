@@ -15,13 +15,13 @@ public class AdminReportController {
 	// 신고 관리 페이지 이동
 	@RequestMapping("/toReportManagement")
 	public String toReportManagement() throws Exception {
-		return "redirect:/admin/getReportAll";
+		return "redirect:/admin/getReportList?currentIdx=1";
 	}
 	
 	// 신고 목록 가져오기
 	@RequestMapping("/getReportList")
-	public String getReportAll(Model model, String searchOption, String searchKeyword, int currentIdx) throws Exception {
-		model.addAttribute("list", service.getReportList(searchOption, searchKeyword, currentIdx));
+	public String getReportList(Model model, String searchOption, String searchKeyword, int currentIdx) throws Exception {
+//		model.addAttribute("list", service.getReportList(searchOption, searchKeyword, currentIdx));
 		return "admin/reportManagement";
 	}
 

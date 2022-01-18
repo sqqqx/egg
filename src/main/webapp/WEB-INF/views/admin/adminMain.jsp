@@ -65,6 +65,20 @@
         .main-Wrapper ul {
             list-style: none;
         }
+        
+        /* 사이드 바 */
+        .cls-sideBar ul {
+            list-style: none;
+        }
+        .cls-sideBar li {
+            padding: 20px;
+        }
+        .cls-sideBar ul a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            padding: 20px;
+        } 
 
     </style>
 </head>
@@ -100,7 +114,7 @@
         
         <div class="main-Wrapper d-flex justify-content-center pt-5">
             <!--사이드 바-->
-            <div>
+            <div class="cls-sideBar">
                 <ul>
                     <li><a href="${pageContext.request.contextPath}/admin/toAdminMain">관리자 홈</a></li>
                     <li><a href="${pageContext.request.contextPath}/admin/toMemberManagement">회원 관리</a></li>

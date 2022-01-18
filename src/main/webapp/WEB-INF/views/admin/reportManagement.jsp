@@ -85,6 +85,20 @@
         .tableWrapper {
             width: 100%;
         }
+        
+        /* 사이드 바 */
+        .cls-sideBar ul {
+            list-style: none;
+        }
+        .cls-sideBar li {
+            padding: 20px;
+        }
+        .cls-sideBar ul a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            padding: 20px;
+        } 
 
         /* 폰트 관련 */
         .cls-blacklist {
@@ -193,25 +207,25 @@
                                             <td>${map.USER_NICKNAME}</td>
                                             <c:choose>
                                             	<c:when test="${map.TYPE eq 1}">
-                                            		<td>게시글</td>
+                                            		<td class="toReportDetail">게시글</td>
                                            		</c:when>
                                            		<c:when test="${map.TYPE eq 2}">
-                                            		<td>댓글</td>
+                                            		<td class="toReportDetail">댓글</td>
                                            		</c:when>
                                            		<c:when test="${map.TYPE eq 3}">
-                                            		<td>쪽지</td>
+                                            		<td class="toReportDetail">쪽지</td>
                                            		</c:when>
                                             </c:choose>
-                                            <td>신고 사유 블라블라</td>
+                                            <td class="toReportDetail">신고 사유 블라블라</td>
                                             <c:choose>
                                             	<c:when test="${map.YN eq 0}">
-                                            		<td>미처리</td>
+                                            		<td class="toReportDetail">미처리</td>
                                            		</c:when>
                                             	<c:otherwise>
-                                            		<td class="reportClear">처리 완료</td>
+                                            		<td class="reportClear toReportDetail">처리 완료</td>
                                            		</c:otherwise>
                                             </c:choose>
-                                            <td>${map.REPORT_DATE}</td>
+                                            <td class="toReportDetail">${map.REPORT_DATE}</td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
@@ -281,6 +295,10 @@
                 return false;
             }
         });
+     	// 신고 상세페이지 이동
+     	$(".toReportDetail").on("click", function(e) {
+     		// 팝업창 링크 open(with seq) & ajax로 dto가져와서 뿌리기
+     	});
     </script>
 </body>
 </html>

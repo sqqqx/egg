@@ -8,6 +8,6 @@
 <title>신고 상세</title>
 </head>
 <body>
-	test
+	레이아웃 귀찮다..
 </body>
 </html>

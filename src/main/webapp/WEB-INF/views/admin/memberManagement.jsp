@@ -110,7 +110,7 @@
             color: black;
             font-weight: bold;
             padding: 20px;
-        }
+        } 
         
 
         /* 폰트 관련 */
