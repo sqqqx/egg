@@ -25,7 +25,8 @@ public class onlinePostDAO {
 	}
 	
 	public List<ProductDTO> searchProduct(String value) throws Exception{
-		return session.selectList("onlinePost.searchProduct",value);
+		System.out.println("dao search 진입"+value);
+		return session.selectList("onlinePostMapper.searchProduct",value);
 	}
 	//숫자나 문자열이 들어온다.
 	//문자열과 숫자를 같이 검색하지 말까? 좋은 방법인 것 같다.

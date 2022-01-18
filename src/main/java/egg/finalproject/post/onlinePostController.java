@@ -44,7 +44,13 @@ public class onlinePostController {
 	}
 	
 	@RequestMapping("/searchProduct.do")
+	@ResponseBody
 	public List<ProductDTO> searchProduct(String value) throws Exception{
-		return service.searchProduct(value);
+		System.out.println("search 진입"+value);
+		List<ProductDTO> list = service.searchProduct(value);
+		for(ProductDTO dto : list) {
+			System.out.println(dto.getName());
+		}
+		return list;
 	}
 }

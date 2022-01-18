@@ -12,7 +12,11 @@
          SELECT CHILD_GROUP FROM TBL_CATEGORY WHERE PARENT_GROUP = #{bigCategory}
     </select>
     
+    <!-- <select id="searchProduct" resultType="ProductDTO">
+         select from tbl_product where name like '%'||#{value}||'%' or content like '%'||#{value}||'%'
+    </select> -->
+    
     <select id="searchProduct" resultType="ProductDTO">
-         select * from tbl_product where name like "%#{value}%" or content like "%#{value}%"
+         select * from tbl_product where name like '%'|| #{value} ||'%'
     </select>
 </mapper>

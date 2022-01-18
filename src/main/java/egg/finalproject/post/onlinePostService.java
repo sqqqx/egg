@@ -22,6 +22,7 @@ public class onlinePostService {
 	}
 	
 	public List<ProductDTO> searchProduct(String value) throws Exception{
+		System.out.println("sevice 진입"+value);
 		return dao.searchProduct(value);
 	}
 }

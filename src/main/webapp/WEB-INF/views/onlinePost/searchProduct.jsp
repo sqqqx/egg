@@ -37,15 +37,15 @@
 			    <button type="button" class="btn btn-info" id="searchBtn">검색</button>
 			</th>
 		  </tr>
-		</thead>
-		<tbody>
+		
 		  <tr>
 			<th>상품 번호</th>
 			<th>상품명</th>
 			<th>가격</th>
 			<th>재고 수량</th>
 		  </tr>
-		  
+		  </thead>
+		  <tbody>
 		  
 		  <!-- <tr>
 			<th>2</th>
@@ -68,13 +68,27 @@
 	    		  ,type : "post"
 	    		  ,data : {value:value}
 	    	  }).done(function(data){
-	    		  data.forEach(function(element){
-	    				 var option= "<option>"+element+"</option>"
-	    				 $("#category2").append(option);
-	    		  })
+	    		  console.log(data);
+	    		  if(data.length!=0){
+	    			  $( '.table > tbody').empty();
+	    			  data.forEach(function(element){
+		    				 var table= "<tr><th>"+element.product_no+"</th><td>"+element.name+"</td><td>"+element.price+"</td><td>"+element.stock+"</td></tr>"
+		    				 $(".table").append(table);
+		    		  })
+		    		  return;
+	    		  }
+	    		  var table="<tr><th colspan=\"4\">해당 데이터가 존재하지 않습니다.</th></tr>";
+    			  $(".table").append(table);
+	    		  
 	    	  }).fail(function(){
 	    		  
 	    	  })
+	      })
+	      
+	      $("#search").on("keydown",function(keyNum){
+	    	  if(keyNum.keyCode==13){
+	    		  $("#searchBtn").click();
+	    	  }
 	      })
 	  </script>
 </body>
