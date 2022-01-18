@@ -35,4 +35,9 @@ public class onlinePostController {
 		}
 		return list;
 	}
+	
+	@RequestMapping("/searchProduct.do")
+	public String toSearchProduct() {
+		return "onlinePost/searchProduct";
+	}
 }

@@ -194,6 +194,12 @@
 	    		 $("#category2").attr("disabled", true); 
 	    	 }
 	     })
+	     
+	     function popup(){
+	    	 var url = "/onlinePost/searchProduct.do";
+	    	 var name = "searchProduct";
+	    	 window.open(url,name, "height=1000,width=1000");
+	     }
 	</script>
 </body>
 </html>
