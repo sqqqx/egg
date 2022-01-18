@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="/resources/css/mypage.css">    <!-- 부트스트랩 적용시 부트스트랩 cdn을 가져온 뒤 css를 불러와야 레이아웃에 적용된다.-->
 <title>마이페이지</title>
 </head>
 <body>
@@ -14,6 +16,21 @@
             <div class="col-12">My Page</div>
             <div class="col-12">User님 환영합니다.</div>
         </div>
+        <div class="row info_box">
+            <div class="col-10 row activity_box">
+                <div class="col-9">
+                    <p>내 포인트 : 800p</p>
+                    <p>총 게시글 : 0 개</p>
+                </div>
+                <div class="col-3">
+                    <p><button type="button">충전내역</button></p>
+                </div>
+            </div>
+            <div class="col-2">
+                <button type="button">프로필 바로가기</button>
+            </div>
+        </div>
+
         <div class="row box_mp">
             <div class="col-4 menu_mp myInfo">
                 <div>
@@ -65,7 +82,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </body>
 </html>
