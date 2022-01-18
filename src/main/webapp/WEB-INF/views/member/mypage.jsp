@@ -18,16 +18,16 @@
         </div>
         <div class="row info_box">
             <div class="col-10 row activity_box">
-                <div class="col-8">
+                <div class="col-9">
                     <p>내 포인트 : 800p</p>
                     <p>총 게시글 : 0 개</p>
                 </div>
                 <div class="col-3">
-                    <p><button type="button" class="btn btn-outline-dark" id="payCheckBtn">충전내역</button></p>
+                    <p><button type="button">충전내역</button></p>
                 </div>
             </div>
             <div class="col-2">
-                <button type="button" class="btn btn-dark" id="toProfileBtn">프로필 바로가기</button>
+                <button type="button">프로필 바로가기</button>
             </div>
         </div>
 

@@ -7,7 +7,7 @@ public class CommentDTO {
 	private int comment_no;
 	private int depth;
 	private int reference_no;
-	private String nickname;
+	private String user_nickname;
 	private String content;
 	private Date written_date;
 	private int post_no;
@@ -15,13 +15,13 @@ public class CommentDTO {
 	
 	public CommentDTO() {}
 
-	public CommentDTO(int comment_no, int depth, int reference_no, String nickname, String content, Date written_date,
+	public CommentDTO(int comment_no, int depth, int reference_no, String user_nickname, String content, Date written_date,
 			int post_no, String user_id) {
 		super();
 		this.comment_no = comment_no;
 		this.depth = depth;
 		this.reference_no = reference_no;
-		this.nickname = nickname;
+		this.user_nickname = user_nickname;
 		this.content = content;
 		this.written_date = written_date;
 		this.post_no = post_no;
@@ -52,12 +52,12 @@ public class CommentDTO {
 		this.reference_no = reference_no;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public String getUser_nickname() {
+		return user_nickname;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setUser_nickname(String user_nickname) {
+		this.user_nickname = user_nickname;
 	}
 
 	public String getContent() {
