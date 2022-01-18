@@ -18,20 +18,28 @@ public class AdminMemberService {
 	private int totalCount;
 	
 	// 총 회원 수 가져오기
-	public int memberCount() throws Exception {
-		return dao.memberCount();
+	public int getMemberCountAll() throws Exception {
+		return dao.getMemberCountAll();
+	}
+	
+	// 검색 한 회원 수 가져오기
+	public int getSearchCount(String searchOption, String searchKeyword) throws Exception {
+		Map<String, String> map = new HashMap<>();
+		map.put("searchOption", searchOption);
+		map.put("searchKeyword", searchKeyword);
+		return dao.getSearchCount(map);
 	}
 	
 	// 회원 목록 가져오기
-	public List<MemberDTO> getMemberList(String searchOption, String searchKeyword, int currentIdx) throws Exception {
+	public List<MemberDTO> getMemberList(String searchOption, String searchKeyword, int currentIdx, String key) throws Exception {
 		Map<String, Object> map = this.getRange(currentIdx);
-		if(searchOption != null & searchKeyword != null) {
+		if(searchOption != null && searchKeyword != null) {
 			map.put("searchOption", searchOption);
 			map.put("searchKeyword", searchKeyword);
 		}
 		List<MemberDTO> list = dao.getMemberList(map);
-		totalCount = list.size() < this.memberCount() ? list.size() : this.memberCount();
-		System.out.println("memberSearch totalCount : " + totalCount);
+		totalCount = key != null ? this.getSearchCount(searchOption, searchKeyword) : this.getMemberCountAll();
+		System.out.println("list-size : " + list.size() + " : totalCount : " + totalCount);
 		return list;
 	}
 	
@@ -77,8 +85,7 @@ public class AdminMemberService {
 		boolean needPrev = firstIdx == 1 ? false : true;
 		boolean needNext = lastIdx == naviCnt ? false : true; 
 		
-		System.out.println("rowCnt : " + rowCnt);
-		System.out.println("firstIdx : " + firstIdx + " : " + "lastIdx : " + lastIdx + "needPrev : " + needPrev + " : " + "needNext : " + needNext);
+		System.out.println("firstIdx : " + firstIdx + " : " + "lastIdx : " + lastIdx + " : needPrev : " + needPrev + " : " + "needNext : " + needNext);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("currentIdx", currentIdx);
@@ -94,6 +101,7 @@ public class AdminMemberService {
 		int rowCntPage = 10; // 페이지당 10명
 		int startRange = currentIdx * rowCntPage - (rowCntPage - 1);
 		int endRange = currentIdx * rowCntPage;
+		System.out.println("startRange : " + startRange + " : endRange : " + endRange);
 		Map<String, Object> map = new HashMap<>();
 		map.put("startRange", startRange);
 		map.put("endRange", endRange);

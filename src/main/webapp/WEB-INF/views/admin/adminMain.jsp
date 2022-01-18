@@ -52,6 +52,19 @@
 		   background-color: black;
 		   color:white;
 		}
+		
+		/*** 관리자 메인 영역 ***/
+        .main-Wrapper > div:nth-child(1) {
+        	width: 15%;
+        	float: left;
+        }
+        .main-Wrapper > div:nth-child(2) {
+        	width: 85%;
+        	float: left;
+        }
+        .main-Wrapper ul {
+            list-style: none;
+        }
 
     </style>
 </head>
@@ -84,17 +97,29 @@
            </div>
         </div>
         <!--관리자 메인영역(여기 쓰시면 됩니다)-->
-        <div class="row main">
         
-        <a href="${pageContext.request.contextPath}/admin/test">test</a>
-        
-        <a href="${pageContext.request.contextPath}/admin/toMemberManagement">회원 관리</a>
-        <a href="${pageContext.request.contextPath}/admin/toPostManagement">게시글 관리</a>
-        <a href="${pageContext.request.contextPath}/admin/toReportManagement">신고 관리</a>
-		
-        
-
+        <div class="main-Wrapper d-flex justify-content-center pt-5">
+            <!--사이드 바-->
+            <div>
+                <ul>
+                    <li><a href="${pageContext.request.contextPath}/admin/toAdminMain">관리자 홈</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/toMemberManagement">회원 관리</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/toPostManagement">게시글 관리</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/toReportManagement">신고 관리</a></li>
+                    <li>~~side menu1</li>
+                    <li>~~side menu2</li>
+                    <li>~~side menu3</li>
+                </ul>
+            </div>
+            <!-- 본문 -->
+            <div>
+                <h2>123abcABC!@#$가나다</h2>
+                <p>접속자 수</p>
+                <p>가입자 수</p>
+                <p>신고 건수, 구매 합..</p>
+            </div>
         </div>
+        
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminReportMapper">
+
+	<!-- 신고 목록 가져오기 (신고 사유 컬럼 추가할 것)-->
+	<select id="getReportList" parameterType="map" resultType="map">
+		SELECT r.report_no, m.user_nickname, r.type, r.yn, r.report_date
+			FROM tbl_report r
+    		INNER JOIN tbl_member m USING(user_id)
+    			WHERE '신고 사유' '%'||#{searchKeyword}||'%'
+    		<if test="searchOption != null and searchOption == '1'">
+    			AND type = 1
+    		</if>
+    		<if test="searchOption != null and searchOption == '2'">
+    			AND type = 2
+    		</if>
+    		<if test="searchOption != null and searchOption == '3'">
+    			AND type = 3
+    		</if>
+	</select>
+
+</mapper>

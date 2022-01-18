@@ -16,8 +16,13 @@ public class AdminMemberDAO {
 	private SqlSession session;
 	
 	// 총 회원 수 가져오기
-	public int memberCount() throws Exception {
-		return session.selectOne("adminMemberMapper.memberCount");
+	public int getMemberCountAll() throws Exception {
+		return session.selectOne("adminMemberMapper.getMemberCountAll");
+	}
+	
+	// 검색 한 회원 수 가져오기
+	public int getSearchCount(Map<String, String> map) throws Exception {
+		return session.selectOne("adminMemberMapper.getSearchCount", map);
 	}
 	
 	// 회원 목록 가져오기
