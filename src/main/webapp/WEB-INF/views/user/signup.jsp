@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
     <title>SignUp</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
     <style>
         *{margin: 0;}
         body{
@@ -17,6 +18,10 @@
             border-radius: 10px;
             width:900px;
             padding:80px;
+        }
+        #id_regex{
+        	font-size: 11px;
+        	margin-top:0px;
         }
         .photoBox>div{
             text-align: center;
@@ -37,16 +42,16 @@
     </style>
 </head>
 <body>
-	<form>
+	<form id="formSignup" action="pageContext.request.contextPath/member/signup.do" method="post">
     <div class="container">
         <div class="row mb-3 photoBox">
             <div class="col">
-               <img src="/resources/img/logo.png"> 
+               <img src="/resources/img/logo.png">
             </div>
         </div>
         <div class="row mb-2">
             <div class="col">
-                <label> 아이디(regex조건 입력)</label>
+                <label> 아이디(4~16자 이내)</label>
             </div>
         </div>
         <div class="row mb-3">
@@ -54,9 +59,11 @@
                 <input type="text" class="form-control" id="user_id" name="user_id">
             </div>
             <div class="col-2">
-                <button type="button" class="btn btn-dark">중복검사</button>
+                <button type="button" class="btn btn-dark" id="btn_idcheck">중복검사</button>
             </div>
         </div>
+        <div id="id_regex">4자 이상 16자 이하의 영문 혹은 영문과 숫자를 조합</div>
+       	<br>
 
         <div class="row mb-2">
             <div class="col">
@@ -177,7 +184,50 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
-
+    
+    // 유효성검사
+    
+    // ID 정규식
+    $("#user_id").on("keyup", function(){
+    	let regExp = /^[a-z0-9]{4,16}$/;
+    	if($("#user_id").val() !== ""){
+    		if(regExp.test($("#user_id").val())){
+            	$("#id_regex").html("중복검사를 해주세요").css("color", "green");
+            }else if(!regExp.test($("#user_id").val())){
+               	$("#id_regex").html("4자 이상 16자 이하의 영문 혹은 영문과 숫자를 조합").css("color", "red");
+            }
+    	}
+    })
+    
+    // PW 정규식
+    
+    
+    
+    // 아이디 중복확인
+    $("#btn_idcheck").on("click", function(){
+		let id = $("#user_id").val();
+		console.log(id);
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/member/toIdCheck.do"
+			, type : "post"
+			, data : {id : id}
+		}).done(function(rs){
+			console.log(rs);
+			if(rs == "available"){
+				alert("사용할 수 있는 아이디입니다.");
+			}else if(rs == "unavailable"){
+				alert("사용할 수 없는 아이디입니다.");
+			}
+		}).fail(function(e){
+			console.log(e);
+		});
+	})
+	
+	// 회원가입 버튼 클릭시
+	
+	
+	// 뒤로가기 버튼
     $("#backBtn").click(function(){
     	location.href="${pageContext.request.contextPath}/toLogin.do"
     })
