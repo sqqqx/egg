@@ -49,17 +49,17 @@
                   </svg>
             </div>
             <!--로그인전 (임시로 로그인후에는 hidden처리할것)// 로그인세션활용하여 c:choose처리할것-->
-            <div class="col-1">
+            <div class="col-1" hidden>
                 <button type="button" class="btn btn-outline-dark" id="toLogin">로그인</button>
             </div>
             <!--로그인후 (임시로 로그인전에는 hidden처리할것)// 로그인세션활용하여 c:choose처리할것 -->
-            <div class="col-1 accountBox" hidden>
+            <div class="col-1 accountBox">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" class="bi bi-person-square account" viewBox="0 0 16 16">
                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                     <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12z"/>
                 </svg>
                 <div id="accountInfoBox" style="display:none;">
-		           <div class="row align-content-center textList1">        		    		
+		           <div class="row align-content-center textList1" id="toMypage">        		    		
 		           			마이페이지
 		           </div>
 		           <div class="row align-content-center textList2">
@@ -174,6 +174,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
+    
+    	//계정표시아이콘 눌렀을 경우 마이페이지,정보수정,로그아웃 할수 있는 div창이 내려옴
         $(".account").click(function(){
             let accountBox = $("#accountInfoBox")
             if(accountBox.is(":visible")){
@@ -183,6 +185,7 @@
 			}
         }); 
     
+    	//카테고리 창 눌렀을 경우 소분류 창이 내려옴
          $(".category_big").click(function(){
             let accountBox = $(".category_small")
             if(accountBox.is(":visible")){
@@ -192,10 +195,15 @@
 			}
         }); 
          
+    	//로그인 버튼 눌렀을 경우 login.jsp로 이동(HomeController이용)
          $("#toLogin").click(function(){
         	 location.href="${pageContext.request.contextPath}/toLogin.do"
          })
          
+         //마이페이지 div창 눌렀을 경우 mypage.jsp로 이동(MemberController이용)
+         $("#toMypage").click(function(){
+        	 location.href="${pageContext.request.contextPath}/member/toMypage.do"
+         })
     </script>
 </body>
 </html>
