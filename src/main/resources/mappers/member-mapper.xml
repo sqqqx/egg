@@ -9,4 +9,22 @@
 			from tbl_member
 				where user_id = #{id}
 	</select>
+	
+	<insert id="insertMember" parameterType="MemberDTO">
+		insert into tbl_member values
+			(#{user_id}, #{password}
+			, #{user_nickname}, #{phone}
+			, #{email}, #{address}, sysdate
+			, 0, 1, 0)
+	</insert>
+	
+	<select id="getMember" resultType="MemberDTO">
+		select * from tbl_member
+			where user_id = #{user_id}
+	</select>
+	
+	<select id="isLoginOk" parameterType="map" resultType="int">
+		select count(*) from tbl_member where user_id=#{id} and password=#{pw}
+	</select>
+	
 </mapper>
