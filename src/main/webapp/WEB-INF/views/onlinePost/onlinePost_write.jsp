@@ -78,8 +78,44 @@
 		}
 	</style>
 	<script>
-		
-		function sendFile(file, editor) {
+	
+	function sendFile(file, el) {
+		data = new FormData();
+		data.append("file", file);
+		$.ajax({
+			data : data,
+			type : "POST",
+			url : "/onlinePost/getPicUrl.do",
+			contentType : false,
+			enctype : 'multipart/form-data',
+			processData : false,
+			success : function(data) {
+				console.log(data);
+				$(el).summernote('editor.insertImage', data.url);
+			}
+		});
+	}
+	
+		/* function sendFile(file, editor) {
+			// 파일 전송을 위한 폼생성
+			data = new FormData();
+			data.append("file", file);
+			$.ajax({ // ajax를 통해 파일 업로드 처리
+				data: data,
+				type: "POST",
+				url: "/onlinePost/getChildCategory.do",
+				cache: false,
+				contentType: false,
+				processData: false,
+				success: function (data) { // 처리가 성공할 경우
+					// 에디터에 이미지 출력
+					$(editor).summernote('editor.insertImage', data.url);
+				}
+			});
+		} */
+
+
+		/* function sendFile(file, editor) {
 			var form_data = new FormData();
 			form_data.append('file', file);
 			$.ajax({
@@ -92,10 +128,10 @@
 				processData: false,
 				success: function (url) {
 					$(editor).summernote('editor.insertImage', url);
-						/* $image.css('width', "25%"); */
+						/* $image.css('width', "25%");
 					}
 				}
-			)};
+			)}; */
 
 
 	</script>
@@ -139,26 +175,24 @@
 							<td class="contentName">강의 소개</td>
 							<td><textarea id="summernote" name="content"></textarea></td>
 							<script>
-							$(document).ready(function () {
-								$('#summernote').summernote({
-									placeholder: '강의에 대한 상세 설명을 넣어주세요.',
-									minHeight: 600,
-									maxHeight: null,
-									focus: false,
-									lang: 'ko-KR',
-									/* disableResizeEditor: true */
-									
-									callbacks: {
-									onImageUpload: function (files, editor, welEditable) {
-										for (var i = 0; i < files.length; i++) {
-											console.log("암히어2");
-											sendFile(files[i], this);
+								$(document).ready(function () {
+									$('#summernote').summernote({
+										placeholder: '강의에 대한 상세 설명을 넣어주세요.',
+										minHeight: 600,
+										maxHeight: null,
+										focus: false,
+										lang: 'ko-KR',
+										/* disableResizeEditor: true */
+
+										callbacks: { // 콜백을 사용
+											// 이미지를 업로드할 경우 이벤트를 발생
+											onImageUpload: function (files, editor, welEditable) {
+												sendFile(files[0], this);
+											}
 										}
-									}
-								}
+									});
+									$('.note-statusbar').hide();
 								});
-								$('.note-statusbar').hide();
-							});
 							</script>
 						</tr>
 
@@ -206,37 +240,37 @@
 			}
 		}); */
 
-		function sendFile(file, editor) {
+		/* function sendFile(file, editor) {
 			console.log("암히어3");
 			var form_data = new FormData();
 			form_data.append('file', file);
 			$.ajax({
-				
+
 				data: form_data,
-				crossDomain : true,
+				crossDomain: true,
 				type: "POST",
 				url: '/onlinePost/getPicUrl.do',
 				cache: false,
 				contentType: false,
 				enctype: 'multipart/form-data',
 				processData: false
-			}).done(function(url){
+			}).done(function (url) {
 				console.log("성공함");
 				$(editor).summernote('insertImage', url, function ($image) {
 					$image.css('width', "25%");
 				})
-			}).fail(function(e){
+			}).fail(function (e) {
 				console.log("실패요");
 				console.log(e);
-			});
+			}); */
 			/* 
 				success: function (url) {
 					$(editor).summernote('insertImage', url, function ($image) {
 						$image.css('width', "25%");
 					});
-				} */
-			
-		}
+				} 
+
+		}*/
 
 
 
@@ -254,17 +288,17 @@
 			let bigCategory = $("#category1").val()
 			if (bigCategory != "대분류") {
 				$.ajax({
-					url: "/onlinePost/getPicUrl.do"
+					url: "/onlinePost/getChildCategory.do"
 					, type: "post"
 					, data: { bigCategory: bigCategory }
 				}).done(function (rs) {
 					console.log(rs);
-					$("#category2").attr("disabled", false);
+					$("#category2").attr("disabled", false); //소분류 입력 가능하게 열기
 					$('#category2').children('option:not(:first)').remove(); //'소분류'라는 항목을 뺀 전체 항목 지우기
-					rs.forEach(function (dto) {
+					 rs.forEach(function (dto) {
 						var option = "<option value='" + dto.category_no + "'>" + dto.child_group + "</option>"
 						$("#category2").append(option);
-					})
+					}) 
 				}).fail(function (e) {
 					console.log("실패했어유ㅋㅋ");
 				})
@@ -304,9 +338,9 @@
 
 
 
-		
 
-		
+
+
 
 
 	</script>
