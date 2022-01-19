@@ -4,98 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<<<<<<< HEAD
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<style>
-	*{margin:0;}
-body{
-    width:1800px;
-    height: 1000px;
-    margin:0 auto;
-}
-.header{
-	height:100px;
-}
-.header>div{
-    line-height: 100px;
-}
-.imgBox>a>img{
-    width:34%;
-    height: 100%;
-    margin-left: 30%;
-}
-.searchBox{
-    width: 41%;
-    padding-top: 20px;
-}
-.searchBox>input{
-	width:200px;
-	height:60px;
-}
-.searchBox>*{
-    height: 60px;
-}
-.header>div>svg{
-    margin-left: 35px;
-    cursor: pointer;
-}
-.accountBox{
-   position: relative;
-}
-#accountInfoBox{
-   background-color: white;
-   position: absolute;
-   width:12%;
-   right: 40px;
-   display:none;
-   z-index: 2;
-}
-#accountInfoBox>div{
-   height: 60px;
-   border: 1px solid gray;
-   text-align: center;
-   padding-top:15px;
-   cursor:pointer;
-}
-#accountInfoBox>div:hover{
-   background-color: black;
-   color:white;
-}
-.categoryBox{
-   height: 50px;
-   background-color: gray; 
-}
-.category_big>div{
-   height: 50px;
-   width:100%;
-   text-align: center;
-   padding-top: 13px;
-   color:white;
-   border: 1px solid white;
-}
-.category_small{
-   background-color: #80808090;
-   position: absolute;
-   width:1777px;
-   height:auto;
-   text-align: center;
-   top:150px;
-   z-index:1;
-}
-.category_small>div>ul>li{
-   height: 40px;
-   padding-top:5px;
-   list-style: none;
-   padding-right: 30px;
-}
-.category_small>div>ul>li:hover{
-   color: white;
-}
-</style>
-=======
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> 
 <link rel="stylesheet" href="/resources/css/header.css"> 
->>>>>>> c7e0b902bea37e4c36a973ee746ceecf4591ca13
 </head>
 <body>
  <div class="container-fluid">
@@ -107,11 +17,6 @@ body{
                 </a>
             </div>
             <!-- 검색창 -->
-<<<<<<< HEAD
-            <div class="input-group searchBox" style="width:740px;">
-                <input type="text" class="form-control" placeholder="검색할 내용을 입력해주세요." aria-describedby="searchText">
-                <button class="btn btn-outline-secondary" type="button" id="searchBtn">검색</button>
-=======
             <div class="col-5 searchBox">
             	<div class="col-10">
             	<input type="text" class="form-control" id="searchInput" placeholder="검색할 내용을 입력해주세요." aria-describedby="searchText">
@@ -119,8 +24,6 @@ body{
             	<div class="col-2">
             	<button class="btn btn-outline-secondary" type="button" id="searchBtn">검색</button>       
             	</div>
-                
->>>>>>> c7e0b902bea37e4c36a973ee746ceecf4591ca13
             </div>
             <!--오프라인클래스 이동-->
             <div class="col-1">
