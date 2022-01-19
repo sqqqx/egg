@@ -6,7 +6,7 @@ public class MemberDTO {
 
 	private String user_id;
 	private String password;
-	private String nickname;
+	private String user_nickname;
 	private String phone;
 	private String email;
 	private String address;
@@ -17,12 +17,12 @@ public class MemberDTO {
 	
 	public MemberDTO() {}
 
-	public MemberDTO(String user_id, String password, String nickname, String phone, String email, String address,
+	public MemberDTO(String user_id, String password, String user_nickname, String phone, String email, String address,
 			Date signup_date, String profile_path, int type, int blacklist) {
 		super();
 		this.user_id = user_id;
 		this.password = password;
-		this.nickname = nickname;
+		this.user_nickname = user_nickname;
 		this.phone = phone;
 		this.email = email;
 		this.address = address;
@@ -48,12 +48,12 @@ public class MemberDTO {
 		this.password = password;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public String getUser_nickname() {
+		return user_nickname;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setUser_nickname(String user_nickname) {
+		this.user_nickname = user_nickname;
 	}
 
 	public String getPhone() {
@@ -112,5 +112,12 @@ public class MemberDTO {
 		this.blacklist = blacklist;
 	}
 	
+
+	@Override
+	public String toString() {
+		return "MemberDTO [user_id=" + user_id + ", password=" + password + ", user_nickname=" + user_nickname
+				+ ", phone=" + phone + ", email=" + email + ", address=" + address + ", signup_date=" + signup_date
+				+ ", profile_path=" + profile_path + ", type=" + type + ", blacklist=" + blacklist + "]";
+	}
 	
 }

@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
     <title>SignUp</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
     <style>
         *{margin: 0;}
         body{
@@ -17,6 +18,10 @@
             border-radius: 10px;
             width:900px;
             padding:80px;
+        }
+        #id_regex{
+        	font-size: 11px;
+        	margin-top:0px;
         }
         .photoBox>div{
             text-align: center;
@@ -37,16 +42,16 @@
     </style>
 </head>
 <body>
-	<form>
+	<form id="formSignup" action="${pageContext.request.contextPath}/member/signup.do" method="post">
     <div class="container">
         <div class="row mb-3 photoBox">
             <div class="col">
-               <img src="/resources/img/logo.png"> 
+               <img src="/resources/img/logo.png">
             </div>
         </div>
         <div class="row mb-2">
             <div class="col">
-                <label> 아이디(regex조건 입력)</label>
+                <label> 아이디(4~16자 이내)</label>
             </div>
         </div>
         <div class="row mb-3">
@@ -54,9 +59,11 @@
                 <input type="text" class="form-control" id="user_id" name="user_id">
             </div>
             <div class="col-2">
-                <button type="button" class="btn btn-dark">중복검사</button>
+                <button type="button" class="btn btn-dark" id="btn_idcheck">중복검사</button>
             </div>
         </div>
+        <div id="id_regex">4자 이상 16자 이하의 영문 혹은 영문과 숫자를 조합</div>
+       	<br>
 
         <div class="row mb-2">
             <div class="col">
@@ -87,7 +94,7 @@
         </div>
         <div class="row mb-3">
             <div class="col-10">
-                <input type="text" class="form-control" id="nickname" name="nickname">
+                <input type="text" class="form-control" id="user_nickname" name="user_nickname">
             </div>
             <div class="col-2">
                 <button type="button" class="btn btn-dark">중복검사</button>
@@ -113,7 +120,7 @@
         </div>
         <div class="row mb-3">
             <div class="col-4">
-                <select class="form-select" aria-label="Default select example" id="phone1" name="phone1" required>
+                <select class="form-select" aria-label="Default select example" id="phone1" required>
                     <option selected>010</option>
                     <option value="1">011</option>
                     <option value="2">016</option>
@@ -122,10 +129,10 @@
                 </select>
             </div>
             <div class="col-3">
-                <input type="text" class="form-control" id="phone2" name="phone2" maxlength="4">
+                <input type="text" class="form-control" id="phone2" maxlength="4">
             </div>
             <div class="col-3">
-                <input type="text" class="form-control" id="phone3" name="phone3" maxlength="4">
+                <input type="text" class="form-control" id="phone3" maxlength="4">
             </div>
         </div>
         <!--휴대전화번호 병합하여 저장할 곳( 회원가입 버튼 클릭시 이곳으로 phone1+phone2+phon3 value값 더해서 입력할것)-->
@@ -142,7 +149,7 @@
          <!--주소 영역-->
          <div class="row" id="daum-postcode">
             <div class="col-12 col-md-6 my-2">
-                <input type="text" class="form-control" id="sample4_postcode" name="postcode" placeholder="우편번호"
+                <input type="text" class="form-control" id="sample4_postcode" placeholder="우편번호"
                     readonly>
             </div>
             <div class="col-12 col-md-6 my-2">
@@ -150,26 +157,26 @@
                         value="우편번호 찾기" class="btn btn-dark btnPost"></div>
             </div>
             <div class="col-12 col-md-6 my-2"><input type="text" class="form-control" id="sample4_roadAddress"
-                    name="roadAddress" placeholder="도로명주소" readonly></div>
+                     placeholder="도로명주소" readonly></div>
             <div class="col-12 col-md-6 my-2"><input type="text" class="form-control" id="sample4_jibunAddress"
                     placeholder="지번주소" readonly></div>
             <div class="col-12 col-md-6 my-2"><input type="text" class="form-control" id="sample4_detailAddress"
-                    name="detailAddress" placeholder="상세주소"></div>
+                     placeholder="상세주소"></div>
             <div class="col-12 col-md-6 my-2"><input type="text" class="form-control" id="sample4_extraAddress"
-                    name="extraAddress" placeholder="참고항목" readonly></div>
+                     placeholder="참고항목" readonly></div>
             <!--주소 병합하여 저장할 곳-->
             <div class="col-12 d-none">
-                <input type="text" id="user_address" name="user_address">
+                <input type="text" id="user_address" name="address">
             </div>
         </div>
 
         <!--버튼 영역-->
         <div class="row my-5 btnBox">
             <div class="col-6">
-                <button type="submit" class="btn btn-dark btn-lg clsBtn" type="button" id="submitBtn">가입 완료</button>
+                <button class="btn btn-dark btn-lg clsBtn" type="button" id="submitBtn">가입 완료</button>
             </div>
             <div class="col-6">
-                <button type="button" class="btn btn-secondary btn-lg clsBtn" type="button" id="backBtn">뒤로 가기</button>
+                <button class="btn btn-secondary btn-lg clsBtn" type="button" id="backBtn">뒤로 가기</button>
             </div>
         </div>
     </div>
@@ -177,7 +184,62 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
-
+    
+    // 유효성검사
+    
+    // ID 정규식
+    $("#user_id").on("keyup", function(){
+    	let regExp = /^[a-z0-9]{4,16}$/;
+    	if($("#user_id").val() !== ""){
+    		if(regExp.test($("#user_id").val())){
+            	$("#id_regex").html("중복검사를 해주세요").css("color", "green");
+            }else if(!regExp.test($("#user_id").val())){
+               	$("#id_regex").html("4자 이상 16자 이하의 영문 혹은 영문과 숫자를 조합").css("color", "red");
+            }
+    	}
+    })
+    
+    // PW 정규식
+    
+    
+    
+    // 아이디 중복확인
+    $("#btn_idcheck").on("click", function(){
+		let id = $("#user_id").val();
+		console.log(id);
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/member/toIdCheck.do"
+			, type : "post"
+			, data : {id : id}
+		}).done(function(rs){
+			console.log(rs);
+			if(rs == "available"){
+				alert("사용할 수 있는 아이디입니다.");
+			}else if(rs == "unavailable"){
+				alert("사용할 수 없는 아이디입니다.");
+			}
+		}).fail(function(e){
+			console.log(e);
+		});
+	})
+	
+	// 회원가입 버튼 클릭시
+	$("#submitBtn").click(function(){
+		phone.value = phone1.value + phone2.value + phone3.value;
+		console.log(phone.value);
+		user_address.value = sample4_postcode.value + " " + sample4_roadAddress.value
+		 + " " + sample4_jibunAddress.value + " " + sample4_detailAddress.value + " " + sample4_extraAddress.value
+		console.log($("#user_address").val());
+		console.log($("#user_id").val());
+		console.log($("#password").val());
+		console.log($("#user_nickname").val());
+		console.log($("#email").val());
+		
+		$("#formSignup").submit();
+	})
+	
+	// 뒤로가기 버튼
     $("#backBtn").click(function(){
     	location.href="${pageContext.request.contextPath}/toLogin.do"
     })
