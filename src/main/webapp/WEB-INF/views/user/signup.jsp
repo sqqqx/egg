@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +42,7 @@
     </style>
 </head>
 <body>
-	<form id="formSignup" action="pageContext.request.contextPath/member/signup.do" method="post">
+	<form id="formSignup" action="${pageContext.request.contextPath}/member/signup.do" method="post">
     <div class="container">
         <div class="row mb-3 photoBox">
             <div class="col">
@@ -94,7 +94,7 @@
         </div>
         <div class="row mb-3">
             <div class="col-10">
-                <input type="text" class="form-control" id="nickname" name="nickname">
+                <input type="text" class="form-control" id="user_nickname" name="user_nickname">
             </div>
             <div class="col-2">
                 <button type="button" class="btn btn-dark">중복검사</button>
@@ -120,7 +120,7 @@
         </div>
         <div class="row mb-3">
             <div class="col-4">
-                <select class="form-select" aria-label="Default select example" id="phone1" name="phone1" required>
+                <select class="form-select" aria-label="Default select example" id="phone1" required>
                     <option selected>010</option>
                     <option value="1">011</option>
                     <option value="2">016</option>
@@ -129,10 +129,10 @@
                 </select>
             </div>
             <div class="col-3">
-                <input type="text" class="form-control" id="phone2" name="phone2" maxlength="4">
+                <input type="text" class="form-control" id="phone2" maxlength="4">
             </div>
             <div class="col-3">
-                <input type="text" class="form-control" id="phone3" name="phone3" maxlength="4">
+                <input type="text" class="form-control" id="phone3" maxlength="4">
             </div>
         </div>
         <!--휴대전화번호 병합하여 저장할 곳( 회원가입 버튼 클릭시 이곳으로 phone1+phone2+phon3 value값 더해서 입력할것)-->
@@ -149,7 +149,7 @@
          <!--주소 영역-->
          <div class="row" id="daum-postcode">
             <div class="col-12 col-md-6 my-2">
-                <input type="text" class="form-control" id="sample4_postcode" name="postcode" placeholder="우편번호"
+                <input type="text" class="form-control" id="sample4_postcode" placeholder="우편번호"
                     readonly>
             </div>
             <div class="col-12 col-md-6 my-2">
@@ -157,26 +157,26 @@
                         value="우편번호 찾기" class="btn btn-dark btnPost"></div>
             </div>
             <div class="col-12 col-md-6 my-2"><input type="text" class="form-control" id="sample4_roadAddress"
-                    name="roadAddress" placeholder="도로명주소" readonly></div>
+                     placeholder="도로명주소" readonly></div>
             <div class="col-12 col-md-6 my-2"><input type="text" class="form-control" id="sample4_jibunAddress"
                     placeholder="지번주소" readonly></div>
             <div class="col-12 col-md-6 my-2"><input type="text" class="form-control" id="sample4_detailAddress"
-                    name="detailAddress" placeholder="상세주소"></div>
+                     placeholder="상세주소"></div>
             <div class="col-12 col-md-6 my-2"><input type="text" class="form-control" id="sample4_extraAddress"
-                    name="extraAddress" placeholder="참고항목" readonly></div>
+                     placeholder="참고항목" readonly></div>
             <!--주소 병합하여 저장할 곳-->
             <div class="col-12 d-none">
-                <input type="text" id="user_address" name="user_address">
+                <input type="text" id="user_address" name="address">
             </div>
         </div>
 
         <!--버튼 영역-->
         <div class="row my-5 btnBox">
             <div class="col-6">
-                <button type="submit" class="btn btn-dark btn-lg clsBtn" type="button" id="submitBtn">가입 완료</button>
+                <button class="btn btn-dark btn-lg clsBtn" type="button" id="submitBtn">가입 완료</button>
             </div>
             <div class="col-6">
-                <button type="button" class="btn btn-secondary btn-lg clsBtn" type="button" id="backBtn">뒤로 가기</button>
+                <button class="btn btn-secondary btn-lg clsBtn" type="button" id="backBtn">뒤로 가기</button>
             </div>
         </div>
     </div>
@@ -225,7 +225,19 @@
 	})
 	
 	// 회원가입 버튼 클릭시
-	
+	$("#submitBtn").click(function(){
+		phone.value = phone1.value + phone2.value + phone3.value;
+		console.log(phone.value);
+		user_address.value = sample4_postcode.value + " " + sample4_roadAddress.value
+		 + " " + sample4_jibunAddress.value + " " + sample4_detailAddress.value + " " + sample4_extraAddress.value
+		console.log($("#user_address").val());
+		console.log($("#user_id").val());
+		console.log($("#password").val());
+		console.log($("#user_nickname").val());
+		console.log($("#email").val());
+		
+		$("#formSignup").submit();
+	})
 	
 	// 뒤로가기 버튼
     $("#backBtn").click(function(){

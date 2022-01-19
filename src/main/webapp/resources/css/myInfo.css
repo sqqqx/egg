@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+/* 좌측 프로필 및 회원 탭 부분*/
+#myInfo {
+    margin-top: 20px;
+    border: 1px solid black;
+}
+#profileBox {
+    border: 1px solid black;
+    text-align: center;
+    margin-bottom: 20px;
+}
+#profilePhoto {
+    border: 1px solid black;
+    padding: 10px;
+}
+#profilePhoto img{
+    width: 100%;
+}
+#profileInfo {
+    border: 1px solid black;
+    height: 100px;
+}
+li {
+    list-style: none;
+}
+a {
+	color: black;
+	text-decoration: none;
+}
+
+/* 좌측 프로필 및 회원 탭 부분*/
+.activityBox div {
+    margin-bottom: 20px;
+    height: 200px;
+}
+
+#banner {
+    border: 1px solid black;
+    overflow: auto;
+    text-align: center;
+}
+#banner img {
+    width: 80%;
+    height: 100%;
+}
+#recentClass {
+    border: 1px solid black;
+}
+#likedPost {
+    border: 1px solid black;
+}
+#paymentLog {
+    border: 1px solid black;
+}
