@@ -19,7 +19,7 @@
                         <img src="/resources/img/myInfo.png">
                     </div>
                     <div id="profileInfo">
-						${loginSession.nickname}님
+						${loginSession.user_nickname}님
                     </div>
                 </div>
                 <div id="userTab">

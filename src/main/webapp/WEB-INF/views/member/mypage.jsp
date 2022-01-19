@@ -15,7 +15,7 @@
     <div class="container">
         <div class="row header_mp">
             <div class="col-12">My Page</div>
-            <div class="col-12">${loginSession.nickname}님 환영합니다.</div>
+            <div class="col-12">${loginSession.user_nickname}님 환영합니다.</div>
         </div>
         <c:if test="${dto.type eq 2}">
         	<div class="row expert_box">
