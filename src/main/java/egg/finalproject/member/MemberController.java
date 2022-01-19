@@ -4,10 +4,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-
 @Controller
 @RequestMapping("/member")
 public class MemberController {
@@ -49,6 +48,36 @@ public class MemberController {
 		}else {
 			return "실패";
 		}
+	}
+
+	// (마이페이지) 마이페이지 요청
+	@RequestMapping("toMyPage")
+	public String toMyPage() {
+		return "/member/mypage";
+	}
+
+	// (마이페이지) 내 정보 페이지 요청
+	@RequestMapping("toMyInfo")
+	public String toMyInfo() {
+		return "/member/myInfo";
+	}
+
+	// (마이페이지) 회원정보조회 페이지 요청
+	@RequestMapping("toUserInformation")
+	public String toUserInformation(Model model, String user_id) throws Exception {
+		System.out.println("MemberController / 회원정보조회 user_id - " + user_id);
+		MemberDTO dto = service.getDTOById(user_id);
+		System.out.println(dto);
+		model.addAttribute("dto", dto);
+		return "/member/userInformation";
+	}
+
+	// (마이페이지) 회원탈퇴 요청
+	@RequestMapping("withdrawal.do")
+	public String widthdrawal(String user_id) throws Exception {
+		System.out.println("MemberController / 회원탈퇴 user_id - " + user_id);
+		service.withdrawal(user_id);
+		return "/home";
 	}
 	
 }

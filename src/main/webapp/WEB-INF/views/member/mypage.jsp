@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,30 +15,51 @@
     <div class="container">
         <div class="row header_mp">
             <div class="col-12">My Page</div>
-            <div class="col-12">User님 환영합니다.</div>
+            <div class="col-12">${loginSession.nickname}님 환영합니다.</div>
         </div>
-        <div class="row info_box">
-            <div class="col-10 row activity_box">
-                <div class="col-9">
-                    <p>내 포인트 : 800p</p>
-                    <p>총 게시글 : 0 개</p>
-                </div>
-                <div class="col-3">
-                    <p><button type="button">충전내역</button></p>
-                </div>
-            </div>
-            <div class="col-2">
-                <button type="button">프로필 바로가기</button>
-            </div>
-        </div>
+        <c:if test="${dto.type eq 2}">
+        	<div class="row expert_box">
+	            <div class="col-10 row activity_box">
+	                <div class="col-8">
+	                    <p>내 포인트 : 800p</p>
+	                    <p>총 게시글 : 0 개</p>
+	                </div>
+	                <div class="col-3">
+	                    <button type="button" class="btn btn-outline-dark">충전내역</button>
+	                </div>
+	            </div>
+	            <div class="col-2">
+	                <button type="button" class="btn btn-dark" id="toProfileBtn">프로필 바로가기</button>
+	            </div>
+       		</div>
+        </c:if>
+        
+        <!-- 능력자 회원 등록이 안되어있어서 임시로 박스 띄워주기. 능력자 회원 생성 시 아래 expert_box 삭제 -->
+        	<div class="row expert_box">
+	            <div class="col-10 row activity_box">
+	                <div class="col-8">
+	                    <p>내 포인트 : 800p</p>
+	                    <p>총 게시글 : 0 개</p>
+	                </div>
+	                <div class="col-3">
+	                    <p><button type="button">충전내역</button></p>
+	                </div>
+	            </div>
+	            <div class="col-2">
+	                <button type="button" id="toProfileBtn" class="btn btn-dark">프로필 바로가기</button>
+	            </div>
+       		</div>
+        
 
         <div class="row box_mp">
             <div class="col-4 menu_mp myInfo">
                 <div>
-                    <img src="/resources/img/myInfo.png">
+                	<a href="${pagecontext.request.contextPath}/member/toMyInfo">
+                		<img src="/resources/img/myInfo.png">
+                	</a>
                 </div>
                 <div>
-                    <span>내 정보</span>
+                	<a href="${pagecontext.request.contextPath}/member/toMyInfo"><span>내 정보</span></a> <!-- a태그 css적용했는데 안먹힘 -->
                 </div>
                 
             </div>
@@ -75,7 +97,7 @@
             </div>
             <div class="col-4 menu_mp delivery">
                 <div>
-                    <img src="/resources/img/baesong.png">
+                    <img src="/resources/img/delivery.png">
                 </div>
                 <div>
                     <span>배송 조회</span>
