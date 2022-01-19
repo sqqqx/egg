@@ -41,9 +41,10 @@
         <div class="row mb-4">
             <img src="/resources/img/logo.png">
         </div>
+        <form id="loginForm">
         <div class="row mb-3">
             <div class="col-12">
-              <input type="text" class="form-control" id="id" name="id" placeholder="아이디 / 이메일을 입력해주세요.">
+              <input type="text" class="form-control" id="id" name="user_id" placeholder="아이디 / 이메일을 입력해주세요.">
             </div>
         </div>
         <div class="row mb-3">
@@ -68,12 +69,37 @@
                 <a href="">아이디</a> * <a href="">비밀번호</a>찾기
             </div>
         </div>
+        </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
-    	$("#backBtn").click(function(){
-    		location.href="${pageContext.request.contextPath}/online/toMain.do"
-    	})
+ 	// 로그인 요청
+ 	$("#loginBtn").on("click", function(){
+		login();
+	})
+ 	function login(){
+ 		let data = $("#loginForm").serialize();
+		console.log(data);
+		$.ajax({
+			url : "${pageContext.request.contextPath}/member/login.do"
+			, type : "post"
+			, data : data
+		}).done(function(rs){
+			console.log(rs);
+			if(rs == "성공"){
+				location.href = "${pageContext.request.contextPath}/online/toMain.do";
+			}else if(rs == "실패"){
+				alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
+			}
+		}).fail(function(e){
+			console.log(e);
+		}) 
+	};
+    
+    
+    $("#backBtn").click(function(){
+    	location.href="${pageContext.request.contextPath}/online/toMain.do"
+    })
     </script>
 </body>
 </html>
