@@ -27,4 +27,14 @@
 		select count(*) from tbl_member where user_id=#{id} and password=#{pw}
 	</select>
 	
+	<!-- (마이페이지) ID로 회원정보 DTO 불러오기 -->
+	<select id="getDTOById" resultType="memberDTO">
+		select * from tbl_member where user_id=#{user_id}
+	</select>
+	
+	<!-- (마이페이지) 회원탈퇴 요청 -->
+	<delete id="withdrawal">
+		delete from tbl_member where user_id=#{user_id}
+	</delete>
+	
 </mapper>

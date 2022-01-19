@@ -15,7 +15,7 @@
     <div class="container">
         <div class="row header_mp">
             <div class="col-12">My Page</div>
-            <div class="col-12">User님 환영합니다.</div>
+            <div class="col-12">${loginSession.nickname}님 환영합니다.</div>
         </div>
         <c:if test="${dto.type eq 2}">
         	<div class="row expert_box">
@@ -54,16 +54,12 @@
         <div class="row box_mp">
             <div class="col-4 menu_mp myInfo">
                 <div>
-<<<<<<< HEAD
                 	<a href="${pagecontext.request.contextPath}/member/toMyInfo">
                 		<img src="/resources/img/myInfo.png">
                 	</a>
-=======
-                    <img src="/resources/img/myInfo.png">
->>>>>>> e029e4299cecb740d003cab8818abadd68b33d0f
                 </div>
                 <div>
-                	<a href="${pagecontext.request.contextPath}/member/toMyInfo"><span>내 정보</span></a>
+                	<a href="${pagecontext.request.contextPath}/member/toMyInfo"><span>내 정보</span></a> <!-- a태그 css적용했는데 안먹힘 -->
                 </div>
                 
             </div>
@@ -101,11 +97,7 @@
             </div>
             <div class="col-4 menu_mp delivery">
                 <div>
-<<<<<<< HEAD
                     <img src="/resources/img/delivery.png">
-=======
-                    <img src="/resources/img/baesong.png">
->>>>>>> e029e4299cecb740d003cab8818abadd68b33d0f
                 </div>
                 <div>
                     <span>배송 조회</span>
