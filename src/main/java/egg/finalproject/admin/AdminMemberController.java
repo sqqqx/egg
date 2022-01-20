@@ -12,38 +12,44 @@ public class AdminMemberController {
 	@Autowired
 	private AdminMemberService service;
 	
-	// °ü¸®ÀÚ ÆäÀÌÁö ÀÌµ¿(ÀÓ½Ã)
+	// ê´€ë¦¬ì í™ˆ ì´ë™
 	@RequestMapping("/toAdminMain")
 	public String toAdminMain() throws Exception {
 		return "admin/adminMain";
 	}
 	
-	// È¸¿ø °ü¸® ÆäÀÌÁö ÀÌµ¿
+	// íšŒì› ê´€ë¦¬ í˜ì´ì§€ ì´ë™
 	@RequestMapping("/toMemberManagement")
 	public String toMemberManagement() throws Exception {
-		return "redirect:/admin/getMemberList?currentIdx="+1;
+		return "redirect:/admin/getMemberList.do?currentIdx="+1;
 	}
 	
-	// È¸¿ø ¸ñ·Ï °¡Á®¿À±â
-	@RequestMapping("/getMemberList")
-	public String getMemberList(Model model, String searchOption, String searchKeyword, int currentIdx, String key) throws Exception {
-		System.out.println("searchOption : " + searchOption + " : " + "searchKeyword : " + searchKeyword + " : " + "currentIdx : " + currentIdx + " : " + "key : " + key);
-		model.addAttribute("list", service.getMemberList(searchOption, searchKeyword, currentIdx, key));
+	// íšŒì› ì •ë³´ ìˆ˜ì • 
+	// jspì— ìˆ˜ì •ê¸°ëŠ¥ ìƒê¸°ë©´ ìˆ˜ì •ê¶Œí•œ ì²˜ë¦¬, ë¹„ë°€ë²ˆí˜¸ ìˆ˜ì • íƒ­ ë³„ë„ ì£¼ì˜, memberìª½ infor..??
+	@RequestMapping("toUserInfomation")
+	public String toUserInfomation(String user_id) throws Exception {
+		return "redirect:/member/toUserInformation?user_id="+user_id;
+	}
+	
+	// íšŒì› ëª©ë¡ ê°€ì ¸ì˜¤ê¸°
+	@RequestMapping("/getMemberList.do")
+	public String getMemberList(Model model, String searchOption, String searchKeyword, int currentIdx) throws Exception {
+		model.addAttribute("list", service.getMemberList(searchOption, searchKeyword, currentIdx));
 		model.addAttribute("map", service.getNavi(currentIdx));
 		model.addAttribute("searchOption", searchOption);
 		model.addAttribute("searchKeyword", searchKeyword);
 		return "admin/memberManagement"; 
 	}
 	
-	// È¸¿ø °­Á¦ Å»Åğ
-	@RequestMapping("/memberExpulsion")
+	// íšŒì› ê°•ì œ íƒˆí‡´
+	@RequestMapping("/memberExpulsion.do")
 	public String memberExpulsion(String[] userCheckBox) throws Exception {
 		service.memberExpulsion(userCheckBox);
 		return "redirect:/admin/toMemberManagement";
 	}
 	
-	// ºí·¢¸®½ºÆ® ON / OFF
-	@RequestMapping("/memberBlackList")
+	// ë¸”ë™ë¦¬ìŠ¤íŠ¸ ON / OFF
+	@RequestMapping("/memberBlackList.do")
 	public String memberBlackList(String[] userCheckBox, int idx) throws Exception {
 		service.memberBlackList(userCheckBox, idx);
 		return "redirect:/admin/toMemberManagement";

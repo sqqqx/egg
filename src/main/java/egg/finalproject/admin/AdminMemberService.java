@@ -17,12 +17,12 @@ public class AdminMemberService {
 	
 	private int totalCount;
 	
-	// ÃÑ È¸¿ø ¼ö °¡Á®¿À±â
+	// ì „ì²´ íšŒì› ìˆ˜ ê°€ì ¸ì˜¤ê¸°
 	public int getMemberCountAll() throws Exception {
 		return dao.getMemberCountAll();
 	}
 	
-	// °Ë»ö ÇÑ È¸¿ø ¼ö °¡Á®¿À±â
+	// ê²€ìƒ‰ í•œ íšŒì› ìˆ˜ ê°€ì ¸ì˜¤ê¸°
 	public int getSearchCount(String searchOption, String searchKeyword) throws Exception {
 		Map<String, String> map = new HashMap<>();
 		map.put("searchOption", searchOption);
@@ -30,27 +30,27 @@ public class AdminMemberService {
 		return dao.getSearchCount(map);
 	}
 	
-	// È¸¿ø ¸ñ·Ï °¡Á®¿À±â
-	public List<MemberDTO> getMemberList(String searchOption, String searchKeyword, int currentIdx, String key) throws Exception {
+	// íšŒì› ëª©ë¡ ê°€ì ¸ì˜¤ê¸° 
+	public List<MemberDTO> getMemberList(String searchOption, String searchKeyword, int currentIdx) throws Exception {
+		System.out.println("searchOption : " + searchOption + " : " + "searchKeyword : " + searchKeyword + " : " + "currentIdx : " + currentIdx);
 		Map<String, Object> map = this.getRange(currentIdx);
 		if(searchOption != null && searchKeyword != null) {
 			map.put("searchOption", searchOption);
 			map.put("searchKeyword", searchKeyword);
+			totalCount = this.getSearchCount(searchOption, searchKeyword);
 		}
-		List<MemberDTO> list = dao.getMemberList(map);
-		totalCount = key != null ? this.getSearchCount(searchOption, searchKeyword) : this.getMemberCountAll();
-		System.out.println("list-size : " + list.size() + " : totalCount : " + totalCount);
-		return list;
+		totalCount = this.getMemberCountAll();
+		return dao.getMemberList(map);
 	}
 	
-	// È¸¿ø °­Á¦ Å»Åğ
+	// íšŒì› ê°•ì œ íƒˆí‡´
 	public int memberExpulsion(String[] userCheckBox) throws Exception {
 		Map<String, String[]> map = new HashMap<>();
 		map.put("userCheckBox", userCheckBox);
 		return dao.memberExpulsion(map);
 	}
 	
-	// ºí·¢¸®½ºÆ® ON / OFF
+	// ë¸”ë™ë¦¬ìŠ¤íŠ¸ ON / OFF
 	public int memberBlackList(String[] userCheckBox, int idx) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		map.put("userCheckBox", userCheckBox);
@@ -62,11 +62,11 @@ public class AdminMemberService {
 	
 	// getNavi
 	public Map<String, Object> getNavi(int currentIdx) throws Exception {
-		int rowCnt = this.totalCount; // ÀüÃ¼ È¸¿ø ¼ö
-		int rowCntPage = 10; // 10¸í/page
+		int rowCnt = this.totalCount; // 
+		int rowCntPage = 10; // 
 		
 		int naviCnt = rowCnt % rowCntPage > 0 ? (rowCnt / rowCntPage) + 1 : (rowCnt / rowCntPage);
-		int naviCntPage = 5; // 10navi/page
+		int naviCntPage = 5; // 
 		
 		if(currentIdx < 1) {
 			currentIdx = 1;
@@ -75,8 +75,8 @@ public class AdminMemberService {
 			currentIdx = naviCnt;
 		}
 		
-		int firstIdx = ((currentIdx - 1) / naviCntPage) * naviCntPage + 1; // ÆäÀÌÁö ½ÃÀÛ ¹øÈ£ 
-		int lastIdx = firstIdx + naviCntPage - 1; // ÆäÀÌÁö ¸¶Áö¸· ¹øÈ£
+		int firstIdx = ((currentIdx - 1) / naviCntPage) * naviCntPage + 1; // 
+		int lastIdx = firstIdx + naviCntPage - 1; // 
 		
 		if(lastIdx > naviCnt) {
 			lastIdx = naviCnt;
@@ -98,7 +98,7 @@ public class AdminMemberService {
 	
 	// get startRange, endRange
 	public Map<String, Object> getRange(int currentIdx) {
-		int rowCntPage = 10; // ÆäÀÌÁö´ç 10¸í
+		int rowCntPage = 10; // 
 		int startRange = currentIdx * rowCntPage - (rowCntPage - 1);
 		int endRange = currentIdx * rowCntPage;
 		System.out.println("startRange : " + startRange + " : endRange : " + endRange);

@@ -12,16 +12,26 @@ public class AdminReportController {
 	@Autowired
 	private AdminReportService service;
 	
-	// ½Å°í °ü¸® ÆäÀÌÁö ÀÌµ¿
+	// ì‹ ê³  í˜ì´ì§€ ì´ë™
 	@RequestMapping("/toReportManagement")
 	public String toReportManagement() throws Exception {
-		return "redirect:/admin/getReportList?currentIdx=1";
+		return "redirect:/admin/getReportList.do?currentIdx=1";
 	}
 	
-	// ½Å°í ¸ñ·Ï °¡Á®¿À±â
-	@RequestMapping("/getReportList")
+	// ì‹ ê³  ìƒì„¸ í˜ì´ì§€ ì´ë™
+	@RequestMapping("/getReportDetail")
+	public String toUserInfomation(Model model, String report_no, String type) throws Exception {
+		model.addAttribute("map", service.getReportDetail(report_no, type));
+		return "admin/reportDetail";
+	}
+	
+	// ì‹ ê³  ëª©ë¡ ê°€ì ¸ì˜¤ê¸° 
+	@RequestMapping("/getReportList.do")
 	public String getReportList(Model model, String searchOption, String searchKeyword, int currentIdx) throws Exception {
-//		model.addAttribute("list", service.getReportList(searchOption, searchKeyword, currentIdx));
+		model.addAttribute("list", service.getReportList(searchOption, searchKeyword, currentIdx));
+		model.addAttribute("map", service.getNavi(currentIdx));
+		model.addAttribute("searchOption", searchOption);
+		model.addAttribute("searchKeyword", searchKeyword);
 		return "admin/reportManagement";
 	}
 

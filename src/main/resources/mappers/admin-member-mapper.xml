@@ -5,7 +5,7 @@
 
 <mapper namespace="adminMemberMapper">
 	
-	<!-- 총 회원 수 가져오기 -->
+	<!-- 전체 회원 수 가져오기 -->
 	<select id="getMemberCountAll" resultType="int">
 		SELECT COUNT(*) FROM tbl_member
 	</select>
@@ -37,13 +37,16 @@
 	<!-- 블랙리스트 ON / OFF -->
 	<update id="memberBlackList" parameterType="map">
 		UPDATE tbl_member SET
-		<if test ="idx == 0">
-	    	blacklist = 0 
-	    </if>
-	    <if test ="idx == 1">
-	    	blacklist = 1 
-	    </if>
-			WHERE user_id IN
+		<trim suffix="WHERE user_id IN">
+			<choose>
+				<when test="idx == 0">
+					blacklist = 0
+				</when>
+				<otherwise>
+					blacklist = 1
+				</otherwise>
+			</choose>
+		</trim>
 		<foreach collection="userCheckBox" item="user_id" open="(" close=")" separator=",">
 			#{user_id}
 		</foreach>

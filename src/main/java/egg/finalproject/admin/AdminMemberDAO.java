@@ -15,27 +15,27 @@ public class AdminMemberDAO {
 	@Autowired
 	private SqlSession session;
 	
-	// ÃÑ È¸¿ø ¼ö °¡Á®¿À±â
+	// ì „ì²´ íšŒì› ìˆ˜ ê°€ì ¸ì˜¤ê¸°
 	public int getMemberCountAll() throws Exception {
 		return session.selectOne("adminMemberMapper.getMemberCountAll");
 	}
 	
-	// °Ë»ö ÇÑ È¸¿ø ¼ö °¡Á®¿À±â
+	// ê²€ìƒ‰ í•œ íšŒì› ìˆ˜ ê°€ì ¸ì˜¤ê¸°
 	public int getSearchCount(Map<String, String> map) throws Exception {
 		return session.selectOne("adminMemberMapper.getSearchCount", map);
 	}
 	
-	// È¸¿ø ¸ñ·Ï °¡Á®¿À±â
+	// íšŒì› ëª©ë¡ ê°€ì ¸ì˜¤ê¸°
 	public List<MemberDTO> getMemberList(Map<String, Object> map) {
 		return session.selectList("adminMemberMapper.getMemberList", map);
 	}
 	
-	// È¸¿ø °­Á¦ Å»Åğ
+	// íšŒì› ê°•ì œ íƒˆí‡´
 	public int memberExpulsion(Map<String, String[]> map) throws Exception {
 		return session.update("adminMemberMapper.memberExpulsion", map);
 	}
 	
-	// ºí·¢¸®½ºÆ® ON / OFF
+	// ë¸”ë™ë¦¬ìŠ¤íŠ¸ ON / OFF
 	public int memberBlackList(Map<String, Object> map) throws Exception {
 		return session.update("adminMemberMapper.memberBlackList", map);
 	}
