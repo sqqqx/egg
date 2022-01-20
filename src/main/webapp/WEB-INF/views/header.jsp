@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +25,6 @@
             	<div class="col-2">
             	<button class="btn btn-outline-secondary" type="button" id="searchBtn">검색</button>       
             	</div>
-                
             </div>
             <!--오프라인클래스 이동-->
             <div class="col-1">
@@ -38,40 +38,48 @@
             </div>
             <!--알림(비로그인시 svg 안보여야함) // 로그인세션활용하여 c:if처리 할것-->
             <div class="col-1">
+            	<c:if test = "${not empty loginSession }">
                     <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
                     <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
                   </svg>
+                </c:if>
             </div>
             <!--쪽지함(비로그인시 svg 안보여야함) // 로그인세션활용하여 c:if처리 할것-->
             <div class="col-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
-                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
-                  </svg>
+            	<c:if test = "${not empty loginSession }">
+	                <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+	                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+	                  </svg>
+                </c:if>
             </div>
-            <!--로그인전 (임시로 로그인후에는 hidden처리할것)// 로그인세션활용하여 c:choose처리할것-->
-            <div class="col-1">
-                <button type="button" class="btn btn-outline-dark" id="toLogin">로그인</button>
-            </div>
-            <!--로그인후 (임시로 로그인전에는 hidden처리할것)// 로그인세션활용하여 c:choose처리할것 -->
-            <div class="col-1 accountBox" hidden>
-                <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" class="bi bi-person-square account" viewBox="0 0 16 16">
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12z"/>
-                </svg>
-                <div id="accountInfoBox" style="display:none;">
-		           <div class="row align-content-center textList1" id="toMypage">        		    		
-		           			마이페이지
-		           </div>
-		           <div class="row align-content-center textList2">
-		           			정보 수정
-		           </div>
-		           <div class="row align-content-center textList2">
-		           			로그 아웃
-		           </div>
-       			 </div>
-            </div>
-             <!--로그인후 계정아이콘 클릭하면 보이는 창-->
-        
+            
+            <!-- 로그인과정 -->
+            <c:choose>
+            	<c:when test="${empty loginSession }">
+            		<div class="col-1">
+		                <button type="button" class="btn btn-outline-dark" id="toLogin">로그인</button>
+		            </div>
+            	</c:when>
+            	<c:otherwise>
+		            <div class="col-1 accountBox" >
+		                <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" class="bi bi-person-square account" viewBox="0 0 16 16">
+		                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+		                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12z"/>
+		                </svg>
+		                <div id="accountInfoBox" style="display:none;">
+				           <div class="row align-content-center textList1" id="toMypage">        		    		
+				           			마이페이지
+				           </div>
+				           <div class="row align-content-center textList2">
+				           			정보 수정
+				           </div>
+				           <div class="row align-content-center textList2">
+				           			로그 아웃
+				           </div>
+		       			 </div>
+		            </div>
+            	</c:otherwise>
+            </c:choose>
         </div>
        
 
@@ -187,11 +195,12 @@
     
     	//카테고리 창 눌렀을 경우 소분류 창이 내려옴
          $(".category_big").click(function(){
-            let accountBox = $(".category_small")
-            if(accountBox.is(":visible")){
-			    accountBox.css("display", "none")
+            let category = $(".category_small")
+            if(category.is(":visible")){
+            	category.css("display", "none")
 			}else{
-			    accountBox.css("display", "flex")
+				category.css("display", "")
+			    
 			}
         }); 
          
@@ -202,7 +211,7 @@
          
          //마이페이지 div창 눌렀을 경우 mypage.jsp로 이동(MemberController이용)
          $("#toMypage").click(function(){
-        	 location.href="${pageContext.request.contextPath}/member/toMypage.do"
+        	 location.href="${pageContext.request.contextPath}/member/toMyPage"
          })
     </script>
 </body>
