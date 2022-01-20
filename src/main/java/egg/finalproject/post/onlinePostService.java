@@ -30,4 +30,8 @@ public class onlinePostService {
 	public void insertFile(String ori_name, String sys_name) throws Exception{
 		dao.insertFile(ori_name,sys_name);
 	}
+	
+	public void insertPost(PostDTO dto) throws Exception{
+		dao.insertPost(dto);
+	}
 }

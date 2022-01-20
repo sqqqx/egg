@@ -70,12 +70,15 @@ public class onlinePostController {
 	}
 	
 	@RequestMapping("/write.do")
-	public void insert(PostDTO dto) throws Exception{
+	public String insert(PostDTO dto) throws Exception{
 		System.out.println("user_nickname"+dto.getUser_nickname());
 		System.out.println("category_no"+dto.getCategory_no());
 		System.out.println("title"+dto.getTitle());
 		System.out.println("content"+dto.getContent());
 		System.out.println("product_no"+dto.getProduct_no());
+		service.insertPost(dto);
+		return "redirect:toWrite.do";
+		//여기에 어드민 게시글 조회 부분링크로 가면 좋을듯
 	}
 	
 	
@@ -83,24 +86,29 @@ public class onlinePostController {
 	@ResponseBody
 	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
 		JsonObject jsonObject = new JsonObject();
-		
         /*
 		 * String fileRoot = "C:\\summernote_image\\"; // 외부경로로 저장을 희망할때.
 		 */
-		
 		// 내부경로로 저장
 		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
-		String fileRoot = contextRoot+"resources/fileupload/";
+		String fileRoot = contextRoot+"resources/onlinePostImg/";
+		
+		
 		
 		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
 		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
 		String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
 		
+		System.out.println("contextRoot : "+contextRoot);
+		System.out.println("fileRoot"+fileRoot);
+		
+		
 		File targetFile = new File(fileRoot + savedFileName);	
 		try {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-			jsonObject.addProperty("url", "/resources/fileupload/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
+			jsonObject.addProperty("ori_name", originalFileName);
+			jsonObject.addProperty("sys_name", "/resources/onlinePostImg/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
 			jsonObject.addProperty("responseCode", "success");
 		}catch (IOException e) {
 			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제

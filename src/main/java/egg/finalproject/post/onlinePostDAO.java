@@ -37,4 +37,8 @@ public class onlinePostDAO {
 		map.put("ori_name", ori_name);
 		session.insert("onlinePostMapper.insertFile",map);
 	}
+	
+	public void insertPost(PostDTO dto) throws Exception{
+		session.insert("onlinePostMapper.insertPost",dto);
+	}
 }

@@ -78,6 +78,7 @@
 		}
 	</style>
 	<script>
+	var imgInfoArr = []; //변형된 url값을 
 	
 	function sendFile(file, el) {
 		data = new FormData();
@@ -91,7 +92,9 @@
 			processData : false,
 			success : function(data) {
 				console.log(data);
-				$(el).summernote('editor.insertImage', data.url);
+				imgInfoArr.push(data);
+				console.log(imgInfoArr);
+				$(el).summernote('editor.insertImage', data.sys_name);
 			}
 		});
 	}

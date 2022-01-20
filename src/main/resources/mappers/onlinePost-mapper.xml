@@ -23,4 +23,8 @@
     <insert id="insertFile" parameterType="Map">
          INSERT INTO TBL_IMAGE VALUES(IMAGE_NO.NEXTVAL, #{ori_name}, #{sys_name},3)
     </insert>
+    
+    <insert id="insertPost" parameterType="PostDTO">
+         INSERT INTO TBL_POST VALUES(POST_NO.NEXTVAL,1,'나중에 넣어주기',#{user_nickname},#{category_no},#{title},#{content},#{product_no},0,SYSDATE,'0')
+    </insert>
 </mapper>
