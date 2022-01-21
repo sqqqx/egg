@@ -1,6 +1,5 @@
 package egg.finalproject.post;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import egg.finalproject.category.CategoryDTO;
+import egg.finalproject.image.ImageDTO;
 import egg.finalproject.product.ProductDTO;
 
 @Repository
@@ -31,14 +31,17 @@ public class onlinePostDAO {
 	}
 	//숫자나 문자열이 들어온다.
 	//문자열과 숫자를 같이 검색하지 말까? 좋은 방법인 것 같다.
-	public void insertFile(String ori_name, String sys_name) throws Exception{
-		HashMap<String,String> map = new HashMap<String, String>();
-		map.put("sys_name", sys_name);
-		map.put("ori_name", ori_name);
-		session.insert("onlinePostMapper.insertFile",map);
-	}
+	
 	
 	public void insertPost(PostDTO dto) throws Exception{
 		session.insert("onlinePostMapper.insertPost",dto);
+	}
+	
+	public int getPost_no() throws Exception{
+		return session.selectOne("onlinePostMapper.getPost_no");
+	}
+	
+	public PostDTO getPostInfo(int post_no) throws Exception{
+		return session.selectOne("onlinePostMapper.getPostInfo",post_no);
 	}
 }
