@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>sidebar</title>
+<title>cls-sideBar</title>
 <style>
 	/*** 관리자 메인 영역 ***/
 	.main-Wrapper > div:nth-child(1) {
@@ -29,7 +29,64 @@
         color: black;
         font-weight: bold;
         padding: 20px;
-    }  
+    }
+    
+    /* TEST */
+    /* body {
+	  margin: 0;
+	  font-family: "Lato", sans-serif;
+	}
+	
+	.cls-sideBar {
+	  margin: 0;
+	  padding: 0;
+	  width: 200px;
+	  background-color: #f1f1f1;
+	  position: fixed;
+	  height: 100%;
+	  overflow: auto;
+	}
+	
+	.cls-sideBar a {
+	  display: block;
+	  color: black;
+	  padding: 16px;
+	  text-decoration: none;
+	}
+	 
+	.cls-sideBar a.active {
+	  background-color: #04AA6D;
+	  color: white;
+	}
+	
+	.cls-sideBar a:hover:not(.active) {
+	  background-color: #555;
+	  color: white;
+	}
+	
+	div.content {
+	  margin-left: 200px;
+	  padding: 1px 16px;
+	  height: 1000px;
+	}
+	
+	@media screen and (max-width: 700px) {
+	  .cls-sideBar {
+	    width: 100%;
+	    height: auto;
+	    position: relative;
+	  }
+	  .cls-sideBar a {float: left;}
+	  div.content {margin-left: 0;}
+	}
+	
+	@media screen and (max-width: 400px) {
+	  .cls-sideBar a {
+	    text-align: center;
+	    float: none;
+	  }
+	} */
+    
 </style>
 </head>
 <body>
@@ -42,5 +99,11 @@
       <li>~~side menu2</li>
       <li>~~side menu3</li>
   	</ul>
+  	
+  	<!-- <a class="active" href="#home">Home</a>
+	<a href="#news">News</a>
+	<a href="#contact">Contact</a>
+	<a href="#about">About</a> -->
+	  	
 </body>
 </html>

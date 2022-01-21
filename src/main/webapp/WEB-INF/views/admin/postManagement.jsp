@@ -26,7 +26,8 @@
                     <div class="row searchArea">
                         <div class="col-3 d-flex justify-content-end">
                             <select class="form-select" aria-label="Default select example" name="searchOption">
-                                <option selected value="title">제목</option>
+                                <option value="title">제목</option>
+                                <option value="content">내용</option>
                                 <option value="user_nickname">작성자</option>
                             </select>
                         </div>
@@ -48,6 +49,7 @@
                                     <th><input type="checkbox" class="postCheckBoxAll" name="postCheckBoxAll"
                                             id="postCheckBoxAll"></th>
                                     <th>번호</th>
+                                    <th>유형</th>
                                     <th>작성자</th>
                                     <th>제목</th>
                                     <th>조회수</th>
@@ -61,6 +63,17 @@
                                                     name="postCheckBox" id="postCheckBox">
                                             </td>
                                             <td class="cls-toDetailPost">${map.POST_NO}</td>
+                                            <c:choose>
+                                            	<c:when test="${map.TYPE eq 0}">
+                                            		<td class="cls-toDetailPost">오프라인</td>
+                                           		</c:when>
+                                            	<c:when test="${map.TYPE eq 1}">
+                                            		<td class="cls-toDetailPost">온라인</td>
+                                            	</c:when>
+                                            	<c:when test="${map.TYPE eq 2}">
+                                            		<td class="cls-toDetailPost">스토어</td>
+                                            	</c:when>
+                                            </c:choose>
                                             <td class="cls-toDetailPost">${map.USER_NICKNAME}</td>
                                             <td class="cls-toDetailPost">${map.TITLE}</td>
                                             <td class="cls-toDetailPost">${map.VIEW_COUNT}</td>

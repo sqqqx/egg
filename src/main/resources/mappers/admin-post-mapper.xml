@@ -8,7 +8,7 @@
 	<!-- 게시글 수 가져오기 -->
 	<select id="getPostCount" resultType="int">
 		SELECT COUNT(*) FROM tbl_post
-		<if test="searchOption != null and searchOption != ''">
+		<if test="searchKeyword != null and searchKeyword != ''">
 			WHERE ${searchOption} LIKE '%'||#{searchKeyword}||'%'
 		</if>
 	</select>
@@ -16,10 +16,11 @@
 	<!-- 게시글 목록 가져오기 -->
 	<select id="getPostList" parameterType="map" resultType="map">
 		SELECT * FROM tbl_post 
-    		INNER JOIN 
-    		(SELECT post_no, COUNT(*) "COUNT" FROM tbl_like GROUP BY post_no) 
-    		USING(post_no)
+    		INNER JOIN (SELECT post_no, COUNT(*) "COUNT" FROM tbl_like GROUP BY post_no) USING(post_no)
     		WHERE post_no BETWEEN #{startRange} AND #{endRange}
+    		<if test="searchKeyword != null and searchKeyword != ''">
+    			AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+    		</if>
 	</select>
 
 </mapper>
