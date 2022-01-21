@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+/*** 프레임 ***/
+.main-Wrapper {
+	padding: 12px;
+}
+
+/*** 검색 영역 ***/
+
+.searchArea {
+    width: 100%;
+}
+.searchArea>div {
+    padding: 0;
+}
+.searchArea select {
+	height: 55% !important;
+}
+.searchArea input {
+	height: 55% !important;
+}
+.searchArea button {
+	width: 100% !important;
+}
+.searchArea button {
+    width: 100%;
+}
+
+/*** 테이블 영역 ***/
+.tableWrapper {
+    width: 100%;
+}
+.tableWrapper table {
+    width: 100%;
+    text-align: center;
+}
+.cls-toMyPage {
+	cursor: pointer !important;
+}
+
+/*** 폰트 관련 ***/
+.cls-blacklist {
+    font-weight: bold;
+    color: red !important;
+}
+.cls-admin {
+    font-weight: bolder;
+}
+.cls-expert {
+    font-weight: bold;
+    color: green !important;
+}

@@ -22,7 +22,7 @@
         list-style: none;
     }
     .cls-sideBar li {
-    	padding-bottom: 15px;
+    	padding-bottom: 20px;
     }
     .cls-sideBar ul a {
         text-decoration: none;

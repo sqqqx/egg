@@ -8,53 +8,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdminReportService {
+public class AdminPostService {
 	
 	@Autowired
-	private AdminReportDAO dao;
+	private AdminPostDAO dao;
 	
 	private int totalCount;
 	
-	// 전체 신고 수 가져오기
-	public int getReportCountAll() throws Exception {
-		return dao.getReportCountAll();
-	}
-	
-	// 검색 한 신고 수 가져오기
-	public int getReportCount(String searchOption, String searchKeyword) {
+	// 검색 한 게시글 수 가져오기
+	public int getPostCount(String searchOption, String searchKeyword) throws Exception {
 		Map<String, String> map = new HashMap<>();
-		if(searchOption != null && searchKeyword != null) {
+		if(searchOption != null & searchKeyword != null) {
 			map.put("searchOption", searchOption);
 			map.put("searchKeyword", searchKeyword);
 		}
-		int rs = dao.getReportCount(map);
-		System.out.println("신고 count : " + rs);
+		int rs = dao.getPostCount(map);
+		System.out.println("count : " + rs);
 		return rs;
 	}
 	
-	// 신고 목록 가져오기
-	public List<Map<String, Object>> getReportList(String searchOption, String searchKeyword, int currentIdx) throws Exception {
-		System.out.println("searchOption : " + searchOption + " : " + "searchKeyword : " + searchKeyword + " : " + "currentIdx : " + currentIdx);
+	// 게시글 목록 가져오기
+	public List<Map<String, Object>> getPostList(int currentIdx, String searchOption, String searchKeyword) throws Exception {
+		System.out.println("currentIdx : " + currentIdx + " : searchOption : " + searchOption + " : searchKeyword : " + searchKeyword);
 		Map<String, Object> map = this.getRange(currentIdx);
-		if(searchOption != null && searchKeyword != null) {
+		if(searchOption != null & searchKeyword != null) {
 			map.put("searchOption", searchOption);
 			map.put("searchKeyword", searchKeyword);
 		}
-		totalCount = this.getReportCount(searchOption, searchKeyword);
-		List<Map<String, Object>> list = dao.getReportList(map);
-		System.out.println("getReportList_list size : " + list.size());
+		map.put("currentIdx", currentIdx);
+		totalCount = this.getPostCount(searchOption, searchKeyword);
+		List<Map<String, Object>> list = dao.getPostList(map);
+		System.out.println("list size : " + list.size());
+		for(Map<String, Object> post : list) {
+			System.out.println(post);
+		}
 		return list;
 	}
-	
-	// 신고 상세 페이지 관련
-	public Map<String, Object> getReportDetail(String report_no, String type) throws Exception {
-		System.out.println("report_no : " + report_no + " : type : " + type);
-		Map<String, Object> map = new HashMap<>();
-		map.put("report_no", report_no);
-		map.put("type", type);
-		return dao.getReportDetail(map);
-	}
-	
 	
 	/********** paging **********/
 	
@@ -105,5 +94,5 @@ public class AdminReportService {
 		map.put("endRange", endRange);
 		return map;
 	}
-
+	
 }

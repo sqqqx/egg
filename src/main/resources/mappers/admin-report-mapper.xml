@@ -7,21 +7,30 @@
 
 	<!-- 신고 목록 가져오기 -->
 	<select id="getReportList" parameterType="map" resultType="map">
-		SELECT r.report_no, m.user_nickname, i.report_content, r.type, r.yn, r.report_date
-		FROM tbl_report r
-			INNER JOIN tbl_reportinfo i USING(report_title)
-    		INNER JOIN tbl_member m USING(user_id)
-    		<trim prefix="INNER JOIN" suffix="LIKE '%'||#{searchKeyword}||'%'">
-    			<if test="searchOption != null and searchOption == 1">
-	    			tbl_post p ON(target_no = post_no) WHERE p.title
-	    		</if>
-	    		<if test="searchOption != null and searchOption == 2">
-		    		tbl_comment c ON(target_no = comment_no) WHERE c.content
-	    		</if>
-	    		<if test="searchOption != null and searchOption == 3">
-		    		tbl_message ON(target_no = post_no) WHERE tbl_message.content 
-	    		</if>
-    		</trim>
+		SELECT 
+			* 
+		FROM (SELECT row_number() OVER (ORDER BY r.report_date DESC) AS idx
+				    ,r.report_no
+				    ,m.user_nickname
+				    ,i.report_content
+				    ,r.type
+				    ,r.yn
+				    ,r.report_date
+				FROM tbl_report r
+		    INNER JOIN tbl_reportinfo i USING(report_title)
+		    INNER JOIN tbl_member m USING(user_id)
+   		<trim prefix="INNER JOIN" suffix="LIKE '%'||#{searchKeyword}||'%'">
+   			<if test="searchOption != null and searchOption == 1">
+    			tbl_post p ON(target_no = post_no) WHERE p.title
+    		</if>
+    		<if test="searchOption != null and searchOption == 2">
+	    		tbl_comment c ON(target_no = comment_no) WHERE c.content
+    		</if>
+    		<if test="searchOption != null and searchOption == 3">
+	    		tbl_message ON(target_no = post_no) WHERE tbl_message.content 
+    		</if>
+   		</trim>
+    		) WHERE idx BETWEEN #{startRange} AND #{endRange}
 	</select>
 	
 	<!-- 신고 수 가져오기 -->

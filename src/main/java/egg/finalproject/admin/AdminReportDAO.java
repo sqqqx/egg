@@ -14,7 +14,7 @@ public class AdminReportDAO {
 	private SqlSession session;
 	
 	// 신고 목록 가져오기
-	public List<Map<String, Object>> getReportList(Map<String, String> map) throws Exception {
+	public List<Map<String, Object>> getReportList(Map<String, Object> map) throws Exception {
 		return session.selectList("adminReportMapper.getReportList", map);
 	}
 	
