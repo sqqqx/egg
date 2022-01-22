@@ -28,14 +28,15 @@ public class AdminPostService {
 	}
 	
 	// 게시글 목록 가져오기
-	public List<Map<String, Object>> getPostList(int currentIdx, String searchOption, String searchKeyword) throws Exception {
-		System.out.println("currentIdx : " + currentIdx + " : searchOption : " + searchOption + " : searchKeyword : " + searchKeyword);
+	public List<Map<String, Object>> getPostList(int currentIdx, String searchOption, String searchKeyword, String type) throws Exception {
+		System.out.println("currentIdx : " + currentIdx + " : searchOption : " + searchOption + " : searchKeyword : " + searchKeyword + " : type : " + type);
 		Map<String, Object> map = this.getRange(currentIdx);
 		if(searchOption != null & searchKeyword != null) {
 			map.put("searchOption", searchOption);
 			map.put("searchKeyword", searchKeyword);
 		}
 		map.put("currentIdx", currentIdx);
+		map.put("type", type);
 		totalCount = this.getPostCount(searchOption, searchKeyword);
 		List<Map<String, Object>> list = dao.getPostList(map);
 		System.out.println("list size : " + list.size());

@@ -9,6 +9,17 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="/resources/css/admin/memberManagement.css">
     <title>게시글 관리</title>
+
+    <style>
+        .test22 {
+            /* background-color: red !important; */
+
+        }
+        .test22:hover {
+            /* background-color: white; */
+        }
+    </style>
+
 </head>
 
 <body>
@@ -20,8 +31,9 @@
             </div>
             <!-- 본문 -->
             <div class="cls-main">
+            	${type}
                 <!-- 검색 영역 -->
-                <form id="searchForm" action="${pageContext.request.contextPath}/admin/getPostList.do?currentIdx=1"
+                <form id="searchForm" action="${pageContext.request.contextPath}/admin/getPostList.do?type=${type}&currentIdx=1"
                     method="post" class="d-flex justify-content-center">
                     <div class="row searchArea">
                         <div class="col-3 d-flex justify-content-end">
@@ -40,6 +52,18 @@
                         </div>
                     </div>
                 </form>
+                <!-- 글 유형 -->
+                <div class="row">
+                    <div class="col-1">
+                        <button type="button" class="btn btn-dark cls-type" value="1">온라인</button>
+                    </div>
+                    <div class="col-1">
+                        <button type="button" class="btn btn-dark cls-type" value="2">오프라인</button>
+                    </div>
+                    <div class="col-1">
+                        <button type="button" class="btn btn-dark cls-type" value="0">스토어</button>
+                    </div>
+                </div>
                 <!-- 회원정보 출력 -->
                 <form id="selectCheckbox" method="post" class="d-flex justify-content-center">
                     <div class="row tableWrapper">
@@ -62,23 +86,30 @@
                                             <td><input type="checkbox" value="${map.POST_NO}" class="postCheckBox"
                                                     name="postCheckBox" id="postCheckBox">
                                             </td>
-                                            <td class="cls-toDetailPost">${map.POST_NO}</td>
+                                            <td class="toDetailPost">${map.POST_NO}</td>
                                             <c:choose>
-                                            	<c:when test="${map.TYPE eq 0}">
-                                            		<td class="cls-toDetailPost">오프라인</td>
+                                            	<c:when test="${map.TYPE eq 2}">
+                                            		<td class="toDetailPost">오프라인</td>
                                            		</c:when>
                                             	<c:when test="${map.TYPE eq 1}">
-                                            		<td class="cls-toDetailPost">온라인</td>
+                                            		<td class="toDetailPost">온라인</td>
                                             	</c:when>
-                                            	<c:when test="${map.TYPE eq 2}">
-                                            		<td class="cls-toDetailPost">스토어</td>
+                                            	<c:when test="${map.TYPE eq 0}">
+                                            		<td class="toDetailPost">스토어</td>
                                             	</c:when>
                                             </c:choose>
-                                            <td class="cls-toDetailPost">${map.USER_NICKNAME}</td>
-                                            <td class="cls-toDetailPost">${map.TITLE}</td>
-                                            <td class="cls-toDetailPost">${map.VIEW_COUNT}</td>
-                                            <td class="cls-toDetailPost">${map.COUNT}</td>
-                                            <td class="cls-toDetailPost">${map.WRITTEN_DATE}</td>
+                                            <td class="toDetailPost">${map.USER_NICKNAME}</td>
+                                            <td class="toDetailPost">${map.TITLE}</td>
+                                            <td class="toDetailPost">${map.VIEW_COUNT}</td>
+                                            <c:choose>
+                                            	<c:when test="${empty map.COUNT}">
+                                            		<td>0</td>
+                                            	</c:when>
+                                            	<c:otherwise>
+                                            		<td>${map.COUNT}</td>
+                                            	</c:otherwise>
+                                            </c:choose>
+                                            <td class="toDetailPost">${map.WRITTEN_DATE}</td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
@@ -93,26 +124,26 @@
                             <ul class="pagination">
                                 <c:if test="${map.needPrev eq true}">
                                     <li class="page-item"><a class="page-link"
-                                            href="${pageContext.request.contextPath}/admin/getPostList.do?currentIdx=${map.firstIdx-1}">Previous</a>
+                                            href="${pageContext.request.contextPath}/admin/getPostList.do?currentIdx=${map.firstIdx-1}&type=${type}">Previous</a>
                                     </li>
                                 </c:if>
                                 <c:forEach var="i" begin="${map.firstIdx}" end="${map.lastIdx}">
                                     <c:choose>
                                         <c:when test="${empty searchOption}">
                                             <li class="page-item"><a class="page-link"
-                                                    href="${pageContext.request.contextPath}/admin/getPostList.do?currentIdx=${i}">${i}</a>
+                                                    href="${pageContext.request.contextPath}/admin/getPostList.do?currentIdx=${i}&type=${type}">${i}</a>
                                             </li>
                                         </c:when>
                                         <c:otherwise>
                                             <li class="page-item"><a class="page-link"
-                                                    href="${pageContext.request.contextPath}/admin/getPostList.do?currentIdx=${i}&searchOption=${searchOption}&searchKeyword=${searchKeyword}">${i}</a>
+                                                    href="${pageContext.request.contextPath}/admin/getPostList.do?currentIdx=${i}&searchOption=${searchOption}&searchKeyword=${searchKeyword}&type=${type}">${i}</a>
                                             </li>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>
                                 <c:if test="${map.needNext eq true}">
                                     <li class="page-item"><a class="page-link"
-                                            href="${pageContext.request.contextPath}/admin/getPostList.do?currentIdx=${map.lastIdx+1}">Next</a>
+                                            href="${pageContext.request.contextPath}/admin/getPostList.do?currentIdx=${map.lastIdx+1}&type=${type}">Next</a>
                                     </li>
                                 </c:if>
                             </ul>
@@ -128,7 +159,6 @@
         <script src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         <script>
-        	
 		    // 전체 체크박스 ON / OFF
 	        $("#selectCheckboxAll").on("click", function () {
 	            if ($("#selectCheckboxAll").is(":checked")) {
@@ -140,7 +170,15 @@
 		    // 검색
 	        $("#searchForm").on("submit");
 		    // 상세페이지 이동
-	      	
+	      	$(".toDetailPost").on("click", function(e) {
+	      		const post_no = $(e.target).parent().find("*").eq(0).children().val();
+ 	      		location.href = "${pageContext.request.contextPath}/admin/toPostDetail?post_no="+post_no;
+	      	});
+            // 글 유형 선택
+            $(".cls-type").on("click", function(e) {
+            	const type = e.target.value;
+                location.href = "${pageContext.request.contextPath}/admin/getPostList.do?type="+type+"&currentIdx=1";
+            });
         </script>
 </body>
 
