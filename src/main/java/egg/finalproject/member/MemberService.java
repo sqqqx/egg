@@ -1,7 +1,13 @@
 package egg.finalproject.member;
 
+import java.util.HashMap;
+
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @Service
 public class MemberService {
@@ -17,8 +23,8 @@ public class MemberService {
 		}
 	}
 	
-	public int insertMember(MemberDTO dto) throws Exception{
-		return dao.insertMember(dto);
+	public int insertMember(String user_id, String password, String user_nickname, String email, String phone, String address) throws Exception{
+		return dao.insertMember(user_id, password, user_nickname, email, phone, address);
 	}
 	
 	public boolean isLoginOk(String user_id, String password) throws Exception{
@@ -32,6 +38,52 @@ public class MemberService {
 	public MemberDTO getMember(String user_id) throws Exception{
 		return dao.getMember(user_id);
 	}
+	
+	public boolean nicknameCheck(String nickname) throws Exception{
+		if(dao.nicknameCheck(nickname) == 1) { 
+			return false;
+		}else {
+			return true;
+		}
+	}
+	
+	public boolean emailCheck(String email) throws Exception{
+		if(dao.emailCheck(email) == 1) { 
+			return false;
+		}else {
+			return true;
+		}
+	}
+	
+	public String toIdFind(String phone) throws Exception {
+		return dao.toIdFind(phone);
+	}
+	
+	// (회원가입)문자인증
+	public void certifiedPhoneNumber(String userPhoneNumber, int randomNumber) {
+		String api_key = "NCSXD81W4JNLDXP7";
+		String api_secret = "QBTEJKEOK9RF7AN8XPV9OLPMNHFQNBPK";
+		Message coolsms = new Message(api_key, api_secret);
+		
+		// 4 params(to, from, type, text) are mandatory. must be filled
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("to", userPhoneNumber); // 수신전화번호 
+		params.put("from", "01021819146"); // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨 
+		params.put("type", "SMS");
+		params.put("text", "[능력자들] 인증번호는" + "["+randomNumber+"]" + "입니다."); // 문자 내용 입력
+		params.put("app_version", "test app 1.2"); // application name and version
+		try {
+			JSONObject obj = (JSONObject) coolsms.send(params);
+			System.out.println(obj.toString());
+		} catch (CoolsmsException e) {
+			System.out.println(e.getMessage());
+			System.out.println(e.getCode());
+		}
+	}
+	
+	
+	
+/////↑↑↑↑↑↑회원가입 및 로그인↑↑↑↑↑↑/////////↓↓↓↓↓↓마이페이지↓↓↓↓↓↓/////////////////////////////
 	
 	// (마이페이지) ID로 회원정보 DTO 불러오기
 	public MemberDTO getDTOById(String user_id) throws Exception {
