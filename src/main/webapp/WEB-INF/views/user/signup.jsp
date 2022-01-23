@@ -161,7 +161,7 @@
         <input type="hidden" id="phoneDoubleChk">
         <!--휴대전화번호 병합하여 저장할 곳( 회원가입 버튼 클릭시 이곳으로 phone1+phone2+phon3 value값 더해서 입력할것)-->
         <div class="d-none">
-            <input type="text" id="phone" name="phone" value="01022222222">
+            <input type="text" id="phone" name="phone">
         </div>
 		
 
@@ -210,7 +210,7 @@
     <script>
     
     // 문자인증
-    let code2 = "1111";
+    let code2 = "";
     $("#btn_phone").click(function(){
     	$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
     	let phone = $("#phone").val();
