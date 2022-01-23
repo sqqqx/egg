@@ -132,4 +132,37 @@ public class MemberController {
 		return "/home";
 	}
 	
+	// (마이페이지) 회원정보 수정요청
+		@RequestMapping(value="/modify.do", produces="application/json;charset=UTF-8")
+		@ResponseBody()
+		public MemberDTO modify(MemberDTO dto) throws Exception {
+			System.out.println("요청 도착");
+			System.out.println("MemberController / 회원정보수정 dto - " + dto);
+			// 수정
+			int rs = service.modify(dto);
+			// 수정 후 아이디로 회원정보 조회하여 보내주기
+			System.out.println("응답 직전");
+			return service.getDTOById(dto.getUser_id());
+		}
+		
+		// (마이페이지) 비밀번호변경 페이지 요청
+		@RequestMapping("/toModifyPw")
+		public String toModifyPw() {
+			return "/member/modifyPassword";
+		}
+		
+		// (마이페이지) 비밀번호 수정 요청
+		@RequestMapping(value="/modifyPassword.do", produces="text/html;charset=UTF-8")
+		@ResponseBody()
+		public String modifyPassword(String id, String pw) throws Exception {
+			System.out.println("요청 도착");
+			System.out.println("MemberController / 비밀번호수정 id & pw - " + id + " & " + pw);
+			if(service.modifyPassword(id, pw) == 1) {
+				System.out.println("비밀번호 수정 성공");
+				return "success";
+			} else {
+				System.out.println("비밀번호 수정 실패");
+				return "fail";
+			}
+		}
 }
