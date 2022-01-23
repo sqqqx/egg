@@ -60,17 +60,4 @@
 		delete from tbl_member where user_id=#{user_id}
 	</delete>
 	
-	<!-- (마이페이지) 회원정보 수정요청 -->
-	<update id="modify" parameterType="MemberDTO">
-		update tbl_member
-			set user_nickname=#{user_nickname}, phone=#{phone}, email=#{email}, address=#{address}
-		 	where user_id=#{user_id}
-	</update>
-	
-	<!-- (마이페이지) 비밀번호 수정 요청 -->
-	<update id="modifyPassword" parameterType="map">
-		update tbl_member
-			set password=#{password} where user_id=#{user_id}
-	</update>
-	
 </mapper>

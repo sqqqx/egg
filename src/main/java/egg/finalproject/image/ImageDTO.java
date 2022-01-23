@@ -49,6 +49,8 @@ public class ImageDTO {
 		this.post_no = post_no;
 	}
 	
-	
+	public String toString() {
+		return "post_no : "+post_no+" system_name : "+system_name;
+	}
 
 }

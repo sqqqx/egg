@@ -122,5 +122,8 @@ public class PostDTO {
 		this.reservation_time = reservation_time;
 	}
 	
+	public String toString() {
+		return "post_no : "+post_no + " title : "+title;
+	}
 	
 }
