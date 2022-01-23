@@ -10,7 +10,7 @@
 				where user_id = #{id}
 	</select>
 	
-	<insert id="insertMember" parameterType="MemberDTO">
+	<insert id="insertMember"  parameterType="map">
 		insert into tbl_member values
 			(#{user_id}, #{password}
 			, #{user_nickname}, #{phone}
@@ -27,6 +27,29 @@
 		select count(*) from tbl_member where user_id=#{id} and password=#{pw}
 	</select>
 	
+	<select id="nicknameCheck" resultType="int">
+		select count(*)
+			from tbl_member
+				where user_nickname = #{nickname}
+	</select>
+	
+	<select id="emailCheck" resultType="int">
+		select count(*) 
+			from tbl_member
+				where email = #{email}
+	</select>
+	
+	<select id="idFind" resultType="String">
+		select user_id
+			from tbl_member
+				where phone = #{phone}
+	</select>
+
+
+<!-- ↑↑↑↑↑↑회원가입 및 로그인↑↑↑↑↑↑/////////↓↓↓↓↓↓마이페이지↓↓↓↓↓↓ -->
+	
+
+
 	<!-- (마이페이지) ID로 회원정보 DTO 불러오기 -->
 	<select id="getDTOById" resultType="memberDTO">
 		select * from tbl_member where user_id=#{user_id}

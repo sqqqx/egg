@@ -19,8 +19,15 @@ public class MemberDAO {
 		return session.selectOne("memberMapper.idCheck", id);
 	}
 	
-	public int insertMember(MemberDTO dto) throws Exception{
-		return session.insert("memberMapper.insertMember", dto);
+	public int insertMember(String user_id, String password, String user_nickname, String email, String phone, String address) throws Exception{
+		Map<String, String> map = new HashMap<>();
+		map.put("user_id", user_id);
+		map.put("password", password);
+		map.put("user_nickname", user_nickname);
+		map.put("email", email);
+		map.put("phone", phone);
+		map.put("address", address);
+		return session.insert("memberMapper.insertMember", map);
 	}
 	
 	public int isLoginOk(String user_id, String password) throws Exception{
@@ -33,6 +40,24 @@ public class MemberDAO {
 	public MemberDTO getMember(String user_id) throws Exception{
 		return session.selectOne("memberMapper.getMember", user_id);
 	}
+	
+	public int nicknameCheck(String nickname) throws Exception{
+		return session.selectOne("memberMapper.nicknameCheck", nickname);
+	}
+	
+	public int emailCheck(String email) throws Exception{
+		return session.selectOne("memberMapper.emailCheck", email);
+	}
+	
+	public String toIdFind(String phone) throws Exception {
+		return session.selectOne("memberMapper.idFind", phone);
+	}
+	
+	
+	
+	
+/////↑↑↑↑↑↑회원가입 및 로그인↑↑↑↑↑↑/////////↓↓↓↓↓↓마이페이지↓↓↓↓↓↓/////////////////////////////
+	
 	
 	// (마이페이지) ID로 회원정보 DTO 불러오기
 	public MemberDTO getDTOById(String user_id) throws Exception {

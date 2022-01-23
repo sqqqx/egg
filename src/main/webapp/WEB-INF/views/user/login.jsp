@@ -61,13 +61,13 @@
         <div class="row">
             <div class="col">
 				<button type="button" class="btn btn-dark" id="loginBtn">로그인</button>
-				<img id="kakaoLoginBtn" src="/resources/img/kakao_login_medium_narrow.png">
+				<img id="kakaoLogin" onclick="kakaoLogin();" src="/resources/img/kakao_login_medium_narrow.png">
 			</div>
         </div>
         <div class="row mt-3">
             <div class="col">
                 <a href="${pageContext.request.contextPath}/toSignup.do">회원가입</a> // 
-                <a href="">아이디</a> * <a href="">비밀번호</a>찾기
+                <a href="${pageContext.request.contextPath}/member/idFind.do">아이디</a> * <a href="">비밀번호</a>찾기
             </div>
         </div>
         </form>
@@ -101,6 +101,36 @@
     $("#backBtn").click(function(){
     	location.href="${pageContext.request.contextPath}/online/toMain.do"
     })
+    
+    //카카오로그인
+  function kakaoLogin() {
+
+    $.ajax({
+        url: '/login/getKakaoAuthUrl',
+        type: 'get',
+        async: false,
+        dataType: 'text',
+        success: function (res) {
+            location.href = res;
+        }
+    });
+  }
+
+  $(document).ready(function() {
+
+      var kakaoInfo = '${kakaoInfo}';
+
+      if(kakaoInfo != ""){
+          var data = JSON.parse(kakaoInfo);
+
+          alert("카카오로그인 성공 \n accessToken : " + data['accessToken']);
+          alert(
+          "user : \n" + "email : "
+          + data['email']  
+          + "\n nickname : " 
+          + data['nickname']);
+      }
+  });  
     </script>
 </body>
 </html>
