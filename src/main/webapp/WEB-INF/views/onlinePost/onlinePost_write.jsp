@@ -90,9 +90,18 @@
          #blankForHeader{
             height: 90px;
          }
+         .thumbNailImg {
+            width: 300px;
+            height: 170px;
+            padding : 10px;
+        }
+
+        #thumbNailImg {
+            width: 100%;
+            height: 100%;
+        }
 	</style>
 	<script>
-	var imgInfoArr = []; //변형된 url값을 
 	
 	function sendFile(file, el) {
 		data = new FormData();
@@ -192,7 +201,13 @@
 						
 						
 							<td class="contentName">썸네일</td>
-							<td><input type="file" class="form-control" name="thumbNail" id="thumbNail" accept=".gif, .jpg, .png, .JPEG"></td>
+							<td>
+							    <div class="thumbNailImg" hidden><img
+                                        src=""
+                                        id="thumbNailImg"></div>
+							    <input type="file" class="form-control" name="thumbNail" id="thumbNail" accept=".gif, .jpg, .png, .JPEG">
+							     
+							</td>
 						</tr>
 
 						<tr>
@@ -316,7 +331,7 @@
 			let bigCategory = $("#category1").val()
 			if (bigCategory != "대분류") {
 				$.ajax({
-					url: "/onlinePost/getChildCategory.do"
+					url: "/category/getChildCategory.do"
 					, type: "post"
 					, data: { bigCategory: bigCategory }
 				}).done(function (rs) {
@@ -340,7 +355,7 @@
 		 }); */
 
 		function popup() {
-			var url = "/onlinePost/toSearchProduct.do";
+			var url = "/product/toSearchProduct.do";
 			var name = "searchProduct";
 			window.open(url, name, "height=1000,width=1000");
 		}
@@ -355,7 +370,9 @@
 			} else if ($("#title").val() == "") {
 				alert("제목을 입력하세요.");
 				$("#title").focus();
-			} else if ($("#summernote").val() == "") {
+			} else if ($("#thumbNail").val() == "") {
+                alert("썸네일을 첨부해 주세요.");
+            } else if ($("#summernote").val() == "") {
 				alert("강의 내용을 입력하여 주세요.");
 			} else if ($("#product_no").val() == "") {
 				alert("연결 상품을 선택하여 주세요.");
@@ -365,7 +382,26 @@
 			}
 			return;
 		})
+		
+		
+		
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
+                reader.onload = function (e) {
+                	$(".thumbNailImg").attr('hidden', false);
+                    $('#thumbNailImg').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // 이벤트를 바인딩해서 input에 파일이 올라올때 (input에 change를 트리거할때) 위의 함수를 this context로 실행합니다.
+        $("#thumbNail").change(function () {
+            readURL(this);
+        });
 
 
 

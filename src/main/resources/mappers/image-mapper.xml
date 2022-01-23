@@ -4,10 +4,13 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="imageMapper">
-    <insert id="insertFile" parameterType="ImageDTO">
+    <insert id="insertThumbNail" parameterType="ImageDTO">
          INSERT INTO TBL_IMAGE VALUES(IMAGE_NO.NEXTVAL, #{origin_name}, #{system_name},#{post_no})
     </insert>
     <select id="getThumbNail" resultType="ImageDTO">
          SELECT * FROM TBL_IMAGE WHERE POST_NO = #{post_no}
     </select>
+    <update id="updateThumbNail" parameterType="ImageDTO">
+         UPDATE TBL_IMAGE SET ORIGIN_NAME = #{origin_name}, SYSTEM_NAME = #{system_name} WHERE POST_NO = #{post_no}
+    </update>
 </mapper>

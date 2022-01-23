@@ -17,21 +17,6 @@ public class onlinePostService {
 	@Autowired
 	private onlinePostDAO dao;
 
-	public List<String> getParentCategory() throws Exception {
-		return dao.getParentCategory();
-	}
-
-	public List<CategoryDTO> getChildCategory(String bigCategory) throws Exception {
-		System.out.println("getChildCategory service 진입");
-		return dao.getChildCategory(bigCategory);
-	}
-
-	public List<ProductDTO> searchProduct(String value) throws Exception {
-		System.out.println("sevice 진입" + value);
-		return dao.searchProduct(value);
-	}
-
-	
 
 	public void insertPost(PostDTO dto) throws Exception {
 		dao.insertPost(dto);
@@ -43,5 +28,17 @@ public class onlinePostService {
 	
 	public PostDTO getPostInfo(int post_no) throws Exception{
 		return dao.getPostInfo(post_no);
+	}
+	
+	public boolean deletePost(int post_no) throws Exception{
+		if(dao.deletePost(post_no)>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public void updatePost(PostDTO dto) throws Exception{
+		dao.updatePost(dto);
 	}
 }

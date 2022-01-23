@@ -68,26 +68,31 @@
 	<script>
 		$("#searchBtn").on("click", function () {
 			let value = $("#search").val();
-			$.ajax({
-				url: "/onlinePost/searchProduct.do"
-				, type: "post"
-				, data: { value: value }
-			}).done(function (data) {
-				console.log(data);
-				$('.table > tbody').empty();
-				if (data.length != 0) {
+			if(value!=""){
+				$.ajax({
+					url: "/product/searchProduct.do"
+					, type: "post"
+					, data: { value: value }
+				}).done(function (data) {
+					console.log(data);
 					$('.table > tbody').empty();
-					data.forEach(function (element) {
-						var table = "<tr><th class='product'>" + element.product_no + "</th><td class='product'>" + element.name + "</td><td class='product'>" + element.price + "</td><td class='product'>" + element.stock + "</td></tr>"
+					if (data.length != 0) {
+						$('.table > tbody').empty();
+						data.forEach(function (element) {
+							var table = "<tr><th class='product'>" + element.product_no + "</th><td class='product'>" + element.name + "</td><td class='product'>" + element.price + "</td><td class='product'>" + element.stock + "</td></tr>"
+							$(".table").append(table);
+						})
+					}else{
+						var table = "<tr><td colspan=\"4\">해당 데이터가 존재하지 않습니다.</th></tr>";
 						$(".table").append(table);
-					})
-				}else{
-					var table = "<tr><td colspan=\"4\">해당 데이터가 존재하지 않습니다.</th></tr>";
-					$(".table").append(table);
-				}
-			}).fail(function () {
+					}
+				}).fail(function () {
 
-			})
+				})
+			}else{
+				alert("상품을 입력해 주세요.");
+			}
+			
 		})
 
 		$("#search").on("keydown", function (keyNum) {

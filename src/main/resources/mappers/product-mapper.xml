@@ -4,5 +4,10 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="productMapper">
-
+    <select id="searchProduct" resultType="ProductDTO">
+         SELECT * FROM TBL_PRODUCT WHERE NAME LIKE '%'|| #{VALUE} ||'%'
+    </select>
+    <select id="getProduct" resultType="ProductDTO">
+         SELECT * FROM TBL_PRODUCT WHERE PRODUCT_NO = #{product_no}
+    </select>
 </mapper>
