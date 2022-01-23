@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>아이디 중복확인</title>
+<title>비밀번호 찾기</title>
 </head>
 <body>
 	
