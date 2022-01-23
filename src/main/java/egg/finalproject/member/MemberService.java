@@ -91,10 +91,25 @@ public class MemberService {
 		return dao.getDTOById(user_id);
 	}
 	
-	// (마이페이지) (마이페이지) 회원탈퇴 요청
+	// (마이페이지) 회원탈퇴 요청
 	public int withdrawal(String user_id) throws Exception {
 		System.out.println("MemberService / 회원탈퇴 user_id - " + user_id); 
 		return dao.withdrawal(user_id);
+	}
+	
+	// (마이페이지) 회원정보 수정요청
+	public int modify(MemberDTO dto) throws Exception {
+		System.out.println("MemberService / 회원정보수정 dto - " + dto);
+		//return dao.modify(dto);
+		int rs = dao.modify(dto);
+		System.out.println("service 실행완료");
+		return rs;
+	}
+		
+	// (마이페이지) 비밀번호 수정 요청
+	public int modifyPassword(String user_id, String password) throws Exception {
+		System.out.println("MemberService / 비밀번호수정 id & pw - " + user_id + " & " + password);
+		return dao.modifyPassword(user_id, password);
 	}
 	
 }
