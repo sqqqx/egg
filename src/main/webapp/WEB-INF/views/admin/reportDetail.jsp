@@ -24,6 +24,27 @@
         width: 100%;
         height: 100%;
     }
+    .container > .row:nth-child(1) {
+    	height: 20%;
+    }
+    .container > .row:nth-child(2) {
+    	height: 10%;
+    }
+    .container > .row:nth-child(3) {
+    	height: 10%;
+    }
+    .container > .row:nth-child(4) {
+    	height: 10%;
+    }
+    .container > .row:nth-child(5) {
+    	height: 20%;
+    }
+    .container > .row:nth-child(6) {
+    	height: 20%;
+    }
+    .container > .row:nth-child(1) > .col {
+		text-align: center;
+	}
 </style>
 </head>
 <body>
@@ -89,6 +110,7 @@
                 <p>${map.REPORT_CONTENT}</p>
             </div>
         </div>
+        
         <div class="row">
             <div class="col-12">
                 신고 대상 내용

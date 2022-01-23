@@ -22,5 +22,10 @@ public class AdminPostDAO {
 	public List<Map<String, Object>> getPostList(Map<String, Object> map) throws Exception {
 		return session.selectList("adminPostMapper.getPostList", map);
 	}
+	
+	// 글 삭제
+	public int deletePost(Map<String, String[]> map) throws Exception {
+		return session.delete("adminPostMapper.deletePost", map);
+	}
 
 }

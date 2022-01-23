@@ -5,21 +5,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="/resources/css/admin/memberManagement.css">
     <title>게시글 관리</title>
-
-    <style>
-        .test22 {
-            /* background-color: red !important; */
-
-        }
-        .test22:hover {
-            /* background-color: white; */
-        }
-    </style>
-
 </head>
 
 <body>
@@ -31,9 +18,8 @@
             </div>
             <!-- 본문 -->
             <div class="cls-main">
-            	${type}
                 <!-- 검색 영역 -->
-                <form id="searchForm" action="${pageContext.request.contextPath}/admin/getPostList.do?type=${type}&currentIdx=1"
+                <form id="searchForm" action="${pageContext.request.contextPath}/admin/getPostList.do?currentIdx=1&type=${type}"
                     method="post" class="d-flex justify-content-center">
                     <div class="row searchArea">
                         <div class="col-3 d-flex justify-content-end">
@@ -53,15 +39,14 @@
                     </div>
                 </form>
                 <!-- 글 유형 -->
-                <div class="row">
-                    <div class="col-1">
-                        <button type="button" class="btn btn-dark cls-type" value="1">온라인</button>
+                <div class="row cls-postType">
+                    <div class="col-4 d-flex">
+                        <button type="button" class="btn btn-outline-dark cls-type" id="typeOnline" value="1">온라인</button>
+                        <button type="button" class="btn btn-outline-dark cls-type" id="typeOffline" value="2">오프라인</button>
+                        <button type="button" class="btn btn-outline-dark cls-type" id="typeStore" value="0">스토어</button>
                     </div>
-                    <div class="col-1">
-                        <button type="button" class="btn btn-dark cls-type" value="2">오프라인</button>
-                    </div>
-                    <div class="col-1">
-                        <button type="button" class="btn btn-dark cls-type" value="0">스토어</button>
+                    <div class="col-8 d-flex justify-content-end">
+                    	<button type="button" class="btn btn-outline-dark" id="btnWrite">글 작성</button>
                     </div>
                 </div>
                 <!-- 회원정보 출력 -->
@@ -149,23 +134,24 @@
                             </ul>
                         </nav>
                     </div>
+                </div>
+                <!-- 하단 버튼 영역 -->
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end px-0">
+                        <button type="button" class="btn btn-outline-dark" id="deletePostbtn">삭제</button>
+                    </div>
                 </div> 
             </div>
         </div>
         
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.js"
-            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         <script>
 		    // 전체 체크박스 ON / OFF
-	        $("#selectCheckboxAll").on("click", function () {
-	            if ($("#selectCheckboxAll").is(":checked")) {
-	                $("input[name=selectCheckbox]").prop("checked", true);
+	        $("#postCheckBoxAll").on("click", function () {
+	            if ($("#postCheckBoxAll").is(":checked")) {
+	                $("input[name=postCheckBox]").prop("checked", true);
 	                return;
 	            }
-	            $("input[name=selectCheckbox]").prop("checked", false);
+	            $("input[name=postCheckBox]").prop("checked", false);
 	        });
 		    // 검색
 	        $("#searchForm").on("submit");
@@ -177,7 +163,32 @@
             // 글 유형 선택
             $(".cls-type").on("click", function(e) {
             	const type = e.target.value;
-                location.href = "${pageContext.request.contextPath}/admin/getPostList.do?type="+type+"&currentIdx=1";
+                location.href = "${pageContext.request.contextPath}/admin/getPostList.do?currentIdx=1&type="+type;
+            });
+            // 유형 버튼 변경
+            $(document).ready(function() {
+                switch(${type}) {
+                    case 0 :
+                        $("#typeStore").attr("class", "btn btn-dark");
+                        break;
+                    case 1 :
+                        $("#typeOnline").attr("class", "btn btn-dark");
+                        break;
+                    case 2 :
+                        $("#typeOffline").attr("class", "btn btn-dark");
+                        break;
+                }
+            });
+            // 글 작성
+            $("#btnWrite").on("click", function() {
+            	location.href = "${pageContext.request.contextPath}/admin/toPostWrite";
+            });
+            // 글 삭제
+            $("#deletePostbtn").on("click", function() {
+            	if ($(".postCheckBox").is(":checked") && confirm("삭제하겠습니까?")) {
+                    $("#selectCheckbox").attr("action", "${pageContext.request.contextPath}/admin/deletePost.do");
+                    $("#selectCheckbox").submit();
+                }
             });
         </script>
 </body>

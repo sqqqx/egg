@@ -46,6 +46,13 @@ public class AdminPostService {
 		return list;
 	}
 	
+	// 글 삭제
+	public int deletePost(String[] postCheckBox) throws Exception {
+		Map<String, String[]> map = new HashMap<>();
+		map.put("postCheckBox", postCheckBox);
+		return dao.deletePost(map);
+	}
+	
 	/********** paging **********/
 	
 	// getNavi

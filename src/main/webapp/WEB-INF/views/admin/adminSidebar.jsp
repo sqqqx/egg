@@ -1,109 +1,137 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>cls-sideBar</title>
 <style>
-	/*** 관리자 메인 영역 ***/
-	.main-Wrapper > div:nth-child(1) {
-		width: 15%;
-		float: left;
-	}
-	.main-Wrapper > div:nth-child(2) {
-		width: 85%;
-		float: left;
-	}
-	
-	/* 사이드 바 */
-    .cls-sideBar ul {
-        list-style: none;
-    }
-    .cls-sideBar li {
-    	padding-bottom: 20px;
-    }
-    .cls-sideBar ul a {
-        text-decoration: none;
-        color: black;
-        font-weight: bold;
-        padding: 20px;
-    }
-    
-    /* TEST */
-    /* body {
-	  margin: 0;
-	  font-family: "Lato", sans-serif;
-	}
-	
-	.cls-sideBar {
-	  margin: 0;
-	  padding: 0;
-	  width: 200px;
-	  background-color: #f1f1f1;
-	  position: fixed;
-	  height: 100%;
-	  overflow: auto;
-	}
-	
-	.cls-sideBar a {
-	  display: block;
-	  color: black;
-	  padding: 16px;
-	  text-decoration: none;
-	}
-	 
-	.cls-sideBar a.active {
-	  background-color: #04AA6D;
-	  color: white;
-	}
-	
-	.cls-sideBar a:hover:not(.active) {
-	  background-color: #555;
-	  color: white;
-	}
-	
-	div.content {
-	  margin-left: 200px;
-	  padding: 1px 16px;
-	  height: 1000px;
-	}
-	
-	@media screen and (max-width: 700px) {
-	  .cls-sideBar {
-	    width: 100%;
-	    height: auto;
-	    position: relative;
-	  }
-	  .cls-sideBar a {float: left;}
-	  div.content {margin-left: 0;}
-	}
-	
-	@media screen and (max-width: 400px) {
-	  .cls-sideBar a {
-	    text-align: center;
-	    float: none;
-	  }
-	} */
-    
+.dropdown-toggle {
+	outline: 0;
+}
+
+.nav-flush .nav-link {
+	border-radius: 0;
+}
+
+.btn-toggle {
+	display: inline-flex;
+	align-items: center;
+	padding: .25rem .5rem;
+	font-weight: 600;
+	color: rgba(0, 0, 0, .65);
+	background-color: transparent;
+	border: 0;
+}
+
+.btn-toggle:hover, .btn-toggle:focus {
+	color: rgba(0, 0, 0, .85);
+	background-color: #d2f4ea;
+}
+
+.btn-toggle::before {
+	width: 1.25em;
+	line-height: 0;
+	content:
+		url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+	transition: transform .35s ease;
+	transform-origin: .5em 50%;
+}
+
+.btn-toggle[aria-expanded="true"] {
+	color: rgba(0, 0, 0, .85);
+}
+
+.btn-toggle[aria-expanded="true"]::before {
+	transform: rotate(90deg);
+}
+
+.btn-toggle-nav a {
+	display: inline-flex;
+	padding: .1875rem .5rem;
+	margin-top: .125rem;
+	margin-left: 1.25rem;
+	text-decoration: none;
+}
+
+.btn-toggle-nav a:hover, .btn-toggle-nav a:focus {
+	background-color: #d2f4ea;
+}
+
+.scrollarea {
+	overflow-y: auto;
+}
+
+.fw-semibold {
+	font-weight: 600;
+}
+
+.lh-tight {
+	line-height: 1.25;
+}
+
+/*** 관리자 메인 영역 ***/
+.main-Wrapper>div:nth-child(1) {
+	width: 15%;
+	float: left;
+}
+
+.main-Wrapper>div:nth-child(2) {
+	width: 85%;
+	float: left;
+}
+.cls-main {
+	padding-left: 20px !important;
+}
 </style>
 </head>
 <body>
-	<ul>
-      <li><a href="${pageContext.request.contextPath}/admin/toAdminMain">관리자 홈</a></li>
-      <li><a href="${pageContext.request.contextPath}/admin/toMemberManagement">회원 관리</a></li>
-      <li><a href="${pageContext.request.contextPath}/admin/toPostManagement">게시글 관리</a></li>
-      <li><a href="${pageContext.request.contextPath}/admin/toReportManagement">신고 관리</a></li>
-      <li>~~side menu1</li>
-      <li>~~side menu2</li>
-      <li>~~side menu3</li>
-  	</ul>
-  	
-  	<!-- <a class="active" href="#home">Home</a>
-	<a href="#news">News</a>
-	<a href="#contact">Contact</a>
-	<a href="#about">About</a> -->
-	  	
+	<div class="flex-shrink-0 p-3 bg-white py-0" style="width: 280px;">
+		<a href="/"
+			class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+			<svg class="bi me-2" width="30" height="24">
+					<use xlink:href="#bootstrap" /></svg> <span class="fs-5 fw-semibold">Admin
+				page</span>
+		</a>
+		<ul class="list-unstyled ps-0">
+			<li class="mb-1">
+				<button class="btn align-items-center rounded collapsed">
+					Home</button>
+			</li>
+			<li class="mb-1">
+				<button class="btn btn-toggle align-items-center rounded collapsed"
+					data-bs-toggle="collapse" data-bs-target="#dashboard-collapse"
+					aria-expanded="false">menu</button>
+				<div class="collapse" id="dashboard-collapse">
+					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+						<li><a
+							href="${pageContext.request.contextPath}/admin/toMemberManagement"
+							class="link-dark rounded">회원 관리</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/admin/toPostManagement"
+							class="link-dark rounded">게시글 관리</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/admin/toReportManagement"
+							class="link-dark rounded">신고 관리</a></li>
+					</ul>
+				</div>
+			</li>
+			<li class="border-top my-3"></li>
+			<li class="mb-1">
+				<button class="btn btn-toggle align-items-center rounded collapsed"
+					data-bs-toggle="collapse" data-bs-target="#account-collapse"
+					aria-expanded="false">menu</button>
+				<div class="collapse" id="account-collapse">
+					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+						<li><a href="#" class="link-dark rounded">메뉴1</a></li>
+						<li><a href="#" class="link-dark rounded">메뉴2</a></li>
+						<li><a href="#" class="link-dark rounded">메뉴3</a></li>
+						<li><a href="#" class="link-dark rounded">메뉴4</a></li>
+					</ul>
+				</div>
+			</li>
+		</ul>
+	</div>
 </body>
 </html>

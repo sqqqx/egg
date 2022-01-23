@@ -26,6 +26,11 @@
     width: 100%;
 }
 
+/*** 글 유형 ***/
+.cls-type {
+	width: 100px !important;
+}
+
 /*** 테이블 영역 ***/
 .tableWrapper {
     width: 100%;

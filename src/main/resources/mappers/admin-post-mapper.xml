@@ -25,5 +25,14 @@
     			AND type = #{type}
     		</if>
 	</select>
+	
+	<!-- 글 삭제 -->
+	<update id="deletePost" parameterType="map">
+		DELETE FROM tbl_post
+			WHERE post_no IN
+		<foreach collection="postCheckBox" item="post_no" open="(" close=")" separator=",">
+			#{post_no}
+		</foreach>
+	</update>
 
 </mapper>
