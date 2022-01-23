@@ -4,27 +4,21 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="onlinePostMapper">
-    <select id="getParentCategory" resultType="String">
-         SELECT DISTINCT PARENT_GROUP FROM TBL_CATEGORY
-    </select>
     
-    <select id="getChildCategory" resultType="CategoryDTO">
-         SELECT * FROM TBL_CATEGORY WHERE PARENT_GROUP = #{bigCategory}
-    </select>
-    
-    <!-- <select id="searchProduct" resultType="ProductDTO">
-         select from tbl_product where name like '%'||#{value}||'%' or content like '%'||#{value}||'%'
-    </select> -->
-    
-    <select id="searchProduct" resultType="ProductDTO">
-         select * from tbl_product where name like '%'|| #{value} ||'%'
-    </select>
-    
-    <insert id="insertFile" parameterType="Map">
-         INSERT INTO TBL_IMAGE VALUES(IMAGE_NO.NEXTVAL, #{ori_name}, #{sys_name},3)
-    </insert>
-    
+
     <insert id="insertPost" parameterType="PostDTO">
-         INSERT INTO TBL_POST VALUES(POST_NO.NEXTVAL,1,'나중에 넣어주기',#{user_nickname},#{category_no},#{title},#{content},#{product_no},0,SYSDATE,'0')
+         INSERT INTO TBL_POST VALUES(#{post_no},1,'나중에 넣어주기',#{user_nickname},#{category_no},#{title},#{content},#{product_no},0,SYSDATE,'0')
     </insert>
+    <select id="getPost_no" resultType="_int">
+         SELECT POST_NO.NEXTVAL FROM DUAL
+    </select>
+    <select id="getPostInfo" resultType="PostDTO">
+         SELECT * FROM TBL_POST WHERE POST_NO = #{post_no}
+    </select>
+    <delete id="deletePost" >
+         DELETE FROM TBL_POST WHERE POST_NO = #{post_no}
+    </delete>
+    <update id="updatePost" parameterType="PostDTO">
+         UPDATE TBL_POST SET CATEGORY_NO = #{category_no},TITLE = #{title},CONTENT = #{content}, PRODUCT_NO = #{product_no} WHERE POST_NO= #{post_no}
+    </update>
 </mapper>

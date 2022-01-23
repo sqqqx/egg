@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@include file="/WEB-INF/views/header.jsp" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -32,13 +34,16 @@
 			text-align: center;
 		}
 
-		.note-editor {
+/* 		.note-editor {
 			height: 100%;
 			margin: 0;
 		}
-
+ */
 		.row {
 			text-align: center;
+		}
+		table{
+		    table-layout: fixed;
 		}
 
 		td {
@@ -46,6 +51,7 @@
 		}
 
 		.contentName {
+		    width : 90px;
 			text-align: center;
 			vertical-align: middle;
 			font-weight: bold;
@@ -76,9 +82,26 @@
 		#searchProduct {
 			text-align: left;
 		}
+		
+		.note-editable.panel-body {
+		    overflow-x: hidden;
+            overflow-y: scroll;
+         }
+         #blankForHeader{
+            height: 90px;
+         }
+         .thumbNailImg {
+            width: 300px;
+            height: 170px;
+            padding : 10px;
+        }
+
+        #thumbNailImg {
+            width: 100%;
+            height: 100%;
+        }
 	</style>
 	<script>
-	var imgInfoArr = []; //변형된 url값을 
 	
 	function sendFile(file, el) {
 		data = new FormData();
@@ -86,7 +109,7 @@
 		$.ajax({
 			data : data,
 			type : "POST",
-			url : "/onlinePost/getPicUrl.do",
+			url : "/image/getPicUrl.do",
 			contentType : false,
 			enctype : 'multipart/form-data',
 			processData : false,
@@ -141,11 +164,12 @@
 </head>
 
 <body>
+    <div id="blankForHeader"></div>
 	<div class="container">
 		<div class="row">
 			<div class="wrapper">
 				<h2 class="text-center">클래스 등록</h2>
-				<form action="/onlinePost/write.do" method="post" id="writeForm">
+				<form action="/onlinePost/write.do" method="post" id="writeForm"  ENCTYPE="multipart/form-data">
 					<table class="table table-striped">
 						<tr>
 							<td class="contentName" id="categories">카테고리</td>
@@ -173,10 +197,25 @@
 							<td class="contentName">강의명</td>
 							<td><input type="text" class="form-control" name="title" id="title"></td>
 						</tr>
+						<tr>
+						
+						
+							<td class="contentName">썸네일</td>
+							<td>
+							    <div class="thumbNailImg" hidden><img
+                                        src=""
+                                        id="thumbNailImg"></div>
+							    <input type="file" class="form-control" name="thumbNail" id="thumbNail" accept=".gif, .jpg, .png, .JPEG">
+							     
+							</td>
+						</tr>
 
 						<tr>
 							<td class="contentName">강의 소개</td>
-							<td><textarea id="summernote" name="content"></textarea></td>
+							<td>
+							    <div><textarea id="summernote" name="content"  ></textarea></div>
+							    
+							</td>
 							<script>
 								$(document).ready(function () {
 									$('#summernote').summernote({
@@ -204,7 +243,7 @@
 							<td id="searchProduct"><input type="text" class="form-control" id="product"
 									placeholder="상품을 검색해 주세요." readonly> <input type="text" name="product_no"
 									id="product_no" hidden>
-								<button type="button" class="btn btn-info" id="searchBtn">상품
+								<button type="button" class="btn btn-info" id="productSearchBtn">상품
 									검색</button>
 							</td>
 						</tr>
@@ -224,6 +263,7 @@
 			</div>
 		</div>
 	</div>
+	<a href="/onlinePost/toDetail.do?post_no=22">여기로 가자</a>
 
 	<script>
 		/* $('.summernote').summernote({
@@ -291,7 +331,7 @@
 			let bigCategory = $("#category1").val()
 			if (bigCategory != "대분류") {
 				$.ajax({
-					url: "/onlinePost/getChildCategory.do"
+					url: "/category/getChildCategory.do"
 					, type: "post"
 					, data: { bigCategory: bigCategory }
 				}).done(function (rs) {
@@ -315,12 +355,12 @@
 		 }); */
 
 		function popup() {
-			var url = "/onlinePost/toSearchProduct.do";
+			var url = "/product/toSearchProduct.do";
 			var name = "searchProduct";
 			window.open(url, name, "height=1000,width=1000");
 		}
 
-		$("#searchBtn").on("click", function () {
+		$("#productSearchBtn").on("click", function () {
 			popup();
 		})
 
@@ -329,16 +369,39 @@
 				alert("카테고리를 설정하여 주세요.");
 			} else if ($("#title").val() == "") {
 				alert("제목을 입력하세요.");
-			} else if ($("#content").val() == "") {
+				$("#title").focus();
+			} else if ($("#thumbNail").val() == "") {
+                alert("썸네일을 첨부해 주세요.");
+            } else if ($("#summernote").val() == "") {
 				alert("강의 내용을 입력하여 주세요.");
 			} else if ($("#product_no").val() == "") {
 				alert("연결 상품을 선택하여 주세요.");
+				$("#product_no").focus();
 			} else {
 				$("#writeForm").submit();
 			}
 			return;
 		})
+		
+		
+		
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
+                reader.onload = function (e) {
+                	$(".thumbNailImg").attr('hidden', false);
+                    $('#thumbNailImg').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // 이벤트를 바인딩해서 input에 파일이 올라올때 (input에 change를 트리거할때) 위의 함수를 this context로 실행합니다.
+        $("#thumbNail").change(function () {
+            readURL(this);
+        });
 
 
 
