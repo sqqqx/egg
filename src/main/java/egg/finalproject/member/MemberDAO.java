@@ -72,4 +72,22 @@ public class MemberDAO {
 		System.out.println("MemberDAO / 회원탈퇴 user_id - " + user_id); 
 		return session.delete("memberMapper.withdrawal", user_id);
 	}
+	
+	// (마이페이지) 회원정보 수정요청
+	public int modify(MemberDTO dto) throws Exception {
+		System.out.println("MemberDAO / 회원정보수정 dto - " + dto);
+		//return session.update("memberMapper.modify", dto);
+		int rs = session.update("memberMapper.modify", dto);
+		System.out.println("dao 실행 완료 ");
+		return rs;
+	}
+	
+	// (마이페이지) 비밀번호 수정 요청
+	public int modifyPassword(String user_id, String password) throws Exception {
+		System.out.println("MemberDAO / 비밀번호수정 id & pw - " + user_id + " & " + password);
+		Map<String, String> map = new HashMap<>();
+		map.put("user_id", user_id);
+		map.put("password", password);
+		return session.update("memberMapper.modifyPassword", map);
+	}
 }

@@ -15,7 +15,7 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="bds"/>
 		<property name="configLocation" value="classpath:mybatis-config.xml"/>
-		<property name="mapperLocations" value="classpath:mappers/*.xml"/>
+		<property name="mapperLocations" value="classpath*:mappers/*.xml"/>	<!-- classpath *을 붙이면 mapper파일을 잘 찾아준다. -->
 	</bean>
 	
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
