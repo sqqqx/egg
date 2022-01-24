@@ -5,7 +5,7 @@
 
 <mapper namespace="adminReportMapper">
 
-	<!-- 신고 목록 가져오기(row_number뺄까) -->
+	<!-- 신고 목록 가져오기(row_number필요없다.. 생각해보니..) -->
 	<select id="getReportList" parameterType="map" resultType="map">
 		SELECT 
 			* 
@@ -27,7 +27,7 @@
 	    		tbl_comment c ON(target_no = comment_no) WHERE c.content
     		</if>
     		<if test="searchOption != null and searchOption == 3">
-	    		tbl_message ON(target_no = post_no) WHERE tbl_message.content 
+	    		tbl_message ON(target_no = message_no) WHERE tbl_message.content 
     		</if>
    		</trim>
     		) WHERE idx BETWEEN #{startRange} AND #{endRange}

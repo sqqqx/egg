@@ -15,7 +15,7 @@ public class AdminPostService {
 	
 	private int totalCount;
 	
-	// 검색 한 게시글 수 가져오기
+	// 게시글 수 가져오기
 	public int getPostCount(String searchOption, String searchKeyword) throws Exception {
 		Map<String, String> map = new HashMap<>();
 		if(searchOption != null & searchKeyword != null) {
