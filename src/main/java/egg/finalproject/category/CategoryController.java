@@ -13,6 +13,7 @@ public class CategoryController {
 	@Autowired
 	private CategoryService service;
 	
+	//대분류에 따른 소분류 리스트를 가져오는 메서드
 	@RequestMapping("/getChildCategory.do")
 	@ResponseBody
 	public List<CategoryDTO> getChildCategory(String bigCategory) throws Exception{
