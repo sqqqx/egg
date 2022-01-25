@@ -24,6 +24,7 @@ public class ImageController {
 	@Autowired
 	private ImageService service;
 	
+	//썸머노트 url 변경하는 메서드
 	@RequestMapping(value="/getPicUrl.do", produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
@@ -49,9 +50,9 @@ public class ImageController {
 		try {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-			jsonObject.addProperty("ori_name", originalFileName);
+//			jsonObject.addProperty("ori_name", originalFileName);
 			jsonObject.addProperty("sys_name", "/resources/onlinePostImg/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
-			jsonObject.addProperty("responseCode", "success");
+//			jsonObject.addProperty("responseCode", "success");
 		}catch (IOException e) {
 			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
 			jsonObject.addProperty("responseCode", "error");
