@@ -34,4 +34,9 @@ public class onlinePostDAO {
 	public void updatePost(PostDTO dto) throws Exception{
 		session.update("onlinePostMapper.updatePost",dto);
 	}
+	
+	//================================================================================
+	public List<Object> selectRecent() throws Exception{
+		return session.selectList("onlinePostMapper.selectRecent");
+	}
 }

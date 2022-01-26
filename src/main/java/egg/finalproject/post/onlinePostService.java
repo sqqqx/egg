@@ -41,4 +41,9 @@ public class onlinePostService {
 	public void updatePost(PostDTO dto) throws Exception{
 		dao.updatePost(dto);
 	}
+	
+	//============================================================================
+	public List<Object> selectRecent() throws Exception{
+		return dao.selectRecent();
+	}
 }
