@@ -66,21 +66,44 @@
                                     <th>닉네임</th>
                                     <td id="viewUser_nickname">${dto.user_nickname}</td>
                                     <td id="editUser_nickname">
-                                        <input type="text" placeholder="수정할 닉네임을 입력해주세요." id="inputUser_nickname" name="user_nickname" value="${dto.user_nickname}">
+                                        <input type="text" placeholder="수정할 닉네임을 입력해주세요." id="inputUser_nickname" name="nickname" value="${dto.user_nickname}">
+                                        <button type="button" class="btn btn-success" id="nicknameCheckBtn" disabled>중복검사</button>
+                                        <div id="nickname_regex"></div>
+                                        <input type="text" placeholder="수정할 닉네임을 입력해주세요." id="user_nickname" name="user_nickname" value="${dto.user_nickname}" hidden>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>휴대전화번호</th>
                                     <td id="viewPhone">${dto.phone}</td>
                                     <td id="editPhone">
-                                        <input type="text" placeholder="수정할 전화번호를 입력해주세요." id="inputPhone" name="phone" value="${dto.phone}">
+                                    	<div id="inputPhoneBox">
+                                            <!--<input type="text" placeholder="수정할 전화번호를 입력해주세요." id="inputPhone" value="${dto.phone}">-->
+                                            <select class="inputPhone" aria-label="Default select example" id="phone1" required>
+                                                <option selected>010</option>
+                                                <option value="1">011</option>
+                                                <option value="2">016</option>
+                                                <option value="2">017</option>
+                                                <option value="3">018</option>
+                                            </select>
+                                            <input type="text" class="inputPhone" id="phone2" maxlength="4">
+                                            <input type="text" class="inputPhone" id="phone3" maxlength="4">
+                                        </div>
+                                        <button type="button" class="btn btn-success" id="phoneCheckBtn">인증요청</button>
+                                        <div class="verification">
+                                            <input type="text" placeholder="인증번호를 입력해 주세요." id="verification">
+                                            <button type="button" class="btn btn-dark" id="verificationBtn" disabled>본인확인</button>
+                                        </div>
+                                        <input type="text" placeholder="수정할 전화번호를 입력해주세요." id="phone" name="phone" value="${dto.phone}" hidden>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>이메일</th>
                                     <td id="viewEmail">${dto.email}</td>
                                     <td id="editEmail">
-                                        <input type="text" placeholder="수정할 이메일을 입력해주세요." id="inputEmail" name="email" value="${dto.email}">
+                                        <input type="text" placeholder="수정할 이메일을 입력해주세요." id="inputEmail" value="${dto.email}">
+                                        <button type="button" class="btn btn-success" id="emailCheckBtn" disabled>중복검사</button>
+                                        <div id="email_regex"></div>
+                                        <input type="text" placeholder="수정할 이메일을 입력해주세요." id="email" name="email" value="${dto.email}" hidden>
                                     </td>
                                 </tr>
                                 <tr>
@@ -89,7 +112,7 @@
                                    <td id="editAddress">
                                        <div class="row">
                                             <input type="text" id="edited_postcode" placeholder="우편번호" class="col-5">
-                                            <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" class="btn btn-warning col-2">
+                                            <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" class="btn btn-warning col-2" id="postcodeBtn">
                                         </div>
                                         <div class="row">
                                             <input type="text" id="edited_roadAddress" placeholder="도로명주소" class="col-5">
@@ -100,10 +123,10 @@
                                             <input type="text" id="edited_detailAddress" placeholder="상세주소" class="col-5">
                                             <input type="text" id="edited_extraAddress" placeholder="참고항목" class="col-5">
                                         </div>
-                                        <input type="text" id="inputAddress" name="address" hidden/>
+                                        <input type="text" id="inputAddress" name="address" value="${dto.address}"/>
                                    </td>
                                 </tr>
-                                <input type="text" value="abc123" name="user_id" hidden/>	<!-- 임시로 id값 "abc123"입력 -->
+                                <input type="text" value="${loginSession.user_id}" name="user_id" hidden/>
                             </form>
                     	</table>
                     
@@ -133,15 +156,215 @@
 	       	convertView();
 	    })
 	    
+	    // 닉네임 정규식 및 중복검사
+	    // 닉네임 정규식 검사(정규식이 맞으면 버튼 활성화)
+	    $("#inputUser_nickname").on("keyup", function(){
+	    	// 닉네임 수정 시 input창 내용 삭제
+	    	$("#user_nickname").val("");
+			let regExp = /^[가-힣a-zA-Z0-9]{4,12}$/;
+			if($("#inputUser_nickname").val() != "") {
+				if(regExp.test($("#inputUser_nickname").val())){
+					$("#nickname_regex").html("중복검사 버튼을 눌러주세요").css("color", "green");
+					$("#nicknameCheckBtn").attr("disabled", false);
+				} else if(!regExp.test($("#inputUser_nickname").val())){
+					$("#nickname_regex").html("양식에 맞게 입력해주세요.").css("color", "red");
+					$("#nicknameCheckBtn").attr("disabled", true);
+				} 
+			}
+		})
+		// 닉네임 중복검사(중복검사가 확인이 되면 input태그에 값 채워넣기)
+		$("#nicknameCheckBtn").on("click", function(){
+			let nickname = $("#inputUser_nickname").val();
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath}/member/toNicknameCheck.do"
+				, type : "post"
+				, data : {nickname : nickname}
+			}).done(function(rs){
+				console.log(rs);
+				if($("#nickname").val() != "") {
+					if(rs == "available"){
+						alert("사용할 수 있는 닉네임입니다.");
+						$("#user_nickname").val($("#inputUser_nickname").val());
+					}else if(rs == "unavailable"){
+						alert("사용할 수 없는 닉네임입니다.");
+					}
+				}else {
+					alert("닉네임을 입력해주세요");
+					return;
+				}
+			}).fail(function(e){
+				console.log(e);
+			});
+		})
+    	
+    	// 전화번호 정규식 및 중복검사
+		// 전화번호 정규식 검사
+    	$("#phone2").on("keyup", function(){
+			if( !( (event.keyCode >= 48 && event.keyCode<=57) || (event.keyCode >= 96 && event.keyCode <= 105)
+				|| event.keyCode==8 ) ){
+					$("#phone2").val("");
+					alert("숫자만 입력해주세요.");
+				event.returnValue=false;
+			}
+			$(".verification").css("display", "none");
+			$("#phone").val("");
+	   })
+	   
+	   $("#phone3").on("keyup", function(){
+			if( !( (event.keyCode >= 48 && event.keyCode<=57) || (event.keyCode >= 96 && event.keyCode <= 105)
+				|| event.keyCode==8 ) ){
+				$("#phone3").val("");
+					alert("숫자만 입력해주세요.");
+				event.returnValue=false;
+			}
+			$(".verification").css("display", "none");
+			$("#phone").val("");
+		})
+		
+		let code2 = "";	// 전화번호 인증코드
+		// 전화번호 중복검사(중복검사가 확인이 되면 input태그에 값 채워넣기)
+		$("#phoneCheckBtn").on("click", function(){
+			$("#verificationBtn").attr("disabled", true);
+			let phoneReg = /[0-9]{4}/;
+            if(phoneReg.test($("#phone2").val()) && phoneReg.test($("#phone3").val())){
+                alert("인증요청합니다.");
+                let phone = $("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val();
+    	    	$.ajax({
+    	    		type:"GET",
+    	    		url:"${pageContext.request.contextPath}/member/phoneCheck?phone=" + phone, 
+    	    		cache : false,
+    	    		success:function(data){
+    	    			if(data === "duplication"){	// 전화번호 중복 발생
+    	    				alert("이미 등록되어 있는 전화번호 입니다. 다시 입력해주세요.");
+    	    				$("#phone2").val("");
+    	    				$("#phone3").val("");
+    	    			} else{
+    	    				$("#phoneCheck").attr("disabled",false);
+    	    				alert("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
+    	    				code2 = data;
+    	    				$("#verificationBtn").attr("disabled",false);
+    	    				$(".verification").css("display", "inline-block");
+    	    			}
+    	    		}
+    	    	})
+            } else {
+                alert("전화번호 다시 입력해주세요");
+            }
+
+			/*
+			$.ajax({
+				url : "${pageContext.request.contextPath}/member/toPhoneCheck.do"
+				, type : "post"
+				, data : {phone : phone}
+			}).done(function(rs){
+				console.log(rs);
+				if($("#phone2").val() !== "" && #("#phone3").val() !== "") {
+					if(rs == "available"){
+						alert("사용할 수 있는 전화번호입니다.");
+						$("#phone").val($("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val()));
+					}else if(rs == "unavailable"){
+						alert("사용할 수 없는 전화번호입니다.");
+						$("#phone2").val("");
+						$("#phone3").val("");
+					}
+				} else {
+					alert("전화번호를 입력해주세요");
+					return;
+				}
+			}).fail(function(e){
+				console.log(e);
+			});
+			*/
+		})
+		
+		//휴대폰 인증번호 대조
+	  	$("#verificationBtn").on("click", function(){
+	  		if($("#verification").val() == code2){
+	  			$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
+	  			$("#verificationBtn").attr("disabled",true);
+	  			alert("인증번호가 일치합니다.감사합니다.");
+	  		}else if($("#phoneCheck").val() != code2){
+	  			$(this).attr("autofocus",true);
+	  			alert("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+	  		}
+	  	})
+    	
+    	
+    	// 이메일 정규식 및 중복검사
+    	// 이메일 정규식 검사
+    	$("#inputEmail").on("keyup", function(){
+    		$("#email").val("");
+			let regExp = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+			if($("#inputEmail").val() != "") {
+				if(regExp.test($("#inputEmail").val())){
+					$("#email_regex").html("중복검사 버튼을 눌러주세요").css("color", "green");
+					$("#emailCheckBtn").attr("disabled", false);
+				} else if(!regExp.test($("#inputEmail").val())){
+					$("#email_regex").html("이메일 양식에 맞게 입력해주세요 예)XXXX@XXXXX.XXX").css("color", "red");
+					$("#emailCheckBtn").attr("disabled", true);
+				}
+			}else if($("#inputEmail").val() == ""){
+				$("#email_regex").empty();
+			}
+		})
+    	
+    	// 이메일 중복검사(중복검사가 확인이 되면 input 태그에 값 채워넣기)
+	    $("#emailCheckBtn").on("click", function(){
+			let email = $("#inputEmail").val();
+			$.ajax({
+				url : "${pageContext.request.contextPath}/member/toEmailCheck.do"
+				, type : "post"
+				, data : {email : email}
+			}).done(function(rs){
+				console.log(rs);
+				if(rs == "available"){
+					alert("사용할 수 있는 이메일입니다.");
+					$("#email").val($("#inputEmail").val());
+				}else if(rs == "unavailable"){
+					alert("사용할 수 없는 이메일입니다.");
+				}
+			}).fail(function(e){
+				console.log(e);
+			});
+		})
+		
+		// 우편번호 버튼
+		$("#postcodeBtn").on("click", function(){
+			console.log("우편번호 버튼 클릭");
+			$("#inputAddress").val("");
+		})
+		
+		// 상세주소 입력 시 주소창에 채우기
+		$("#edited_detailAddress").on("keyup", function(){
+			let editedAddress = $("#edited_postcode").val() + " " + $("#edited_roadAddress").val() + " "
+            + $("#edited_jibunAddress").val() + " " + $("#edited_detailAddress").val() + " "
+            + $("#edited_extraAddress").val();
+	    	$("#inputAddress").val(editedAddress);
+		})
+		
+    	
 	    // 회원정보수정 후 수정 버튼
 	    // ajax로 비동기 통신을 할 때 type: "post"방식으로 넘겨주려면 넘겨줄 값을 data: 여기에 serialize()된 변수를 써줘야 한다.
 	    // ajax로 key-value값으로 된 데이터를 받을 수 있는데 jackson으로는 객체를 받을 수 있다.
 	    $("#confirmBtn").on("click", function(){
-	    	// 주소 하나의 인풋창으로 합치기
-	    	let editedAddress = $("#edited_postcode").val() + " " + $("#edited_roadAddress").val() + " "
-            + $("#edited_jibunAddress").val() + " " + $("#edited_detailAddress").val() + " "
-            + $("#edited_extraAddress").val();
-	    	$("#inputAddress").val(editedAddress);
+	    	console.log("회원정보수정버튼 클릭 후 주소: " + $("#inputAddress").val());
+	    	// 유효성 검사(닉네임, 전화번호, 이메일, 주소 빈값검사)
+	    	if($("#user_nickname").val() === "") {
+	    		alert("닉네임 중복검사를 실행해주세요");
+	    		return ;
+	    	} else if($("#phone").val() === "") {
+	    		alert("전화번호 중복검사를 실행해주세요");
+	    		return ;
+	    	} else if($("#email").val() === "") {
+	    		alert("이메일 중복검사를 실행해주세요");
+	    		return ;
+	    	} else if($("#inputAddress").val() === "" || $("#edited_detailAddress").val() === "") {
+	    		alert("주소를 상세히 입력해 주세요");
+	    		return ;
+	    	}
+	    	// 주소 입력
+    		
 	    	let data = $("#userInfoForm").serialize();
 			console.log("userInfoForm.serialize(): " + data);
 			
@@ -152,22 +375,11 @@
 		    	data: data
 		    	}).done(function(rs){
 		    		if(rs !== null){	// 변경 성공 시 회원정보칸에 수정된 정보 넣어주기 및 버튼 바꾸기. String이 아닌 DTO로 받아주기
-		    			// 수정사항을 담은 dto 객체를 전달 받기
-		    			console.log("회원정보 수정 성공 : " + rs);
-		    			console.log(rs.user_nickname);
-		    			console.log(rs.phone);
-		    			console.log(rs.email);
-		    			console.log(rs.address);
 		    			// 기존 input창에 수정된 dto정보로 대체
 		    			$("#viewUser_nickname").html(rs.user_nickname);
 		    			$("#viewPhone").html(rs.phone);
 		    			$("#viewEmail").html(rs.email);
 		    			$("#viewAddress").html(rs.address);
-		    			// 기존 input창 출력
-		    			console.log("수정닉네임 - " + $("#viewUser_nickname").html());
-		    			console.log("수정폰 - " + $("#viewPhone").html());
-		    			console.log("수정이메일 - " + $("#viewEmail").html());
-		    			console.log("수정주소 - " + $("#viewAddress").html());
 		    			convertView();
 		    		} else {
 		    			console.log(rs);
@@ -184,6 +396,10 @@
 	        $("table td:last-child").css("display", "block");
 	        $("#btnBox").css("display", "none");
 	        $("#editBtnBox").css("display", "inline-block");
+	        
+	        let temp = "${dto.phone}";
+	        $("#phone2").val(temp.substring(3,7));
+	        $("#phone3").val(temp.substring(7));
 	    }
     	
     	// 회원정보조회 화면 및 버튼 전환

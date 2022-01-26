@@ -26,7 +26,6 @@
         #confirmBtn {
             width: 300px;
             display: none;
-            
         }
     </style>
 </head>
@@ -42,7 +41,7 @@
 	            <div class="col-3">
 	                <button type="button" id="checkBtn" class="btn btn-primary">본인확인</button>
 	            </div>
-	            <input type="text" id="checkId" name="user_id" value="test" hidden/>	<!-- 임시 id값 넣어놓음. -->
+	            <input type="text" id="checkId" name="user_id" value="${loginSession.user_id}" hidden/>	<!-- 임시 id값 넣어놓음. -->
 			</form>
 		</div>
         <div class="row" id="modifyPw">
@@ -55,7 +54,7 @@
                 <div class="col-12">
                     <button type="button" id="confirmBtn" class="btn btn-success">비밀번호 수정</button>
                 </div>
-                <input type="text" id="id" name="id" value="test" hidden/>	<!-- 임시 id값 넣어놓음. -->
+                <input type="text" id="id" name="id" value="${loginSession.user_id}" hidden/>	<!-- 임시 id값 넣어놓음. -->
             </form>
         </div>
 	</div>
@@ -91,18 +90,25 @@
         // 비밀번호 유효성 검사 회원가입 폼보고 추후에 추가
         // 비밀번호가 일치할 때 버튼 초록색으로 바뀐다.
         // 새비밀번호 입력 시 확인비밀번호 같은지 확인
+        let regExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
         $("#newPw").keyup(function(){
-            if($("#newPw").val() === $("#newPwCheck").val()){
-                $("#confirmBtn").css("display", "block");
+       		if($("#newPw").val() === $("#newPwCheck").val()){
+       			if(regExp.test($("#newPw").val())){
+       				$("#confirmBtn").css("display", "block");	
+       			}
             } else {
                 $("#confirmBtn").css("display", "none");
-            }
+            }	
         })
         // 확인비밀번호 입력 시 새비밀번호 같은지 확인
         $("#newPwCheck").keyup(function(){
-            if($("#newPw").val() === $("#newPwCheck").val()){
-                $("#confirmBtn").css("display", "block");
+       		if($("#newPw").val() === $("#newPwCheck").val()){
+       			if(regExp.test($("#newPwCheck").val())){
+       				console.log("확인 비밀번호와 새로운 비밀번호 일치");
+                       $("#confirmBtn").css("display", "block");
+       			}
             } else {
+            	console.log("확인 비밀번호와 새로운 비밀번호 불일치");
                 $("#confirmBtn").css("display", "none");
             }
         })
