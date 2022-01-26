@@ -56,4 +56,18 @@ public class CommentController {
 		}System.out.println("false가 들어왔어!!");
 		return null;
 	}
+	
+	@RequestMapping("/getAllReplies")
+	public List<ReplyDTO> getAllReplies(int comment_no) throws Exception{
+		return service.getAllReplies(comment_no);
+	}
+	
+	@RequestMapping("/insertReply.do")
+	@ResponseBody
+	public List<ReplyDTO> insertReply(ReplyDTO dto) throws Exception{
+		System.out.println(dto.getPost_no());
+		System.out.println(dto.getComment_no());
+		System.out.println(dto.getContent());
+		return null;
+	}
 }

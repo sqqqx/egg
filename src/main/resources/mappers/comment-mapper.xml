@@ -18,4 +18,8 @@
      <update id="modifyComment">
            UPDATE TBL_COMMENT SET CONTENT=#{content} WHERE COMMENT_NO = #{comment_no}
      </update>
+     
+     <select id="getAllReplies" resultType="ReplyDTO">
+           SELECT * FROM TBL_COMMENT WHERE PARENT_NO=#{comment_no}
+     </select>
 </mapper>

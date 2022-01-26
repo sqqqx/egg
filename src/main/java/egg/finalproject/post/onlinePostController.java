@@ -80,8 +80,13 @@ public class onlinePostController {
 		ProductDTO productDto = productService.getProduct(dto.getProduct_no());
 		List<CommentDTO> commentList = commentService.getAllComments(post_no);
 		if(commentList.size()!=0) {
+<<<<<<< Updated upstream
 	         System.out.println(commentList.get(0).getContent());
 	      }
+=======
+			System.out.println(commentList.get(0).getContent());
+		}
+>>>>>>> Stashed changes
 		System.out.println("성공이야!!1"+productDto.getName());
 		model.addAttribute("PostDTO", dto);
 		model.addAttribute("ImageDTO",imageDto);

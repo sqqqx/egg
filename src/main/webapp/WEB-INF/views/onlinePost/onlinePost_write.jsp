@@ -196,16 +196,13 @@
 							<td class="contentName">강의명</td>
 							<td><input type="text" class="form-control" name="title" id="title"></td>
 						</tr>
-						<tr>
-						
-						
+						<tr>						
 							<td class="contentName">썸네일</td>
 							<td>
 							    <div class="thumbNailImg" hidden><img
                                         src=""
                                         id="thumbNailImg"></div>
 							    <input type="file" class="form-control" name="thumbNail" id="thumbNail" accept=".gif, .jpg, .png, .JPEG">
-							     
 							</td>
 						</tr>
 
@@ -264,7 +261,7 @@
 			</div>
 		</div>
 	</div>
-	<a href="/onlinePost/toDetail.do?post_no=22">여기로 가자</a>
+	<a href="/onlinePost/toDetail.do?post_no=30">여기로 가자</a>
 
 	<script>
 
@@ -273,14 +270,12 @@
 		console.log($("#category2 option:selected").val());
 		$("#reset").on("click", function () {
 			if (confirm("입력된 데이터가 모두 삭제됩니다. 정말 새로 쓰시겠습니까?")) {
-				$("#category_no").val("");
-				$("#title").val("");
-				($(".note-editable").children()).remove(); //썸머노트 에디터 속 내용 삭제
+				location.reload();
 			}
 		})
 		
-		//대분류가 선택되는 경우, 소분류 리스트를 띄워주는 함수
-		//parameter로 대분류 넘기면 그에 맞는 소분류 불러옴
+		// 대분류가 선택되는 경우, 소분류 리스트를 띄워주는 함수
+		// parameter로 대분류 넘기면 그에 맞는 소분류 불러옴
 		$("#category1").on("change", function () {
 			console.log($("#category1").val());
 			let bigCategory = $("#category1").val(); //대분류 값

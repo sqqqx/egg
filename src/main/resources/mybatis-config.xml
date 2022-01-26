@@ -12,6 +12,7 @@
 			<typeAlias type="egg.finalproject.cart.CartDTO" alias="cartDTO"/>
 			<typeAlias type="egg.finalproject.category.CategoryDTO" alias="categoryDTO"/>
 			<typeAlias type="egg.finalproject.comment.CommentDTO" alias="commentDTO"/>
+			<typeAlias type="egg.finalproject.comment.ReplyDTO" alias="ReplyDTO"/>
 			<typeAlias type="egg.finalproject.expert.ExpertDTO" alias="expertDTO"/>
 			<typeAlias type="egg.finalproject.file.FileDTO" alias="fileDTO"/>
 			<typeAlias type="egg.finalproject.image.ImageDTO" alias="imageDTO"/>

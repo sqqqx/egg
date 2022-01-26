@@ -319,12 +319,32 @@
             height: 20px;
             /* border-bottom: 1px dotted black; */
         }
-        #modifyInput{
+        .modifyInput{
             height: 100px;
             width: 100%;
             resize: none;
             font-size : 20px;
             /* border-top : 1px dotted black; */
+        }
+        .replyInputDiv input{
+            width: 100%;
+            margin-left: 10px;
+            margin-top: 10px;
+            border-top: 0px;
+            border-left: 0px;
+            border-right: 0px;
+            font-size: 20px;
+            border-radius: 0px;
+            
+        }
+        .replyInputDiv input:focus{
+            outline: none;
+            box-shadow: none;
+        }
+        .InsertReplyBtnArea{
+            margin-top: 10px;
+            text-align: right;
+            /* margin-right: 10px; */
         }
     </style>
 </head>
@@ -404,13 +424,12 @@
                                         <div >
                                             <div class="commentsModifyInput">
                                                 <!-- <textarea id="commentsInput"></textarea> -->
-                                                <textarea id="modifyInput" name="${dto.comment_no}" cols="30" rows="10"
-                                                    >${dto.content}</textarea>
+                                                <textarea class="modifyInput" name="${dto.comment_no}" cols="30" rows="10">${dto.content}</textarea>
                 
                                                 <div id="commentModifyBtn">
-                                                    <span id="commentsInput_cnt">(0 / 150)</span>
+                                                    <span class="modifyInput_cnt" name="${dto.comment_no}">(0 / 150)</span>
                                                     <button id="cancelModify" class="btn btn-warning" onclick="commentFormVisible(${dto.comment_no})">취소</button>
-                                                    <button id="updateComment" class="btn btn-primary" onclick="updateComment(${dto.comment_no},${dto.post_no},'${dto.content}')">댓글 수정</button>
+                                                    <button id="updateComment" class="btn btn-primary" onclick="updateComment(${dto.comment_no},'${dto.content}')">댓글 수정</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -428,9 +447,9 @@
                                                         <label id="editComments">댓글 편집</label>
                                                     </ul>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li class="dropdown-item" onclick="modify(${dto.comment_no})">수정</li>
+                                                        <li class="dropdown-item" onclick="pressModify(${dto.comment_no},'${dto.content}')">수정</li>
                                                         <li class="dropdown-item"
-                                                            onclick="checkDelete(${dto.comment_no},${dto.post_no})">
+                                                            onclick="checkDelete(${dto.comment_no})">
                                                             삭제
                                                         </li>
                                                     </ul>
@@ -458,6 +477,19 @@
                                                 <div class="icon" id="reportIcon"><i class="fas fa-times fa-2x"></i>
                                                 </div>
                                                 <div class="title" id="reportTitle">신고</div>
+                                            </div>
+                                        </div>
+                                        <div class="replies">
+                                            <div class="replyInputArea">
+                                                <div class="replyInputDiv">
+                                                    <input type="text" class="form-control" placeholder="답글을 입력해 주세요." name="${dto.comment_no}">
+                                                </div>
+                                                <div class="InsertReplyBtnArea">
+                                                    <button type="button" class="btn btn-primary insertReplyBtn" name="${dto.comment_no}" onclick="insertReply(${dto.comment_no})">답글 등록</button>
+                                                </div>
+                                            </div>
+                                            <div class="commentReplyArea">
+                                                
                                             </div>
                                         </div>
                                         <div class="blank"></div>
@@ -503,7 +535,25 @@
         $(document).ready(function () {
             $('.dropdown-toggle').dropdown()
         });
-
+        
+        $(document).on("keyup",".modifyInput",function(){
+        	let name = this.name;
+        	console.log(name);
+        	commentCnt = $("span[name='"+name+"']")[0];
+            console.log(commentCnt);
+            commentCnt.innerHTML = "("+$(this).val().length+" / 150)"
+            if ($(this).val().length > 150) {
+                $(this).val($(this).val().substring(0, 150));
+                commentCnt.innerHTML = "("+$(this).val().length+" / 150)"
+                alert("150자 이상 입력하실 수 없습니다.");
+            }
+        });
+        
+        
+        /* $('.modifyInput').on('keyup', function () {
+        	
+        }); */
+        
         $("#insertComment").on("click", function () {
             console.log("여깄어요");
             if ($("#commentsInput").val() != "") {
@@ -522,13 +572,16 @@
                 }).fail(function (rs) {
                     console.log(rs);
                 })
+            }else{
+            	alert("댓글을 입력해 주세요.");
             }
         })
 
 
 
-        function checkDelete(comment_no, post_no) {
+        function checkDelete(comment_no) {
             if (confirm("삭제 하시겠습니까?")) {
+            	let post_no = ${PostDTO.post_no}
                 $.ajax({
                     url: "/comment/deleteComment.do"
                     , type: "post"
@@ -553,12 +606,12 @@
                     <div class='modifyComment' value='"+dto.comment_no+"' hidden>\
                         <div >\
                             <div class='commentsModifyInput'>\
-                                <textarea id='modifyInput' name='"+dto.comment_no+"' cols='30' rows='10'\
+                                <textarea class='modifyInput' name='"+dto.comment_no+"' cols='30' rows='10'\
                                     >"+dto.content+"</textarea>\
                                 <div id='commentModifyBtn'>\
-                                    <span id='commentsInput_cnt'>(0 / 150)</span>\
+                                    <span class='modifyInput_cnt' name='"+dto.comment_no+"'>(0 / 150)</span>\
                                     <button id='cancelModify' class='btn btn-warning' onclick='commentFormVisible("+dto.comment_no+")'>취소</button>\
-                                    <button id='updateComment' class='btn btn-primary' onclick=\"updateComment("+dto.comment_no+","+dto.post_no+",'"+dto.content+"')\">댓글 수정</button>\
+                                    <button id='updateComment' class='btn btn-primary' onclick=\"updateComment("+dto.comment_no+",'"+dto.content+"')\">댓글 수정</button>\
                                 </div>\
                             </div>\
                         </div>\
@@ -575,7 +628,7 @@
                                         <label id='editComments'>댓글 편집</label>\
                                     </ul>\
                                     <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'>\
-                                        <li class='dropdown-item' onclick='modify("+dto.comment_no+")'>수정</li>\
+                                    <li class='dropdown-item' onclick=\"pressModify("+dto.comment_no+",'"+dto.content+"')\">수정</li>\
                                         <li class='dropdown-item'\
                                             onclick='checkDelete("+dto.comment_no+","+dto.post_no+")'>\
                                             삭제\
@@ -606,6 +659,18 @@
                                 <div class='title' id='reportTitle'>신고</div>\
                             </div>\
                         </div>\
+                        <div class='replies' hidden>\
+                        <div class='replyInputArea'>\
+                            <div class='replyInputDiv'>\
+                                <input type='text' class='form-control' placeholder='답글을 입력해 주세요.' name='"+dto.comment_no+"'>\
+                            </div>\
+                            <div class='InsertReplyBtnArea'>\
+                                <button type='button' class='btn btn-primary insertReplyBtn' name='"+dto.comment_no+"' onclick='insertReply("+dto.comment_no+")'>답글 등록</button>\
+                            </div>\
+                        </div>\
+                        <div class='commentReplyArea'>\
+                        </div>\
+                    </div>\
                         <div class='blank'></div>\
                     </div>\
                 </div>"
@@ -615,15 +680,24 @@
 
         };
         
-         function modify(comment_no){
+         function pressModify(comment_no,origin_comment){
         	console.log("하이루루");
         	let commentDiv = $("div[value='"+comment_no+"']");
         	modifyComment = commentDiv[0];
+         	let modifyInput = $("textarea[name='"+comment_no+"']") 
         	commentForm = commentDiv[1];
         	console.log(modifyComment);
         	console.log(commentForm);
         	modifyComment.hidden=false;
             commentForm.style.visibility = "hidden";
+            let textarea = ($("textarea[name='"+comment_no+"']")[0])
+            textarea.value = origin_comment;
+            console.log((textarea.value).length);
+            commentCnt = $("span[name='"+comment_no+"']")[0];
+            console.log(commentCnt);
+            commentCnt.innerHTML = "("+(textarea.value).length+" / 150)"
+            return;
+            
         } 
          
         function commentFormVisible(comment_no){
@@ -637,11 +711,16 @@
         	return
         }
         
-       function updateComment(comment_no,post_no,origin_content){
+       function updateComment(comment_no,origin_content){
     	   let textarea = $("textarea[name='"+comment_no+"']");
     	   let content = textarea[0].value;
+    	   let post_no = ${PostDTO.post_no}
     	   console.log(textarea);
     	   console.log(content);
+    	   if(content==""){
+    		   alert("댓글을 입력해 주세요.");
+    		   return;
+    	   }
     	   if(origin_content!=content){
     		   $.ajax({
     			   url : "/comment/modifyComment.do"
@@ -653,9 +732,28 @@
     		   }).fail(function(rs){
     			   console.log(rs);
     		   })
-    	   } 
+    	   }commentFormVisible(comment_no); 
        }
-        
+       
+       function insertReply(comment_no){
+    	   let content = $("input[name='"+comment_no+"']")[0].value;
+    	   console.log(content);
+    	   let post_no = ${PostDTO.post_no}
+    	   if(content==""){
+    		   alert("답글을 입력해 주세요.");
+    		   return;
+    	   }else{
+    		   $.ajax({
+    			   url : "/comment/insertReply.do"
+    			   ,type:"post"
+    			   ,data : {comment_no,comment_no, post_no:post_no,content:content}
+    		   }).done(function(data){
+    			   console.log(data);
+    		   }).fail(function(rs){
+    			   console.log(rs);
+    		   })
+    	   }
+       }
     </script>
 </body>
 

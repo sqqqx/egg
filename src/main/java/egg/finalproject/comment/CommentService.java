@@ -32,4 +32,8 @@ public class CommentService {
 		}System.out.println("false");
 		return false;
 	}
+	
+	public List<ReplyDTO> getAllReplies(int comment_no) throws Exception{
+		return dao.getAllReplies(comment_no);
+	}
 }

@@ -26,4 +26,8 @@ public class CommentDAO {
 	public int modifyComment(CommentDTO dto) throws Exception{
 		return session.update("commentMapper.modifyComment",dto);
 	}
+	
+	public List<ReplyDTO> getAllReplies(int comment_no) throws Exception{
+		return session.selectList("commentMapper.getAllReplies",comment_no);
+	}
 }
