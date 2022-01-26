@@ -21,4 +21,11 @@
     <update id="updatePost" parameterType="PostDTO">
          UPDATE TBL_POST SET CATEGORY_NO = #{category_no},TITLE = #{title},CONTENT = #{content}, PRODUCT_NO = #{product_no} WHERE POST_NO= #{post_no}
     </update>
+    
+    <!-- ============================================================================================================================================ -->
+    
+    <select id="selectRecent" resultType="map" parameterType="Object">
+    	select * from (select a.post_no, a.title, b.system_name, rank() over(order by written_date DESC) as ranking from tbl_post a, tbl_image b where a.post_no = b.post_no)
+    	 where ranking &lt; 5
+    </select>
 </mapper>
