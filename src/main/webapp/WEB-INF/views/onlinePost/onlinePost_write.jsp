@@ -115,8 +115,8 @@
 			processData : false,
 			success : function(data) {
 				console.log(data);
-				imgInfoArr.push(data);
-				console.log(imgInfoArr);
+				//imgInfoArr.push(data);
+				//console.log(imgInfoArr);
 				$(el).summernote('editor.insertImage', data.sys_name);
 			}
 		});
