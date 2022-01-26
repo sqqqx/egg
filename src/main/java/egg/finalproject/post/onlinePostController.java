@@ -80,8 +80,10 @@ public class onlinePostController {
 		ImageDTO imageDto = imageService.getThumbNail(post_no);
 		ProductDTO productDto = productService.getProduct(dto.getProduct_no());
 		List<CommentDTO> commentList = commentService.getAllComments(post_no);
+		if(commentList.size()!=0) {
+	         System.out.println(commentList.get(0).getContent());
+	      }
 		System.out.println("성공이야!!1"+productDto.getName());
-		System.out.println(commentList.get(0).getContent());
 		model.addAttribute("PostDTO", dto);
 		model.addAttribute("ImageDTO",imageDto);
 		model.addAttribute("ProductDTO",productDto);

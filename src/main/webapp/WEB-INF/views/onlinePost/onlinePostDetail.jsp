@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@include file="/WEB-INF/views/header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -329,7 +330,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container mt-3">
         <div class="buttons">
             <button type="button" class="btn btn-warning" id="modify">게시글 수정</button>
             <button type="button" class="btn btn-danger" id="delete">게시글 삭제</button>

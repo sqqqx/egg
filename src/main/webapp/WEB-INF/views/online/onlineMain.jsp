@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!-- 헤더 적용 문구 -->
 <%@include file="/WEB-INF/views/header.jsp" %>
 <!DOCTYPE html>
@@ -41,78 +42,57 @@
         </div>
 
         <div class="row main">
+        	<!-- 최신강의 -->
             <div class="col-12 mt-5 class">
-                <label><h4>★이달의 강의★</h4></label>
-                <button type="button" class="btn btn-primary">더보기</button>
-                <div class="row">
-                    <div class="col">
-                        <div class="row mediaPhoto">영상화면</div>
-                        <div class="row mediaText">제목</div>
-                    </div>
-                    <div class="col">
-                        <div class="row mediaPhoto">영상화면</div>
-                        <div class="row mediaText">제목</div>
-                    </div>
-                    <div class="col">
-                        <div class="row mediaPhoto">영상화면</div>
-                        <div class="row mediaText">제목</div>
-                    </div>
-                    <div class="col">
-                        <div class="row mediaPhoto">영상화면</div>
-                        <div class="row mediaText">제목</div>
-                    </div>
+            	<div class="row titleBox">
+            		<div class="col-2 mt-2 mainTitle">
+            			<label><h4>★최신 강의★</h4></label>
+            		</div>
+            		<div class="col-1 mt-2 mainbutton">
+            			<button type="button" class="btn btn-primary">더보기</button>
+            		</div>		
+            	</div>
+                <div class="row mediaBox">
+                	<c:forEach items="${listRecent }" var="recent">
+	                		<div class="col">
+	                			<a href="${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no=${recent.POST_NO}">
+			                		<div class="row mediaPhoto">
+			                			<img class="photo" src="${pageContext.request.contextPath}/onlinePostThumbNail/${recent.SYSTEM_NAME }">
+			                		</div>
+			                		<div class="row mediaText">
+			             				<span>${recent.TITLE }</span>
+			                		</div>
+		                		</a>
+	                		</div>
+                	</c:forEach>
                 </div>
             </div>
-
+            
+            <!-- 인기 강의 -->
             <div class="col-12 mt-5 class">
-                <label><h4>★관리자 추천 강의★</h4></label>
-                <button type="button" class="btn btn-primary">더보기</button>
-                <div class="row">
-                    <div class="col">
-                        <div class="row mediaPhoto">영상화면</div>
-                        <div class="row mediaText">제목</div>
-                    </div>
-                    <div class="col">
-                        <div class="row mediaPhoto">영상화면</div>
-                        <div class="row mediaText">제목</div>
-                    </div>
-                    <div class="col">
-                        <div class="row mediaPhoto">영상화면</div>
-                        <div class="row mediaText">제목</div>
-                    </div>
-                    <div class="col">
-                        <div class="row mediaPhoto">영상화면</div>
-                        <div class="row mediaText">제목</div>
-                    </div>
+            	<div class="row titleBox">
+            		<div class="col-2 mt-2 mainTitle">
+            			<label><h4>★인기 강의★</h4></label>
+            		</div>
+            		<div class="col-1 mt-2 mainbutton">
+            			<button type="button" class="btn btn-primary">더보기</button>
+            		</div>		
+            	</div>
+                <div class="row mediaBox">
+                	<c:forEach items="${listRecent }" var="recent">
+                		<div class="col">
+	                			<a href="${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no=${recent.POST_NO}">
+			                		<div class="row mediaPhoto">
+			                			<img class="photo" src="${pageContext.request.contextPath}/onlinePostThumbNail/${recent.SYSTEM_NAME }">
+			                		</div>
+			                		<div class="row mediaText">
+			             				<span>${recent.TITLE }</span>
+			                		</div>
+		                		</a>
+	                		</div>
+                	</c:forEach>
                 </div>
-            </div>
-
-            <div class="col-12 mt-5 itemBox">
-                <label><h4>★강의 필수 아이템★</h4></label>
-                <button type="button" class="btn btn-primary">더보기</button>
-                <div class="row">
-                    <div class="col">
-                        <div class="row mediaPhoto">상품사진</div>
-                        <div class="row mediaText">제목</div>
-                    </div>
-                    <div class="col">
-                        <div class="row mediaPhoto">상품사진</div>
-                        <div class="row mediaText">제목</div>
-                    </div>
-                    <div class="col">
-                        <div class="row mediaPhoto">상품사진</div>
-                        <div class="row mediaText">제목</div>
-                    </div>
-                    <div class="col">
-                        <div class="row mediaPhoto">상품사진</div>
-                        <div class="row mediaText">제목</div>
-                    </div>
-                    <div class="col">
-                        <div class="row mediaPhoto">상품사진</div>
-                        <div class="row mediaText">제목</div>
-                    </div>
-                </div>
-            </div>
+            </div>      
         </div>
         <div class="row footer">
             푸터
