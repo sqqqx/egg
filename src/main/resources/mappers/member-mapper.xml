@@ -77,4 +77,9 @@
 			set password=#{password} where user_id=#{user_id}
 	</update>
 	
+	<!-- (마이페이지) 휴대전화 중복검사 -->
+	<select id="phoneCheck" resultType="int">
+		select count(*) from tbl_member where phone=#{phone}
+	</select>
+	
 </mapper>
