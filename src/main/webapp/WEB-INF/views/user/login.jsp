@@ -51,7 +51,7 @@
         </div>
         <div class="row mb-3">
             <div class="col">
-                <input type="password" class="form-control" name="password" placeholder="패스워드를 입력해주세요.">
+                <input type="password" class="form-control" id="password" name="password" placeholder="패스워드를 입력해주세요.">
             </div>
         </div>
         <div class="row mb-3">
@@ -74,6 +74,19 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
+    $("#password").on('keypress', function(e){
+    	if(e.keyCode == '13'){
+    		$('#loginBtn').click();
+    	}
+    });
+    
+    $("#user_id").on('keypress', function(e){
+    	if(e.keyCode == '13'){
+    		$('#loginBtn').click();
+    	}
+    });
+    
+    
     
 	// 쿠키 선생님이랑 같이 했던 코드
 	// 쿠키 값 가져와 id 인풋창에 세팅 
@@ -108,8 +121,8 @@
 					}
 				}).fail(function(e){
 					console.log(e);
-				}) 
-			}); 
+				})
+			});
 
 		// 로그인 쿠키 삭제
 		function deleteRememberId() {
