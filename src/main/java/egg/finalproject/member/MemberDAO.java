@@ -14,12 +14,13 @@ public class MemberDAO {
 	@Autowired
 	private SqlSession session;
 	
+	// 아이디 중복확인
 	public int idCheck(String id) throws Exception{
-		System.out.println("DAO 확인 : " + id);
 		return session.selectOne("memberMapper.idCheck", id);
 	}
 	
-	public int insertMember(String user_id, String password, String user_nickname, String email, String phone, String address) throws Exception{
+	// 회원가입
+	public int insertMember(String user_id, String password, String user_nickname, String email, String phone, String address, String profile_path) throws Exception{
 		Map<String, String> map = new HashMap<>();
 		map.put("user_id", user_id);
 		map.put("password", password);
@@ -27,9 +28,11 @@ public class MemberDAO {
 		map.put("email", email);
 		map.put("phone", phone);
 		map.put("address", address);
+		map.put("profile_path", profile_path);
 		return session.insert("memberMapper.insertMember", map);
 	}
 	
+	// 로그인
 	public int isLoginOk(String user_id, String password) throws Exception{
 		Map<String, String> map = new HashMap<>();
 		map.put("id", user_id);
@@ -37,20 +40,32 @@ public class MemberDAO {
 		return session.selectOne("memberMapper.isLoginOk", map);
 	}
 	
+	// 로그인시 세션에 아이디 값 담기위해
 	public MemberDTO getMember(String user_id) throws Exception{
 		return session.selectOne("memberMapper.getMember", user_id);
 	}
 	
+	// 닉네임 중복검사
 	public int nicknameCheck(String nickname) throws Exception{
 		return session.selectOne("memberMapper.nicknameCheck", nickname);
 	}
 	
+	// 이메일 중복검사
 	public int emailCheck(String email) throws Exception{
 		return session.selectOne("memberMapper.emailCheck", email);
 	}
 	
+	// 아이디 찾기
 	public String toIdFind(String phone) throws Exception {
 		return session.selectOne("memberMapper.idFind", phone);
+	}
+	
+	// 비밀번호 찾기(수정)
+	public int toPwFind(String password, String user_id) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("user_id", user_id);
+		map.put("password", password);
+		return session.update("memberMapper.pwFind", map);
 	}
 	
 	
@@ -89,5 +104,15 @@ public class MemberDAO {
 		map.put("user_id", user_id);
 		map.put("password", password);
 		return session.update("memberMapper.modifyPassword", map);
+	}
+	
+	// (마이페이지) 휴대전화 중복검사
+	public boolean phoneCheck(String phone) throws Exception {
+		System.out.println("MemberDAO / 휴대전화 중복검사 phone - " + phone);
+		if((int)session.selectOne("memberMapper.phoneCheck", phone) > 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }

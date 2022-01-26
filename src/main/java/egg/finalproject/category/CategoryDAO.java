@@ -11,15 +11,18 @@ public class CategoryDAO {
 	@Autowired
 	private SqlSession session;
 	
+	//대분류 항목을 다 가져오는 메서드
 	public List<String> getParentCategory() throws Exception{
 		return session.selectList("categoryMapper.getParentCategory");
 	}
 	
+	//대분류에 따른 소분류를 가져오는 메서드
 	public List<CategoryDTO> getChildCategory(String bigCategory) throws Exception{
 		System.out.println("getChildCategory dao 진입");
 		return session.selectList("categoryMapper.getChildCategory",bigCategory);
 	}
 	
+	//category_no로 categoryDTO를 가져오는 메서드
 	public CategoryDTO getCategory(int category_no) throws Exception{
 		return session.selectOne("categoryMapper.getCategory",category_no);
 	}

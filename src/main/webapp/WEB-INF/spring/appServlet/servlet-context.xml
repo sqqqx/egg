@@ -17,8 +17,6 @@
 	<resources mapping="/img/**" location="/resources/img/" />
 	<resources mapping="/css/**" location="/resources/css/" />
 	<resources mapping="/file/**" location="/resources/file/" />
-	<resources mapping="/onlinePost/onlinePostThumbNail/**" location="/onlinePost/onlinePostThumbNail/"/>
-	<resources mapping="/onlinePostThumbNail/**" location="/onlinePostThumbNail/"/>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -30,6 +28,28 @@
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="10485760" /> <!-- 파일 최대 용량 -->
 	</beans:bean>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="/"/>
+			<exclude-mapping path="/toLogin.do"/>
+			<exclude-mapping path="/resources/**"/>
+			<exclude-mapping path="/online/toMain.do"/>
+			<exclude-mapping path="/toSignup.do"/>
+			<exclude-mapping path="/member/idFind.do"/>
+			<exclude-mapping path="/member/pwFind.do"/>
+			<exclude-mapping path="/member/login.do"/>
+			<exclude-mapping path="/member/pwFind.do"/>
+			<exclude-mapping path="/member/toEmailCheck.do"/>
+			<exclude-mapping path="/member/toNicknameCheck.do"/>
+			<exclude-mapping path="/member/toIdCheck.do"/>
+			<exclude-mapping path="/member/signup.do"/>
+			<exclude-mapping path="/member/phoneCheck"/>
+			
+			<beans:bean class="egg.finalproject.utils.LoginInterceptor"/>
+		</interceptor>
+	</interceptors>
 	
 	<context:component-scan base-package="egg.finalproject" />
 	

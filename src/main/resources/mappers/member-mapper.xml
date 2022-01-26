@@ -15,7 +15,7 @@
 			(#{user_id}, #{password}
 			, #{user_nickname}, #{phone}
 			, #{email}, #{address}, sysdate
-			, 0, 1, 0)
+			, #{profile_path}, 1, 0)
 	</insert>
 	
 	<select id="getMember" resultType="MemberDTO">
@@ -44,6 +44,10 @@
 			from tbl_member
 				where phone = #{phone}
 	</select>
+	
+	<update id="pwFind" parameterType="map">
+		update tbl_member set password = #{password} where user_id = #{user_id}
+	</update>
 
 
 <!-- ↑↑↑↑↑↑회원가입 및 로그인↑↑↑↑↑↑/////////↓↓↓↓↓↓마이페이지↓↓↓↓↓↓ -->
@@ -59,5 +63,23 @@
 	<delete id="withdrawal">
 		delete from tbl_member where user_id=#{user_id}
 	</delete>
+	
+	<!-- (마이페이지) 회원정보 수정요청 -->
+	<update id="modify" parameterType="MemberDTO">
+		update tbl_member
+			set user_nickname=#{user_nickname}, phone=#{phone}, email=#{email}, address=#{address}
+		 	where user_id=#{user_id}
+	</update>
+	
+	<!-- (마이페이지) 비밀번호 수정 요청 -->
+	<update id="modifyPassword" parameterType="map">
+		update tbl_member
+			set password=#{password} where user_id=#{user_id}
+	</update>
+	
+	<!-- (마이페이지) 휴대전화 중복검사 -->
+	<select id="phoneCheck" resultType="int">
+		select count(*) from tbl_member where phone=#{phone}
+	</select>
 	
 </mapper>

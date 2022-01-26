@@ -35,7 +35,8 @@ public class MemberController {
 	@RequestMapping(value="signup.do")
 	public String signup(String user_id, String password, String user_nickname, String email, String phone, String address) throws Exception {
 		password = EncryptionUtils.getSHA512(password);
-		service.insertMember(user_id, password, user_nickname, email, phone, address);
+		String profile_path = "/resources/img/myInfo.png";
+		service.insertMember(user_id, password, user_nickname, email, phone, address, profile_path);
 		return "user/login";
 	}
 	
@@ -85,10 +86,23 @@ public class MemberController {
 	@RequestMapping(value="toIdFind.do")
 	@ResponseBody
 	public String toIdFind(String phone) throws Exception {
-		System.out.println(phone);
-		System.out.println(service.toIdFind(phone));
 		return service.toIdFind(phone);
 	}
+	
+	// 비밀번호 찾기 페이지로 이동
+	@RequestMapping(value="pwFind.do")
+	public String pwFind() throws Exception {
+		return "user/passwordFind";
+	}
+	
+	// 비밀번호 찾기 완료버튼 클릭
+	@RequestMapping(value="toPwfind.do")
+	public String toPwFind(String password, String user_id) throws Exception {
+		password = EncryptionUtils.getSHA512(password);
+		service.toPwFind(password, user_id);
+		return "user/login";
+	}
+	
 	
 	// 문자인증
 	@RequestMapping(value = "/phoneCheck", method = RequestMethod.GET)
@@ -165,4 +179,6 @@ public class MemberController {
 				return "fail";
 			}
 		}
+		
+		
 }

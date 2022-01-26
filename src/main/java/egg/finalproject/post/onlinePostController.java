@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import egg.finalproject.category.CategoryDTO;
 import egg.finalproject.category.CategoryService;
+import egg.finalproject.comment.CommentDTO;
+import egg.finalproject.comment.CommentService;
 import egg.finalproject.image.ImageDTO;
 import egg.finalproject.image.ImageService;
 import egg.finalproject.product.ProductDTO;
@@ -31,6 +33,9 @@ public class onlinePostController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired 
+	private CommentService commentService;
 	
 	@Autowired
 	private HttpSession session;
@@ -73,10 +78,15 @@ public class onlinePostController {
 		System.out.println(dto);
 		ImageDTO imageDto = imageService.getThumbNail(post_no);
 		ProductDTO productDto = productService.getProduct(dto.getProduct_no());
+		List<CommentDTO> commentList = commentService.getAllComments(post_no);
+		if(commentList.size()!=0) {
+	         System.out.println(commentList.get(0).getContent());
+	      }
 		System.out.println("성공이야!!1"+productDto.getName());
 		model.addAttribute("PostDTO", dto);
 		model.addAttribute("ImageDTO",imageDto);
 		model.addAttribute("ProductDTO",productDto);
+		model.addAttribute("CommentList",commentList);
 		return "onlinePost/onlinePostDetail";
 	}
 	

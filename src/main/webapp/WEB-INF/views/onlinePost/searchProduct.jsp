@@ -66,6 +66,7 @@
 		</tbody>
 	</table>
 	<script>
+	    //검색 버튼 눌렀을 때 해당 조회 내용 보여주기
 		$("#searchBtn").on("click", function () {
 			let value = $("#search").val();
 			if(value!=""){
@@ -95,12 +96,15 @@
 			
 		})
 
+		//엔터 누른 경우, 상품 검색과 같은 기능 실행
 		$("#search").on("keydown", function (keyNum) {
 			if (keyNum.keyCode == 13) {
 				$("#searchBtn").click();
 			}
 		})
+		
 
+		//검색 내용 중 하나 누르는 경우 그 값이 선택됨.
 		$(".table").on("click",'.product',function ( e) {
 			console.log("클릭됨");
 			var selected = ((e.target).parentElement);
