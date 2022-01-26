@@ -14,8 +14,8 @@ public class MemberService {
 	@Autowired
 	private MemberDAO dao;
 	
+	// 아이디 중복확인
 	public boolean idCheck(String id) throws Exception{
-		System.out.println("서비스 확인 : " + id);
 		if(dao.idCheck(id) == 1) { 
 			return false;
 		}else {
@@ -23,10 +23,12 @@ public class MemberService {
 		}
 	}
 	
-	public int insertMember(String user_id, String password, String user_nickname, String email, String phone, String address) throws Exception{
-		return dao.insertMember(user_id, password, user_nickname, email, phone, address);
+	// 회원가입
+	public int insertMember(String user_id, String password, String user_nickname, String email, String phone, String address, String profile_path) throws Exception{
+		return dao.insertMember(user_id, password, user_nickname, email, phone, address, profile_path);
 	}
 	
+	// 로그인
 	public boolean isLoginOk(String user_id, String password) throws Exception{
 		if(dao.isLoginOk(user_id, password) == 1) {
 			return true;
@@ -35,10 +37,12 @@ public class MemberService {
 		}
 	}
 	
+	// 로그인시 세션에 아이디 값 담기위해
 	public MemberDTO getMember(String user_id) throws Exception{
 		return dao.getMember(user_id);
 	}
 	
+	// 닉네임 중복검사
 	public boolean nicknameCheck(String nickname) throws Exception{
 		if(dao.nicknameCheck(nickname) == 1) { 
 			return false;
@@ -47,6 +51,7 @@ public class MemberService {
 		}
 	}
 	
+	// 이메일 중복검사
 	public boolean emailCheck(String email) throws Exception{
 		if(dao.emailCheck(email) == 1) { 
 			return false;
@@ -55,9 +60,17 @@ public class MemberService {
 		}
 	}
 	
+	// 아이디 찾기
 	public String toIdFind(String phone) throws Exception {
 		return dao.toIdFind(phone);
 	}
+	
+	// 비밀번호 찾기(수정)
+	public int toPwFind(String password, String user_id) throws Exception {
+		return dao.toPwFind(password, user_id);
+	}
+	
+	
 	
 	// (회원가입)문자인증
 	public void certifiedPhoneNumber(String userPhoneNumber, int randomNumber) {
