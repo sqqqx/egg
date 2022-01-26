@@ -42,8 +42,22 @@ table th {
 table td:nth-child(3) {
     display: none;
 }
+#inputPhoneBox {
+    display: inline-block;
+}
+#inputPhoneBox * {
+    display: inline-block;
+    width: 155px;
+    height: 40px;
+}
+.verification {
+    display: none;
+}
 #editAddress div input {
     margin: 0px 10px 10px 12px;
+}
+#inputAddress {
+	width: 80%;
 }
 #btnBox {
     text-align: center;

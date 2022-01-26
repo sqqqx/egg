@@ -105,4 +105,14 @@ public class MemberDAO {
 		map.put("password", password);
 		return session.update("memberMapper.modifyPassword", map);
 	}
+	
+	// (마이페이지) 휴대전화 중복검사
+	public boolean phoneCheck(String phone) throws Exception {
+		System.out.println("MemberDAO / 휴대전화 중복검사 phone - " + phone);
+		if((int)session.selectOne("memberMapper.phoneCheck", phone) > 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }
