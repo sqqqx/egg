@@ -2,6 +2,8 @@ package egg.finalproject.comment;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class CommentDTO {
 	
 	private int comment_no;
@@ -9,6 +11,7 @@ public class CommentDTO {
 	private int reference_no;
 	private String user_nickname;
 	private String content;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date written_date;
 	private int post_no;
 	private String user_id;

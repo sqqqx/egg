@@ -274,6 +274,7 @@
 
     <script>
        
+       //대분류 선택되었을 때 소분류 리스트 띄우기
         $("#category1").on("change", function () {
             console.log($("#category1").val());
             let bigCategory = $("#category1").val()
@@ -299,17 +300,21 @@
         })
 
        
-
+        //상품 검색 팝업 띄우기
         function popup() {
             var url = "/product/toSearchProduct.do";
             var name = "searchProduct";
             window.open(url, name, "height=1000,width=1000");
         }
 
+        
+        //상품 검색 버튼 눌렀을 때
         $("#productSearchBtn").on("click", function () {
             popup();
         })
 
+        
+        //수정 버튼 눌렀을 경우, 유효성 검사
         $("#update").on("click", function () {
         	console.log("눌렸음");
             if ($("#category2 option:selected").val() == '소분류') {
@@ -337,7 +342,7 @@
         });
         
         
-
+        //썸네일 파일 추가되면 그 위에 사진 띄워주기
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -350,7 +355,7 @@
             }
         }
 
-        // 이벤트를 바인딩해서 input에 파일이 올라올때 (input에 change를 트리거할때) 위의 함수를 this context로 실행합니다.
+        // 이벤트를 바인딩해서 input에 파일이 올라올때 위의 함수를 this context로 실행합니다.
         $("#thumbNail").change(function () {
             readURL(this);
         });

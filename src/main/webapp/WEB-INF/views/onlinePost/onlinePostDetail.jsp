@@ -13,10 +13,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-    <title>Document</title>
+    <title>게시글 조회</title>
     <style>
         @font-face {
             font-family: 'BMHANNAAir';
@@ -149,7 +150,26 @@
             /* border: 1px solid black; */
             height: 800px;
             font-family: 'BMHANNAAir';
+            
         }
+        .comment{
+            position: relative;
+        }
+        .modifyComment {
+            height:100%;
+            width: 100%;
+            position: absolute;
+            z-index: 1;
+            /* border: 1px solid black; */
+            border-top: 1px dotted black;
+            /* border-bottom: 1px dotted black; */
+        }
+        .commentsModifyInput{
+            padding-top: 5px;
+            /* border-bottom: 1px dotted black; */
+            padding-bottom: 5px;
+        }
+     
 
         .tab-content {
             height: 0;
@@ -191,6 +211,11 @@
             margin-top: 10px;
             padding-right: 5px;
         }
+        
+        #commentModifyBtn{
+            text-align: right;
+            padding-right: 5px;
+        }
 
         .user_nickname {
             text-align: left;
@@ -198,15 +223,17 @@
             padding-top: 10px;
             height: 22px;
             /* border: 1px solid black; */
-            margin-top: 10px;
-            font-size: 18px;
+
+            font-size: 20px;
             border-top: 1px dotted #494646;
             font-weight: bold;
             display: flex;
         }
-        #user_id{
+
+        #user_id {
             padding-top: 5px;
         }
+
         .written_date {
             padding-left: 10px;
             text-align: left;
@@ -221,6 +248,7 @@
             padding-left: 13px;
             padding-right: 10px;
             margin-top: 25px;
+            font-size: 22px;
         }
 
         .divGroup {
@@ -234,13 +262,68 @@
             padding-right: 10px;
             /* padding-top: 5px; */
             margin-bottom: 10px;
-            
+
         }
-        .dropdown{
+
+        .dropdown {
             vertical-align: top;
         }
-        ul{
-            font-weight : bold;
+
+        #editComments {
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .reactions {
+            height: 33px;
+            /* border: 1px solid black; */
+            margin-top: 20px;
+            padding-right: 63%;
+            padding-left: 10px;
+            text-align: left;
+        }
+
+        .reaction {
+            /* width: 40px; */
+            /* border: 1px solid black; */
+            height: 100%;
+            float: left;
+            margin-right: 15px;
+        }
+
+        .icon {
+            /* border: 1px solid black; */
+            /* width: 40px; */
+            height: 100%;
+            float: left;
+        }
+
+        .title {
+            float: left;
+            padding-left: 5px;
+            font-size: 20px;
+        }
+
+        i {
+            height: 100%;
+            width: 100%;
+        }
+
+        #likeTitle {
+            text-align: left;
+        }
+
+        .blank {
+            height: 20px;
+            /* border-bottom: 1px dotted black; */
+        }
+        #modifyInput{
+            height: 100px;
+            width: 100%;
+            resize: none;
+            font-size : 20px;
+            /* border-top : 1px dotted black; */
         }
     </style>
 </head>
@@ -285,7 +368,8 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments"
-                        type="button" role="tab" aria-controls="comments" aria-selected="false">후기 및 Q&A</button>
+                        type="button" role="tab" aria-controls="comments" aria-selected="false">후기 및
+                        Q&A</button>
                 </li>
 
             </ul>
@@ -306,37 +390,81 @@
 
                                 <div id="commentInsertBtn">
                                     <span id="commentsInput_cnt">(0 / 150)</span>
-                                    <button id="insert" class="btn btn-success">댓글 등록</button>
+                                    <button id="insertComment" class="btn btn-success">댓글 등록</button>
                                 </div>
                             </div>
                         </div>
                         <div class="allComments">
-                            <div class="commentsLabel"><label id="commentsLabel">전체 댓글 (120)</label></div>
-                            <div class="comment">
-                                <div class="user_nickname">
-                                    <div class="divGroup" id="user_id"><label >경민짱</label></div>
-                                    <div class="divGroup"></div>
-                                    <div class="divGroup" id="commentChange">
-                                        <div class="dropdown">
-                                            <ul class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Left Align">
-                                                <!-- <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span> -->
-                                                댓글 편집
-                                            </ul>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                              <li><a class="dropdown-item" href="#">수정</a></li>
-                                              <li><a class="dropdown-item" href="#">삭제</a></li>
-                                            </ul>
-                                          </div>
+                            <div class="commentsLabel"><label id="commentsLabel">전체 댓글 (${CommentList.size()})</label>
+                            </div>
+                            <c:forEach var="dto" items="${CommentList}">
+                                <div class="comment">
+                                    <div class="modifyComment" value="${dto.comment_no}" hidden>
+                                        <div >
+                                            <div class="commentsModifyInput">
+                                                <!-- <textarea id="commentsInput"></textarea> -->
+                                                <textarea id="modifyInput" name="${dto.comment_no}" cols="30" rows="10"
+                                                    >${dto.content}</textarea>
+                
+                                                <div id="commentModifyBtn">
+                                                    <span id="commentsInput_cnt">(0 / 150)</span>
+                                                    <button id="cancelModify" class="btn btn-warning" onclick="commentFormVisible(${dto.comment_no})">취소</button>
+                                                    <button id="updateComment" class="btn btn-primary" onclick="updateComment(${dto.comment_no},${dto.post_no},'${dto.content}')">댓글 수정</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="commentForm" value="${dto.comment_no}">
+                                        <div class="user_nickname">
+                                            <div class="divGroup" id="user_id"><label>${dto.user_nickname}</label></div>
+                                            <div class="divGroup"></div>
+                                            <div class="divGroup" id="commentChange">
+                                                <div class="dropdown">
+                                                    <ul class="btn btn-default dropdown-toggle" type="button"
+                                                        id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                        aria-expanded="false" aria-label="Left Align">
+                                                        <!-- <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span> -->
+                                                        <label id="editComments">댓글 편집</label>
+                                                    </ul>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                        <li class="dropdown-item" onclick="modify(${dto.comment_no})">수정</li>
+                                                        <li class="dropdown-item"
+                                                            onclick="checkDelete(${dto.comment_no},${dto.post_no})">
+                                                            삭제
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="comment_content">${dto.content}</div>
+                                        <div class="written_date">
+                                            <label id="written_date">${dto.written_date}</label>
+                                        </div>
+                                        <div class="reactions">
+                                            <div class="reaction" id="replyArea">
+                                                <div class="icon" id="replyIcon"><i
+                                                        class="far fa-comment-dots fa-2x"></i>
+                                                </div>
+                                                <div class="title" id="replyTitle">답글</div>
+                                            </div>
+                                            <div class="reaction" id="likeArea">
+                                                <div class="icon" id="likeIcon"> <i class="far fa-heart fa-2x"></i>
+                                                </div>
+                                                <!-- <i class="fas fa-heart"></i> -->
+                                                <div class="title" id="likeTitle">좋아요</div>
+                                            </div>
+                                            <div class="reaction" id="reportArea">
+                                                <div class="icon" id="reportIcon"><i class="fas fa-times fa-2x"></i>
+                                                </div>
+                                                <div class="title" id="reportTitle">신고</div>
+                                            </div>
+                                        </div>
+                                        <div class="blank"></div>
                                     </div>
                                 </div>
-                                <div class="comment_content">아니라고는 말 못할 것 같아요아니라고는 말 못할 것 같아요아니라고는 말 못할 것 같아요아니라고는 말 못할
-                                    것 같아요아니라고는 말 못할 것 같아요아니라고는 말 못할 것 같아요아니라고는 말 못할 것 같아요</div>
-                                <div class="written_date"><label id="written_date">2021-12-15 12:30</label></div>
-                                <div class="reactions">
-                                    <div class="reaction" id="like"></div>
-                                    <div class="reaction" id="report"></div>
-                                </div>
-                            </div>
+
+                            </c:forEach>
+
                         </div>
                     </div>
                 </div>
@@ -345,6 +473,7 @@
 
     </div>
     <script>
+    
         document.getElementById("modify").onclick = function () {
             /* alert("수정 버튼이 눌렸어!"); */
             location.href = "/onlinePost/toModifyPost.do?post_no=" + ${ PostDTO.post_no };
@@ -357,6 +486,7 @@
             location.href = "/onlinePost/deletePost.do?post_no=16";
         }
 
+        //댓글 수 읽어주는 기능
         $(document).ready(function () {
             $('#commentsInput').on('keyup', function () {
                 $('#commentsInput_cnt').html("(" + $(this).val().length + " / 150)");
@@ -369,10 +499,161 @@
             });
         });
 
-        $(document).ready(function(){
-        $('.dropdown-toggle').dropdown()
-    });
+        $(document).ready(function () {
+            $('.dropdown-toggle').dropdown()
+        });
 
+        $("#insertComment").on("click", function () {
+            console.log("여깄어요");
+            if ($("#commentsInput").val() != "") {
+                let content = $("#commentsInput").val();
+                let user_nickname = '경민쓰';
+                let user_id = 'pipi123';
+                let post_no = ${ PostDTO.post_no };
+                $.ajax({
+                    url: "/comment/insertComment.do"
+                    , type: "post"
+                    , data: { content: content, user_nickname: user_nickname, user_id: user_id, post_no: post_no }
+                }).done(function (data) {
+                    console.log(data);
+                    $("#commentsInput").val("");
+                    printComment(data);
+                }).fail(function (rs) {
+                    console.log(rs);
+                })
+            }
+        })
+
+
+
+        function checkDelete(comment_no, post_no) {
+            if (confirm("삭제 하시겠습니까?")) {
+                $.ajax({
+                    url: "/comment/deleteComment.do"
+                    , type: "post"
+                    , data: { comment_no: comment_no, post_no: post_no }
+                }).done(function (data) {
+                    printComment(data);
+                }).fail(function (rs) {
+                    console.log(rs);
+                });
+            } else {
+                console.log(comment_no);
+                return false;
+            }
+        }
+
+        function printComment(Commentlist) {
+            $(".allComments").empty();
+            var option = "<div class='commentsLabel'><label id='commentsLabel'>전체 댓글 (" + Commentlist.length + ")</label></div>";
+            $(".allComments").append(option);
+            Commentlist.forEach(function (dto) {
+            	option = "<div class='comment'>\
+                    <div class='modifyComment' value='"+dto.comment_no+"' hidden>\
+                        <div >\
+                            <div class='commentsModifyInput'>\
+                                <textarea id='modifyInput' name='"+dto.comment_no+"' cols='30' rows='10'\
+                                    >"+dto.content+"</textarea>\
+                                <div id='commentModifyBtn'>\
+                                    <span id='commentsInput_cnt'>(0 / 150)</span>\
+                                    <button id='cancelModify' class='btn btn-warning' onclick='commentFormVisible("+dto.comment_no+")'>취소</button>\
+                                    <button id='updateComment' class='btn btn-primary' onclick=\"updateComment("+dto.comment_no+","+dto.post_no+",'"+dto.content+"')\">댓글 수정</button>\
+                                </div>\
+                            </div>\
+                        </div>\
+                    </div>\
+                    <div class='commentForm' value='"+dto.comment_no+"'>\
+                        <div class='user_nickname'>\
+                            <div class='divGroup' id='user_id'><label>"+dto.user_nickname+"</label></div>\
+                            <div class='divGroup'></div>\
+                            <div class='divGroup' id='commentChange'>\
+                                <div class='dropdown'>\
+                                    <ul class='btn btn-default dropdown-toggle' type='button'\
+                                        id='dropdownMenuButton1' data-bs-toggle='dropdown'\
+                                        aria-expanded='false' aria-label='Left Align'>\
+                                        <label id='editComments'>댓글 편집</label>\
+                                    </ul>\
+                                    <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'>\
+                                        <li class='dropdown-item' onclick='modify("+dto.comment_no+")'>수정</li>\
+                                        <li class='dropdown-item'\
+                                            onclick='checkDelete("+dto.comment_no+","+dto.post_no+")'>\
+                                            삭제\
+                                        </li>\
+                                    </ul>\
+                                </div>\
+                            </div>\
+                        </div>\
+                        <div class='comment_content'>"+dto.content+"</div>\
+                        <div class='written_date'>\
+                            <label id='written_date'>"+dto.written_date+"</label>\
+                        </div>\
+                        <div class='reactions'>\
+                            <div class='reaction' id='replyArea'>\
+                                <div class='icon' id='replyIcon'><i\
+                                        class='far fa-comment-dots fa-2x'></i>\
+                                </div>\
+                                <div class='title' id='replyTitle'>답글</div>\
+                            </div>\
+                            <div class='reaction' id='likeArea'>\
+                                <div class='icon' id='likeIcon'> <i class='far fa-heart fa-2x'></i>\
+                                </div>\
+                                <div class='title' id='likeTitle'>좋아요</div>\
+                            </div>\
+                            <div class='reaction' id='reportArea'>\
+                                <div class='icon' id='reportIcon'><i class='fas fa-times fa-2x'></i>\
+                                </div>\
+                                <div class='title' id='reportTitle'>신고</div>\
+                            </div>\
+                        </div>\
+                        <div class='blank'></div>\
+                    </div>\
+                </div>"
+                $(".allComments").append(option);
+
+            })
+
+        };
+        
+         function modify(comment_no){
+        	console.log("하이루루");
+        	let commentDiv = $("div[value='"+comment_no+"']");
+        	modifyComment = commentDiv[0];
+        	commentForm = commentDiv[1];
+        	console.log(modifyComment);
+        	console.log(commentForm);
+        	modifyComment.hidden=false;
+            commentForm.style.visibility = "hidden";
+        } 
+         
+        function commentFormVisible(comment_no){
+        	let commentDiv = $("div[value='"+comment_no+"']");
+        	modifyComment = commentDiv[0];
+        	commentForm = commentDiv[1];
+        	console.log(modifyComment);
+        	console.log(commentForm);
+        	commentForm.style.visibility = "visible"
+        	modifyComment.hidden=true;
+        	return
+        }
+        
+       function updateComment(comment_no,post_no,origin_content){
+    	   let textarea = $("textarea[name='"+comment_no+"']");
+    	   let content = textarea[0].value;
+    	   console.log(textarea);
+    	   console.log(content);
+    	   if(origin_content!=content){
+    		   $.ajax({
+    			   url : "/comment/modifyComment.do"
+    			   ,type:"post"
+    			   ,data : {comment_no:comment_no, content:content, post_no}
+    		   }).done(function(data){
+    			   console.log(data);
+    			   printComment(data);
+    		   }).fail(function(rs){
+    			   console.log(rs);
+    		   })
+    	   } 
+       }
         
     </script>
 </body>

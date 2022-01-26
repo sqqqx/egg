@@ -103,6 +103,7 @@
 	</style>
 	<script>
 	
+	//썸머노트 사진 url을 변경해 주는 함수
 	function sendFile(file, el) {
 		data = new FormData();
 		data.append("file", file);
@@ -115,8 +116,6 @@
 			processData : false,
 			success : function(data) {
 				console.log(data);
-				//imgInfoArr.push(data);
-				//console.log(imgInfoArr);
 				$(el).summernote('editor.insertImage', data.sys_name);
 			}
 		});
@@ -183,7 +182,7 @@
 								</select> <span></span> <select class="form-select category"
 									aria-label="Default select example" id="category2" name="category_no" disabled>
 									<option selected>소분류</option>
-
+									<!-- 소분류는 대분류에 따라 AJAX로 띄우도록 처리 -->
 								</select></td>
 						</tr>
 						<tr>
@@ -217,6 +216,8 @@
 							    
 							</td>
 							<script>
+							
+							  //썸머노트 게시판을 띄워주는 함수, 높이값이나 지원 언어 등의 정보 + 이미지 업로드 처리 방식 (상단 스크립트 부분 속 함수) 
 								$(document).ready(function () {
 									$('#summernote').summernote({
 										placeholder: '강의에 대한 상세 설명을 넣어주세요.',
@@ -266,70 +267,24 @@
 	<a href="/onlinePost/toDetail.do?post_no=22">여기로 가자</a>
 
 	<script>
-		/* $('.summernote').summernote({
-			height: 400,
-			lang: "ko-KR",
-			minHeight: null,
-			maxHeight: null,
-			focus: true,
-			callbacks: {
-				console.log("암히어2")
-				onImageUpload: function (files, editor, welEditable) {
-					console.log("암히어1")
-					for (var i = 0; i < files.length; i++) {
-						sendFile(files[i], this);
-					}
-				}
-			}
-		}); */
-
-		/* function sendFile(file, editor) {
-			console.log("암히어3");
-			var form_data = new FormData();
-			form_data.append('file', file);
-			$.ajax({
-
-				data: form_data,
-				crossDomain: true,
-				type: "POST",
-				url: '/onlinePost/getPicUrl.do',
-				cache: false,
-				contentType: false,
-				enctype: 'multipart/form-data',
-				processData: false
-			}).done(function (url) {
-				console.log("성공함");
-				$(editor).summernote('insertImage', url, function ($image) {
-					$image.css('width', "25%");
-				})
-			}).fail(function (e) {
-				console.log("실패요");
-				console.log(e);
-			}); */
-			/* 
-				success: function (url) {
-					$(editor).summernote('insertImage', url, function ($image) {
-						$image.css('width', "25%");
-					});
-				} 
-
-		}*/
 
 
-
+	    //reset버튼 눌렀을 경우 데이터 처리
 		console.log($("#category2 option:selected").val());
 		$("#reset").on("click", function () {
 			if (confirm("입력된 데이터가 모두 삭제됩니다. 정말 새로 쓰시겠습니까?")) {
 				$("#category_no").val("");
 				$("#title").val("");
-				($(".note-editable").children()).remove();
+				($(".note-editable").children()).remove(); //썸머노트 에디터 속 내용 삭제
 			}
 		})
-
+		
+		//대분류가 선택되는 경우, 소분류 리스트를 띄워주는 함수
+		//parameter로 대분류 넘기면 그에 맞는 소분류 불러옴
 		$("#category1").on("change", function () {
 			console.log($("#category1").val());
-			let bigCategory = $("#category1").val()
-			if (bigCategory != "대분류") {
+			let bigCategory = $("#category1").val(); //대분류 값
+			if (bigCategory != "대분류") { //=="대분류"---->아무것도 선택 안됨
 				$.ajax({
 					url: "/category/getChildCategory.do"
 					, type: "post"
@@ -345,25 +300,27 @@
 				}).fail(function (e) {
 					console.log("실패했어유ㅋㅋ");
 				})
-			} else {
+			} else { //아무것도 선택 안되었을때는
 				$("#category2").attr("disabled", true);
 			}
 		})
 
-		/*  $("#category2").on("change",function(){
-			 console.log($("#category2 option:selected").val());
-		 }); */
-
-		function popup() {
+		
+		//상품 검색 팝업 띄우기
+		function popup() { 
 			var url = "/product/toSearchProduct.do";
 			var name = "searchProduct";
 			window.open(url, name, "height=1000,width=1000");
 		}
 
-		$("#productSearchBtn").on("click", function () {
+		
+		//상품검색 버튼 클릭시 팝업 띄워주기
+		$("#productSearchBtn").on("click", function () { 
 			popup();
 		})
 
+		
+		//등록 버튼 눌렀을 때
 		$("#insert").on("click", function () {
 			if ($("#category2 option:selected").val() == '소분류') {
 				alert("카테고리를 설정하여 주세요.");
@@ -384,7 +341,7 @@
 		})
 		
 		
-		
+		//썸네일 파일 선택되면 위에 띄워주는 함수
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -398,7 +355,7 @@
             }
         }
 
-        // 이벤트를 바인딩해서 input에 파일이 올라올때 (input에 change를 트리거할때) 위의 함수를 this context로 실행합니다.
+        // 이벤트를 바인딩해서 input에 파일이 올라올때 위의 함수를 this context로 실행합니다.
         $("#thumbNail").change(function () {
             readURL(this);
         });
