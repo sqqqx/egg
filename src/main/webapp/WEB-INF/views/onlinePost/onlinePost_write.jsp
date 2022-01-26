@@ -261,7 +261,7 @@
 			</div>
 		</div>
 	</div>
-	<a href="/onlinePost/toDetail.do?post_no=30">여기로 가자</a>
+	<a href="/onlinePost/toDetail.do?post_no=22">여기로 가자</a>
 
 	<script>
 

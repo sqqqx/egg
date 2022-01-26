@@ -36,4 +36,10 @@ public class CommentService {
 	public List<ReplyDTO> getAllReplies(int comment_no) throws Exception{
 		return dao.getAllReplies(comment_no);
 	}
+	
+	public boolean insertReply(ReplyDTO dto) throws Exception{
+		if(dao.insertReply(dto)>0) {
+			return true;
+		}return false;
+	}
 }

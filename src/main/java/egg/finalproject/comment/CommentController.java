@@ -57,7 +57,8 @@ public class CommentController {
 		return null;
 	}
 	
-	@RequestMapping("/getAllReplies")
+	@RequestMapping("/getAllReplies.do")
+	@ResponseBody
 	public List<ReplyDTO> getAllReplies(int comment_no) throws Exception{
 		return service.getAllReplies(comment_no);
 	}
@@ -68,6 +69,8 @@ public class CommentController {
 		System.out.println(dto.getPost_no());
 		System.out.println(dto.getComment_no());
 		System.out.println(dto.getContent());
-		return null;
+		if(service.insertReply(dto)) {
+			return service.getAllReplies(dto.getComment_no());
+		}return null;
 	}
 }

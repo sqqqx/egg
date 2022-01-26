@@ -30,4 +30,8 @@ public class CommentDAO {
 	public List<ReplyDTO> getAllReplies(int comment_no) throws Exception{
 		return session.selectList("commentMapper.getAllReplies",comment_no);
 	}
+	
+	public int insertReply(ReplyDTO dto) throws Exception{
+		return session.insert("commentMapper.insertReply",dto);
+	}
 }
