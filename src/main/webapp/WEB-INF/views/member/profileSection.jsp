@@ -21,7 +21,7 @@
               <li>
                   <ul><span id="toModifyPw" class="userTab">비밀번호 수정</span></ul>
                   <ul><a href="${pagecontext.request.contextPath}/member/toUserInformation?user_id=${loginSession.user_id}">회원정보 조회</a></ul>
-                  <ul>쪽지함</ul>
+                  <ul><span id="toViewMessage" class="userTab">쪽지함</span></ul>
                   <ul>찜한 게시글</ul>
                   <ul>내가 쓴 글</ul>
                   <ul>주문 결제 조회</ul>
@@ -36,19 +36,23 @@
 		$("#withdrawal").on("click", function(){
 			if(confirm("회원 탈퇴를 진행 하시겠습니까?")){
 				if(confirm("정말로 씨리어쓸리 회원탈퇴를 하시겠습니까?ㅠㅠㅠ")){
-					//$(location).attr("href", "${pagecontext.request.contextPath}/member/withdrawal.do?user_id=${loginSession.user_id}");
-					$(location).attr("href", "${pagecontext.request.contextPath}/member/withdrawal.do?user_id=test");
+					$(location).attr("href", "${pagecontext.request.contextPath}/member/withdrawal.do?user_id=${loginSession.user_id}");
 				}
 			}
 		})
 		
+		// 비밀번호 수정
 		$("#toModifyPw").on("click", function(){
-			//let openUrl = "${pagecontext.request.contextPath}/member/toModifyPw?user_id=${loginSession.user_id}";
-			let openUrl = "${pagecontext.request.contextPath}/member/toModifyPw?user_id=test";	// 임시아이디
+			let openUrl = "${pagecontext.request.contextPath}/member/toModifyPw?user_id=${loginSession.user_id}";
 			let name = "비밀번호 수정";
 			let option = "width=600, height=500, top=300";
 			
 			window.open(openUrl, name, option);
+		})
+		
+		// 쪽지함
+		$("#toViewMessage").on("click", function(){
+			$(location).attr("href", "${pagecontext.request.contextPath}/message/toViewMessage?type=received&user_id=${loginSession.user_id}&currentPage=1");
 		})
 		
 	</script>

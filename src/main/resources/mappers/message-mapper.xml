@@ -4,5 +4,40 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="messageMapper">
-
+	<!-- (마이페이지) 쪽지 보내기 -->
+	<insert id="sendMessage" parameterType="messageDTO">
+		insert into tbl_message
+			values(message_no.nextval, #{title}, #{content}, 'N', sysdate, #{from_id}, #{to_id}, 'N', 'N')
+	</insert>
+	
+	<!-- (마이페이지) 쪽지 불러오기 -->
+	<select id="getMsgList" parameterType="map" resultType="messageDTO">
+		select message_no, title, content, message_check, message_date, from_id, to_id, from_delete, to_delete
+			from (select row_number() over (order by message_no desc) as msgRank, m.* from tbl_message m where 
+		
+		<!-- 받는 쪽지 -->
+		<if test="type == 'received'">
+			to_id=#{user_id}
+		</if>
+		<!-- 보낸 쪽지 -->
+		<if test="type == 'sent'">
+			from_id=#{user_id}
+		</if>
+		
+		) where msgRank between #{startRange} and #{endRange}
+	</select>
+	
+	<!-- (마이페이지) 전체 쪽지 개수 -->
+	<select id="getMsgTotalCnt" parameterType="map" resultType="int">
+		select count(*) from tbl_message where 
+		
+		<!-- 받는 쪽지 -->
+		<if test="type == 'received'">
+			to_id=#{user_id}
+		</if>
+		<!-- 보낸 쪽지 -->
+		<if test="type == 'sent'">
+			from_id=#{user_id}
+		</if>
+	</select>
 </mapper>

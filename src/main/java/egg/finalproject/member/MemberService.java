@@ -125,4 +125,9 @@ public class MemberService {
 		return dao.modifyPassword(user_id, password);
 	}
 	
+	// (마이페이지) 휴대전화 중복검사
+	public boolean phoneCheck(String phone) throws Exception {
+		System.out.println("MemberService / 휴대전화 중복검사 phone - " + phone);
+		return dao.phoneCheck(phone);
+	}
 }
