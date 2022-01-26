@@ -7,9 +7,15 @@
 <head>
 <meta charset="UTF-8">
 <title>아이디 찾기</title>
+<style>
+	.btnBox > div {
+		text-align: center;
+	}
+</style>
 </head>
 <body>
-	<div class="row mb-3">
+	<div class="container">
+		<div class="row mb-3">
             <div class="col-4">
                 <select class="form-select" aria-label="Default select example" id="phone1" required>
                     <option selected>010</option>
@@ -43,10 +49,21 @@
             <input type="text" id="phone" name="phone">
         </div>
         
-        <div id="idView"></div>
+        <div id="idView">
+        	<label>아이디</label>
+        </div>
+        
+        <div class="row my-5 btnBox">
+        <div class="col">
+            <button class="btn btn-secondary btn-lg clsBtn" type="button" id="backBtn">뒤로 가기</button>
+        </div>
+    	</div>
+    </div>
+    
+    
         
         <script>
-     // 문자인증
+     	// 문자인증
         let code2 = "";
         $("#btn_phone").click(function(){
         	$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
@@ -54,7 +71,7 @@
         	alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오."); 
         	$.ajax({
         		type:"GET",
-        		url:"${pageContext.request.contextPath}/member/phoneCheck?phone=" + phone, 
+        		url:"${pageContext.request.contextPath}/member/phoneCheck?phone=" + phone,
         		cache : false,
         		success:function(data){
         			if(data == "error"){
@@ -89,6 +106,11 @@
       			alert("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
       		}
       	})
+      	
+      	// 뒤로가기 버튼
+	    $("#backBtn").click(function(){
+	    	location.href="${pageContext.request.contextPath}/toLogin.do"
+	    })
         </script>
 </body>
 </html>

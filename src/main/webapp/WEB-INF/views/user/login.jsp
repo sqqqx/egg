@@ -45,8 +45,9 @@
         <form id="loginForm">
         <div class="row mb-3">
             <div class="col-12">
-              <input type="text" class="form-control" id="id" name="user_id" placeholder="아이디 / 이메일을 입력해주세요.">
+              <input type="text" class="form-control" id="user_id" name="user_id" placeholder="아이디 / 이메일을 입력해주세요.">
             </div>
+            
         </div>
         <div class="row mb-3">
             <div class="col">
@@ -55,82 +56,87 @@
         </div>
         <div class="row mb-3">
             <div class="col">
-				<input type="checkbox" class="form-check-input" id="rememberId"> 아이디 기억하기
+				<input type="checkbox" class="form-check-input" id="rememberId" name="rememberId"> 아이디 기억하기
 			</div>
         </div>
         <div class="row">
             <div class="col">
 				<button type="button" class="btn btn-dark" id="loginBtn">로그인</button>
-				<img id="kakaoLogin" onclick="kakaoLogin();" src="/resources/img/kakao_login_medium_narrow.png">
 			</div>
         </div>
         <div class="row mt-3">
             <div class="col">
                 <a href="${pageContext.request.contextPath}/toSignup.do">회원가입</a> // 
-                <a href="${pageContext.request.contextPath}/member/idFind.do">아이디</a> * <a href="">비밀번호</a>찾기
+                <a href="${pageContext.request.contextPath}/member/idFind.do">아이디</a> * <a href="${pageContext.request.contextPath}/member/pwFind.do">비밀번호</a>찾기
             </div>
         </div>
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
- 	// 로그인 요청
- 	$("#loginBtn").on("click", function(){
-		login();
-	})
- 	function login(){
- 		let data = $("#loginForm").serialize();
-		console.log(data);
-		$.ajax({
-			url : "${pageContext.request.contextPath}/member/login.do"
-			, type : "post"
-			, data : data
-		}).done(function(rs){
-			console.log(rs);
-			if(rs == "성공"){
-				location.href = "${pageContext.request.contextPath}/online/toMain.do";
-			}else if(rs == "실패"){
-				alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
-			}
-		}).fail(function(e){
-			console.log(e);
-		}) 
-	};
+    
+	// 쿠키 선생님이랑 같이 했던 코드
+	// 쿠키 값 가져와 id 인풋창에 세팅 
+		console.log(document.cookie);
+		let regex = /rememberId=(.*)/;
+		if (regex.test(document.cookie)) {
+			let id = RegExp.$1;
+			$("#user_id").val(id);
+		}
+		
+		// 로그인 요청
+		 	$("#loginBtn").on("click", function(){
+		 		// 아이디 기억하기 여부 검사
+		 		if($("#rememberId:checked").length == 1){ // 체크 됨.
+		 			rememberId();
+		 		}else{ //체크 안됨.
+		 			deleteRememberId();
+		 		}		 		
+		 		
+				let data = $("#loginForm").serialize();
+				console.log(data);
+				$.ajax({
+					url : "${pageContext.request.contextPath}/member/login.do"
+					, type : "post"
+					, data : data
+				}).done(function(rs){
+					console.log(rs);
+					if(rs == "성공"){
+						location.href = "${pageContext.request.contextPath}/online/toMain.do";
+					}else if(rs == "실패"){
+						alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
+					}
+				}).fail(function(e){
+					console.log(e);
+				}) 
+			}); 
+
+		// 로그인 쿠키 삭제
+		function deleteRememberId() {
+			// 쿠키 삭제 : 쿠키는 삭제 X -> 쿠키는 만료일이 되어야 삭제가 됨
+			// 만료일을 과거날짜로 덮어씌워 버림.
+			// 만료일 날짜 형식 2022-02-03T10:06:42.000Z
+			// 과거일 : 1월 1일
+			// Sat, 01 Jan 2022 00:00:10 GMT
+			document.cookie = "rememberId=;Expires=Sat, 01 Jan 2022 00:00:10 GMT";
+		}
+
+		// 로그인 쿠키 생성
+		function rememberId() {
+			let expiryDate = new Date();
+			console.log("오늘 날짜 ", expiryDate);
+			expiryDate.setDate(expiryDate.getDate() + 30);
+			console.log("30일 뒤", expiryDate);
+
+			let key = "rememberId";
+			let value = $("#id").val();
+			document.cookie = key + "=" + value + ";Expires=" + expiryDate;
+		}
     
     
     $("#backBtn").click(function(){
     	location.href="${pageContext.request.contextPath}/online/toMain.do"
-    })
-    
-    //카카오로그인
-  function kakaoLogin() {
-
-    $.ajax({
-        url: '/login/getKakaoAuthUrl',
-        type: 'get',
-        async: false,
-        dataType: 'text',
-        success: function (res) {
-            location.href = res;
-        }
-    });
-  }
-
-  $(document).ready(function() {
-
-      var kakaoInfo = '${kakaoInfo}';
-
-      if(kakaoInfo != ""){
-          var data = JSON.parse(kakaoInfo);
-
-          alert("카카오로그인 성공 \n accessToken : " + data['accessToken']);
-          alert(
-          "user : \n" + "email : "
-          + data['email']  
-          + "\n nickname : " 
-          + data['nickname']);
-      }
-  });  
+    }) 
     </script>
 </body>
 </html>

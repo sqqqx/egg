@@ -214,20 +214,19 @@
     $("#btn_phone").click(function(){
     	$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
     	let phone = $("#phone").val();
-    	alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오."); 
     	$.ajax({
     		type:"GET",
     		url:"${pageContext.request.contextPath}/member/phoneCheck?phone=" + phone, 
     		cache : false,
     		success:function(data){
-    			if(data == "error"){
-    				alert("휴대폰 번호가 올바르지 않습니다.")
-    			}else{
-    				$("#phoneCheck").attr("disabled",false);
-    				alert("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
-    				code2 = data;
+    				if(data == "error"){
+        				alert("휴대폰 번호가 올바르지 않습니다.")
+        			}else{
+        				$("#phoneCheck").attr("disabled",false);
+        				alert("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
+        				code2 = data;
+        			}
     			}
-    		}
     	})
     })
     
@@ -244,11 +243,10 @@
   		}
   	})
 
-
-    
     // 유효성검사
     // ID 정규식
     $("#id").on("keyup", function(){
+    	$("#user_id").val("");
     	let regExp = /^[a-z0-9]{4,16}$/;
     	if($("#id").val() != ""){
     		if(regExp.test($("#id").val())){
@@ -298,6 +296,7 @@
     
     // 닉네임 정규식
     $("#nickname").on("keyup", function(){
+    	$("#user_nickname").val("");
 		let regExp = /^[가-힣a-zA-Z0-9]{4,12}$/;
 		if($("#nickname").val() != "") {
 			if(regExp.test($("#nickname").val())){
@@ -312,6 +311,7 @@
     
     // 이메일 정규식
     $("#em").on("keyup", function(){
+    	$("#email").val("");
 		let regExp = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 		if($("#em").val() != "") {
 			if(regExp.test($("#em").val())){
@@ -322,13 +322,13 @@
 		}else if($("#em").val() == ""){
 			$("#email_regex").empty();
 		}
-		
 	})
     
     // 휴대전화 정규식
 	$("#phone2").on("keyup", function(){
+		$("#phone").val("");
 		if( !( (event.keyCode >= 48 && event.keyCode<=57) || (event.keyCode >= 96 && event.keyCode <= 105)
-			|| event.keyCode==8 ) ){
+			|| event.keyCode==8 || event.keyCode==9 ) ){
 				$("#phone2").val("");
 				alert("숫자만 입력해주세요.");
 			event.returnValue=false;
@@ -336,8 +336,9 @@
     })
     
     $("#phone3").on("keyup", function(){
+    	$("#phone").val("");
 		if( !( (event.keyCode >= 48 && event.keyCode<=57) || (event.keyCode >= 96 && event.keyCode <= 105)
-			|| event.keyCode==8 ) ){
+			|| event.keyCode==8 || event.keyCode==9 ) ){
 			$("#phone3").val("");
 				alert("숫자만 입력해주세요.");
 			event.returnValue=false;
@@ -346,8 +347,9 @@
 	
     // 아이디 중복확인
     $("#btn_idcheck").on("click", function(){
+    	let regExp = /^[a-z0-9]{4,16}$/;
+    	if(regExp.test($("#id").val())){
 		let id = $("#id").val();
-		console.log(id);
 		
 		$.ajax({
 			url : "${pageContext.request.contextPath}/member/toIdCheck.do"
@@ -364,12 +366,17 @@
 		}).fail(function(e){
 			console.log(e);
 		});
+    	} else {
+    		alert("양식에 맞게 입력해주세요.");
+    		return;
+    	}
 	})
 	
 	// 닉네임 중복확인
     $("#btn_nickname").on("click", function(){
+    	let regExp = /^[가-힣a-zA-Z0-9]{4,12}$/;
+    	if(regExp.test($("#nickname").val())){
 		let nickname = $("#nickname").val();
-		
 		$.ajax({
 			url : "${pageContext.request.contextPath}/member/toNicknameCheck.do"
 			, type : "post"
@@ -390,10 +397,17 @@
 		}).fail(function(e){
 			console.log(e);
 		});
+    	}else {
+    		alert("양식에 맞게 입력해주세요.");
+    		return;
+    	}
 	})
+    
 	
 	// 이메일 중복확인
     $("#btn_email").on("click", function(){
+    	let regExp = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    	if(regExp.test($("#em").val())){
 		let email = $("#em").val();
 		$.ajax({
 			url : "${pageContext.request.contextPath}/member/toEmailCheck.do"
@@ -410,6 +424,10 @@
 		}).fail(function(e){
 			console.log(e);
 		});
+    	} else {
+    		alert("양식에 맞게 입력해주세요.");
+    		return;
+    	}
 	})
 	
 	// 회원가입 버튼 클릭시
@@ -438,7 +456,11 @@
 	            alert("닉네임 중복검사를 해주세요.");
 	            $("#nickname").focus();
 	            return
-	         }else if($("#phoneDoubleChk").val() == ""){
+	         }else if($("#phone").val() == ""){
+		        alert("휴대전화 번호를 다시입력 후 인증절차를 진행해주세요");
+		        $("#phone2").focus();
+		        return
+		     }else if($("#phoneDoubleChk").val() == ""){
 	            alert("휴대전화 인증절차를 진행해주세요.");
 	            $("#phone2").focus();
 	            return
