@@ -111,7 +111,6 @@ public class MemberDTO {
 	public void setBlacklist(int blacklist) {
 		this.blacklist = blacklist;
 	}
-	
 
 	@Override
 	public String toString() {
