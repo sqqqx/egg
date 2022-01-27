@@ -1,21 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> 
 <link rel="stylesheet" href="/resources/css/header.css"> 
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
  <div class="container-fluid">
         <div class="row header">
             <!--로고영역-->
             <div class="col-2 imgBox">
-                <a href="/online/toMain.do">
-                	<img src="/resources/img/logo.png">
-                </a>
+            	<c:choose>
+            		<c:when test="${loginSession.type==0}">
+            			 <a href="/admin/toAdminMain">
+		                	<img src="/resources/img/logo.png">
+		                </a>
+            		</c:when>
+            		<c:otherwise>
+            			 <a href="/online/toMain.do">
+		                	<img src="/resources/img/logo.png">
+		                </a>
+            		</c:otherwise>
+            	</c:choose>
             </div>
             <!-- 검색창 -->
             <div class="col-5 searchBox">
@@ -47,7 +56,7 @@
             <!--쪽지함(비로그인시 svg 안보여야함) // 로그인세션활용하여 c:if처리 할것-->
             <div class="col-1">
             	<c:if test = "${not empty loginSession }">
-	                <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+	                <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" id="toMessage" class="bi bi-envelope" viewBox="0 0 16 16">
 	                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
 	                  </svg>
                 </c:if>
@@ -72,7 +81,7 @@
 				           <div class="row align-content-center textList2">
 				           			정보 수정
 				           </div>
-				           <div class="row align-content-center textList2">
+				           <div class="row align-content-center textList2" id="toLogout">
 				           			로그 아웃
 				           </div>
 		       			 </div>
@@ -211,6 +220,13 @@
          //마이페이지 div창 눌렀을 경우 mypage.jsp로 이동(MemberController이용)
          $("#toMypage").click(function(){
         	 location.href="${pageContext.request.contextPath}/member/toMyPage"
+         })
+         $("#toMessage").click(function(){
+        	 location.href="${pagecontext.request.contextPath}/message/toViewMessage?type=received&user_id=${loginSession.user_id}&currentPage=1";
+         })
+         //로그아웃버튼 누르면 로그아웃처리
+         $("#toLogout").click(function(){
+        	 location.href="${pageContext.request.contextPath}/member/logout"
          })
     </script>
 </body>

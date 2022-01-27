@@ -37,19 +37,83 @@ public class MessageController {
 	
 	// (마이페이지) 쪽지함 페이지 요청
 	@RequestMapping("/toViewMessage")
-	public String toViewMessage(Model model, String type, String user_id, int currentPage) throws Exception {
+	public String toViewMessage(Model model, String type, String user_id, int currentPage, String orderMsg) throws Exception {
 		// type: received - 받은쪽지 / sent - 보낸쪽지
-		System.out.println("MessageController toViewMessage - type: " + type + " / user_Id: " + user_id + " / currentPage: " + currentPage);
+		System.out.println("MessageController toViewMessage - type: " + type + " / user_Id: " + user_id
+				+ " / currentPage: " + currentPage + " / orderMsg: " + orderMsg);
 		
 		// 현재 페이지에 해당하는 쪽지 리스트 가져오기
-		List<MessageDTO> msgList = service.getMsgList(type, user_id, currentPage);
+		List<MessageDTO> msgList = service.getMsgList(type, user_id, currentPage, orderMsg, null, null);
 		if(msgList != null) {
 			model.addAttribute("msgList", msgList);
-			Map<String, Object> naviMap = service.getPageNavi(type, user_id, currentPage);
+			Map<String, Object> naviMap = service.getPageNavi(type, user_id, currentPage, orderMsg, null, null);
 			System.out.println("MessageController / naviMap jsp보내기 전 - type: " + naviMap.get("type"));
 			model.addAttribute("naviMap", naviMap);
 		}
+		
+		// 정렬이 null이면 최신순으로 정렬
+		if(orderMsg == null) {
+			orderMsg = "latest";
+		}
+		model.addAttribute("orderMsg", orderMsg);
 		return "/member/viewMessage";
+	}
+	
+	// (마이페이지) 쪽지 삭제 (1개)
+	@RequestMapping("/deleteMsg.do")
+	public String deleteMsg(String type, String user_id, int currentPage, int message_no, String orderMsg) throws Exception {
+		System.out.println("MessageController / 쪽지삭제 - message_no: " + message_no);
+		service.deleteMsg(message_no);
+		return "redirect:/message/toViewMessage?type=" + type + "&user_id=" + user_id + "&currentPage=" + currentPage + "&orderMsg=" + orderMsg;
+	}
+	
+	// (마이페이지) 체크된 메세지 처리
+	@RequestMapping("/checkedMsg.do")
+	public String checkedMsgDelete(String type, String user_id, int currentPage, String checkOpt, int[] checkedMsg, String orderMsg) throws Exception {
+		
+		System.out.println("MessageController / 체크된 쪽지 전부 삭제 - type: " + type + " / user_id: " + user_id
+				+ " / currentPage: " + currentPage + " / checkOpt: " + checkOpt);
+		for(int msg : checkedMsg) {
+			System.out.println("체크된 메시지 번호: " + msg);
+		}
+		if(checkOpt.equals("read")) {	// 체크된 메세지 전부 읽음 처리
+			service.checkedMsgRead(checkedMsg);
+		} else if(checkOpt.equals("delete")) {	// 체크된 메세지 전부 삭제
+			service.checkedMsgDelete(checkedMsg);
+		}
+		
+		return "redirect:/message/toViewMessage?type=" + type + "&user_id=" + user_id + "&currentPage=" + currentPage + "&orderMsg=" + orderMsg;
+	}
+	
+	// (마이페이지) 검색 기능
+	@RequestMapping("/searchMsg.do")
+	public String searchMsg(Model model, String type, String user_id, int currentPage, String orderMsg, String searchOpt, String inputText) throws Exception {
+		System.out.println("MessageController / 검색 기능 - inputText: " + inputText + " / searchOpt: " + searchOpt + " / type: " + type
+				+ " / user_id: " + user_id + " / currentPage: " + currentPage + " / orderMsg: " + orderMsg);
+		currentPage = 1;
+		// 현재 페이지에 해당하는 쪽지 리스트 가져오기
+		List<MessageDTO> msgList = service.getMsgList(type, user_id, currentPage, orderMsg, searchOpt, inputText);
+		if(msgList != null) {
+			model.addAttribute("msgList", msgList);
+			Map<String, Object> naviMap = service.getPageNavi(type, user_id, currentPage, orderMsg, searchOpt, inputText);
+			System.out.println("MessageController / naviMap jsp보내기 전 - type: " + naviMap.get("type"));
+			model.addAttribute("naviMap", naviMap);
+		}	
+				
+		// 정렬이 null이면 최신순으로 정렬
+		if(orderMsg == null) {
+			orderMsg = "latest";
+		}
+		model.addAttribute("orderMsg", orderMsg);
+		model.addAttribute("searchOpt", searchOpt);
+		model.addAttribute("inputText", inputText);
+		return "/member/viewMessage";
+	}
+	
+	// (마이페이지) 쪽지 상세보기
+	@RequestMapping("/detailMsg.do")
+	public String detailMsg() throws Exception {
+		return "/member/detailMsg";
 	}
 	
 }

@@ -27,13 +27,14 @@ public class MessageService {
 	}
 	
 	// (마이페이지) 쪽지 불러오기
-	public List<MessageDTO> getMsgList(String type, String user_id, int currentPage) throws Exception {
-		System.out.println("MessageService / 쪽지 불러오기 - type: " + type + " / user_id: " + user_id + " / currentPage: " + currentPage);
+	public List<MessageDTO> getMsgList(String type, String user_id, int currentPage, String orderMsg, String searchOpt, String inputText) throws Exception {
+		System.out.println("MessageService / 쪽지 불러오기 - type: " + type + " / user_id: " + user_id + " / currentPage: " + currentPage
+				+ " / orderMsg: " + orderMsg + " / searchOpt: " + searchOpt + " / inputText: " + inputText);
 		int startRange = currentPage * msgCntPerPage - (msgCntPerPage-1);
 		int endRange = currentPage * msgCntPerPage;
 		System.out.println("startRange: " + startRange + " / endRange: " + endRange);
 		
-		List<MessageDTO> msgList = dao.getMsgList(type, user_id, startRange, endRange);
+		List<MessageDTO> msgList = dao.getMsgList(type, user_id, startRange, endRange, orderMsg, searchOpt, inputText);
 		for(MessageDTO msg : msgList) {
 			System.out.println(msg);
 		}
@@ -41,10 +42,11 @@ public class MessageService {
 	}
 	
 	// (마이페이지) 쪽지 페이징
-	public Map<String, Object> getPageNavi(String type, String user_id, int currentPage) throws Exception {
-		System.out.println("MessageService / 쪽지 페이징 - type: " + type + " / user_id: " + user_id + " / currentPage: " + currentPage);
+	public Map<String, Object> getPageNavi(String type, String user_id, int currentPage, String orderMsg, String searchOpt, String inputText) throws Exception {
+		System.out.println("MessageService / 쪽지 페이징 - type: " + type + " / user_id: " + user_id + " / currentPage: " + currentPage
+				+ " / orderMsg: " + orderMsg + " / searchOpt: " + searchOpt + " / inputText: " + inputText);
 		// 해당 아이디에 해당하는 전체 쪽지 개수
-		int msgTotalCnt = dao.getMsgTotalCnt(type, user_id);
+		int msgTotalCnt = dao.getMsgTotalCnt(type, user_id, orderMsg, searchOpt, inputText);
 		System.out.println("메세지 총 개수: " + msgTotalCnt);
 		
 		// 메세지 유무 검사
@@ -97,8 +99,7 @@ public class MessageService {
 			System.out.println("needPrev: " + needPrev);
 			System.out.println("needNext: " + needNext);
 			System.out.println("currentPage: " + currentPage);
-			System.out.println("type" + type);
-			
+			System.out.println("type: " + type);
 			
 			return map;	
 		} else {
@@ -116,5 +117,23 @@ public class MessageService {
 			
 			return map;	
 		}
+	}
+	
+	// (마이페이지) 쪽지 삭제 (1개)
+	public int deleteMsg(int message_no) throws Exception {
+		System.out.println("MessageService / 쪽지 삭제 - message_no: " + message_no);
+		return dao.deleteMsg(message_no);
+	}
+	
+	// (마이페이지) 체크된 쪽지 전부 삭제
+	public int checkedMsgDelete(int[] checkedMsg) throws Exception {
+		System.out.println("MessageService / 체크된 쪽지 전부 삭제 - checkedMsg: " + checkedMsg);
+		return dao.checkedMsgDelete(checkedMsg);
+	}
+	
+	// (마이페이지) 체크된 쪽지 전부 읽음처리
+	public int checkedMsgRead(int[] checkedMsg) throws Exception {
+		System.out.println("MessageService / 체크된 쪽지 전부 읽음처리 - checkedMsg: " + checkedMsg);
+		return dao.checkedMsgRead(checkedMsg);
 	}
 }

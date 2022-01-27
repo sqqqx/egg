@@ -11,9 +11,131 @@
 	</insert>
 	
 	<!-- (마이페이지) 쪽지 불러오기 -->
-	<select id="getMsgList" parameterType="map" resultType="messageDTO">
+	<select id="getMsgList_latest" parameterType="map" resultType="messageDTO">
 		select message_no, title, content, message_check, message_date, from_id, to_id, from_delete, to_delete
 			from (select row_number() over (order by message_no desc) as msgRank, m.* from tbl_message m where 
+		
+		
+		<!-- 받는 쪽지 -->
+		<if test="type == 'received'">
+			to_id=#{user_id}
+			<if test="searchOpt == 'user_id'">
+				and from_id like '%' ||  #{inputText} || '%'
+			</if>
+		</if>
+		<!-- 보낸 쪽지 -->
+		<if test="type == 'sent'">
+			from_id=#{user_id}
+			<if test="searchOpt == 'user_id'">
+				and from_id like '%' ||  #{inputText} || '%'
+			</if>
+		</if>
+		
+		<if test="searchOpt == 'title'">
+			and title like '%' ||  #{inputText} || '%'
+		</if>
+		
+		) where msgRank between #{startRange} and #{endRange}
+	</select>
+	
+	<!-- (마이페이지) 전체 쪽지 개수 -->
+	<select id="getMsgTotalCnt_all" parameterType="map" resultType="int">
+		select count(*) from tbl_message where 
+		
+		<!-- 받는 쪽지 -->
+		<if test="type == 'received'">
+			to_id=#{user_id}
+			<if test="searchOpt == 'user_id'">
+				and from_id like '%' ||  #{inputText} || '%'
+			</if>
+		</if>
+		<!-- 보낸 쪽지 -->
+		<if test="type == 'sent'">
+			from_id=#{user_id}
+			<if test="searchOpt == 'user_id'">
+				and from_id like '%' ||  #{inputText} || '%'
+			</if>
+		</if>
+		<if test="searchOpt == 'title'">
+			and title like '%' ||  #{inputText} || '%'
+		</if>
+	</select>
+	
+	<!-- (마이페이지) 미열람 쪽지 개수 -->
+	<select id="getMsgTotalCnt_unread" parameterType="map" resultType="int">
+		select count(*) from tbl_message where 
+		
+		<!-- 받는 쪽지 -->
+		<if test="type == 'received'">
+			to_id=#{user_id}
+			<if test="searchOpt == 'user_id'">
+				and from_id like '%' ||  #{inputText} || '%'
+			</if>
+		</if>
+		<!-- 보낸 쪽지 -->
+		<if test="type == 'sent'">
+			from_id=#{user_id}
+			<if test="searchOpt == 'user_id'">
+				and from_id like '%' ||  #{inputText} || '%'
+			</if>
+		</if>
+		<if test="searchOpt == 'title'">
+			and title like '%' ||  #{inputText} || '%'
+		</if>
+		and message_check='N'
+	</select>
+	
+	<!-- (마이페이지) 열람 쪽지 개수 -->
+	<select id="getMsgTotalCnt_read" parameterType="map" resultType="int">
+		select count(*) from tbl_message where 
+		
+		<!-- 받는 쪽지 -->
+		<if test="type == 'received'">
+			to_id=#{user_id}
+			<if test="searchOpt == 'user_id'">
+				and from_id like '%' ||  #{inputText} || '%'
+			</if>
+		</if>
+		<!-- 보낸 쪽지 -->
+		<if test="type == 'sent'">
+			from_id=#{user_id}
+			<if test="searchOpt == 'user_id'">
+				and from_id like '%' ||  #{inputText} || '%'
+			</if>
+		</if>
+		<if test="searchOpt == 'title'">
+			and title like '%' ||  #{inputText} || '%'
+		</if>
+		and message_check='Y'
+	</select>
+	
+	<!-- (마이페이지) 쪽지 삭제 (1개) -->
+	<delete id="deleteMsg">
+		delete from tbl_message where message_no = #{message_no}
+	</delete>
+	
+	<!-- (마이페이지) 체크된 쪽지 전부 삭제 -->
+	<delete id="checkedMsgDelete" parameterType="java.util.List">
+		delete from tbl_message where message_no in (
+		<foreach collection="array" item="msgNo" index="index" separator=",">
+			#{msgNo}	
+		</foreach>
+		)
+	</delete>
+	
+	<!-- (마이페이지) 체크된 쪽지 전부 읽음처리 -->
+	<update id="checkedMsgRead" parameterType="java.util.List">
+		update tbl_message set message_check='Y' where message_no in(
+		<foreach collection="array" item="msgNo" index="index" separator=",">
+			#{msgNo}	
+		</foreach>
+		)
+	</update>
+	
+	<!-- 쪽지 정렬 (오래된 순) -->
+	<select id="getMsgList_oldest" parameterType="map" resultType="messageDTO">
+		select message_no, title, content, message_check, message_date, from_id, to_id, from_delete, to_delete
+			from (select row_number() over (order by message_no) as msgRank, m.* from tbl_message m where 
 		
 		<!-- 받는 쪽지 -->
 		<if test="type == 'received'">
@@ -27,9 +149,10 @@
 		) where msgRank between #{startRange} and #{endRange}
 	</select>
 	
-	<!-- (마이페이지) 전체 쪽지 개수 -->
-	<select id="getMsgTotalCnt" parameterType="map" resultType="int">
-		select count(*) from tbl_message where 
+	<!-- 쪽지 정렬 (미열람 쪽지) -->
+	<select id="getMsgList_unread" parameterType="map" resultType="messageDTO">
+		select message_no, title, content, message_check, message_date, from_id, to_id, from_delete, to_delete
+			from (select row_number() over (order by message_no desc) as msgRank, m.* from tbl_message m where 
 		
 		<!-- 받는 쪽지 -->
 		<if test="type == 'received'">
@@ -39,5 +162,28 @@
 		<if test="type == 'sent'">
 			from_id=#{user_id}
 		</if>
+		
+		and message_check='N') where msgRank between #{startRange} and #{endRange}
 	</select>
+	
+	<!-- 쪽지 정렬 (열람 쪽지) -->
+	<select id="getMsgList_read" parameterType="map" resultType="messageDTO">
+		select message_no, title, content, message_check, message_date, from_id, to_id, from_delete, to_delete
+			from (select row_number() over (order by message_no desc) as msgRank, m.* from tbl_message m where 
+		
+		<!-- 받는 쪽지 -->
+		<if test="type == 'received'">
+			to_id=#{user_id}
+		</if>
+		<!-- 보낸 쪽지 -->
+		<if test="type == 'sent'">
+			from_id=#{user_id}
+		</if>
+		
+		and message_check='Y') where msgRank between #{startRange} and #{endRange}
+	</select>
+	
+	
+	
+	
 </mapper>

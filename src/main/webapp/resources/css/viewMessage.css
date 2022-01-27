@@ -12,6 +12,7 @@
     .msgTab {
         font-size: 20pt;
         line-height: 50px;
+        cursor: pointer;
     }
     #receivedMsgTab {
         border: 5px solid skyblue;
