@@ -46,7 +46,7 @@ public class MessageController {
 		List<MessageDTO> msgList = service.getMsgList(type, user_id, currentPage, orderMsg, null, null);
 		if(msgList != null) {
 			model.addAttribute("msgList", msgList);
-			Map<String, Object> naviMap = service.getPageNavi(type, user_id, currentPage, orderMsg);
+			Map<String, Object> naviMap = service.getPageNavi(type, user_id, currentPage, orderMsg, null, null);
 			System.out.println("MessageController / naviMap jsp보내기 전 - type: " + naviMap.get("type"));
 			model.addAttribute("naviMap", naviMap);
 		}
@@ -87,11 +87,27 @@ public class MessageController {
 	
 	// (마이페이지) 검색 기능
 	@RequestMapping("/searchMsg.do")
-	public String searchMsg(String inputText, String searchOpt, String type, String user_id, int currentPage, String orderMsg) throws Exception {
+	public String searchMsg(Model model, String type, String user_id, int currentPage, String orderMsg, String searchOpt, String inputText) throws Exception {
 		System.out.println("MessageController / 검색 기능 - inputText: " + inputText + " / searchOpt: " + searchOpt + " / type: " + type
 				+ " / user_id: " + user_id + " / currentPage: " + currentPage + " / orderMsg: " + orderMsg);
-		service.getMsgList(type, user_id, currentPage, orderMsg, searchOpt, inputText);
-		return "redirect:/message/toViewMessage?type=" + type + "&user_id=" + user_id + "&currentPage=" + currentPage + "&orderMsg=" + orderMsg; 
+		currentPage = 1;
+		// 현재 페이지에 해당하는 쪽지 리스트 가져오기
+		List<MessageDTO> msgList = service.getMsgList(type, user_id, currentPage, orderMsg, searchOpt, inputText);
+		if(msgList != null) {
+			model.addAttribute("msgList", msgList);
+			Map<String, Object> naviMap = service.getPageNavi(type, user_id, currentPage, orderMsg, searchOpt, inputText);
+			System.out.println("MessageController / naviMap jsp보내기 전 - type: " + naviMap.get("type"));
+			model.addAttribute("naviMap", naviMap);
+		}	
+				
+		// 정렬이 null이면 최신순으로 정렬
+		if(orderMsg == null) {
+			orderMsg = "latest";
+		}
+		model.addAttribute("orderMsg", orderMsg);
+		model.addAttribute("searchOpt", searchOpt);
+		model.addAttribute("inputText", inputText);
+		return "/member/viewMessage";
 	}
 	
 	// (마이페이지) 쪽지 상세보기
