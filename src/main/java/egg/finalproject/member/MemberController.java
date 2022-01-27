@@ -1,5 +1,6 @@
 package egg.finalproject.member;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import egg.finalproject.utils.EncryptionUtils;
 @Controller
@@ -46,13 +48,27 @@ public class MemberController {
 	public String login(String user_id, String password) throws Exception{
 		password = EncryptionUtils.getSHA512(password);
 		if(service.isLoginOk(user_id, password)) {
-			MemberDTO dto = service.getMember(user_id); 
+			System.out.println("user_id =" + user_id);
+			System.out.println("password = " + password);
+			MemberDTO dto = service.getMember(user_id);
 			session.setAttribute("loginSession", dto);
-			return "성공";
-		}else {
-			return "실패";
+			System.out.println(dto.getType());
+			if(dto.getType() == 1 || dto.getType() == 2) {
+				return "성공";
+			}else if(dto.getType() == 0) {
+				return "관리자";
+			}
 		}
+		return "실패";
 	}
+	
+	// 로그아웃
+	@RequestMapping("/logout")
+    public ModelAndView logout() {
+        session.removeAttribute("loginSession");
+        ModelAndView mv = new ModelAndView("redirect:/");
+        return mv;
+    }
 	
 	// 닉네임 중복검사
 	@RequestMapping(value="toNicknameCheck.do")

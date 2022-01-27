@@ -208,39 +208,80 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
+    // 엔터 이벤트
+    
+    // 아이디 중복 엔터
+    $("#id").on("keypress", function(e){
+    	if(e.keyCode == "13"){
+    		$('#btn_idcheck').click();
+    	}
+    });
+    
+    // 닉네임 중복 엔터
+    $("#nickname").on("keypress", function(e){
+    	if(e.keyCode == "13"){
+    		$("#btn_nickname").click();
+    	}
+    });
+    
+    // 이메일 중복 엔터
+    $("#em").on("keypress", function(e){
+    	if(e.keyCode == "13"){
+    		$("#btn_email").click();
+    	}
+    });
+    
+    // 휴대전화 인증 엔터
+    $("#phone3").on("keypress", function(e){
+    	if(e.keyCode == "13"){
+    		$("#btn_phone").click();
+    	}
+    });
+    
+    // 휴대전화 인증확인 엔터
+    $("#phoneCheck").on("keypress", function(e){
+    	if(e.keyCode == "13"){
+    		$("#btn_phoneCk").click();
+    	}
+    });
+    
     
     // 문자인증
     let code2 = "";
     $("#btn_phone").click(function(){
-    	$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
-    	let phone = $("#phone").val();
-    	$.ajax({
-    		type:"GET",
-    		url:"${pageContext.request.contextPath}/member/phoneCheck?phone=" + phone, 
-    		cache : false,
-    		success:function(data){
-    				if(data == "error"){
-        				alert("휴대폰 번호가 올바르지 않습니다.")
-        			}else{
-        				$("#phoneCheck").attr("disabled",false);
-        				alert("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
-        				code2 = data;
+    	if( $("#phone2").val() != "" || $("#phone3").val() != "" ){
+    		$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
+        	let phone = $("#phone").val();
+        	$.ajax({
+        		type:"GET",
+        		url:"${pageContext.request.contextPath}/member/phoneCheck?phone=" + phone, 
+        		cache : false,
+        		success:function(data){
+        				if(data == "error"){
+            				alert("휴대폰 번호가 올바르지 않습니다.")
+            			}else{
+            				$("#phoneCheck").attr("disabled",false);
+            				alert("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
+            				code2 = data;
+            			}
         			}
-    			}
-    	})
+        	})
+    	}else if( $("#phone2").val() == "" || $("#phone3").val() == "" ){
+    		alert("전화번호를 입력후 인증을 진행해주세요.");
+    	}
     })
     
   	//휴대폰 인증번호 대조
   	$("#btn_phoneCk").click(function(){
-  		if($("#phoneCheck").val() == code2){
-  			$("#phoneDoubleChk").val("true");
-  			$("#phoneCheck").attr("disabled",true);
-  			alert("인증번호가 일치합니다.감사합니다.");
-  		}else if($("#phoneCheck").val() != code2){
-  			$("#phoneDoubleChk").val("false");
-  			$(this).attr("autofocus",true);
-  			alert("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
-  		}
+	  		if($("#phoneCheck").val() == code2 || $("#phoneCheck").val() != ""){
+	  			$("#phoneDoubleChk").val("true");
+	  			$("#phoneCheck").attr("disabled",true);
+	  			alert("인증번호가 일치합니다.감사합니다.");
+	  		}else if($("#phoneCheck").val() != code2 || $("#phoneCheck").val() == ""){
+	  			$("#phoneDoubleChk").val("false");
+	  			$(this).attr("autofocus",true);
+	  			alert("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+	  		}
   	})
 
     // 유효성검사
@@ -328,7 +369,7 @@
 	$("#phone2").on("keyup", function(){
 		$("#phone").val("");
 		if( !( (event.keyCode >= 48 && event.keyCode<=57) || (event.keyCode >= 96 && event.keyCode <= 105)
-			|| event.keyCode==8 || event.keyCode==9 ) ){
+			|| event.keyCode==8 || event.keyCode==9 || event.keyCode==13 ) ){
 				$("#phone2").val("");
 				alert("숫자만 입력해주세요.");
 			event.returnValue=false;
@@ -338,7 +379,7 @@
     $("#phone3").on("keyup", function(){
     	$("#phone").val("");
 		if( !( (event.keyCode >= 48 && event.keyCode<=57) || (event.keyCode >= 96 && event.keyCode <= 105)
-			|| event.keyCode==8 || event.keyCode==9 ) ){
+			|| event.keyCode==8 || event.keyCode==9 || event.keyCode==13 ) ){
 			$("#phone3").val("");
 				alert("숫자만 입력해주세요.");
 			event.returnValue=false;

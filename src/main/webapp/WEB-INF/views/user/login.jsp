@@ -35,7 +35,7 @@
         }
     </style>
 </head>
-<body>	
+<body>
     <div class="container">
     	<button type="button" class="btn-close" id="backBtn" aria-label="Close"></button>
         <div class="row mb-4">
@@ -73,77 +73,85 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
-    $("#password").on('keypress', function(e){
-    	if(e.keyCode == '13'){
-    		$('#loginBtn').click();
+    
+    	$("#password").on('keypress', function(e){
+        	if(e.keyCode == '13'){
+        		$('#loginBtn').click();
+        	}
+        });
+        
+        $("#user_id").on('keypress', function(e){
+        	if(e.keyCode == '13'){
+        		$('#loginBtn').click();
+        	}
+        });
+        
+     	// 쿠키 선생님이랑 같이 했던 코드
+    	// 쿠키 값 가져와 id 인풋창에 세팅
+    	console.log(document.cookie);
+    	let regex = /rememberId=(.*)/;
+    	if (regex.test(document.cookie)) {
+    		let id = RegExp.$1;
+    		$("#user_id").val(id);
     	}
-    });
-    
-    $("#user_id").on('keypress', function(e){
-    	if(e.keyCode == '13'){
-    		$('#loginBtn').click();
+    	
+    	if(document.cookie) {
+    		$("#rememberId").attr("checked", true);
     	}
-    });
-    
-    
-    
-	// 쿠키 선생님이랑 같이 했던 코드
-	// 쿠키 값 가져와 id 인풋창에 세팅 
-		console.log(document.cookie);
-		let regex = /rememberId=(.*)/;
-		if (regex.test(document.cookie)) {
-			let id = RegExp.$1;
-			$("#user_id").val(id);
-		}
 		
-		// 로그인 요청
-		 	$("#loginBtn").on("click", function(){
-		 		// 아이디 기억하기 여부 검사
-		 		if($("#rememberId:checked").length == 1){ // 체크 됨.
-		 			rememberId();
-		 		}else{ //체크 안됨.
-		 			deleteRememberId();
-		 		}		 		
-		 		
-				let data = $("#loginForm").serialize();
-				console.log(data);
-				$.ajax({
-					url : "${pageContext.request.contextPath}/member/login.do"
-					, type : "post"
-					, data : data
-				}).done(function(rs){
-					console.log(rs);
-					if(rs == "성공"){
-						location.href = "${pageContext.request.contextPath}/online/toMain.do";
-					}else if(rs == "실패"){
-						alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
-					}
-				}).fail(function(e){
-					console.log(e);
-				})
-			});
+    	
+    	// 로그인 요청
+    	$("#loginBtn").on("click", function(){
+    		
+    		// 아이디 기억하기 여부 검사
+    		if($("#rememberId:checked").length == 1){ // 체크 됨.
+    		 	rememberId();
+    		}else{ //체크 안됨.
+    			deleteRememberId();
+    		}	
+    		
+    		let data = $("#loginForm").serialize();
+    		console.log(data);
+    		$.ajax({
+    			url : "${pageContext.request.contextPath}/member/login.do"
+    			, type : "post"
+    			, data : data
+    		}).done(function(rs){
+    			console.log(rs);
+    				if(rs == "성공") {
+    					location.href="${pageContext.request.contextPath}/online/toMain.do"
+    				}else if(rs == "관리자") {
+    					location.href = "${pageContext.request.contextPath}/admin/toAdminMain"
+    				}else if(rs == "실패"){
+    				alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
+    				}
+    		}).fail(function(e){
+    			console.log(e);
+    		})
+    	});
+        
+    
+	// 로그인 쿠키 삭제
+	function deleteRememberId() {
+		// 쿠키 삭제 : 쿠키는 삭제 X -> 쿠키는 만료일이 되어야 삭제가 됨
+		// 만료일을 과거날짜로 덮어씌워 버림.
+		// 만료일 날짜 형식 2022-02-03T10:06:42.000Z
+		// 과거일 : 1월 1일
+		// Sat, 01 Jan 2022 00:00:10 GMT
+		document.cookie = "rememberId=;Expires=Sat, 01 Jan 2022 00:00:10 GMT";
+	}
 
-		// 로그인 쿠키 삭제
-		function deleteRememberId() {
-			// 쿠키 삭제 : 쿠키는 삭제 X -> 쿠키는 만료일이 되어야 삭제가 됨
-			// 만료일을 과거날짜로 덮어씌워 버림.
-			// 만료일 날짜 형식 2022-02-03T10:06:42.000Z
-			// 과거일 : 1월 1일
-			// Sat, 01 Jan 2022 00:00:10 GMT
-			document.cookie = "rememberId=;Expires=Sat, 01 Jan 2022 00:00:10 GMT";
-		}
-
-		// 로그인 쿠키 생성
-		function rememberId() {
-			let expiryDate = new Date();
-			console.log("오늘 날짜 ", expiryDate);
-			expiryDate.setDate(expiryDate.getDate() + 30);
-			console.log("30일 뒤", expiryDate);
-
-			let key = "rememberId";
-			let value = $("#id").val();
-			document.cookie = key + "=" + value + ";Expires=" + expiryDate;
-		}
+	// 로그인 쿠키 생성
+	function rememberId() {
+		let expiryDate = new Date();
+		console.log("오늘 날짜 ", expiryDate);
+		expiryDate.setDate(expiryDate.getDate() + 30);
+		console.log("30일 뒤", expiryDate);
+			
+		let key = "rememberId";
+		let value = $("#user_id").val();
+		document.cookie = key + "=" + value + ";Expires=" + expiryDate;
+	}
     
     
     $("#backBtn").click(function(){
