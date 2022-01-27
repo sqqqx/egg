@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/resources/css/admin/memberManagement.css">
     <title>관리자 홈</title>
+
 </head>
 
 <body>

@@ -42,7 +42,7 @@ public class MemberController {
 		return "user/login";
 	}
 	
-	// 로그인
+
 	@RequestMapping(value="/login.do", produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String login(String user_id, String password) throws Exception{
@@ -61,6 +61,7 @@ public class MemberController {
 		}
 		return "실패";
 	}
+
 	
 	// 로그아웃
 	@RequestMapping("/logout")
