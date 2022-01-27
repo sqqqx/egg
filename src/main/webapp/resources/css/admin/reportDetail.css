@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+ 	tr, td {
+        border: 1px solid lightgray;
+        /* box-sizing: border-box; */
+        border-radius: 5px;
+    }
+    .container {
+        text-align: center;
+    }
+    .cls-table {
+    	width: 500px;
+        height: 600px;
+    }
+    .cls-table > tbody > tr:nth-child(1) > td {
+    	height: 10%;
+    }
+    .smallRow > td{
+    	height: 5%;
+    }
+    tbody > tr:nth-child(6) > td {
+    	height: 20%
+    }

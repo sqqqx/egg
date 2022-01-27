@@ -73,6 +73,7 @@ public class onlinePostController {
 	//ProductDTO 추가 예정
 	@RequestMapping("/toDetail.do")
 	public String toDetail(int post_no, Model model) throws Exception{
+		System.out.println("pont_no : " + post_no);
 //		ImageDTO imageDto = service.getThumbNail(post_no);
 		PostDTO dto = service.getPostInfo(post_no);
 		System.out.println(dto);

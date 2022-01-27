@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminReportMapper">
+
+	<!-- 신고 목록 가져오기(row_number제거할것) -->
+	<select id="getReportList" parameterType="map" resultType="map">
+		SELECT 
+			* 
+		FROM (SELECT row_number() OVER (ORDER BY r.report_date DESC) AS idx
+				    ,r.report_no
+				    ,m.user_nickname
+				    ,i.report_content
+				    ,r.type
+				    ,r.yn
+				    ,r.report_date
+				FROM tbl_report r
+		    INNER JOIN tbl_reportinfo i USING(report_title)
+		    INNER JOIN tbl_member m USING(user_id)
+   		<trim prefix="INNER JOIN" suffix="LIKE '%'||#{searchKeyword}||'%'">
+   			<if test="searchOption != null and searchOption == 1">
+    			tbl_post p ON(target_no = post_no) WHERE p.title
+    		</if>
+    		<if test="searchOption != null and searchOption == 2">
+	    		tbl_comment c ON(target_no = comment_no) WHERE c.content
+    		</if>
+    		<if test="searchOption != null and searchOption == 3">
+	    		tbl_message ON(target_no = message_no) WHERE tbl_message.content 
+    		</if>
+   		</trim>
+    		) WHERE idx BETWEEN #{startRange} AND #{endRange}
+	</select>
+	
+	<!-- 신고 수 가져오기 -->
+	<select id="getReportCount" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM tbl_report
+   		<trim prefix="INNER JOIN" suffix="LIKE '%'||#{searchKeyword}||'%'">
+   			<if test="searchOption != null and searchOption != '' and searchOption == 1">
+   				tbl_post p ON(target_no = post_no) WHERE p.title
+   			</if>
+   			<if test="searchOption != null and searchOption != '' and searchOption == 2">
+   				tbl_comment c ON(target_no = comment_no) WHERE c.content
+   			</if>
+   			<if test="searchOption != null and searchOption != '' and searchOption == 3">
+   				tbl_message ON(target_no = message_no) WHERE tbl_message.content
+   			</if>
+   		</trim>
+	</select>
+	
+	<!-- 신고 상세 페이지 관련 -->
+	<select id="getReportDetail" parameterType="map" resultType="map">
+		SELECT 
+			r.report_no,
+			r.user_id,
+			r.type,
+			r.report_content,
+			r.report_date,
+			r.target_no,
+			i.report_content "I_REPORT_CONTENT",
+			<if test="type == '게시글'">
+				p.*
+			</if>
+			<if test="type == '댓글'">
+				c.*
+			</if>
+			<if test="type == '쪽지'">
+				m.*
+			</if>
+		FROM tbl_report r
+			INNER JOIN tbl_reportinfo i USING(report_title)
+			<trim prefix="INNER JOIN">
+				<if test="type == '게시글'">
+					tbl_post p ON(target_no = post_no)
+				</if>
+				<if test="type == '댓글'">
+					tbl_comment c ON(target_no = comment_no)
+				</if>
+				<if test="type == '쪽지'">
+					tbl_message m ON(target_no = message_no)
+				</if>
+			</trim>
+			WHERE report_no = #{report_no}
+	</select>
+	
+	<!-- 신고 처리 상태 변경 -->
+	<update id="changeReportStatus">
+		UPDATE tbl_report SET yn = 1 WHERE report_no = #{report_no}
+	</update>
+
+</mapper>
