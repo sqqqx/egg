@@ -17,8 +17,10 @@
 		<div class="cls-sideBar">
 			<%@include file="/WEB-INF/views/admin/adminSidebar.jsp"%>
 		</div>
+		
 		<!-- 본문 -->
 		<div class="cls-main">
+		
 			<!-- 검색 영역 -->
 			<form id="searchForm"
 				action="${pageContext.request.contextPath}/admin/getPostList.do?currentIdx=1&type=${type}"
@@ -41,6 +43,7 @@
 					</div>
 				</div>
 			</form>
+			
 			<!-- 글 유형 -->
 			<div class="row cls-postType">
 				<div class="col-4 d-flex">
@@ -58,6 +61,7 @@
 						수정</button>
 				</div>
 			</div>
+			
 			<!-- 회원정보 출력 -->
 			<form id="selectCheckbox" method="post"
 				class="d-flex justify-content-center">
@@ -121,6 +125,7 @@
 					</div>
 				</div>
 			</form>
+			
 			<!-- 페이징 영역 -->
 			<div class="row">
 				<div class="col-12 d-flex justify-content-center pt-5">
@@ -154,6 +159,7 @@
 					</nav>
 				</div>
 			</div>
+			
 			<!-- 하단 버튼 영역 -->
 			<div class="row">
 				<div class="col-12 d-flex justify-content-end px-0">

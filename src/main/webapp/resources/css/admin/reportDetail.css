@@ -1,9 +1,9 @@
 @charset "UTF-8";
 
- 	table, tr, td {
+ 	tr, td {
         border: 1px solid lightgray;
-        box-sizing: border-box;
-        border-radius: 20px;
+        /* box-sizing: border-box; */
+        border-radius: 5px;
     }
     .container {
         text-align: center;

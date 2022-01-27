@@ -19,20 +19,22 @@
 		<div class="cls-sideBar">
 			<%@include file="/WEB-INF/views/admin/adminSidebar.jsp"%>
 		</div>
+
 		<!-- 본문 -->
 		<div class="cls-main">
 
 			<!-- 검색 영역 -->
 			<form id="searchForm"
-				action="${pageContext.request.contextPath}/admin/getReportList.do?currentIdx=1"
+				action="${pageContext.request.contextPath}/admin/getOrderList.do?currentIdx=1"
 				method="post" class="d-flex justify-content-center">
 				<div class="row searchArea">
 					<div class="col-3 d-flex justify-content-end">
 						<select class="form-select" aria-label="Default select example"
 							name="searchOption">
-							<option value="1">주문번호</option>
-							<option value="2">구매자</option>
-							<option value="3">주문금액</option>
+							<option value="order_no"
+								${searchOption == "order_no" ? 'selected="selected"' : ''}>주문번호</option>
+							<option value="user_id"
+								${searchOption == "user_id" ? 'selected="selected"' : ''}>구매자</option>
 						</select>
 					</div>
 					<div class="col-6 d-flex justify-content-center">
@@ -48,12 +50,12 @@
 			<!-- 주문정보 출력 -->
 			<form id="selectCheckbox" method="post"
 				class="d-flex justify-content-center">
-				<table class="table table-condensed table-striped">
-					<thead>
-						<!-- depth 0 -->
-						<tr>
+				<div class="row tableWrapper">
+					<table class="table table-condensed table-striped">
+						<thead>
+							<!-- depth 0 -->
 							<th><input type="checkbox" class="orderCheckBoxAll"
-									name="orderCheckBoxAll" id="orderCheckBoxAll"></th>
+								name="orderCheckBoxAll" id="orderCheckBoxAll"></th>
 							<th>주문 번호</th>
 							<th>구매자</th>
 							<th>요청 사항</th>
@@ -61,190 +63,169 @@
 							<th>주문 상태</th>
 							<th>결제 번호</th>
 							<th>주문 일자</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr data-bs-toggle="collapse" data-bs-target="#demo1"
-							class="accordion-toggle orderRow">
-							<td><input type="checkbox" class="orderCheckBox"
-									name="orderCheckBox" id="orderCheckBoxAll"></td>
-							<td>10305</td>
-							<td>구매자 닉네임</td>
-							<td>빠른 배송 원함</td>
-							<td>10,000,000원</td>
-							<td>성공</td>
-							<td>TESTNUM124185</td>
-							<td>2022-01-23</td>
-						</tr>
-						<!-- depth 1 -->
-						<tr>
-							<td colspan="12" class="hiddenRow">
-								<div class="accordian-body collapse" id="demo1">
-									<table class="table">
-										<thead>
-											<tr class="info">
-												<th colspan="2"></th>
-												<th>상품번호</th>
-												<th>상품명</th>
-												<th>가격</th>
-												<th>수량</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr data-bs-toggle="collapse"
-												class="accordion-toggle childTd" data-bs-target="#demo10">
-												<td colspan="2"></td>
-												<td>1060</td>
-												<td>두더지</td>
-												<td>10,000,000</td>
-												<td>7</td>
-											</tr>
-											<!-- depth 2 -->
-											<!-- <tr>
-                                                <td colspan="12" class="hiddenRow">
-                                                    <div class="accordian-body collapse" id="demo10">
-                                                        <table class="table table-striped">
-                                                            <thead>
-                                                                <tr>
-                                                                    <td><a href="#">-</a></td>
-                                                                    <td>-</td>
-                                                                    <td>-</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>item 1</th>
-                                                                    <th>item 2</th>
-                                                                    <th>item 3</th>
-                                                                    <th>item 4</th>
-                                                                    <th>item 5</th>
-                                                                    <th>Actions</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>item 1</td>
-                                                                    <td>item 2</td>
-                                                                    <td>item 3</td>
-                                                                    <td>item 4</td>
-                                                                    <td>item 5</td>
-                                                                    <td><a href="#" class="btn btn-default btn-sm">
-                                                                            <i class="glyphicon glyphicon-cog"></i>
-                                                                        </a></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-
-                                                    </div>
-                                                </td>
-                                            </tr> -->
-											<!-- depth 1 -->
-											<tr>
-												<td colspan="2"></td>
-												<td>3080</td>
-												<td>MSFT</td>
-												<td>300$</td>
-												<td>10</td>
-											</tr>
-
-										</tbody>
-									</table>
-								</div>
-							</td>
-						</tr>
-						<!-- one row finish -->
-
-						<tr data-bs-toggle="collapse" data-bs-target="#demo2"
-							class="accordion-toggle orderRow">
-							<td><input type="checkbox" class="orderCheckBox"
-									name="orderCheckBox" id="orderCheckBox"></td>
-							<td>10305</td>
-							<td>구매자 닉네임</td>
-							<td>빠른 배송 원함</td>
-							<td>10,000,000원</td>
-							<td>성공</td>
-							<td>TESTNUM124185</td>
-							<td>2022-01-23</td>
-						</tr>
-						<!-- depth 1 -->
-						<tr>
-							<td colspan="12" class="hiddenRow">
-								<div class="accordian-body collapse" id="demo2">
-									<table class="table">
-										<thead>
-											<tr class="info">
-												<th>상품명</th>
-												<th>가격</th>
-												<th>수량</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr data-bs-toggle="collapse" class="accordion-toggle"
-												data-bs-target="#demo10">
-												<td><a href="#">CHILD TD</a></td>
-												<td>CHILD TD</td>
-												<td>CHILD TD</td>
-											</tr>
-											<!-- depth 2 -->
-											<!-- <tr>
-                                                <td colspan="12" class="hiddenRow">
-                                                    <div class="accordian-body collapse" id="demo10">
-                                                        <table class="table table-striped">
-                                                            <thead>
-                                                                <tr>
-                                                                    <td><a href="#">-</a></td>
-                                                                    <td>-</td>
-                                                                    <td>-</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>item 1</th>
-                                                                    <th>item 2</th>
-                                                                    <th>item 3</th>
-                                                                    <th>item 4</th>
-                                                                    <th>item 5</th>
-                                                                    <th>Actions</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>item 1</td>
-                                                                    <td>item 2</td>
-                                                                    <td>item 3</td>
-                                                                    <td>item 4</td>
-                                                                    <td>item 5</td>
-                                                                    <td><a href="#" class="btn btn-default btn-sm">
-                                                                            <i class="glyphicon glyphicon-cog"></i>
-                                                                        </a></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-
-                                                    </div>
-                                                </td>
-                                            </tr> -->
-											<!-- depth 1 -->
-											<tr>
-												<td>-</td>
-												<td>-</td>
-												<td>-</td>
-												<td>-</td>
-												<td>-</td>
-												<td>-</td>
-											</tr>
-
-										</tbody>
-									</table>
-								</div>
-							</td>
-						</tr>
-						<!-- one row finish -->
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							<c:choose>
+								<c:when test="${empty list}">
+									<tr>
+										<td colspan="8">주문 목록이 존재하지 않습니다.</td>
+									</tr>
+								</c:when>
+								<c:otherwise>
+									<c:forEach items="${list}" var="map">
+										<tr data-bs-toggle="collapse"
+											data-bs-target="#id_${map.ORDER_NO}"
+											class="accordion-toggle orderRow" id="${map.ORDER_NO}">
+											<td><input type="checkbox" value="${map.ORDER_NO}"
+												class="orderCheckBox" name="orderCheckBox"
+												id="orderCheckBox"></td>
+											<td>${map.ORDER_NO}</td>
+											<td>${map.USER_ID}</td>
+											<td>${map.MESSAGE}</td>
+											<td>${map.AMOUNT}</td>
+											<td>${map.STATUS}</td>
+											<td>${map.PAYMENT_NO}</td>
+											<td>${map.PAYMENT_TIME}</td>
+										</tr>
+										<!-- depth 1 -->
+										<tr>
+											<td colspan="8" class="hiddenRow">
+												<div class="accordian-body collapse" id="id_${map.ORDER_NO}">
+													<table class="table">
+														<thead>
+															<tr class="info">
+																<th>상품번호</th>
+																<th>상품명</th>
+																<th>가격</th>
+																<th>수량</th>
+															</tr>
+														</thead>
+														<tbody id="tblBody">
+														</tbody>
+													</table>
+												</div>
+											</td>
+										</tr>
+										<!-- one row finish -->
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
+						</tbody>
+					</table>
+				</div>
 			</form>
+
+			<!-- 페이징 영역 -->
+			<div class="row">
+				<div class="col-12 d-flex justify-content-center pt-5">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination">
+							<c:if test="${map.needPrev eq true}">
+								<li class="page-item"><a class="page-link"
+									href="${pageContext.request.contextPath}/admin/getOrderList.do?currentIdx=${map.firstIdx-1}">Previous</a>
+								</li>
+							</c:if>
+							<c:forEach var="i" begin="${map.firstIdx}" end="${map.lastIdx}">
+								<c:choose>
+									<c:when test="${empty searchOption}">
+										<li class="page-item"><a class="page-link"
+											href="${pageContext.request.contextPath}/admin/getOrderList.do?currentIdx=${i}">${i}</a>
+										</li>
+									</c:when>
+									<c:otherwise>
+										<li class="page-item"><a class="page-link"
+											href="${pageContext.request.contextPath}/admin/getOrderList.do?currentIdx=${i}&searchOption=${searchOption}&searchKeyword=${searchKeyword}">${i}</a>
+										</li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+							<c:if test="${map.needNext eq true}">
+								<li class="page-item"><a class="page-link"
+									href="${pageContext.request.contextPath}/admin/getOrderList.do?currentIdx=${map.lastIdx+1}">Next</a>
+								</li>
+							</c:if>
+						</ul>
+					</nav>
+				</div>
+			</div>
+
+			<!-- 하단 버튼 영역 -->
+			<div class="row">
+				<div class="col-12 d-flex justify-content-end px-0">
+					<button type="button" class="btn btn-outline-dark" id="refundBtn">주문
+						취소</button>
+				</div>
+			</div>
+
 		</div>
 	</div>
 
 	<script>
-
-        </script>
+		// 전체 체크박스 ON / OFF
+	    $("#orderCheckBoxAll").on("click", function () {
+	        if ($("#orderCheckBoxAll").is(":checked")) {
+	            $("input[name=orderCheckBox]").prop("checked", true);
+	            return;
+	        }
+	        $("input[name=orderCheckBox]").prop("checked", false);
+	    });
+	 	// 검색
+	    $("#searchForm").on("submit");
+		// 상품 목록 가져오기 (닫힐 때 request막기 & setTimeout걸어놓을 것 & checkbox는 선택ㄴㄴ)
+		$(".orderRow").on("click", function(e) {
+			$("#tblBody").empty(); 
+			let order_no = parseInt($(this).attr("id"));
+			$.ajax({
+				url: "/admin/getProductList.do",
+				data: {order_no : order_no}
+			}).done(function(list){
+				for(let map of list) {
+					const tr = $('<tr>');
+					tr.append($("<td>" + map.PRODUCT_NO + "</td>"));
+					tr.append($("<td>" + map.NAME + "</td>"));
+					tr.append($("<td>" + map.PRICE + "</td>"));
+					tr.append($("<td>" + map.QUANTITY + "</td>"));
+					$("#tblBody").append(tr);
+				}
+			}).fail(function(e){
+				console.log(e);
+			});
+		});
+		// 환불 버튼
+		$("#refundBtn").on("click", function() {
+			const checkBox = $("input:checkbox[name=orderCheckBox]:checked");
+        	if($("#orderCheckBox").is(":checked") && checkBox.length == 1) {
+        		const payment_no = checkBox.parents("tr").children().eq(6).html();
+        		const amount = checkBox.parents("tr").children().eq(4).html();
+        		cancelPay(payment_no, amount);
+                return;
+            }
+        	if(checkBox.length == 0) {
+        		alert("한 개 이상의 주문을 선택해주세요.");
+        		return;
+        	}
+        	alert("하나의 주문만 선택해주세요.");
+		});
+		// 결제정보 toss
+		function cancelPay(payment_no, cost) {
+			console.log(payment_no + " : " + cost);
+			$.ajax({
+				url: "/admin/canclePay.do",
+				type: "post",
+				contentType: "application/json",
+				data: JSON.stringify({
+					merchant_uid: payment_no,
+					cancel_request_mount: cost,
+					reason: ""
+				}),
+				dataType: "json"
+			}).done(rs)({
+				//console.log(rs);
+			}).fail(e)({
+				//console.log(e);
+			});
+		}
+    </script>
 </body>
 
 </html>

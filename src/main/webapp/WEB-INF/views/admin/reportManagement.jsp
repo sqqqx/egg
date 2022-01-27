@@ -7,6 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/resources/css/admin/reportManagement.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <title>신고 관리</title>
 </head>
 
@@ -17,8 +20,10 @@
 		<div class="cls-sideBar">
 			<%@include file="/WEB-INF/views/admin/adminSidebar.jsp"%>
 		</div>
+		
 		<!-- 본문 -->
 		<div class="cls-main">
+		
 			<!-- 검색 영역 -->
 			<form id="searchForm"
 				action="${pageContext.request.contextPath}/admin/getReportList.do?currentIdx=1"
@@ -42,6 +47,7 @@
 					</div>
 				</div>
 			</form>
+			
 			<!-- 테이블 영역 -->
 			<form id="selectCheckbox" method="post"
 				class="d-flex justify-content-center">
@@ -102,6 +108,7 @@
 					</div>
 				</div>
 			</form>
+			
 			<!-- 페이징 영역 -->
 			<div class="row">
 				<div class="col-12 d-flex justify-content-center pt-5">
@@ -131,13 +138,6 @@
 					</nav>
 				</div>
 			</div>
-			<!-- 하단 버튼 영역 -->
-			<div class="row">
-				<div class="col-12 d-flex justify-content-end px-0">
-					<button type="button" class="btn btn-outline-dark"
-						id="deletePostbtn">처리</button>
-				</div>
-			</div>
 		</div>
 	</div>
 	<script>
@@ -155,10 +155,8 @@
      	$(".toReportDetail").on("click", function(e) {
      		const type = $(e.target).parent().find("*").eq(3).text();
      		const report_no = $(e.target).parent().find("*").eq(0).children().val();
-     		window.open("${pageContext.request.contextPath}/admin/getReportDetail?report_no="+report_no+"&type="+type, "reportDetail", "width=500,height=600");
+     		window.open("${pageContext.request.contextPath}/admin/getReportDetail?report_no="+report_no+"&type="+type, "reportDetail", "width=550,height=650");
      	});
-     	// 신고 처리
-     	// 뭘 어떻게할건데?
     </script>
 </body>
 </html>

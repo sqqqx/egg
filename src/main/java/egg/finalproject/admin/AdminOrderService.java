@@ -8,56 +8,44 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdminReportService {
+public class AdminOrderService {
 	
 	@Autowired
-	private AdminReportDAO dao;
+	private AdminOrderDAO dao;
 	
 	private int totalCount;
 	
-	// 전체 신고 수 가져오기
-	public int getReportCountAll() throws Exception {
-		return dao.getReportCountAll();
-	}
-	
-	// 검색 한 신고 수 가져오기
-	public int getReportCount(String searchOption, String searchKeyword) {
+	// 주문 수 가져오기
+	public int getOrderCount(String searchOption, String searchKeyword) throws Exception {
 		Map<String, String> map = new HashMap<>();
 		if(searchOption != null && searchKeyword != null) {
 			map.put("searchOption", searchOption);
 			map.put("searchKeyword", searchKeyword);
 		}
-		int rs = dao.getReportCount(map);
-		System.out.println("신고 count : " + rs);
+		int rs = dao.getOrderCount(map);
+		System.out.println("getOrderCount : " + rs);
 		return rs;
 	}
 	
-	// 신고 목록 가져오기
-	public List<Map<String, Object>> getReportList(String searchOption, String searchKeyword, int currentIdx) throws Exception {
-		System.out.println("searchOption : " + searchOption + " : " + "searchKeyword : " + searchKeyword + " : " + "currentIdx : " + currentIdx);
+	// 주문 목록 가져오기
+	public List<Map<String, Object>> getOrderList(int currentIdx, String searchOption, String searchKeyword) throws Exception {
+		System.out.println("currentIdx : " + currentIdx + " : searchOption : " + searchOption + " : searchKeyword : " + searchKeyword);
 		Map<String, Object> map = this.getRange(currentIdx);
 		if(searchOption != null && searchKeyword != null) {
 			map.put("searchOption", searchOption);
 			map.put("searchKeyword", searchKeyword);
 		}
-		totalCount = this.getReportCount(searchOption, searchKeyword);
-		List<Map<String, Object>> list = dao.getReportList(map);
-		System.out.println("getReportList_list size : " + list.size());
+		map.put("currentIdx", currentIdx);
+		totalCount = this.getOrderCount(searchOption, searchKeyword);
+		List<Map<String, Object>> list = dao.getOrderList(map);
+		System.out.println("getOrderList_list.size : " + list.size());
 		return list;
 	}
 	
-	// 신고 상세 페이지 관련
-	public Map<String, Object> getReportDetail(String report_no, String type) throws Exception {
-		System.out.println("report_no : " + report_no + " : type : " + type);
-		Map<String, Object> map = new HashMap<>();
-		map.put("report_no", report_no);
-		map.put("type", type);
-		return dao.getReportDetail(map);
-	}
-	
-	// 신고 처리 상태 변경
-	public int changeReportStatus(String report_no) throws Exception {
-		return dao.changeReportStatus(report_no);
+	// 상품 목록 가져오기
+	public List<Map<String, Object>> getProductList(int order_no) throws Exception {
+		System.out.println("order_no : " + order_no);
+		return dao.getProductList(order_no);
 	}
 	
 	/********** paging **********/
@@ -109,5 +97,4 @@ public class AdminReportService {
 		map.put("endRange", endRange);
 		return map;
 	}
-
 }

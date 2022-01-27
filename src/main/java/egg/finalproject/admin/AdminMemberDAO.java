@@ -39,5 +39,10 @@ public class AdminMemberDAO {
 	public int memberBlackList(Map<String, Object> map) throws Exception {
 		return session.update("adminMemberMapper.memberBlackList", map);
 	}
+	
+	// 피신고자 블랙리스트 추가
+	public String addBlackList(Map<String, String> map) throws Exception {
+		return session.selectOne("adminMemberMapper.getUserId", map);
+	}
 
 }

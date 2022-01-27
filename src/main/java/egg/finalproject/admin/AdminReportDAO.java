@@ -28,9 +28,14 @@ public class AdminReportDAO {
 		return session.selectOne("adminReportMapper.getReportCount", map);
 	}
 	
-	// 신고 상세 페이지 관련
+	// 신고 상세 페이지 
 	public Map<String, Object> getReportDetail(Map<String, Object> map) throws Exception {
 		return session.selectOne("adminReportMapper.getReportDetail", map);
+	}
+	
+	// 신고 처리 상태 변경
+	public int changeReportStatus(String report_no) throws Exception {
+		return session.update("adminReportMapper.changeReportStatus", report_no);
 	}
 	
 }

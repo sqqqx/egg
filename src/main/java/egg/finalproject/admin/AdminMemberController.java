@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/admin")
@@ -21,7 +22,7 @@ public class AdminMemberController {
 	// 회원 관리 페이지 이동
 	@RequestMapping("/toMemberManagement")
 	public String toMemberManagement() throws Exception {
-		return "redirect:/admin/getMemberList.do?currentIdx="+1;
+		return "redirect:/admin/getMemberList.do?currentIdx=1&userType=9";
 	}
 	
 	// 회원 정보 수정 
@@ -33,11 +34,12 @@ public class AdminMemberController {
 	
 	// 회원 목록 가져오기
 	@RequestMapping("/getMemberList.do")
-	public String getMemberList(Model model, String searchOption, String searchKeyword, int currentIdx) throws Exception {
-		model.addAttribute("list", service.getMemberList(searchOption, searchKeyword, currentIdx));
+	public String getMemberList(Model model, String searchOption, String searchKeyword, int currentIdx, int userType) throws Exception {
+		model.addAttribute("list", service.getMemberList(searchOption, searchKeyword, currentIdx, userType));
 		model.addAttribute("map", service.getNavi(currentIdx));
 		model.addAttribute("searchOption", searchOption);
 		model.addAttribute("searchKeyword", searchKeyword);
+		model.addAttribute("userType", userType);
 		return "admin/memberManagement"; 
 	}
 	
@@ -53,6 +55,13 @@ public class AdminMemberController {
 	public String memberBlackList(String[] userCheckBox, int idx) throws Exception {
 		service.memberBlackList(userCheckBox, idx);
 		return "redirect:/admin/toMemberManagement";
+	}
+	
+	// 피신고자 블랙리스트 추가
+	@RequestMapping("/addBlackList.do")
+	@ResponseBody
+	public boolean addBlackList(String type, String target_no, String report_no) throws Exception {
+		return service.addBlackList(type, target_no);
 	}
 
 }

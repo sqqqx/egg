@@ -32,8 +32,6 @@
     </style>
 </head>
 <body>
-	<a href="${pageContext.request.contextPath}/admin/toAdminMain">(임시) 관리자 페이지 이동</a>
-	
     <div class="container-fluid whole">
         <div class="row">
             <div class="col ctnBox">

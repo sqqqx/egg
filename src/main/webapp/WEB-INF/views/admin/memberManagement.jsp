@@ -17,11 +17,13 @@
 		<div class="cls-sideBar">
 			<%@include file="/WEB-INF/views/admin/adminSidebar.jsp"%>
 		</div>
+		
 		<!-- 본문 -->
 		<div class="cls-main">
+		
 			<!-- 검색 영역 -->
 			<form id="searchForm"
-				action="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=1"
+				action="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=1&userType=${userType}"
 				method="post" class="d-flex justify-content-center">
 				<div class="row searchArea">
 					<div class="col-3 d-flex justify-content-end">
@@ -41,6 +43,19 @@
 					</div>
 				</div>
 			</form>
+			
+			<!-- 회원 유형 -->
+			<div class="row cls-postType">
+				<div class="col-4 d-flex">
+					<button type="button" class="btn btn-outline-dark cls-type"
+						id="typeBasic" value="1">일반회원</button>
+					<button type="button" class="btn btn-outline-dark cls-type"
+						id="typeExpert" value="2">고수</button>
+					<button type="button" class="btn btn-outline-dark cls-type"
+						id="typeAdmin" value="0">관리자</button>
+				</div>
+			</div>
+			
 			<!-- 회원정보 출력 -->
 			<form id="selectCheckbox" method="post"
 				class="d-flex justify-content-center">
@@ -102,6 +117,7 @@
 					</div>
 				</div>
 			</form>
+			
 			<!-- 페이징 영역 -->
 			<div class="row">
 				<div class="col-12 d-flex justify-content-center pt-5">
@@ -109,32 +125,33 @@
 						<ul class="pagination">
 							<c:if test="${map.needPrev eq true}">
 								<li class="page-item"><a class="page-link"
-									href="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=${map.firstIdx-1}">Previous</a>
+									href="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=${map.firstIdx-1}&userType=${userType}">Previous</a>
 								</li>
 							</c:if>
 							<c:forEach var="i" begin="${map.firstIdx}" end="${map.lastIdx}">
 								<c:choose>
 									<c:when test="${empty searchOption}">
 										<li class="page-item"><a class="page-link"
-											href="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=${i}">${i}</a>
+											href="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=${i}&userType=${userType}">${i}</a>
 										</li>
 									</c:when>
 									<c:otherwise>
 										<li class="page-item"><a class="page-link"
-											href="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=${i}&searchOption=${searchOption}&searchKeyword=${searchKeyword}">${i}</a>
+											href="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=${i}&searchOption=${searchOption}&searchKeyword=${searchKeyword}&userType=${userType}">${i}</a>
 										</li>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
 							<c:if test="${map.needNext eq true}">
 								<li class="page-item"><a class="page-link"
-									href="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=${map.lastIdx+1}">Next</a>
+									href="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=${map.lastIdx+1}&userType=${userType}">Next</a>
 								</li>
 							</c:if>
 						</ul>
 					</nav>
 				</div>
 			</div>
+			
 			<!-- 하단 버튼 영역 -->
 			<div class="row">
 				<div class="col-12 d-flex justify-content-end px-0">
@@ -185,6 +202,25 @@
             $(".cls-toMypage").on("click", function (e) {
                 const user_id = $(e.target).parent().find("#user_id").text();
                 location.href = "${pageContext.request.contextPath}/admin/toUserInfomation?user_id=" + user_id;
+            });
+         	// 회원 유형 선택
+            $(".cls-type").on("click", function(e) {
+            	const userType = e.target.value;
+                location.href = "${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=1&userType="+userType;
+            });
+            // 유형 버튼 변경
+            $(document).ready(function() {
+                switch(${userType}) {
+                    case 0 :
+                        $("#typeAdmin").attr("class", "btn btn-dark");
+                        break;
+                    case 1 :
+                        $("#typeBasic").attr("class", "btn btn-dark");
+                        break;
+                    case 2 :
+                        $("#typeExpert").attr("class", "btn btn-dark");
+                        break;
+                }
             });
         </script>
 </body>

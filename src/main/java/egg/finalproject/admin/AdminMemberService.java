@@ -31,9 +31,10 @@ public class AdminMemberService {
 	}
 	
 	// 회원 목록 가져오기 
-	public List<MemberDTO> getMemberList(String searchOption, String searchKeyword, int currentIdx) throws Exception {
-		System.out.println("searchOption : " + searchOption + " : " + "searchKeyword : " + searchKeyword + " : " + "currentIdx : " + currentIdx);
+	public List<MemberDTO> getMemberList(String searchOption, String searchKeyword, int currentIdx, int userType) throws Exception {
+		System.out.println("searchOption : " + searchOption + " : " + "searchKeyword : " + searchKeyword + " : " + "currentIdx : " + currentIdx + " : userType : " + userType);
 		Map<String, Object> map = this.getRange(currentIdx);
+		map.put("userType", userType);
 		if(searchOption != null && searchKeyword != null) {
 			map.put("searchOption", searchOption);
 			map.put("searchKeyword", searchKeyword);
@@ -52,10 +53,24 @@ public class AdminMemberService {
 	
 	// 블랙리스트 ON / OFF
 	public int memberBlackList(String[] userCheckBox, int idx) throws Exception {
+		for(String s : userCheckBox) {
+			System.out.println("user_id: " + s);
+		}
 		Map<String, Object> map = new HashMap<>();
 		map.put("userCheckBox", userCheckBox);
 		map.put("idx", idx);
 		return dao.memberBlackList(map);
+	}
+	
+	// 피신고자 블랙리스트 추가
+	public boolean addBlackList(String type, String target_no) throws Exception {
+		System.out.println("type : " + type + " : target_no : " + target_no);
+		Map<String, String> map = new HashMap<>();
+		map.put("type", type);
+		map.put("target_no", target_no);
+		String[] arr = new String[1];
+		arr[0] = dao.addBlackList(map);
+		return this.memberBlackList(arr, 1) == 1 ? true : false;
 	}
 	
 	/********** paging **********/

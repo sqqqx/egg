@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminOrderMapper">
+
+	<!-- 주문 수 가져오기 -->
+	<select id="getOrderCount" resultType="int">
+		SELECT COUNT(*) FROM tbl_order
+		<if test="searchKeyword != null and searchKeyword != ''">
+			WHERE ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+		</if>
+	</select>
+
+	<!-- 주문 목록 가져오기 -->
+	<select id="getOrderList" parameterType="map" resultType="map">
+		SELECT * FROM tbl_order
+    		INNER JOIN tbl_payment USING(payment_no)
+    		WHERE order_no BETWEEN #{startRange} AND #{endRange}
+    		<if test="searchKeyword != null and searchKeyword != ''">
+    			AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+    		</if>
+	</select>
+	
+	<!-- 구매 상품 목록 가져오기 -->
+	<select id="getProductList" resultType="map">
+		SELECT * FROM tbl_product
+    		INNER JOIN test_tbl_order_product USING(product_no) WHERE order_no = #{order_no}
+	</select>
+
+</mapper>

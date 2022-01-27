@@ -5,7 +5,7 @@
 
 <mapper namespace="adminReportMapper">
 
-	<!-- 신고 목록 가져오기(row_number필요없다.. 생각해보니..) -->
+	<!-- 신고 목록 가져오기(row_number제거할것) -->
 	<select id="getReportList" parameterType="map" resultType="map">
 		SELECT 
 			* 
@@ -57,6 +57,7 @@
 			r.type,
 			r.report_content,
 			r.report_date,
+			r.target_no,
 			i.report_content "I_REPORT_CONTENT",
 			<if test="type == '게시글'">
 				p.*
@@ -82,5 +83,10 @@
 			</trim>
 			WHERE report_no = #{report_no}
 	</select>
+	
+	<!-- 신고 처리 상태 변경 -->
+	<update id="changeReportStatus">
+		UPDATE tbl_report SET yn = 1 WHERE report_no = #{report_no}
+	</update>
 
 </mapper>

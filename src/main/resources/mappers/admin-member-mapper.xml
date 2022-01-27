@@ -10,7 +10,7 @@
 		SELECT COUNT(*) FROM tbl_member
 	</select>
 	
-	<!-- 검색 한 회원 수 가져오기 -->
+	<!-- 검색 한 회원 수 가져오기(위와 병합할 것) -->
 	<select id="getSearchCount" parameterType="map" resultType="int">
 		SELECT COUNT(*) FROM tbl_member 
 			WHERE ${searchOption} LIKE '%'||#{searchKeyword}||'%'
@@ -23,6 +23,17 @@
 		    <if test ="searchOption != null">
 		    	AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
 		    </if>
+		    <choose>
+		    	<when test="userType == 0">
+		    		AND type = 0
+		    	</when>
+		    	<when test="userType == 1">
+		    		AND type = 1
+		    	</when>
+		    	<when test="userType == 2">
+		    		AND type = 2
+		    	</when>
+		    </choose>
 	</select>
 	
 	<!-- 회원 강제 탈퇴-->
@@ -51,5 +62,21 @@
 			#{user_id}
 		</foreach>
 	</update>
+	
+	<!-- 피신고자 아이디 찾기 -->
+	<select id="getUserId" parameterType="map" resultType="String">
+		SELECT user_id FROM
+		<choose>
+			<when test="type == 1">
+				tbl_post WHERE post_no = #{target_no} 
+			</when>
+			<when test="type == 2">
+				tbl_comment WHERE comment_no = #{target_no}
+			</when>
+			<when test="type == 3">
+				tbl_message WHERE message_no = #{target_no}
+			</when>
+		</choose>
+	</select>
 	
 </mapper>
