@@ -118,11 +118,10 @@
     		}).done(function(rs){
     			console.log(rs);
     			if(rs == "성공"){
-    				console.log("${loginSession.type}")
     				if("${loginSession.type}" == 1 || "${loginSession.type}" == 2) {
-    					//location.href="${pageContext.request.contextPath}/online/toMain.do"
+    					location.href="${pageContext.request.contextPath}/online/toMain.do"
     				}else if("${loginSession.type}" == 0) {
-    					//location.href = "${pageContext.request.contextPath}/admin/toAdminMain"
+    					location.href = "${pageContext.request.contextPath}/admin/toAdminMain"
     				}
     			}else if(rs == "실패"){
     				alert("아이디 혹은 비밀번호가 일치하지 않습니다.");

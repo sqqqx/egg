@@ -43,21 +43,18 @@ public class MemberController {
 	}
 	
 	// 로그인
-	@RequestMapping(value="/login.do", produces="text/html;charset=UTF-8")
-	@ResponseBody
-	public String login(String user_id, String password) throws Exception{
-		password = EncryptionUtils.getSHA512(password);
-		if(service.isLoginOk(user_id, password)) {
-			MemberDTO dto;
-			dto = service.getMember(user_id); 
-			System.out.println(dto);
-			session.setAttribute("loginSession", dto);
-			int type = service.getType(user_id);
-			return "성공";
-		}else {
-			return "실패";
+		@RequestMapping(value="/login.do", produces="text/html;charset=UTF-8")
+		@ResponseBody
+		public String login(String user_id, String password) throws Exception{
+			password = EncryptionUtils.getSHA512(password);
+			if(service.isLoginOk(user_id, password)) {
+				MemberDTO dto = service.getMember(user_id); 
+				session.setAttribute("loginSession", dto);
+				return "성공";
+			}else {
+				return "실패";
+			}
 		}
-	}
 	
 	// 로그아웃
 	@RequestMapping("/logout")
