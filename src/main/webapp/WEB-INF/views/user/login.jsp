@@ -36,7 +36,6 @@
     </style>
 </head>
 <body>
-	
     <div class="container">
     	<button type="button" class="btn-close" id="backBtn" aria-label="Close"></button>
         <div class="row mb-4">
@@ -99,9 +98,11 @@
     	if(document.cookie) {
     		$("#rememberId").attr("checked", true);
     	}
-
+		
+    	
     	// 로그인 요청
     	$("#loginBtn").on("click", function(){
+    		
     		// 아이디 기억하기 여부 검사
     		if($("#rememberId:checked").length == 1){ // 체크 됨.
     		 	rememberId();
@@ -117,15 +118,13 @@
     			, data : data
     		}).done(function(rs){
     			console.log(rs);
-    			if(rs == "성공"){
-    				if("${loginSession.type}" == 1 || "${loginSession.type}" == 2) {
+    				if(rs == "성공") {
     					location.href="${pageContext.request.contextPath}/online/toMain.do"
-    				}else if("${loginSession.type}" == 0) {
+    				}else if(rs == "관리자") {
     					location.href = "${pageContext.request.contextPath}/admin/toAdminMain"
-    				}
-    			}else if(rs == "실패"){
+    				}else if(rs == "실패"){
     				alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
-    			}
+    				}
     		}).fail(function(e){
     			console.log(e);
     		})
