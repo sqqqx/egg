@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> 
-<link rel="stylesheet" href="/resources/css/header.css"> 
+<link rel="stylesheet" href="/resources/css/header.css">
 </head>
 <body>
  <div class="container-fluid">
@@ -74,7 +74,7 @@
 				           			정보 수정
 				           </div>
 				           <div class="row align-content-center textList2">
-				           			로그 아웃
+				           			<a href="${pageContext.request.contextPath}/member/logout">로그 아웃</a>
 				           </div>
 		       			 </div>
 		            </div>

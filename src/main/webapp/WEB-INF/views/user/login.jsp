@@ -75,8 +75,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
     
-    $(document).ready(funtion() {
-    	
     	$("#password").on('keypress', function(e){
         	if(e.keyCode == '13'){
         		$('#loginBtn').click();
@@ -120,7 +118,11 @@
     		}).done(function(rs){
     			console.log(rs);
     			if(rs == "성공"){
-    				location.href = "${pageContext.request.contextPath}/online/toMain.do";
+    				if("${loginSession.type}" == 1 || "${loginSession.type}" == 2) {
+    					location.href="${pageContext.request.contextPath}/online/toMain.do"
+    				}else if("${loginSession.type}" == 0) {
+    					location.href = "${pageContext.request.contextPath}/admin/toAdminMain"
+    				}
     			}else if(rs == "실패"){
     				alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
     			}
@@ -129,7 +131,6 @@
     		})
     	});
         
-    })
     
 	// 로그인 쿠키 삭제
 	function deleteRememberId() {
