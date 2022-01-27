@@ -13,9 +13,18 @@
         <div class="row header">
             <!--로고영역-->
             <div class="col-2 imgBox">
-                <a href="/online/toMain.do">
-                	<img src="/resources/img/logo.png">
-                </a>
+            	<c:choose>
+            		<c:when test="${loginSession.type==0}">
+            			 <a href="/admin/toAdminMain">
+		                	<img src="/resources/img/logo.png">
+		                </a>
+            		</c:when>
+            		<c:otherwise>
+            			 <a href="/online/toMain.do">
+		                	<img src="/resources/img/logo.png">
+		                </a>
+            		</c:otherwise>
+            	</c:choose>
             </div>
             <!-- 검색창 -->
             <div class="col-5 searchBox">
@@ -73,8 +82,8 @@
 				           <div class="row align-content-center textList2">
 				           			정보 수정
 				           </div>
-				           <div class="row align-content-center textList2">
-				           			<a href="${pageContext.request.contextPath}/member/logout">로그 아웃</a>
+				           <div class="row align-content-center textList2" id="toLogout">
+				           			로그 아웃
 				           </div>
 		       			 </div>
 		            </div>
@@ -212,6 +221,10 @@
          //마이페이지 div창 눌렀을 경우 mypage.jsp로 이동(MemberController이용)
          $("#toMypage").click(function(){
         	 location.href="${pageContext.request.contextPath}/member/toMyPage"
+         })
+         //로그아웃버튼 누르면 로그아웃처리
+         $("#toLogout").click(function(){
+        	 location.href="${pageContext.request.contextPath}/member/logout"
          })
     </script>
 </body>

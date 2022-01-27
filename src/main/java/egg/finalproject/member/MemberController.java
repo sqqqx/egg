@@ -42,25 +42,31 @@ public class MemberController {
 		return "user/login";
 	}
 	
-	// 로그인
-		@RequestMapping(value="/login.do", produces="text/html;charset=UTF-8")
-		@ResponseBody
-		public String login(String user_id, String password) throws Exception{
-			password = EncryptionUtils.getSHA512(password);
-			if(service.isLoginOk(user_id, password)) {
-				
-				MemberDTO dto = service.getMember(user_id); 
-				session.setAttribute("loginSession", dto);
+
+	@RequestMapping(value="/login.do", produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String login(String user_id, String password) throws Exception{
+		password = EncryptionUtils.getSHA512(password);
+		if(service.isLoginOk(user_id, password)) {
+			System.out.println("user_id =" + user_id);
+			System.out.println("password = " + password);
+			MemberDTO dto = service.getMember(user_id);
+			session.setAttribute("loginSession", dto);
+			System.out.println(dto.getType());
+			if(dto.getType() == 1 || dto.getType() == 2) {
 				return "성공";
-			}else {
-				return "실패";
+			}else if(dto.getType() == 0) {
+				return "관리자";
 			}
 		}
+		return "실패";
+	}
+
 	
 	// 로그아웃
 	@RequestMapping("/logout")
-    public ModelAndView logout(HttpSession session) {
-        session.invalidate();
+    public ModelAndView logout() {
+        session.removeAttribute("loginSession");
         ModelAndView mv = new ModelAndView("redirect:/");
         return mv;
     }
