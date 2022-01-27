@@ -35,8 +35,7 @@
         }
     </style>
 </head>
-<body>
-	
+<body>	
     <div class="container">
     	<button type="button" class="btn-close" id="backBtn" aria-label="Close"></button>
         <div class="row mb-4">

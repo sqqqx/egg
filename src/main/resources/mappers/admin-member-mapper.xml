@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminMemberMapper">
+	
+	<!-- 전체 회원 수 가져오기 -->
+	<select id="getMemberCountAll" resultType="int">
+		SELECT COUNT(*) FROM tbl_member
+	</select>
+	
+	<!-- 검색 한 회원 수 가져오기(위와 병합할 것) -->
+	<select id="getSearchCount" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM tbl_member 
+			WHERE ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+	</select>
+	
+	<!-- 회원 목록 가져오기 -->
+	<select id="getMemberList" parameterType="map" resultType="memberDTO">
+		SELECT * FROM (SELECT row_number() OVER (ORDER BY signup_date DESC) AS idx, tbl_member.* FROM tbl_member) 
+		    WHERE idx BETWEEN #{startRange} AND #{endRange}
+		    <if test ="searchOption != null">
+		    	AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+		    </if>
+		    <choose>
+		    	<when test="userType == 0">
+		    		AND type = 0
+		    	</when>
+		    	<when test="userType == 1">
+		    		AND type = 1
+		    	</when>
+		    	<when test="userType == 2">
+		    		AND type = 2
+		    	</when>
+		    </choose>
+	</select>
+	
+	<!-- 회원 강제 탈퇴-->
+	<update id="memberExpulsion" parameterType="map">
+		DELETE FROM tbl_member 
+			WHERE user_id IN
+		<foreach collection="userCheckBox" item="user_id" open="(" close=")" separator=",">
+			#{user_id}
+		</foreach>
+	</update>
+	
+	<!-- 블랙리스트 ON / OFF -->
+	<update id="memberBlackList" parameterType="map">
+		UPDATE tbl_member SET
+		<trim suffix="WHERE user_id IN">
+			<choose>
+				<when test="idx == 0">
+					blacklist = 0
+				</when>
+				<otherwise>
+					blacklist = 1
+				</otherwise>
+			</choose>
+		</trim>
+		<foreach collection="userCheckBox" item="user_id" open="(" close=")" separator=",">
+			#{user_id}
+		</foreach>
+	</update>
+	
+	<!-- 피신고자 아이디 찾기 -->
+	<select id="getUserId" parameterType="map" resultType="String">
+		SELECT user_id FROM
+		<choose>
+			<when test="type == 1">
+				tbl_post WHERE post_no = #{target_no} 
+			</when>
+			<when test="type == 2">
+				tbl_comment WHERE comment_no = #{target_no}
+			</when>
+			<when test="type == 3">
+				tbl_message WHERE message_no = #{target_no}
+			</when>
+		</choose>
+	</select>
+	
+</mapper>
