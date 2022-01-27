@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -12,6 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ProductController {
 	@Autowired
 	private ProductService service;
+	
+	@RequestMapping("/toProductDetail.do")
+	public String toProductDetail(int comment_no,Model model) throws Exception{
+		ProductDTO dto = service.getProduct(comment_no);
+		model.addAttribute("ProductDTO",dto);
+		return "product/productDetail";
+	}
 	
 	@RequestMapping("/toSearchProduct.do")
 	public String toSearchProduct() throws Exception{

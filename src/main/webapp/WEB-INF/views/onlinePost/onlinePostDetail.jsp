@@ -695,9 +695,6 @@ i {
                             </div>\
                         </div>\
                         <div class='comment_content'>"+dto.content+"</div>\
-                        <div class='written_date'>\
-                            <label id='written_date'>"+dto.written_date+"</label>\
-                        </div>\
                         <div class='reactions'>\
                             <div class='reaction' id='replyArea'>\
                                 <div class='icon' id='replyIcon'><i\
@@ -809,6 +806,7 @@ i {
     		   }).done(function(data){
     			   console.log(data);
     			   getReplies(data,comment_no);
+    			   content.value="";
     		   }).fail(function(rs){
     			   console.log(rs);
     		   })
@@ -842,9 +840,6 @@ i {
                    <div class='reply_nickname'><span>"+dto.user_nickname+" |</span><span class='reply_written_date'>"+dto.written_date+"</span></div>\
                    <div class='reply_content'>"+dto.content+"</div>\
                    <div class='reply_reactions'>\
-                       <div class='reply_reply' id='reply_reply"+dto.comment_no+"' onclick=\"reply_reply("+dto.comment_no+",'"+dto.user_nickname+"')\">\
-                           <i class='far fa-comment-dots fa-1x reply_reply'></i>\
-                       </div>\
                        <div class='reply_like'>\
                            <i class='far fa-heart fa-1x'></i>\
                        </div>\
@@ -854,25 +849,44 @@ i {
                    </div>\
                </div>\
                <div class='blank'></div>\
-               <div class='reply_replyArea' id='reply_replyArea"+dto.comment_no+"' hidden>\
-               <div class='replyInputDiv' >\
-                   <input type='text' class='form-control' id='reply_replyInput"+dto.comment_no+"' name='"+dto.comment_no+"'/>\
-               </div>\
-               <div class='InsertReplyBtnArea' >\
-                   <button type='button' class='btn btn-secondary replyReplyBtn' name='"+dto.comment_no+"'>답글 등록</button>\
-               </div>\
           </div>"
                $("div[id='commentReplyArea"+comment_no+"']").append(option);
     	   })
 
        }
       
-       function reply_reply(comment_no,user_nickname){
+       /* function reply_reply_click(comment_no,user_nickname){
     	   console.log($("div[id='reply_replyArea"+comment_no+"']"));
     	   $("div[id='reply_replyArea"+comment_no+"']")[0].hidden=false;
     	   console.log($("Input[id='reply_replyInput"+comment_no+"']")[0]);
     	   console.log($("Input[id='reply_replyInput"+comment_no+"']").attr("placeholder","@"+user_nickname+" 답글을 입력해 주세요."));
-       }
+       } */
+       
+       /* function replyReplyBtn_click(){
+    	   console.log(this);
+    	   let comment_no = $(this).attr('value');
+    	   console.log(comment_no);
+    	   let replyInput = $("Input[id='reply_replyInput"+comment_no+"']")[0];
+    	   console.log(replyInput.value);
+    	   if(replyInput==""){
+    		   alert("답글을 입력해 주세요.");
+    	   }else{
+    		   
+    	   }
+       } */
+       
+       /* $(document).on("click",".replyReplyBtn",function(){
+    	   let comment_no = $(this).attr('value');
+    	   console.log(comment_no);
+    	   let replyInput = $("Input[id='reply_replyInput"+comment_no+"']")[0];
+    	   console.log(replyInput.value);
+    	   if(replyInput==""){
+    		   alert("답글을 입력해 주세요.");
+    	   }else{
+    		   
+    	   }
+    	   
+       }) */
     </script>
 </body>
 
