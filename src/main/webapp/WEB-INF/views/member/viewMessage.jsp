@@ -30,7 +30,7 @@
 		        <div class="row" id="searchBox">
 		            <div class="col">
 		            	<form action="${pagecontext.request.contextPath}/message/searchMsg.do" method="post" id="searchForm">
-		            		<select id="seaerchSelect">
+		            		<select id="searchSelect">
 			                    <option value="user_id">ID</option>
 			                    <option value="title">제목</option>
 			                </select>
@@ -40,7 +40,7 @@
 		            		<input type="text" name="user_id" value="${loginSession.user_id}" hidden>
 		            		<input type="text" name="currentPage" value="${naviMap.get('currentPage')}" hidden>
 		            		<input type="text" name="orderMsg" value="${orderMsg}" hidden>
-			                <button type="button" id="searchBtn">검색</button>
+			                <button type="button" id="msgSearchBtn">검색</button>
 		            	</form>
 		            </div>
 		            <div class="col">
@@ -68,6 +68,8 @@
 		                <button type="button" id="checkedMsgDelBtn" class="btn btn-danger">체크삭제</button>
 		            </div>
 		        </div>
+		        
+		        <!-- 글 목록 테이블 -->
 		        <form action="${pagecontext.request.contextPath}/message/checkedMsg.do" method="post" id="msgListForm">
 			        <table class="table">
 			            <thead>
@@ -124,6 +126,8 @@
 			            </tbody>
 			        </table>
 		        </form>
+		        
+		        <!-- 페이지 -->
 		        <div class="row">
 		            <nav aria-label="Page navigation example">
 		            	<ul class="pagination justify-content-center">
@@ -158,12 +162,12 @@
 
     <script>
     	// 검색 버튼
-/*     	$("#searchBtn").on("click", function(e){
+     	$("#msgSearchBtn").on("click", function(e){
     		console.log("클릭");
     		console.log($("#searchSelect option:selected").val());
             $("#searchOpt").val($("#searchSelect option:selected").val());
             $("#searchForm").submit(); 
-    	}) */
+    	})
     	document.getElementById("searchBtn").onclick = function(){
     		console.log("e");
     	}

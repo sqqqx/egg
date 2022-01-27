@@ -15,23 +15,24 @@
 		select message_no, title, content, message_check, message_date, from_id, to_id, from_delete, to_delete
 			from (select row_number() over (order by message_no desc) as msgRank, m.* from tbl_message m where 
 		
+		
 		<!-- 받는 쪽지 -->
 		<if test="type == 'received'">
 			to_id=#{user_id}
 			<if test="searchOpt == 'user_id'">
-				and from_id like %${inputText}%
+				and from_id like '%' ||  #{inputText} || '%'
 			</if>
 		</if>
 		<!-- 보낸 쪽지 -->
 		<if test="type == 'sent'">
 			from_id=#{user_id}
 			<if test="searchOpt == 'user_id'">
-				and from_id like %${inputText}%
+				and from_id like '%' ||  #{inputText} || '%'
 			</if>
 		</if>
 		
 		<if test="searchOpt == 'title'">
-			and title like %${inputText}%
+			and title like '%' ||  #{inputText} || '%'
 		</if>
 		
 		) where msgRank between #{startRange} and #{endRange}
@@ -44,10 +45,19 @@
 		<!-- 받는 쪽지 -->
 		<if test="type == 'received'">
 			to_id=#{user_id}
+			<if test="searchOpt == 'user_id'">
+				and from_id like '%' ||  #{inputText} || '%'
+			</if>
 		</if>
 		<!-- 보낸 쪽지 -->
 		<if test="type == 'sent'">
 			from_id=#{user_id}
+			<if test="searchOpt == 'user_id'">
+				and from_id like '%' ||  #{inputText} || '%'
+			</if>
+		</if>
+		<if test="searchOpt == 'title'">
+			and title like '%' ||  #{inputText} || '%'
 		</if>
 	</select>
 	
@@ -58,10 +68,19 @@
 		<!-- 받는 쪽지 -->
 		<if test="type == 'received'">
 			to_id=#{user_id}
+			<if test="searchOpt == 'user_id'">
+				and from_id like '%' ||  #{inputText} || '%'
+			</if>
 		</if>
 		<!-- 보낸 쪽지 -->
 		<if test="type == 'sent'">
 			from_id=#{user_id}
+			<if test="searchOpt == 'user_id'">
+				and from_id like '%' ||  #{inputText} || '%'
+			</if>
+		</if>
+		<if test="searchOpt == 'title'">
+			and title like '%' ||  #{inputText} || '%'
 		</if>
 		and message_check='N'
 	</select>
@@ -73,10 +92,19 @@
 		<!-- 받는 쪽지 -->
 		<if test="type == 'received'">
 			to_id=#{user_id}
+			<if test="searchOpt == 'user_id'">
+				and from_id like '%' ||  #{inputText} || '%'
+			</if>
 		</if>
 		<!-- 보낸 쪽지 -->
 		<if test="type == 'sent'">
 			from_id=#{user_id}
+			<if test="searchOpt == 'user_id'">
+				and from_id like '%' ||  #{inputText} || '%'
+			</if>
+		</if>
+		<if test="searchOpt == 'title'">
+			and title like '%' ||  #{inputText} || '%'
 		</if>
 		and message_check='Y'
 	</select>
