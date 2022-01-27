@@ -37,7 +37,7 @@
 			<exclude-mapping path="/resources/**"/>
 			<exclude-mapping path="/online/toMain.do"/>
 			<exclude-mapping path="/toSignup.do"/>
-			<exclude-mapping path="/member/**"/>
+ 			<exclude-mapping path="/member/**"/>
 <!-- 			<exclude-mapping path="/member/idFind.do"/> -->
 <!-- 			<exclude-mapping path="/member/pwFind.do"/> -->
 <!-- 			<exclude-mapping path="/member/login.do"/> -->
