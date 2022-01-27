@@ -336,7 +336,6 @@ i {
             width: 100%;
             padding-left: 10px;
             padding-right : 10px;
-            margin-top: 10px;
             border-top: 0px;
             border-left: 0px;
             border-right: 0px;
@@ -362,11 +361,11 @@ i {
             margin-left: 20px;
         }
         .commentReply{
-            height : 73px;
             text-align : left;
             margin-top : 10px;
-            margin-bottom : 30px;
+            height : 70px;
         }
+        
         .reply_nickname{
             font-size: 18px;
             font-weight : bold;
@@ -377,6 +376,9 @@ i {
         }
         .reply_content{
             font-size : 20px;
+        }
+        .reply_replyArea:after{
+            position : absolute;
         }
 </style>
 </head>
@@ -806,6 +808,7 @@ i {
     			   ,data : {comment_no,comment_no, post_no:post_no,content:content,user_nickname:user_nickname, user_id:user_id}
     		   }).done(function(data){
     			   console.log(data);
+    			   getReplies(data,comment_no);
     		   }).fail(function(rs){
     			   console.log(rs);
     		   })
@@ -814,15 +817,7 @@ i {
        
        $(".replyArea").on("click",function(){
     	   let comment_no = ($(this)).attr('id');
-    	   console.log($(this).parent().siblings()[2].children[1]);
-    	   console.log($("div[id='commentReplyArea"+comment_no+"']")[0]); 
     	   let commentForm = ($(this).parent().parent())[0];
-    	 //red 클래스명의 자식요소만 찾아 ;
-    	   console.log(comment_no);
-    	   console.log(commentForm);
-    	   let replies = commentForm.children[3];
-    	   let commentArea = $(this).parent().siblings()[2].children[1];
-    	   console.log(replies.children[1]);
     	   if(commentForm.children[3].hidden){
     		   commentForm.children[3].hidden=false;
     		   $.ajax({
@@ -831,26 +826,7 @@ i {
     			   ,data:{comment_no:comment_no}
     		   }).done(function(data){
     			   console.log(data);
-    			   $("div[id='commentReplyArea"+comment_no+"']").empty();
-    			   data.forEach(function(dto){
-    	    		   var option = "<div class='commentReply'>\
-    	                   <div class='reply_nickname'><span>"+dto.user_nickname+" |</span><span class='reply_written_date'>"+dto.written_date+"</span></div>\
-    	                   <div class='reply_content'>"+dto.content+"</div>\
-    	                   <div class='reply_reactions'>\
-    	                       <div class='reply_reply'>\
-    	                           <i class='far fa-comment-dots fa-1x'></i>\
-    	                       </div>\
-    	                       <div class='reply_like'>\
-    	                           <i class='far fa-heart fa-1x'></i>\
-    	                       </div>\
-    	                       <div class='reply_report'>\
-    	                           <i class='fas fa-times fa-1x'></i>\
-    	                       </div>\
-    	                   </div>\
-    	               </div>"
-    	               $("div[id='commentReplyArea"+comment_no+"']").append(option);
-    	    	   })
-
+    			   getReplies(data, comment_no);
     		   }).fail(function(rs){
     			   console.log(rs);
     		   })
@@ -858,15 +834,16 @@ i {
     	   }commentForm.children[3].hidden =true;
        })
        
-       function getApplies(data, div){
-
-    	   data.forEach(function(dto){
+       
+       function getReplies(data, comment_no){
+    	   $("div[id='commentReplyArea"+comment_no+"']").empty();
+		   data.forEach(function(dto){
     		   var option = "<div class='commentReply'>\
                    <div class='reply_nickname'><span>"+dto.user_nickname+" |</span><span class='reply_written_date'>"+dto.written_date+"</span></div>\
                    <div class='reply_content'>"+dto.content+"</div>\
                    <div class='reply_reactions'>\
-                       <div class='reply_reply'>\
-                           <i class='far fa-comment-dots fa-1x'></i>\
+                       <div class='reply_reply' id='reply_reply"+dto.comment_no+"' onclick=\"reply_reply("+dto.comment_no+",'"+dto.user_nickname+"')\">\
+                           <i class='far fa-comment-dots fa-1x reply_reply'></i>\
                        </div>\
                        <div class='reply_like'>\
                            <i class='far fa-heart fa-1x'></i>\
@@ -875,9 +852,26 @@ i {
                            <i class='fas fa-times fa-1x'></i>\
                        </div>\
                    </div>\
-               </div>"
-               div.append(option);
+               </div>\
+               <div class='blank'></div>\
+               <div class='reply_replyArea' id='reply_replyArea"+dto.comment_no+"' hidden>\
+               <div class='replyInputDiv' >\
+                   <input type='text' class='form-control' id='reply_replyInput"+dto.comment_no+"' name='"+dto.comment_no+"'/>\
+               </div>\
+               <div class='InsertReplyBtnArea' >\
+                   <button type='button' class='btn btn-secondary replyReplyBtn' name='"+dto.comment_no+"'>답글 등록</button>\
+               </div>\
+          </div>"
+               $("div[id='commentReplyArea"+comment_no+"']").append(option);
     	   })
+
+       }
+      
+       function reply_reply(comment_no,user_nickname){
+    	   console.log($("div[id='reply_replyArea"+comment_no+"']"));
+    	   $("div[id='reply_replyArea"+comment_no+"']")[0].hidden=false;
+    	   console.log($("Input[id='reply_replyInput"+comment_no+"']")[0]);
+    	   console.log($("Input[id='reply_replyInput"+comment_no+"']").attr("placeholder","@"+user_nickname+" 답글을 입력해 주세요."));
        }
     </script>
 </body>
