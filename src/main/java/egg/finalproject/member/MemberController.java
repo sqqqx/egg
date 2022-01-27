@@ -48,6 +48,7 @@ public class MemberController {
 		public String login(String user_id, String password) throws Exception{
 			password = EncryptionUtils.getSHA512(password);
 			if(service.isLoginOk(user_id, password)) {
+				
 				MemberDTO dto = service.getMember(user_id); 
 				session.setAttribute("loginSession", dto);
 				return "성공";
