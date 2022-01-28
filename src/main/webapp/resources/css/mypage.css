@@ -46,7 +46,7 @@
 }
 a {
 	color: black;
-	text-decoration: none;
+	text-decoration-line: none;
 }
 span {
 	cursor: pointer;
