@@ -191,6 +191,23 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
+    	// WebSocket TEST
+    	$(document).ready(function() {
+    		ws = new WebSocket("ws://localhost/test"); // 포트번호가 80이 아니면 붙여줘야 함
+
+            $("#btnSend").on("click", function(){
+                let msg = $("#inputText").val();
+                $("inputText").val("");
+                ws.send(msg);
+            });
+            
+            // 메세지 수신
+            ws.onmessage = function(e) {
+            	console.log(e.data);
+            	let msgObj = JSON.parse(e.data);
+            	console.log(msgObj);
+            }
+    	});
     
     	//계정표시아이콘 눌렀을 경우 마이페이지,정보수정,로그아웃 할수 있는 div창이 내려옴
         $(".account").click(function(){
