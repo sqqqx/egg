@@ -6,7 +6,7 @@ public class OrderDTO {
 
 	private int order_no;
 	private Date order_time;
-	private int amount;
+	private int cost;
 	private String name;
 	private String address;
 	private String message;
@@ -17,12 +17,12 @@ public class OrderDTO {
 	
 	public OrderDTO() {}
 
-	public OrderDTO(int order_no, Date order_time, int amount, String name, String address, String message,
+	public OrderDTO(int order_no, Date order_time, int cost, String name, String address, String message,
 			String status, String tracking_no, int payment_no, String user_id) {
 		super();
 		this.order_no = order_no;
 		this.order_time = order_time;
-		this.amount = amount;
+		this.cost = cost;
 		this.name = name;
 		this.address = address;
 		this.message = message;
@@ -48,12 +48,12 @@ public class OrderDTO {
 		this.order_time = order_time;
 	}
 
-	public int getAmount() {
-		return amount;
+	public int getCost() {
+		return cost;
 	}
 
-	public void setAmount(int amount) {
-		this.amount = amount;
+	public void setCost(int cost) {
+		this.cost = cost;
 	}
 
 	public String getName() {
