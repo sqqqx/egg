@@ -26,4 +26,20 @@ public class CommentDAO {
 	public int modifyComment(CommentDTO dto) throws Exception{
 		return session.update("commentMapper.modifyComment",dto);
 	}
+	
+	public List<ReplyDTO> getAllReplies(int comment_no) throws Exception{
+		return session.selectList("commentMapper.getAllReplies",comment_no);
+	}
+	
+	public int insertReply(ReplyDTO dto) throws Exception{
+		return session.insert("commentMapper.insertReply",dto);
+	}
+	
+	public int deleteReply(int comment_no) throws Exception{
+		return session.delete("commentMapper.deleteReply",comment_no);
+	}
+	
+	public int insertReply_reply(ReplyDTO dto) throws Exception{
+		return session.insert("commentMapper.insertReply_reply",dto);
+	}
 }

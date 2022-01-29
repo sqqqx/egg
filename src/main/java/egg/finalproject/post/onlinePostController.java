@@ -43,9 +43,6 @@ public class onlinePostController {
 	@RequestMapping("/toWrite.do")
 	public String toWrite(Model model) throws Exception{
 		List<String> list = categoryService.getParentCategory(); //대분류 값 받아오기
-//		for(String str : list) {
-//			System.out.println(str);
-//		}
 		model.addAttribute("list", list);
 		return "onlinePost/onlinePost_write";
 	}
@@ -70,7 +67,7 @@ public class onlinePostController {
 	
 	
 	
-	//ProductDTO 추가 예정
+	//TODO : ProductDTO 추가 예정
 	@RequestMapping("/toDetail.do")
 	public String toDetail(int post_no, Model model) throws Exception{
 		System.out.println("pont_no : " + post_no);

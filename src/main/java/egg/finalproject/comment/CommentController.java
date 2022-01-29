@@ -56,4 +56,38 @@ public class CommentController {
 		}System.out.println("false가 들어왔어!!");
 		return null;
 	}
+	
+	@RequestMapping("/getAllReplies.do")
+	@ResponseBody
+	public List<ReplyDTO> getAllReplies(int comment_no) throws Exception{
+		return service.getAllReplies(comment_no);
+	}
+	
+	@RequestMapping("/insertReply.do")
+	@ResponseBody
+	public List<ReplyDTO> insertReply(ReplyDTO dto) throws Exception{
+		System.out.println(dto.getPost_no());
+		System.out.println(dto.getComment_no());
+		System.out.println(dto.getContent());
+		if(service.insertReply(dto)) {
+			return service.getAllReplies(dto.getComment_no());
+		}return null;
+	}
+	
+	@RequestMapping("/deleteReply.do")
+	@ResponseBody
+	public List<ReplyDTO> deleteReply(int comment_no, int parent_no) throws Exception{
+		System.out.println("comment_no : "+comment_no);
+		System.out.println("parent_no : "+ parent_no);
+		if(service.deleteReply(comment_no)) {
+			return getAllReplies(parent_no);
+		}return null;
+	}
+	@RequestMapping("/insertReply_reply.do")
+	@ResponseBody
+	public List<ReplyDTO> insertReply_reply(ReplyDTO dto) throws Exception{
+		if(service.insertReply_reply(dto)) {
+			return service.getAllReplies(dto.getParent_no());
+		}return null;
+	}
 }
