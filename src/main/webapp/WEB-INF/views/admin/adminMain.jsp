@@ -39,7 +39,21 @@
             		<li></li>
             		<li></li>
             	</ul>
+            	<h2>TEST</h2>
+            	<span id="tmp"></span>
             </div>
        </div>
+       
+       <script>
+       		/* $(document).ready(function() {
+       			ws.onmessage = function(e) {
+                	console.log(e.data);
+                	msgObj = JSON.parse(e.data);
+                	console.log("msgObj333 : " + msgObj);
+                	$("#tmp").empty();
+                	$("#tmp").append(msgObj);
+                }
+       		}); */
+       </script>
 </body>
 </html>

@@ -189,6 +189,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
     	// WebSocket TEST
+    	let msgObj;
     	$(document).ready(function() {
     		ws = new WebSocket("ws://localhost/test"); // 포트번호가 80이 아니면 붙여줘야 함
 
@@ -200,9 +201,12 @@
             
             // 메세지 수신
             ws.onmessage = function(e) {
-            	console.log(e.data);
-            	let msgObj = JSON.parse(e.data);
-            	console.log(msgObj);
+            	console.log("e.data : " + e.data);
+            	msgObj = JSON.parse(e.data);
+            	console.log("msgObj : " + msgObj.type);
+            	if(msgObj.type == "notiCount") {
+            		
+            	}
             }
     	});
     

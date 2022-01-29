@@ -498,7 +498,7 @@
         $(document).ready(function () {
             $('.dropdown-toggle').dropdown()
         });
-
+        
         $("#insertComment").on("click", function () {
             console.log("여깄어요");
             if ($("#commentsInput").val() != "") {
