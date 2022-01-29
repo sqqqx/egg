@@ -1,21 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/resources/css/header.css">
+<link rel="stylesheet" href="/resources/css/header.css"> 
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
  <div class="container-fluid">
         <div class="row header">
             <!--로고영역-->
             <div class="col-2 imgBox">
-                <a href="/online/toMain.do">
-                	<img src="/resources/img/logo.png">
-                </a>
+            	<c:choose>
+            		<c:when test="${loginSession.type==0}">
+            			 <a href="/admin/toAdminMain">
+		                	<img src="/resources/img/logo.png">
+		                </a>
+            		</c:when>
+            		<c:otherwise>
+            			 <a href="/online/toMain.do">
+		                	<img src="/resources/img/logo.png">
+		                </a>
+            		</c:otherwise>
+            	</c:choose>
             </div>
             <!-- 검색창 -->
             <div class="col-5 searchBox">
@@ -30,11 +39,8 @@
             <div class="col-1">
                 <button type="button" class="btn btn-dark">오프라인</button>
             </div>
-            <!--쇼핑몰-->
-            <div class="col-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" class="bi bi-shop" viewBox="0 0 16 16">
-                    <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z"/>
-                </svg>
+            <!--쇼핑몰(이었던것)-->
+            <div class="col-1">        
             </div>
             <!--알림(비로그인시 svg 안보여야함) // 로그인세션활용하여 c:if처리 할것-->
             <div class="col-1">
@@ -47,7 +53,7 @@
             <!--쪽지함(비로그인시 svg 안보여야함) // 로그인세션활용하여 c:if처리 할것-->
             <div class="col-1">
             	<c:if test = "${not empty loginSession }">
-	                <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+	                <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" id="toMessage" class="bi bi-envelope" viewBox="0 0 16 16">
 	                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
 	                  </svg>
                 </c:if>
@@ -70,11 +76,11 @@
 				           <div class="row align-content-center textList1" id="toMypage">        		    		
 				           			마이페이지
 				           </div>
-				           <div class="row align-content-center textList2">
+				           <div class="row align-content-center textList2" id="toUserInfo">
 				           			정보 수정
 				           </div>
-				           <div class="row align-content-center textList2">
-				           			<a href="${pageContext.request.contextPath}/member/logout">로그 아웃</a>
+				           <div class="row align-content-center textList2" id="toLogout">
+				           			로그 아웃
 				           </div>
 		       			 </div>
 		            </div>
@@ -212,6 +218,19 @@
          //마이페이지 div창 눌렀을 경우 mypage.jsp로 이동(MemberController이용)
          $("#toMypage").click(function(){
         	 location.href="${pageContext.request.contextPath}/member/toMyPage"
+         })
+         //쪽지함 버튼 클릭시 쪽지함으로 이동 
+         $("#toMessage").click(function(){
+        	 location.href="${pagecontext.request.contextPath}/message/toViewMessage?type=received&user_id=${loginSession.user_id}&currentPage=1";
+         })
+         //정보수정 버튼 클릭시 회원정보조회페이지로 이동 
+         $("#toUserInfo").click(function(){
+        	 location.href="${pageContext.request.contextPath}/member/toUserInformation?user_id=${loginSession.user_id}";
+         })
+         
+         //로그아웃버튼 누르면 로그아웃처리
+         $("#toLogout").click(function(){
+        	 location.href="${pageContext.request.contextPath}/member/logout"
          })
     </script>
 </body>

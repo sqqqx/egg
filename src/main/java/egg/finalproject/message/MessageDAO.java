@@ -46,12 +46,16 @@ public class MessageDAO {
 	}
 	
 	// (마이페이지) 전체 쪽지 개수
-	public int getMsgTotalCnt(String type, String user_id, String orderMsg) throws Exception {
-		System.out.println("MessageDAO / 쪽지 페이징 - type: " + type + " / user_id: " + user_id);
+	public int getMsgTotalCnt(String type, String user_id, String orderMsg, String searchOpt, String inputText) throws Exception {
+		System.out.println("MessageDAO / 쪽지 페이징 - type: " + type + " / user_id: " + user_id + " / orderMsg: " + orderMsg
+				+ " / searechOpt: " + searchOpt + " / inputText: " + inputText);
 		
 		Map<String, String> map = new HashMap<>();
 		map.put("type", type);
 		map.put("user_id", user_id);
+		map.put("searchOpt", searchOpt);
+		map.put("inputText", inputText);
+		
 		
 		// 정렬 방법에 따라서 쿼리문이 달라진다.
 		if(orderMsg == null || orderMsg.equals("latest") || orderMsg.equals("oldest")) {	// 전체 쪽지

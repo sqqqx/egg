@@ -28,8 +28,8 @@ public class MessageService {
 	
 	// (마이페이지) 쪽지 불러오기
 	public List<MessageDTO> getMsgList(String type, String user_id, int currentPage, String orderMsg, String searchOpt, String inputText) throws Exception {
-		System.out.println("MessageService / 쪽지 불러오기 - type: " + type + " / user_id: " + user_id
-				+ " / currentPage: " + currentPage + " / orderMsg: " + orderMsg);
+		System.out.println("MessageService / 쪽지 불러오기 - type: " + type + " / user_id: " + user_id + " / currentPage: " + currentPage
+				+ " / orderMsg: " + orderMsg + " / searchOpt: " + searchOpt + " / inputText: " + inputText);
 		int startRange = currentPage * msgCntPerPage - (msgCntPerPage-1);
 		int endRange = currentPage * msgCntPerPage;
 		System.out.println("startRange: " + startRange + " / endRange: " + endRange);
@@ -42,10 +42,11 @@ public class MessageService {
 	}
 	
 	// (마이페이지) 쪽지 페이징
-	public Map<String, Object> getPageNavi(String type, String user_id, int currentPage, String orderMsg) throws Exception {
-		System.out.println("MessageService / 쪽지 페이징 - type: " + type + " / user_id: " + user_id + " / currentPage: " + currentPage);
+	public Map<String, Object> getPageNavi(String type, String user_id, int currentPage, String orderMsg, String searchOpt, String inputText) throws Exception {
+		System.out.println("MessageService / 쪽지 페이징 - type: " + type + " / user_id: " + user_id + " / currentPage: " + currentPage
+				+ " / orderMsg: " + orderMsg + " / searchOpt: " + searchOpt + " / inputText: " + inputText);
 		// 해당 아이디에 해당하는 전체 쪽지 개수
-		int msgTotalCnt = dao.getMsgTotalCnt(type, user_id, orderMsg);
+		int msgTotalCnt = dao.getMsgTotalCnt(type, user_id, orderMsg, searchOpt, inputText);
 		System.out.println("메세지 총 개수: " + msgTotalCnt);
 		
 		// 메세지 유무 검사
