@@ -34,4 +34,12 @@ public class CommentDAO {
 	public int insertReply(ReplyDTO dto) throws Exception{
 		return session.insert("commentMapper.insertReply",dto);
 	}
+	
+	public int deleteReply(int comment_no) throws Exception{
+		return session.delete("commentMapper.deleteReply",comment_no);
+	}
+	
+	public int insertReply_reply(ReplyDTO dto) throws Exception{
+		return session.insert("commentMapper.insertReply_reply",dto);
+	}
 }

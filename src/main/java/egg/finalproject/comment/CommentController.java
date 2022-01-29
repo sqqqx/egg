@@ -73,4 +73,21 @@ public class CommentController {
 			return service.getAllReplies(dto.getComment_no());
 		}return null;
 	}
+	
+	@RequestMapping("/deleteReply.do")
+	@ResponseBody
+	public List<ReplyDTO> deleteReply(int comment_no, int parent_no) throws Exception{
+		System.out.println("comment_no : "+comment_no);
+		System.out.println("parent_no : "+ parent_no);
+		if(service.deleteReply(comment_no)) {
+			return getAllReplies(parent_no);
+		}return null;
+	}
+	@RequestMapping("/insertReply_reply.do")
+	@ResponseBody
+	public List<ReplyDTO> insertReply_reply(ReplyDTO dto) throws Exception{
+		if(service.insertReply_reply(dto)) {
+			return service.getAllReplies(dto.getParent_no());
+		}return null;
+	}
 }

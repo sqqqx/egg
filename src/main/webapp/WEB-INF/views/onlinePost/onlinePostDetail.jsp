@@ -6,12 +6,15 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://kit.fontawesome.com/def66b134a.js"
+	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
 
 <title>게시글 조회</title>
 <style>
@@ -209,6 +212,7 @@ a {
 }
 
 #commentModifyBtn {
+    margin-top : 5px;
 	text-align: right;
 	padding-right: 5px;
 }
@@ -298,7 +302,7 @@ a {
 }
 
 i {
-	height: 100%;
+	height: 50%;
 	width: 100%;
 	font-family: 'BMHANNAAir';
 }
@@ -313,7 +317,7 @@ i {
 }
 
 .modifyInput {
-	height: 100px;
+	height: 70px;
 	width: 100%;
 	resize: none;
 	font-size: 20px;
@@ -342,7 +346,7 @@ i {
             /* margin-right: 10px; */
         }
 
-        .reply_nickname, .reply_content,  .reply_written_date{
+        .reply_nickname, .reply_written_date, .reference_nickname{
             margin-left: 20px;
         }
         .reply_reactions div{
@@ -363,12 +367,27 @@ i {
             font-size : 14px;
             margin-left:8px;
         }
-        .reply_content{
+        .deleteReply{
+            font-size : 14px;
+            margin-left : 10px;
+            color : red;
+            cursor : pointer;
+         }
+        .reply_content, .reference_nickname{
             font-size : 20px;
+            font-family: 'BMHANNAAir';
+        }
+        .reply_content div{
+            padding-left : 15px;
+        }
+        .reference_nickname{
+            font-size: 20px; 
+            color : #6495ed;
+            padding : 0;
+            
         }
         .reply_replyArea:after{
-            position : absolute;
-        }
+            position : absolute;}
 </style>
 </head>
 
@@ -685,7 +704,7 @@ i {
                         </div>\
                         <div class='comment_content'>"+dto.content+"</div>\
                         <div class='reactions'>\
-                            <div class='reaction' id='replyArea'>\
+                            <div class='reaction replyArea' id='"+dto.comment_no+"'>\
                                 <div class='icon' id='replyIcon'><i\
                                         class='far fa-comment-dots fa-2x'></i>\
                                 </div>\
@@ -794,15 +813,15 @@ i {
     			   ,data : {comment_no,comment_no, post_no:post_no,content:content,user_nickname:user_nickname, user_id:user_id}
     		   }).done(function(data){
     			   console.log(data);
+    			   $("input[name='"+comment_no+"']").val("");
     			   getReplies(data,comment_no);
-    			   content.value="";
     		   }).fail(function(rs){
     			   console.log(rs);
     		   })
     	   }
        }
        
-       $(".replyArea").on("click",function(){
+       $(document).on("click",".replyArea",function(){
     	   let comment_no = ($(this)).attr('id');
     	   let commentForm = ($(this).parent().parent())[0];
     	   if(commentForm.children[3].hidden){
@@ -821,14 +840,24 @@ i {
     	   }commentForm.children[3].hidden =true;
        })
        
+      
+       
        
        function getReplies(data, comment_no){
     	   $("div[id='commentReplyArea"+comment_no+"']").empty();
 		   data.forEach(function(dto){
+			   
+			   
     		   var option = "<div class='commentReply'>\
-                   <div class='reply_nickname'><span>"+dto.user_nickname+" |</span><span class='reply_written_date'>"+dto.written_date+"</span></div>\
-                   <div class='reply_content'>"+dto.content+"</div>\
+                   <div class='reply_nickname'><span>"+dto.user_nickname+" |</span>\
+                                               <span class='reply_written_date'>"+dto.written_date+"</span>\
+                                               <span class='deleteReply' onclick='deleteReply("+dto.comment_no+","+dto.parent_no+")'>삭제</span>\
+                                               </div>\
+                   <div class='reply_content' id='reply_content"+dto.comment_no+"'></div>\
                    <div class='reply_reactions'>\
+                       <div class='reply_reply' id='reply_reply"+dto.comment_no+"' onclick=\"reply_reply("+dto.comment_no+",'"+dto.user_nickname+"')\">\
+                           <i class='far fa-comment-dots fa-1x reply_reply'></i>\
+                       </div>\
                        <div class='reply_like'>\
                            <i class='far fa-heart fa-1x'></i>\
                        </div>\
@@ -838,21 +867,34 @@ i {
                    </div>\
                </div>\
                <div class='blank'></div>\
-          </div>"
+               <div class='reply_replyArea' id='reply_replyArea"+dto.comment_no+"' hidden>\
+               <div class='replyInputDiv' >\
+                   <input type='text' class='form-control reply_replyInput' id='reply_replyInput"+dto.comment_no+"' name="+dto.comment_no+">\
+               </div>\
+               <div class='InsertReplyBtnArea' >\
+                   <button type='button' class='btn btn-secondary replyReplyBtn' value='"+dto.comment_no+"' onclick='insertReply_reply("+dto.parent_no+","+dto.comment_no+")'>답글 등록</button>\
+               </div>\
+          </div>" 
+          
                $("div[id='commentReplyArea"+comment_no+"']").append(option);
+    		   if(dto.reference_nickname!=" "){
+    			   $("div[id='reply_content"+dto.comment_no+"']").append("<span class='reference_nickname'>@"+dto.reference_nickname+" </span>"+dto.content);
+			   }else{
+				   $("div[id='reply_content"+dto.comment_no+"']").append("<span class='reference_nickname'></span>"+dto.content);
+			   }
+               
     	   })
 
        }
       
-       /* function reply_reply_click(comment_no,user_nickname){
+       function reply_reply(comment_no,user_nickname){
     	   console.log($("div[id='reply_replyArea"+comment_no+"']"));
-    	   $("div[id='reply_replyArea"+comment_no+"']")[0].hidden=false;
     	   console.log($("Input[id='reply_replyInput"+comment_no+"']")[0]);
-    	   console.log($("Input[id='reply_replyInput"+comment_no+"']").attr("placeholder","@"+user_nickname+" 답글을 입력해 주세요."));
-       } */
+    	   console.log($("Input[id='reply_replyInput"+comment_no+"']").attr("placeholder","@"+user_nickname+" 답글을 입력해 주세요.")); 
+    	   $("div[id='reply_replyArea"+comment_no+"']")[0].hidden=!$("div[id='reply_replyArea"+comment_no+"']")[0].hidden
+       }
        
-       /* function replyReplyBtn_click(){
-    	   console.log(this);
+      /*  $(document).on("click",".replyReplyBtn",function(){
     	   let comment_no = $(this).attr('value');
     	   console.log(comment_no);
     	   let replyInput = $("Input[id='reply_replyInput"+comment_no+"']")[0];
@@ -860,22 +902,49 @@ i {
     	   if(replyInput==""){
     		   alert("답글을 입력해 주세요.");
     	   }else{
-    		   
-    	   }
-       } */
-       
-       /* $(document).on("click",".replyReplyBtn",function(){
-    	   let comment_no = $(this).attr('value');
-    	   console.log(comment_no);
-    	   let replyInput = $("Input[id='reply_replyInput"+comment_no+"']")[0];
-    	   console.log(replyInput.value);
-    	   if(replyInput==""){
-    		   alert("답글을 입력해 주세요.");
-    	   }else{
-    		   
+    		   $.ajax({
+    			   url : "/comment/insertReply.do"
+    			   ,type:"post"
+    			   ,data : {comment_no:comment_no}
+    		   })
     	   }
     	   
        }) */
+       function insertReply_reply(parent_no,comment_no){
+    	   console.log(comment_no);
+    	   let replyInput = $("Input[id='reply_replyInput"+comment_no+"']")[0];
+    	   content = replyInput.value;
+    	   console.log(content);
+    	   let post_no = ${PostDTO.post_no}
+    	   if(content==""){
+    		   alert("답글을 입력해 주세요.");
+    	   }else{
+    		   $.ajax({
+    			   url : "/comment/insertReply_reply.do"
+    			   ,type:"post"
+    			   ,data : {comment_no:comment_no,parent_no:parent_no,content:content,post_no:post_no}
+    		   }).done(function(data){
+    			   console.log(data);
+    			   getReplies(data, parent_no);
+    		   }).fail(function(rs){
+    			   console.log(rs);
+    		   })
+    	   } 
+       }
+       
+       
+       function deleteReply(comment_no,parent_no){
+    	   $.ajax({
+    		   url : "/comment/deleteReply.do"
+    		   ,type : "post"
+    		   ,data : {comment_no:comment_no, parent_no : parent_no}
+    	   }).done(function(data){
+    		   getReplies(data, parent_no);
+    	   }).fail(function(rs){
+    		   console.log(rs);
+    	   })
+       }
+       
     </script>
 </body>
 

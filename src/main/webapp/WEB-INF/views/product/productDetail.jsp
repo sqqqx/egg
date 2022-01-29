@@ -250,6 +250,10 @@
         
         $(".parchaseBtn").on("click",function(){
         	console.log("하하하하");
+        	let product_no = ${ProductDTO.product_no}
+        	let quantity = $("#quantityController").val();
+        	console.log(product_no);
+        	location.href="/product/toOrder.do?product_no="+product_no+"&quantity="+quantity;
         })
     </script>
 </body>
