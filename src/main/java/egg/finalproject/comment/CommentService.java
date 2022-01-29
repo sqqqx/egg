@@ -14,22 +14,30 @@ public class CommentService {
 		return dao.getAllComments(post_no);
 	}
 	public boolean insertComment(CommentDTO dto) throws Exception{
-		if(dao.insertComment(dto)>0) {
-			return true;
-		}return false;
+		return dao.insertComment(dto)>0;
 	}
 	
 	public boolean  deleteComment(int comment_no) throws Exception{
-		if(dao.deleteComment(comment_no)>0) {
-			return true;
-		}return false;
+		return dao.deleteComment(comment_no)>0;
 	}
 	
 	public boolean modifyComment(CommentDTO dto) throws Exception{
-		if(dao.modifyComment(dto)>0) {
-			System.out.println("true");
-			return true;
-		}System.out.println("false");
-		return false;
+		return dao.modifyComment(dto)>0;
+	}
+	
+	public List<ReplyDTO> getAllReplies(int comment_no) throws Exception{
+		return dao.getAllReplies(comment_no);
+	}
+	
+	public boolean insertReply(ReplyDTO dto) throws Exception{
+		return dao.insertReply(dto)>0;
+	}
+	
+	public boolean deleteReply(int comment_no) throws Exception{
+		return dao.deleteReply(comment_no)>0;
+	}
+	
+	public boolean insertReply_reply(ReplyDTO dto) throws Exception{
+		return dao.insertReply_reply(dto)>0;
 	}
 }
