@@ -5,7 +5,7 @@
 
 <mapper namespace="commentMapper">
      <select id="getAllComments" resultType="CommentDTO">
-           SELECT * FROM TBL_COMMENT WHERE POST_NO=#{post_no} and REFERENCE_NO = 0 ORDER BY WRITTEN_DATE DESC
+           SELECT * FROM TBL_COMMENT WHERE POST_NO=#{post_no} and PARENT_NO = 0 ORDER BY WRITTEN_DATE DESC
      </select>
      
      <insert id="insertComment">
@@ -18,4 +18,22 @@
      <update id="modifyComment">
            UPDATE TBL_COMMENT SET CONTENT=#{content} WHERE COMMENT_NO = #{comment_no}
      </update>
+     
+     <select id="getAllReplies" resultType="ReplyDTO">
+           SELECT E1.COMMENT_NO,E1.PARENT_NO,NVL(E2.USER_NICKNAME,' ') AS "REFERENCE_NICKNAME", E1.USER_NICKNAME, E1.CONTENT,E1.WRITTEN_DATE, E1.USER_ID 
+           FROM TBL_COMMENT E1 LEFT OUTER JOIN TBL_COMMENT E2
+           ON(E1.REFERENCE_NO=E2.COMMENT_NO)
+           WHERE E1.PARENT_NO = #{comment_no}
+           ORDER BY E1.WRITTEN_DATE
+     </select>
+     <insert id="insertReply" parameterType="ReplyDTO">
+           INSERT INTO TBL_COMMENT VALUES(COMMENT_NO.NEXTVAL,#{comment_no},0,#{user_nickname},#{content},SYSDATE,#{post_no},#{user_id})
+     </insert>
+     <delete id="deleteReply">
+           DELETE FROM TBL_COMMENT WHERE COMMENT_NO = #{comment_no}
+     </delete>
+     <insert id="insertReply_reply">
+           INSERT INTO TBL_COMMENT VALUES (COMMENT_NO.NEXTVAL,#{parent_no},#{comment_no},'쿠쿠',#{content},SYSDATE,#{post_no},'tlqkf')
+     </insert>
+     
 </mapper>

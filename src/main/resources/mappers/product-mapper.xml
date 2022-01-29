@@ -10,4 +10,7 @@
     <select id="getProduct" resultType="ProductDTO">
          SELECT * FROM TBL_PRODUCT WHERE PRODUCT_NO = #{product_no}
     </select>
+    <select id="tempOrderInfo" resultType="TempOrderDTO">
+         SELECT * FROM TBL_PRODUCT WHERE PRODUCT_NO = #{product_no}
+    </select>
 </mapper>

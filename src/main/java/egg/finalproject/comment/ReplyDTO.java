@@ -4,8 +4,7 @@ import java.sql.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class CommentDTO {
-	
+public class ReplyDTO {
 	private int comment_no;
 	private int parent_no;
 	private int reference_no;
@@ -15,11 +14,12 @@ public class CommentDTO {
 	private Date written_date;
 	private int post_no;
 	private String user_id;
+	private String reference_nickname;
 	
-	public CommentDTO() {}
+	public ReplyDTO() {}
 
-	public CommentDTO(int comment_no, int parent_no, int reference_no, String user_nickname, String content, Date written_date,
-			int post_no, String user_id) {
+	public ReplyDTO(int comment_no, int parent_no, int reference_no, String user_nickname, String content,
+			Date written_date, int post_no, String user_id, String reference_nickname) {
 		super();
 		this.comment_no = comment_no;
 		this.parent_no = parent_no;
@@ -29,6 +29,7 @@ public class CommentDTO {
 		this.written_date = written_date;
 		this.post_no = post_no;
 		this.user_id = user_id;
+		this.reference_nickname = reference_nickname;
 	}
 
 	public int getComment_no() {
@@ -94,6 +95,16 @@ public class CommentDTO {
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
+
+	public String getReference_nickname() {
+		return reference_nickname;
+	}
+
+	public void setReference_nickname(String reference_nickname) {
+		this.reference_nickname = reference_nickname;
+	}
 	
 	
 }
+
+	

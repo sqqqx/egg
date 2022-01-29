@@ -121,43 +121,6 @@
 		});
 	}
 	
-		/* function sendFile(file, editor) {
-			// 파일 전송을 위한 폼생성
-			data = new FormData();
-			data.append("file", file);
-			$.ajax({ // ajax를 통해 파일 업로드 처리
-				data: data,
-				type: "POST",
-				url: "/onlinePost/getChildCategory.do",
-				cache: false,
-				contentType: false,
-				processData: false,
-				success: function (data) { // 처리가 성공할 경우
-					// 에디터에 이미지 출력
-					$(editor).summernote('editor.insertImage', data.url);
-				}
-			});
-		} */
-
-
-		/* function sendFile(file, editor) {
-			var form_data = new FormData();
-			form_data.append('file', file);
-			$.ajax({
-				data: form_data,
-				type: "POST",
-				url: '/onlinePost/getChildCategory.do',
-				cache: false,
-				contentType: false,
-				enctype: 'multipart/form-data',
-				processData: false,
-				success: function (url) {
-					$(editor).summernote('editor.insertImage', url);
-						/* $image.css('width', "25%");
-					}
-				}
-			)}; */
-
 
 	</script>
 </head>
@@ -167,7 +130,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="wrapper">
-				<h2 class="text-center">클래스 등록</h2>
+				<h2 class="text-center">상품 등록</h2>
 				<form action="/onlinePost/write.do" method="post" id="writeForm"  ENCTYPE="multipart/form-data">
 					<table class="table table-striped">
 						<tr>
