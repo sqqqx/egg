@@ -2,17 +2,25 @@ package egg.finalproject.comment;
 
 import java.util.List;
 
-import org.apache.maven.shared.invoker.SystemOutHandler;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import egg.finalproject.member.MemberDTO;
 
 @Controller
 @RequestMapping("/comment")
 public class CommentController {
 	@Autowired
 	private CommentService service;
+	
+	@Autowired
+	private HttpSession session;
+
+	
 	
 	@RequestMapping("/getAllComments.do")
 	@ResponseBody
@@ -23,6 +31,10 @@ public class CommentController {
 	@RequestMapping("/insertComment.do")
 	@ResponseBody
 	public List<CommentDTO> insertComment(CommentDTO dto) throws Exception{
+		String user_id = ((MemberDTO)session.getAttribute("loginSession")).getUser_id();
+	    String user_nickname = ((MemberDTO)session.getAttribute("loginSession")).getUser_nickname();
+		dto.setUser_id(user_id);
+		dto.setUser_nickname(user_nickname);
 		if(service.insertComment(dto)) {
 			return service.getAllComments(dto.getPost_no());
 		}return null;
@@ -69,6 +81,10 @@ public class CommentController {
 		System.out.println(dto.getPost_no());
 		System.out.println(dto.getComment_no());
 		System.out.println(dto.getContent());
+		String user_id = ((MemberDTO)session.getAttribute("loginSession")).getUser_id();
+	    String user_nickname = ((MemberDTO)session.getAttribute("loginSession")).getUser_nickname();
+		dto.setUser_id(user_id);
+		dto.setUser_nickname(user_nickname);
 		if(service.insertReply(dto)) {
 			return service.getAllReplies(dto.getComment_no());
 		}return null;
@@ -86,6 +102,10 @@ public class CommentController {
 	@RequestMapping("/insertReply_reply.do")
 	@ResponseBody
 	public List<ReplyDTO> insertReply_reply(ReplyDTO dto) throws Exception{
+		String user_id = ((MemberDTO)session.getAttribute("loginSession")).getUser_id();
+	    String user_nickname = ((MemberDTO)session.getAttribute("loginSession")).getUser_nickname();
+		dto.setUser_id(user_id);
+		dto.setUser_nickname(user_nickname);
 		if(service.insertReply_reply(dto)) {
 			return service.getAllReplies(dto.getParent_no());
 		}return null;
