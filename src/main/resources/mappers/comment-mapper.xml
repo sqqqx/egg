@@ -33,7 +33,7 @@
            DELETE FROM TBL_COMMENT WHERE COMMENT_NO = #{comment_no}
      </delete>
      <insert id="insertReply_reply">
-           INSERT INTO TBL_COMMENT VALUES (COMMENT_NO.NEXTVAL,#{parent_no},#{comment_no},'쿠쿠',#{content},SYSDATE,#{post_no},'tlqkf')
+           INSERT INTO TBL_COMMENT VALUES (COMMENT_NO.NEXTVAL,#{parent_no},#{comment_no},#{user_nickname},#{content},SYSDATE,#{post_no},#{user_id})
      </insert>
      
 </mapper>

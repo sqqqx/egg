@@ -189,7 +189,7 @@
 							<td class="contentName">작성자<br>닉네임
 							</td>
 							<td><input type="text" name="user_id" id="user_id" value="id" hidden> <input type="text"
-									class="form-control" name="user_nickname" id="user_nickname" value="관리자" readonly>
+									class="form-control" name="user_nickname" id="user_nickname" value="${loginSession.user_nickname}" readonly>
 							</td>
 						</tr>
 						<tr>

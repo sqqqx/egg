@@ -7,7 +7,7 @@
     
 
     <insert id="insertPost" parameterType="PostDTO">
-         INSERT INTO TBL_POST VALUES(#{post_no},1,'나중에 넣어주기',#{user_nickname},#{category_no},#{title},#{content},#{product_no},0,SYSDATE,'0')
+         INSERT INTO TBL_POST VALUES(#{post_no},1,#{user_id},#{user_nickname},#{category_no},#{title},#{content},#{product_no},0,SYSDATE,'0')
     </insert>
     <select id="getPost_no" resultType="_int">
          SELECT POST_NO.NEXTVAL FROM DUAL
