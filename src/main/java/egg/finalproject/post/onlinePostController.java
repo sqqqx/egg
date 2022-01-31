@@ -16,6 +16,7 @@ import egg.finalproject.comment.CommentDTO;
 import egg.finalproject.comment.CommentService;
 import egg.finalproject.image.ImageDTO;
 import egg.finalproject.image.ImageService;
+import egg.finalproject.member.MemberDTO;
 import egg.finalproject.product.ProductDTO;
 import egg.finalproject.product.ProductService;
 
@@ -53,7 +54,11 @@ public class onlinePostController {
 	//toWrite.do => 게시글 목록으로 이동 시켜야함~!!!!
 	@RequestMapping("/write.do")
 	public String insert(PostDTO dto,MultipartFile thumbNail) throws Exception{
-		int post_no = service.getPost_no();
+		int post_no = service.getPost_no(); //넣어질 시퀀스 번호 받아오기
+		String id = ((MemberDTO)session.getAttribute("loginSession")).getUser_id();
+		String nickname = ((MemberDTO)session.getAttribute("loginSession")).getUser_nickname();
+		dto.setUser_id(id);
+		dto.setUser_nickname(nickname);
 		System.out.println("post_no : "+post_no);
 		dto.setPost_no(post_no);
 		service.insertPost(dto);

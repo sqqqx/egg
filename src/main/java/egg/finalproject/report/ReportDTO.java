@@ -3,22 +3,24 @@ package egg.finalproject.report;
 import java.sql.Date;
 
 public class ReportDTO {
-
 	private int report_no;
 	private int type;
 	private int target_no;
-	private Date report_date;
+	private int report_title;
+	private String report_content;
 	private int yn;
 	private String user_id;
 	
 	public ReportDTO() {}
 
-	public ReportDTO(int report_no, int type, int target_no, Date report_date, int yn, String user_id) {
+	public ReportDTO(int report_no, int type, int target_no, int report_title, String report_content, int yn,
+			String user_id) {
 		super();
 		this.report_no = report_no;
 		this.type = type;
 		this.target_no = target_no;
-		this.report_date = report_date;
+		this.report_title = report_title;
+		this.report_content = report_content;
 		this.yn = yn;
 		this.user_id = user_id;
 	}
@@ -47,12 +49,20 @@ public class ReportDTO {
 		this.target_no = target_no;
 	}
 
-	public Date getReport_date() {
-		return report_date;
+	public int getReport_title() {
+		return report_title;
 	}
 
-	public void setReport_date(Date report_date) {
-		this.report_date = report_date;
+	public void setReport_title(int report_title) {
+		this.report_title = report_title;
+	}
+
+	public String getReport_content() {
+		return report_content;
+	}
+
+	public void setReport_content(String report_content) {
+		this.report_content = report_content;
 	}
 
 	public int getYn() {
