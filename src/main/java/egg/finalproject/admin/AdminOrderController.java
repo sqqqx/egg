@@ -3,14 +3,13 @@ package egg.finalproject.admin;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import egg.finalproject.order.OrderDTO;
 
 @Controller
 @RequestMapping("/admin")
@@ -42,12 +41,21 @@ public class AdminOrderController {
 		return service.getProductList(order_no);
 	}
 	
-	// 결제 정보 catch
-//	@RequestMapping(value = "/canclePay.do", method = RequestMethod.POST)
-//	@ResponseBody
-//	public String canclePay(HttpServletRequest request) throws Exception {
-//		return "test RS";
-//	}
+	// 주문 상태 확인
+	@RequestMapping("/checkOrder.do")
+	@ResponseBody
+	public String checkOrder(String payment_no) throws Exception {
+		return service.checkOrder(payment_no).equals("success") ? "success" : "ns";
+	}
+	
+	// 결제 취소
+	@RequestMapping(value = "/canclePay.do")
+	@ResponseBody
+	public String canclePay(String payment_no, String cost) throws Exception {
+		System.out.println("uid : " + payment_no + " : cost : " + cost);
+		String rs = service.canclePay(service.getToken(), "imp_776209824514"); // 추가 정보 필요하면 같이 넘길 것
+		return rs.equals("fail") ? "fail" : "success";
+	}
 	
 	
 }

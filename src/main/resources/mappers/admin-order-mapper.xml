@@ -28,5 +28,10 @@
 		SELECT * FROM tbl_product
     		INNER JOIN test_tbl_order_product USING(product_no) WHERE order_no = #{order_no}
 	</select>
+	
+	<!-- 주문 상태 확인 -->
+	<select id="checkOrder" resultType="String">
+		SELECT status FROM tbl_order WHERE payment_no = #{payment_no}
+	</select>
 
 </mapper>

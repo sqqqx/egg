@@ -191,13 +191,19 @@
 				console.log(e);
 			});
 		});
-		// 환불 버튼
+		// 결제 취소 버튼
 		$("#refundBtn").on("click", function() {
 			const checkBox = $("input:checkbox[name=orderCheckBox]:checked");
         	if($("#orderCheckBox").is(":checked") && checkBox.length == 1) {
         		const payment_no = checkBox.parents("tr").children().eq(6).html();
-        		const amount = checkBox.parents("tr").children().eq(4).html();
-        		cancelPay(payment_no, amount);
+        		const cost = checkBox.parents("tr").children().eq(4).html();
+        		if(confirm("주문을 취소하겠습니까?")) {
+        			if(checkOrder(payment_no)) {
+        				cancelPay(payment_no, cost);	
+        				return;
+        			}
+        			alert("주문에 실패했거나, 이미 취소 된 결제입니다.");
+        		}
                 return;
             }
         	if(checkBox.length == 0) {
@@ -206,23 +212,48 @@
         	}
         	alert("하나의 주문만 선택해주세요.");
 		});
-		// 결제정보 toss
+		// 주문 상태 확인
+		function checkOrder(payment_no) {
+			let bl = false;
+			$.ajax({
+				url: "/admin/checkOrder.do",
+				type: "post",
+				async: false,
+				data: {
+					payment_no: payment_no
+				}
+			}).done(function(rs) {
+				console.log(rs);
+				if(rs == "success") {
+					bl = true;
+				}
+			}).fail(function(e) {
+				console.log(e);
+			});
+			console.log("bl : " + bl);
+			return bl;
+		}
+		// 결제 취소 process
 		function cancelPay(payment_no, cost) {
 			console.log(payment_no + " : " + cost);
 			$.ajax({
 				url: "/admin/canclePay.do",
 				type: "post",
-				contentType: "application/json",
-				data: JSON.stringify({
-					merchant_uid: payment_no,
-					cancel_request_mount: cost,
+				data: {
+					payment_no: payment_no,
+					cost: cost,
 					reason: ""
-				}),
-				dataType: "json"
-			}).done(rs)({
-				//console.log(rs);
-			}).fail(e)({
-				//console.log(e);
+				}
+			}).done(function(rs) {
+				console.log(rs);
+				if(rs == "success") {
+					alert("결제 취소에 성공했습니다.");
+					location.href = "${pageContext.request.contextPath}/admin/toOrderManagement";
+					return;
+				}
+				alert("결제 취소에 실패했습니다.");
+			}).fail(function(e) {
+				console.log(e);
 			});
 		}
     </script>

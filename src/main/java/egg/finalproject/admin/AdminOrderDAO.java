@@ -27,5 +27,10 @@ public class AdminOrderDAO {
 	public List<Map<String, Object>> getProductList(int order_no) throws Exception {
 		return session.selectList("adminOrderMapper.getProductList", order_no);
 	}
+	
+	// 주문 상태 확인
+	public String checkOrder(String payment_no) throws Exception {
+		return session.selectOne("adminOrderMapper.checkOrder", payment_no);
+	}
 
 }
