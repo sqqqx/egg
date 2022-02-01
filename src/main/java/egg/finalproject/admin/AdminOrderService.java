@@ -65,6 +65,11 @@ public class AdminOrderService {
 		return rs;
 	}
 	
+	// 주문 상태 변경
+	public int updateStatus(String order_no) throws Exception {
+		return dao.updateStatus(order_no);
+	}
+	
 	// 토큰 가져오기
 	public String getToken() throws Exception {
 		HttpURLConnection conn = null;

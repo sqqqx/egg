@@ -32,5 +32,10 @@ public class AdminOrderDAO {
 	public String checkOrder(String payment_no) throws Exception {
 		return session.selectOne("adminOrderMapper.checkOrder", payment_no);
 	}
+	
+	// 주문 상태 변경
+	public int updateStatus(String order_no) throws Exception {
+		return session.update("adminOrderMapper.updateStatus", order_no);
+	}
 
 }

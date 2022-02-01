@@ -195,11 +195,12 @@
 		$("#refundBtn").on("click", function() {
 			const checkBox = $("input:checkbox[name=orderCheckBox]:checked");
         	if($("#orderCheckBox").is(":checked") && checkBox.length == 1) {
+        		const order_no = checkBox.parents("tr").children().eq(1).html();
         		const payment_no = checkBox.parents("tr").children().eq(6).html();
         		const cost = checkBox.parents("tr").children().eq(4).html();
         		if(confirm("주문을 취소하겠습니까?")) {
         			if(checkOrder(payment_no)) {
-        				cancelPay(payment_no, cost);	
+        				cancelPay(payment_no, cost, order_no);	
         				return;
         			}
         			alert("주문에 실패했거나, 이미 취소 된 결제입니다.");
@@ -234,15 +235,16 @@
 			return bl;
 		}
 		// 결제 취소 process
-		function cancelPay(payment_no, cost) {
-			console.log(payment_no + " : " + cost);
+		function cancelPay(payment_no, cost, order_no) {
+			console.log(payment_no + " : " + cost + " : " + order_no);
 			$.ajax({
 				url: "/admin/canclePay.do",
 				type: "post",
 				data: {
 					payment_no: payment_no,
 					cost: cost,
-					reason: ""
+					reason: "",
+					order_no: order_no
 				}
 			}).done(function(rs) {
 				console.log(rs);
