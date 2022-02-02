@@ -38,7 +38,7 @@
 			                <input type="text" id="searchOpt" name="searchOpt" hidden/>
 			                <input type="text" name="type" value="${naviMap.get('type')}" hidden>
 		            		<input type="text" name="user_id" value="${loginSession.user_id}" hidden>
-		            		<input type="text" name="currentPage" value="${naviMap.get('currentPage')}" hidden>
+		            		<input type="text" name="currentPage" value="1" hidden> <!-- 1로 수정 -->
 		            		<input type="text" name="orderMsg" value="${orderMsg}" hidden>
 			                <button type="button" id="msgSearchBtn">검색</button>
 		            	</form>
@@ -110,7 +110,7 @@
 					                    	<td>${msg.to_id}</td>
 				                    	</c:if>
 				                    </td>
-				                    <td>${msg.title}</td>
+				                    <td><span class="msgTitle" msgNo="${msg.message_no}"}>${msg.title}</span></td> <!-- <a>로 적용시 파란밑줄이 안사라져 <span>으로 작성 -->
 				                    <td>${msg.message_date}</td>
 				                    <td><button type="button" class="btn btn-danger deleteBtn" value="${msg.message_no}">삭제</button></td>
 		                		</tr>
@@ -141,7 +141,15 @@
 		            		<!-- 페이지 목록 -->
 		            		<c:forEach var="m" begin="${naviMap.get('startNavi')}" end="${naviMap.get('endNavi')}">
 								<li class="page-item">
-									<a class="page-link" href="${pagecontext.request.contextPath}/message/toViewMessage?type=${naviMap.get('type')}&user_id=${loginSession.user_id}&currentPage=${m}&orderMsg=${orderMsg}">${m}</a>
+									<c:if test="${searchOpt eq null}">
+										<a class="page-link" href="${pagecontext.request.contextPath}/message/toViewMessage?type=${naviMap.get('type')}&user_id=${loginSession.user_id}&currentPage=${m}&orderMsg=${orderMsg}
+										&searchOpt=${searchOpt}&inputText=${inputText}">${m}</a>
+									</c:if>
+									<!-- 검색했을 경우 -->
+									<c:if test="${searchOpt ne null}">
+										<a class="page-link" href="${pagecontext.request.contextPath}/message/searchMsg.do?type=${naviMap.get('type')}&user_id=${loginSession.user_id}&currentPage=${m}&orderMsg=${orderMsg}
+										&searchOpt=${searchOpt}&inputText=${inputText}">${m}</a>
+									</c:if>
 								</li>		            		
 		            		</c:forEach>
 		            		
@@ -161,6 +169,18 @@
     
 
     <script>
+    	// 쪽지 상세보기
+    	$(".msgTitle").on("click", function(e){
+    		console.log($(e.target).attr("msgNo"));
+    		
+    		let openUrl = "${pagecontext.request.contextPath}/message/detailMsg.do?message_no=" + $(e.target).attr("msgNo");
+			let name = "쪽지 상세보기";
+			let option = "width=700, height=500, top=300";
+			
+			window.open(openUrl, name, option);
+    	})
+    	
+    
     	// 검색 버튼
      	$("#msgSearchBtn").on("click", function(e){
     		console.log("클릭");

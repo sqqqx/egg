@@ -1,10 +1,13 @@
 package egg.finalproject.member;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
@@ -136,4 +139,41 @@ public class MemberService {
 		System.out.println("MemberService / 휴대전화 중복검사 phone - " + phone);
 		return dao.phoneCheck(phone);
 	}
+	
+	// (마이페이지) 프로필 사진 변경
+	public int modifyPP(String realPath, String user_id, MultipartFile photo) throws Exception {
+		System.out.println("MemberService / 프로필 사진 변경 - realPath: " + realPath + " / user_id: " + user_id + " / photo: " + photo);
+		// 해당 경로가 있는지 확인
+		File realPathPhoto = new File(realPath);
+		if(!realPathPhoto.exists()) {	// 만약 경로가 존재하지 않으면 경로 생성
+			realPathPhoto.mkdir();
+		}
+		
+		// 1. 클라이언트로부터 넘어 온 파일유무 확인
+		// 2. 지금 넘어 온 파일의 ori_name 얻어오기
+		// 3. 넘어 온 파일을 서버에 저장할 때 저정할 이름(sys_name)만들기
+		// 4. sys_name을 이용해 경로에 실제로 저장하기
+		if(!photo.isEmpty()) {	// 사진파일이 비어 있지 않다면
+			// 클라이언트가 업로드 한 원본 파일명
+			String ori_name = photo.getOriginalFilename();
+			System.out.println("원본파일명: " + ori_name);
+			
+			// 서버에 저장할 파일명
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HH.mm");
+			String sys_name = user_id + "_" + sdf.format(System.currentTimeMillis()) + "_" + ori_name;
+			System.out.println("서버에 저장할 파일명: " + sys_name);
+			String profile_path = realPath + File.separator + sys_name;
+			// 파일을 서버에 저장
+			photo.transferTo(new File(profile_path));
+			return dao.modifyPP(user_id, sys_name);
+		} else {
+			return -1;
+		}
+	}
+	
+	// (마이페이지) 기본 프로필 사진 설정
+	public int defaultPP(String user_id) throws Exception {
+		System.out.println("MemberService / 기본 프로필 사진 설정 - user_id: " + user_id);
+		return dao.defaultPP(user_id);
+	}	
 }

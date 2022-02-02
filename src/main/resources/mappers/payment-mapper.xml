@@ -4,5 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="paymentMapper">
-
+	<insert id="completePaid" parameterType="paymentDTO">
+		insert into tbl_payment values (payment_no.nextval, #{cost}, sysdate, #{method}, #{card_name})
+	</insert>
 </mapper>

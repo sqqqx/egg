@@ -15,7 +15,6 @@
 		select message_no, title, content, message_check, message_date, from_id, to_id, from_delete, to_delete
 			from (select row_number() over (order by message_no desc) as msgRank, m.* from tbl_message m where 
 		
-		
 		<!-- 받는 쪽지 -->
 		<if test="type == 'received'">
 			to_id=#{user_id}
@@ -27,7 +26,7 @@
 		<if test="type == 'sent'">
 			from_id=#{user_id}
 			<if test="searchOpt == 'user_id'">
-				and from_id like '%' ||  #{inputText} || '%'
+				and to_id like '%' ||  #{inputText} || '%'
 			</if>
 		</if>
 		
@@ -53,7 +52,7 @@
 		<if test="type == 'sent'">
 			from_id=#{user_id}
 			<if test="searchOpt == 'user_id'">
-				and from_id like '%' ||  #{inputText} || '%'
+				and to_id like '%' ||  #{inputText} || '%'
 			</if>
 		</if>
 		<if test="searchOpt == 'title'">
@@ -132,7 +131,7 @@
 		)
 	</update>
 	
-	<!-- 쪽지 정렬 (오래된 순) -->
+	<!-- (마이페이지) 쪽지 정렬 by 오래된 순 -->
 	<select id="getMsgList_oldest" parameterType="map" resultType="messageDTO">
 		select message_no, title, content, message_check, message_date, from_id, to_id, from_delete, to_delete
 			from (select row_number() over (order by message_no) as msgRank, m.* from tbl_message m where 
@@ -149,7 +148,7 @@
 		) where msgRank between #{startRange} and #{endRange}
 	</select>
 	
-	<!-- 쪽지 정렬 (미열람 쪽지) -->
+	<!-- 쪽지 정렬 by 미열람쪽지 -->
 	<select id="getMsgList_unread" parameterType="map" resultType="messageDTO">
 		select message_no, title, content, message_check, message_date, from_id, to_id, from_delete, to_delete
 			from (select row_number() over (order by message_no desc) as msgRank, m.* from tbl_message m where 
@@ -166,7 +165,7 @@
 		and message_check='N') where msgRank between #{startRange} and #{endRange}
 	</select>
 	
-	<!-- 쪽지 정렬 (열람 쪽지) -->
+	<!-- (마이페이지) 쪽지 정렬 by 열람쪽지 -->
 	<select id="getMsgList_read" parameterType="map" resultType="messageDTO">
 		select message_no, title, content, message_check, message_date, from_id, to_id, from_delete, to_delete
 			from (select row_number() over (order by message_no desc) as msgRank, m.* from tbl_message m where 
@@ -183,7 +182,9 @@
 		and message_check='Y') where msgRank between #{startRange} and #{endRange}
 	</select>
 	
-	
-	
+	<!-- (마이페이지) 쪽지 상세보기 -->
+	<select id="detailMsg" resultType="messageDTO">
+		select * from tbl_message where message_no = #{message_no}
+	</select>
 	
 </mapper>
