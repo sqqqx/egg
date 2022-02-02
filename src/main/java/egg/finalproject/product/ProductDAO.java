@@ -13,17 +13,27 @@ public class ProductDAO {
 	@Autowired
 	private SqlSession session;
 	
+	//검색어에 해당하는 상품 정보 리스트 반환
+	//RETURN : List<ProductDTO>
 	public List<ProductDTO> searchProduct(String value) throws Exception{
 		System.out.println("dao search 진입"+value);
 		return session.selectList("productMapper.searchProduct",value);
 	}
-	//숫자나 문자열이 들어온다.
-	//문자열과 숫자를 같이 검색하지 말까? 좋은 방법인 것 같다.
+	
+	//product_no로 상품 정보 얻어오기 
+	//RETURN : ProductDTO 정보 반환
 	public ProductDTO getProduct(int product_no) throws Exception{
 		return session.selectOne("productMapper.getProduct",product_no);
 	}
 	
+	//product_no로 ProductDTO를 얻어와 controller에서 수량 담아서 반환
+	//RETURN : ProductDTO만 담긴 TempOrderDTO
 	public TempOrderDTO getTempOrderInfo(int product_no) throws Exception{
 		return session.selectOne("productMapper.tempOrderInfo",product_no);
+	}
+	
+	//상품 등록 메서드
+	public int insertProduct(ProductDTO dto) throws Exception{
+		return session.insert("productMapper.insertProduct",dto);
 	}
 }

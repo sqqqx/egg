@@ -21,13 +21,16 @@ public class CommentController {
 	private HttpSession session;
 
 	
-	
+	//해당 게시글(post_no)의 모든 댓글 가져오기
+	//RETURN : List<CommentDTO>
 	@RequestMapping("/getAllComments.do")
 	@ResponseBody
 	public List<CommentDTO> getAllComments(int post_no) throws Exception{
 		return service.getAllComments(post_no);
 	}
 	
+	//댓글 등록(댓글 등록 후 AJAX로 다시 띄우기(LIST반환해서 띄우기))
+	//RETURN : List<CommentDTO>
 	@RequestMapping("/insertComment.do")
 	@ResponseBody
 	public List<CommentDTO> insertComment(CommentDTO dto) throws Exception{
@@ -40,6 +43,8 @@ public class CommentController {
 		}return null;
 	}
 	
+	//댓글 삭제 (댓글 삭제 후 AJAX로 리스트 다시 띄워주기)
+	//RETURN : List<CommentDTO>
 	@RequestMapping("/deleteComment.do")
 	@ResponseBody
 	public List<CommentDTO> deleteComment(CommentDTO dto) throws Exception{
@@ -51,6 +56,8 @@ public class CommentController {
 		return null;
 	}
 	
+	//댓글 수정 (댓글 수정 후 AJAX로 리스트 다시 띄워주기)
+	//RETURN : List<CommentDTO>
 	@RequestMapping("/modifyComment.do")
 	@ResponseBody
 	public List<CommentDTO> modifyComment(CommentDTO dto) throws Exception{
@@ -69,12 +76,16 @@ public class CommentController {
 		return null;
 	}
 	
+	//해당 댓글(comment_no)의 모든 답글 가져오기
+	//RETURN : List<ReplyDTO>
 	@RequestMapping("/getAllReplies.do")
 	@ResponseBody
 	public List<ReplyDTO> getAllReplies(int comment_no) throws Exception{
 		return service.getAllReplies(comment_no);
 	}
 	
+	//답글 등록(등록 후 모든 답글 가져와 업데이트)
+	//RETURN : List<ReplyDTO>
 	@RequestMapping("/insertReply.do")
 	@ResponseBody
 	public List<ReplyDTO> insertReply(ReplyDTO dto) throws Exception{
@@ -90,6 +101,8 @@ public class CommentController {
 		}return null;
 	}
 	
+	//답글 삭제 (삭제 후 답글 업데이트)
+	//RETURN : List<ReplyDTO>
 	@RequestMapping("/deleteReply.do")
 	@ResponseBody
 	public List<ReplyDTO> deleteReply(int comment_no, int parent_no) throws Exception{
@@ -99,6 +112,9 @@ public class CommentController {
 			return getAllReplies(parent_no);
 		}return null;
 	}
+	
+	//대댓글(답글의 답글)추가
+	//RETURN : List<ReplyDTO>
 	@RequestMapping("/insertReply_reply.do")
 	@ResponseBody
 	public List<ReplyDTO> insertReply_reply(ReplyDTO dto) throws Exception{

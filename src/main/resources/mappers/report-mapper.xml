@@ -4,8 +4,11 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="reportMapper">
+    
+    <!-- 신고 내역 추가 -->
     <insert id="insertReport" parameterType="ReportDTO">
         INSERT INTO TBL_REPORT 
         VALUES(REPORT_NO.NEXTVAL, #{type}, #{target_no},#{report_title},#{report_content},SYSDATE,0,#{user_id})
     </insert>
+    
 </mapper>
