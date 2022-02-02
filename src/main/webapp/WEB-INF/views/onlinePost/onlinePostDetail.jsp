@@ -498,22 +498,29 @@
         .likeClass{
             position: fixed;
             left: 370px;
-            top : 230px;
-            border: 3px solid #e05885;
+            top : 230px;          
             height : 62px;
             width : 60px;
-            padding : 3px;
-            border-radius : 10px;
+            padding : 3px;        
             text-align : center;
             cursor : pointer;
             font-size: 15px;
             font-family: 'BMHANNAAir';
+            border: 3px solid #e05885;
+        	border-radius : 10px;
         }
+		
         #likeEmpty{
             color : #e05885;
         }
+        #likefull{
+        	color: white;
+        }
         #likeBtnTitle{
              color : #e05885;
+        }
+        #likeFullBtnTitle{
+        	color:white;
         }
         .likeClass:hover{
              background-color: #e05885;
@@ -526,15 +533,37 @@
         .likeClass:hover #likeBtnTitle{
              color : white;
         }
-   
+   .likeFullClass{
+            position: fixed;
+            left: 370px;
+            top : 230px;          
+            height : 62px;
+            width : 60px;
+            padding : 3px;        
+            text-align : center;
+            cursor : pointer;
+            font-size: 15px;
+            font-family: 'BMHANNAAir';
+            border: 3px solid #e05885;
+        	border-radius : 10px;
+        	background-color: #e05885;
+        	display:none;
+        }
     </style>
 </head>
 
 <body>
-    <div class="likeClass" >
-          <i class="far fa-heart fa-2x" id="likeEmpty"></i>
-          <span id="likeBtnTitle">찜하기</span>
+	<!-- 종아요 버튼 -->
+    <div class="likeClass">
+    		<i class="far fa-heart fa-2x" id="likeEmpty"></i>
+         	<span id="likeBtnTitle">찜하기</span>
     </div>
+    <div class="likeFullClass">
+    		<i class="far fa-heart fa-2x" id="likefull"></i>
+         	<span id="likeFullBtnTitle">찜하기</span>
+    </div>
+    
+    
     <div class="container mt-3">
         <div class="buttons">
             <button type="button" class="btn btn-warning" id="modify">게시글
@@ -774,6 +803,7 @@
 
         $(document).ready(function () {
             $('.dropdown-toggle').dropdown()
+            selectLike(); //좋아요 눌렀는지 확인해주는 함수
         });
 
         $(document).on("keyup", ".modifyInput", function () {
@@ -1196,7 +1226,72 @@
         		console.log(rs);
         	});
         })
-
+        
+        
+		//좋아요 버튼 처리
+		$('.likeClass').click(function(){
+		let bid= '${loginSession.user_id}'
+		let post_no = '${PostDTO.post_no}'
+		
+		
+		$(this).css("display", "none")
+		$(".likeFullClass").css("display", "block");
+	
+		$.ajax({
+			url : "${pageContext.request.contextPath}/like/plus.do?post_no="+post_no+"&user_id="+bid,
+			type : "get"
+		}).done(function(data){
+			if(data == "available"){
+				console.log("좋아요 성공")
+			}else if(data == "unavailable"){
+				alert("좋아요 요청 실패");
+			}
+		}).fail(function(e){
+			console.log(e);
+		})
+	})
+	
+		//좋아요 취소 처리
+		$('.likeFullClass').click(function(){
+		let bid= '${loginSession.user_id}'
+		let post_no = '${PostDTO.post_no}'
+		
+		
+		$(this).css("display", "none")
+		$(".likeClass").css("display", "block");
+	
+		$.ajax({
+			url : "${pageContext.request.contextPath}/like/minus.do?post_no="+post_no+"&user_id="+bid,
+			type : "get"
+		}).done(function(data){
+			if(data == "available"){
+				console.log("좋아요 취소 성공")
+			}else if(data == "unavailable"){
+				alert("좋아요 취소 요청 실패");
+			}
+		}).fail(function(e){
+			console.log(e);
+		})
+	})
+	//유저가 이 게시글에 좋아요를 눌렀을 경우 좋아요버튼이 눌린채로 표시
+	function selectLike(){
+      let bid= '${loginSession.user_id}'
+      let post_no = '${PostDTO.post_no}'
+	$.ajax({
+		url:"${pageContext.request.contextPath}/like/selectLike.do?post_no="+post_no+"&user_id="+bid,
+		type: "get"
+	}).done(function(data){
+		if(data == "available"){
+			$(".likeFullClass").css("display", "block")
+			$(".likeClass").css("display", "none");
+		}else if(data == "unavailable"){
+			$(".likeFullClass").css("display", "none")
+			$(".likeClass").css("display", "block");
+		}
+	}).fail(function(e){
+		console.log(e);
+	});
+}
     </script>
 </body>
 
