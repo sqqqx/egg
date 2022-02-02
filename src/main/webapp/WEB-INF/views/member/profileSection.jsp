@@ -11,7 +11,7 @@
 	<div class="col-2 userBox">
 	<div id="profileBox">
     	<div id="profilePhoto">
-        	<img src="/resources/img/myInfo.png">
+        	<img src="${pagecontext.request.contextpath}/profilePhotos/${dto.profile_path}">
        </div>
        <div id="profileInfo">
               ${loginSession.user_nickname}님

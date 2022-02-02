@@ -136,4 +136,10 @@ public class MessageService {
 		System.out.println("MessageService / 체크된 쪽지 전부 읽음처리 - checkedMsg: " + checkedMsg);
 		return dao.checkedMsgRead(checkedMsg);
 	}
+	
+	// (마이페이지) 쪽지 상세보기
+	public MessageDTO detailMsg(int message_no) throws Exception {
+		System.out.println("MessageService / 쪽지 상세보기 - message_no: " + message_no);
+		return dao.detailMsg(message_no);
+	}
 }

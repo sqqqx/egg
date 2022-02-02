@@ -120,4 +120,19 @@ public class MemberDAO {
 			return true;
 		}
 	}
+	
+	// (마이페이지) 프로필 사진 변경
+	public int modifyPP(String user_id, String sys_name) throws Exception {
+		System.out.println("MemberDAO / modifyPP - user_id: " + user_id + " / sys_name: " + sys_name);
+		Map<String, String> map = new HashMap<>();
+		map.put("user_id", user_id);
+		map.put("sys_name", sys_name);
+		return session.update("memberMapper.modifyPP", map);
+	}
+	
+	// (마이페이지) 기본 프로필 사진 설정
+	public int defaultPP(String user_id) throws Exception {
+		System.out.println("MemberDAO / 기본 프로필 사진 설정 - user_id: " + user_id);
+		return session.update("memberMapper.defaultPP", user_id);
+	}	
 }

@@ -48,6 +48,12 @@ public class FileDTO {
 	public void setMessage_no(int message_no) {
 		this.message_no = message_no;
 	}
+
+	@Override
+	public String toString() {
+		return "FileDTO [file_no=" + file_no + ", origin_name=" + origin_name + ", system_name=" + system_name
+				+ ", message_no=" + message_no + "]";
+	}
 	
 	
 }

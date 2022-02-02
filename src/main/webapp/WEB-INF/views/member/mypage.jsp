@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="/resources/css/mypage.css">    <!-- 부트스트랩 적용시 부트스트랩 cdn을 가져온 뒤 css를 불러와야 레이아웃에 적용된다.-->
 <title>마이페이지</title>
 </head>
@@ -54,13 +55,11 @@
         <div class="row box_mp">
             <div class="col-4 menu_mp myInfo">
                 <div>
-                	<a href="${pagecontext.request.contextPath}/member/toMyInfo">
+                	<a href="${pagecontext.request.contextPath}/member/toMyInfo?user_id=${loginSession.user_id}">
                 		<img src="/resources/img/myInfo.png">
                 	</a>
                 </div>
-                <div>
-                	<a href="${pagecontext.request.contextPath}/member/toMyInfo"><span>내 정보</span></a> <!-- a태그 css적용했는데 안먹힘 -->
-                </div>
+                <div><span id="toMyInfo">내 정보</span></div>
                 
             </div>
             <div class="col-4 menu_mp msgBox">
@@ -107,6 +106,11 @@
     </div>
     
     <script>
+    	// 내정보
+    	$("#toMyInfo").on("click", function(){
+    		$(location).attr("href", "${pagecontext.request.contextPath}/member/toMyInf?user_id=${loginSession.user_id}");
+    	})
+    
 		// 쪽지함
 		$("#toViewMessage").on("click", function(){
 			$(location).attr("href", "${pagecontext.request.contextPath}/message/toViewMessage?type=received&user_id=${loginSession.user_id}&currentPage=1");
