@@ -122,6 +122,19 @@
                 <button id="btn_email" type="button" class="btn btn-dark">중복검사</button>
             </div>
         </div>
+        
+        <div class="row mb-3">
+        	<div class="col-10">
+                <input id="emailCheck" class="form-control" type="text" >
+            </div>
+            <div class="col-2" id="emailSendBox">
+                <button type="button" class="btn btn-dark" id="mail_check_button">인증전송</button>
+            </div>
+            <div class="col-2" style="display:none;" id="emailCheckBox">
+                <button type="button" class="btn btn-dark" id="btn_emailCk">인증확인</button>
+            </div>
+        </div>
+        <input type="hidden" id="emailDoubleChk">
         <input type="text" class="form-control" id="email" name="email" hidden>
         <div id="email_regex"></div>
         <div class="row mb-2">
@@ -152,7 +165,7 @@
         
         <div class="row mb-3">
             <div class="col-10">
-                <input id="phoneCheck" class="form-control" type="text" > <!--disabled required>  -->
+                <input id="phoneCheck" class="form-control" type="text" >
             </div>
             <div class="col-2">
                 <button type="button" id="btn_phoneCk" class="btn btn-dark">인증확인</button>
@@ -245,6 +258,45 @@
     	}
     });
     
+    // 이메일 인증
+    let code = "";
+    
+    $("#mail_check_button").click(function(){
+    	let regExp = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    	if($("#em").val() != "") {
+    		if(regExp.test($("#em").val())) {
+    			let email = $("#em").val();
+            	
+            	$.ajax({
+                    type:"GET",
+                    url:"${pageContext.request.contextPath}/member/mailCheck?email=" + email,
+                    success:function(data){
+                    	$("#emailSendBox").hide();
+                    	$("#emailCheckBox").css("display", "block");
+                    	code = data;
+                    }
+                })
+    		}else {
+    			alert("이메일을 양식에 맞게 입력해주세요.");
+    		}
+    	}else {
+    		alert("이메일을 입력해주세요.");
+    	}
+	})
+	
+	$("#btn_emailCk").click(function(){
+  		if($("#emailCheck").val() != "") {
+  			if($("#emailCheck").val() == code){
+	  			$("#emailDoubleChk").val("true");
+	  			$("#emailCkeck").attr("disabled",true);
+	  			alert("인증번호가 일치합니다.감사합니다.");
+	  		}else if($("#emailCheck").val() != code){
+	  			$("#emailDoubleChk").val("false");
+	  			$(this).attr("autofocus",true);
+	  			alert("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+	  		}
+  		}
+  	})
     
     // 문자인증
     let code2 = "";
@@ -271,18 +323,30 @@
     	}
     })
     
+    
   	//휴대폰 인증번호 대조
   	$("#btn_phoneCk").click(function(){
-	  		if($("#phoneCheck").val() == code2 || $("#phoneCheck").val() != ""){
+  		if($("#phoneCheck").val() != "") {
+  			if($("#phoneCheck").val() == code2){
 	  			$("#phoneDoubleChk").val("true");
 	  			$("#phoneCheck").attr("disabled",true);
 	  			alert("인증번호가 일치합니다.감사합니다.");
-	  		}else if($("#phoneCheck").val() != code2 || $("#phoneCheck").val() == ""){
+	  		}else if($("#phoneCheck").val() != code2){
 	  			$("#phoneDoubleChk").val("false");
 	  			$(this).attr("autofocus",true);
 	  			alert("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
 	  		}
+  		}
   	})
+  	
+  	// 휴대전화 저장
+    $("#phone2").blur(function(){
+    	$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
+    })
+    
+    $("#phone3").blur(function(){
+    	$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
+    })
 
     // 유효성검사
     // ID 정규식
@@ -369,7 +433,7 @@
 	$("#phone2").on("keyup", function(){
 		$("#phone").val("");
 		if( !( (event.keyCode >= 48 && event.keyCode<=57) || (event.keyCode >= 96 && event.keyCode <= 105)
-			|| event.keyCode==8 || event.keyCode==9 || event.keyCode==13 ) ){
+			|| event.keyCode==8 || event.keyCode==9 || event.keyCode==13 || event.keyCode==144) ){
 				$("#phone2").val("");
 				alert("숫자만 입력해주세요.");
 			event.returnValue=false;
@@ -379,7 +443,7 @@
     $("#phone3").on("keyup", function(){
     	$("#phone").val("");
 		if( !( (event.keyCode >= 48 && event.keyCode<=57) || (event.keyCode >= 96 && event.keyCode <= 105)
-			|| event.keyCode==8 || event.keyCode==9 || event.keyCode==13 ) ){
+			|| event.keyCode==8 || event.keyCode==9 || event.keyCode==13 || event.keyCode==144) ){
 			$("#phone3").val("");
 				alert("숫자만 입력해주세요.");
 			event.returnValue=false;
@@ -498,14 +562,16 @@
 	            $("#nickname").focus();
 	            return
 	         }else if($("#phone").val() == ""){
-		        alert("휴대전화 번호를 다시입력 후 인증절차를 진행해주세요");
+		        alert("휴대전화 번호를 입력 해주세요");
 		        $("#phone2").focus();
 		        return
-		     }else if($("#phoneDoubleChk").val() == ""){
-	            alert("휴대전화 인증절차를 진행해주세요.");
-	            $("#phone2").focus();
+		     }else if($("#phoneDoubleChk").val() == "" && $("#emailDoubleChk").val() == ""){
+	            alert("휴대전화 혹은 이메일 인증절차를 진행해주세요.");
 	            return
-	         }else if($("#em").val() == ""){
+	         }else if($("#phoneDoubleChk").val() == "false" && $("#emailDoubleChk").val() == "false"){
+		        alert("휴대전화 혹은 이메일 인증번호를 다시 입렵해주세요.");
+		        return
+		     }else if($("#em").val() == ""){
 	            alert("이메일을 입력해주세요.");
 	            $("#em").focus();
 	            return

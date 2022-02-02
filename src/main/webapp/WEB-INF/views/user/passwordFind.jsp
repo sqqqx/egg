@@ -80,6 +80,30 @@
 	        <div class="d-none">
 	            <input type="text" id="phone" name="phone">
 	        </div>
+	        
+	        <div class="row mb-2">
+            <div class="col">
+                <label> 이메일</label>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-10">
+                <input type="text" class="form-control" id="em" name="em">
+            </div>
+            <div class="col-2" id="emailSendBox">
+                <button type="button" class="btn btn-dark" id="mail_check_button">인증전송</button>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+        	<div class="col-10">
+                <input id="emailCheck" class="form-control" type="text" >
+            </div>
+            
+            <div class="col-2" id="emailCheckBox">
+                <button type="button" class="btn btn-dark" id="btn_emailCk">인증확인</button>
+            </div>
+        </div>
         </div>
         <form id="pwForm" action="${pageContext.request.contextPath}/member/toPwfind.do" method="post">
         <input type="text" class="form-control" id="user_id" name="user_id" hidden>
@@ -116,6 +140,45 @@
     </div>
 
 	<script>
+	// 이메일 인증
+    let code = "";
+    
+    $("#mail_check_button").click(function(){
+    	let regExp = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    	if($("#em").val() != "") {
+    		if(regExp.test($("#em").val())) {
+    			let email = $("#em").val();
+            	
+            	$.ajax({
+                    type:"GET",
+                    url:"${pageContext.request.contextPath}/member/mailCheck?email=" + email,
+                    success:function(data){
+                    	$("#emailSendBox").hide();
+                    	$("#emailCheckBox").css("display", "block");
+                    	code = data;
+                    }
+                })
+    		}else {
+    			alert("이메일을 양식에 맞게 입력해주세요.");
+    		}
+    	}else {
+    		alert("이메일을 입력해주세요.");
+    	}
+	})
+	
+	$("#btn_emailCk").click(function(){
+  		if($("#emailCheck").val() != "") {
+  			if($("#emailCheck").val() == code){
+  				alert("인증번호가 일치합니다.비밀번호를 교체해주세요.");
+  	  			$("#phoneBox").hide();
+  				$("#pwBox").css("display", "block");
+  				$("#completeBtn").css("display", "block");
+	  		}else if($("#emailCheck").val() != code){
+	  			alert("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+	  		}
+  		}
+  	})
+	
 	$("#btn_idcheck").on("click", function(){
     	let regExp = /^[a-z0-9]{4,16}$/;
     	if(regExp.test($("#id").val())){
@@ -144,36 +207,41 @@
 	})
 
 	// 문자인증
-    let code2 = "1111";
-    $("#btn_phone").click(function(){
-    	$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
-    	let phone = $("#phone").val();
-    	alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오."); 
-    	$.ajax({
-    		type:"GET",
-    		url:"${pageContext.request.contextPath}/member/phoneCheck?phone=" + phone, 
-    		cache : false,
-    		success:function(data){
-    			if(data == "error"){
-    				alert("휴대폰 번호가 올바르지 않습니다.")
-    			}else{
-    				$("#phoneCheck").attr("disabled",false);
-    				alert("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
-    				code2 = data;
-    			}
-    		}
-    	})
-    })
+    let code2 = "";
+        $("#btn_phone").click(function(){
+        	if( $("#phone2").val() != "" || $("#phone3").val() != "" ){
+        		$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
+            	let phone = $("#phone").val();
+            	$.ajax({
+            		type:"GET",
+            		url:"${pageContext.request.contextPath}/member/phoneCheck?phone=" + phone, 
+            		cache : false,
+            		success:function(data){
+            				if(data == "error"){
+                				alert("휴대폰 번호가 올바르지 않습니다.")
+                			}else{
+                				$("#phoneCheck").attr("disabled",false);
+                				alert("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
+                				code2 = data;
+                			}
+            			}
+            	})
+        	}else if( $("#phone2").val() == "" || $("#phone3").val() == "" ){
+        		alert("전화번호를 입력후 인증을 진행해주세요.");
+        	}
+        })
     
   	//휴대폰 인증번호 대조
   	$("#btn_phoneCk").click(function(){
-  		if($("#phoneCheck").val() == code2){
-  			alert("인증번호가 일치합니다.비밀번호를 교체해주세요.");
-  			$("#phoneBox").hide();
-			$("#pwBox").css("display", "block");
-			$("#completeBtn").css("display", "block");
-  		}else if($("#phoneCheck").val() != code2){
-  			alert("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+  		if($("#phoneCheck").val() != "") {
+  			if($("#phoneCheck").val() == code2){
+  	  			alert("인증번호가 일치합니다.비밀번호를 교체해주세요.");
+  	  			$("#phoneBox").hide();
+  				$("#pwBox").css("display", "block");
+  				$("#completeBtn").css("display", "block");
+  	  		}else if($("#phoneCheck").val() != code2){
+  	  			alert("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+  	  		}
   		}
   	})
   	
