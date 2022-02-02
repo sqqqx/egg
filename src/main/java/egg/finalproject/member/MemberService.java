@@ -65,6 +65,11 @@ public class MemberService {
 		return dao.toIdFind(phone);
 	}
 	
+	// 이메일 아이디 찾기
+	public String toEmailIdFind(String email) throws Exception {
+		return dao.toEmailIdFind(email);
+	}
+	
 	// 비밀번호 찾기(수정)
 	public int toPwFind(String password, String user_id) throws Exception {
 		return dao.toPwFind(password, user_id);

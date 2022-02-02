@@ -14,7 +14,14 @@
 </style>
 </head>
 <body>
+	<h2 style="text-align:center;">아이디 찾기</h2>
 	<div class="container">
+		<div class="row mb-2">
+            <div class="col">
+                <label> 휴대전화</label>
+            </div>
+        </div>
+        
 		<div class="row mb-3">
             <div class="col-4">
                 <select class="form-select" aria-label="Default select example" id="phone1" required>
@@ -44,68 +51,143 @@
                 <button type="button" id="btn_phoneCk" class="btn btn-dark">인증확인</button>
             </div>
         </div>
-        <input type="hidden" id="phoneDoubleChk">
+        
         <div class="d-none">
             <input type="text" id="phone" name="phone">
         </div>
         
-        <div id="idView">
-        	<label>아이디</label>
+        <div class="row mb-2">
+            <div class="col">
+                <label> 이메일</label>
+            </div>
         </div>
+        <div class="row mb-3">
+            <div class="col-10">
+                <input type="text" class="form-control" id="em" name="em">
+            </div>
+            <div class="col-2" id="emailSendBox">
+                <button type="button" class="btn btn-dark" id="mail_check_button">인증전송</button>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+        	<div class="col-10">
+                <input id="emailCheck" class="form-control" type="text" >
+            </div>
+            
+            <div class="col-2" id="emailCheckBox">
+                <button type="button" class="btn btn-dark" id="btn_emailCk">인증확인</button>
+            </div>
+        </div>
+        
+        <label>아이디</label>
+        <h2><div id="idView"></div></h2>
         
         <div class="row my-5 btnBox">
         <div class="col">
             <button class="btn btn-secondary btn-lg clsBtn" type="button" id="backBtn">뒤로 가기</button>
         </div>
     	</div>
+    	
+    	
     </div>
     
+    <script>
+ 	// 이메일 인증
+    let code = "";
     
-        
-        <script>
-     	// 문자인증
-        let code2 = "";
-        $("#btn_phone").click(function(){
-        	$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
-        	let phone = $("#phone").val();
-        	alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오."); 
-        	$.ajax({
-        		type:"GET",
-        		url:"${pageContext.request.contextPath}/member/phoneCheck?phone=" + phone,
-        		cache : false,
-        		success:function(data){
-        			if(data == "error"){
-        				alert("휴대폰 번호가 올바르지 않습니다.");
-        			}else{
-        				$("#phoneCheck").attr("disabled",false);
-        				alert("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
-        				code2 = data;
-        			}
-        		}
-        	})
-        })
-        
-      	//휴대폰 인증번호 대조
-      	$("#btn_phoneCk").click(function(){
-      		if($("#phoneCheck").val() == code2){
-      			$("#phoneCheck").attr("disabled",true);
-      			alert("인증번호가 일치합니다.감사합니다.");
-      			let phone = $("#phone").val();
+    $("#mail_check_button").click(function(){
+    	let regExp = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    	if($("#em").val() != "") {
+    		if(regExp.test($("#em").val())) {
+    			let email = $("#em").val();
+            	
+            	$.ajax({
+                    type:"GET",
+                    url:"${pageContext.request.contextPath}/member/mailCheck?email=" + email,
+                    success:function(data){
+                    	code = data;
+                    }
+                })
+    		}else {
+    			alert("이메일을 양식에 맞게 입력해주세요.");
+    		}
+    	}else {
+    		alert("이메일을 입력해주세요.");
+    	}
+	})
+	
+	$("#btn_emailCk").click(function(){
+  		if($("#emailCheck").val() != "") {
+  			if($("#emailCheck").val() == code){
+  				let email = $("#em").val();
       			$.ajax({
-      				url : "${pageContext.request.contextPath}/member/toIdFind.do"
+      				url : "${pageContext.request.contextPath}/member/toEmailIdFind.do"
       				, type : "post"
-      				, data : {phone : phone}
+      				, data : {email : email}
       			}).done(function(rs){
       				$("#idView").html(rs);
       			}).fail(function(e){
       				console.log(e);
       			});
-      			
-      		}else if($("#phoneCheck").val() != code2){
-      			$(this).attr("autofocus",true);
-      			alert("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+	  		}else if($("#emailCheck").val() != code){
+	  			$("#emailDoubleChk").val("false");
+	  			$(this).attr("autofocus",true);
+	  			alert("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+	  		}
+  		}
+  	})
+    
+    // 문자인증
+    let code2 = "";
+   	$("#btn_phone").click(function(){
+        if( $("#phone2").val() != "" || $("#phone3").val() != "" ){
+        	$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
+            let phone = $("#phone").val();
+            $.ajax({
+            	type:"GET",
+            	url:"${pageContext.request.contextPath}/member/phoneCheck?phone=" + phone, 
+            	cache : false,
+            	success:function(data){
+            			if(data == "error"){
+               				alert("휴대폰 번호가 올바르지 않습니다.")
+               			}else{
+               				$("#phoneCheck").attr("disabled",false);
+               				alert("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
+               				code2 = data;
+               			}
+            		}
+            	})
+        }else if( $("#phone2").val() == "" || $("#phone3").val() == "" ){
+        	alert("전화번호를 입력후 인증을 진행해주세요.");
+        }
+	})
+        
+      	//휴대폰 인증번호 대조
+      	$("#btn_phoneCk").click(function(){
+      		if($("#phoneCheck").val() != "") {
+      			if($("#phoneCheck").val() == code2){
+          			$("#phoneCheck").attr("disabled",true);
+          			alert("인증번호가 일치합니다.감사합니다.");
+          			let phone = $("#phone").val();
+          			$.ajax({
+          				url : "${pageContext.request.contextPath}/member/toIdFind.do"
+          				, type : "post"
+          				, data : {phone : phone}
+          			}).done(function(rs){
+          				$("#idView").html(rs);
+          			}).fail(function(e){
+          				console.log(e);
+          			});
+          			
+          		}else if($("#phoneCheck").val() != code2){
+          			$(this).attr("autofocus",true);
+          			alert("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+          		}
       		}
-      	})
+       	})
+      	
+      		
       	
       	// 뒤로가기 버튼
 	    $("#backBtn").click(function(){
