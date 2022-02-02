@@ -60,7 +60,10 @@ public class PaymentDTO {
 	public void setCard_name(String card_name) {
 		this.card_name = card_name;
 	}
-	
-	
 
+	@Override
+	public String toString() {
+		return "PaymentDTO [payment_no=" + payment_no + ", cost=" + cost + ", payment_time=" + payment_time
+				+ ", method=" + method + ", card_name=" + card_name + "]";
+	}
 }

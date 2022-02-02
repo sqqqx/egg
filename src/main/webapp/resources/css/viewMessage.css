@@ -25,3 +25,6 @@
     img {
         width: 20px;
     }
+    .msgTitle {
+    	cursor: pointer;
+    }

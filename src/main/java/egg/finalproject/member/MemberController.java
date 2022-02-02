@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import egg.finalproject.utils.EncryptionUtils;
@@ -250,6 +251,35 @@ public class MemberController {
 				return "fail";
 			}
 		}
+
+		// (마이페이지) 프로필 사진 변경
+		@RequestMapping(value="/modifyPP.do")
+		public String modifyPP(Model model, String user_id, MultipartFile photo) throws Exception {	// ModifyProfilePhoto
+			System.out.println("MemberController / 프로필사진변경 photo: " + photo);
+			
+			// 저장 경로
+			String realPath = session.getServletContext().getRealPath("profilePhotos");
+			System.out.println("realPath: " + realPath);
+			if(service.modifyPP(realPath, user_id, photo) > 0) {
+				System.out.println("프로필 사진 변경 성공");
+			} else {
+				System.out.println("프로필 사진 변경 실패");
+			}
+			
+			// 변경된 dto 불러오기
+			MemberDTO dto = service.getDTOById(user_id);
+			System.out.println(dto);
+			model.addAttribute("dto", dto);
+			return "/member/userInformation";
+		}
 		
-		
+		// (마이페이지) 기본 프로필 사진 설정
+		@RequestMapping("/defaultPP.do")
+		public String defaultPP(Model model, String user_id) throws Exception {
+			System.out.println("MemberController / 기본 프로필 사진 설정 - user_id: " + user_id);
+			// 기본 프로필 사진명이 myInfo.png라고 할 때
+			service.defaultPP(user_id);
+			model.addAttribute("dto", service.getDTOById(user_id));
+			return "/member/userInformation";
+		}
 }

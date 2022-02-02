@@ -29,10 +29,21 @@
                 <div class="row" id="profileSection01">
                     <div class="col-2">
                         <div id="userPhoto">
-                            <img src="/resources/img/myInfo.png">
+                            <img src="${pagecontext.request.contextPath}/profilePhotos/${dto.profile_path}">
                         </div>
                         <div>
-                            <button type="button" class="btn btn-primary" id="changePhoto">프로필 사진변경</button>
+                        	<form action="${pagecontext.request.contextPath}/member/modifyPP.do" method="post" enctype="multipart/form-data" id="modifyProfilePhotoForm">
+                        		<button type="button" class="btn btn-info" id="showPhotoBtnBox">프로필 사진 변경</button>
+                                    <div id="photoBtnBox">
+                                        <button type="button" class="btn btn-info photoBtn" id="changePhotoBtn">선택</button>
+                                        <button type="button" class="btn btn-warning photoBtn" id="defaultPhotoBtn">기본</button>
+                                        <button type="button" class="btn btn-secondary photoBtn" id="cancelPhotoBtn">취소</button>
+                                        <button type="button" class="btn btn-success photoBtn" id="confirmPhotoBtn">확인</button>
+                                    </div>
+                            	<input type="file" id="searchPhoto" name="photo" accept="image/*" hidden>
+                            	<input type="text" name="user_id" value="${loginSession.user_id}" hidden>
+                        	</form>
+                            
                         </div>
                     </div>
                     <div class="col-7" id="temp1">
@@ -44,8 +55,8 @@
                     </div>
                 </div>
                 <div class="row" id="profileSection02">
-                	<table>
-                            <form id="userInfoForm">
+                	<form id="userInfoForm">
+                		<table>
                                 <tr>
                                     <th>회원유형</th>
                                     <td id="viewType">
@@ -127,8 +138,8 @@
                                    </td>
                                 </tr>
                                 <input type="text" value="${loginSession.user_id}" name="user_id" hidden/>
-                            </form>
-                    	</table>
+                    		</table>
+                    	</form>
                     
                     <div class="col" id="btnBox">
                         <button type="button" id="usertypeConvertBtn" class="btn btn-success">능력자로 전환하기</button>
@@ -144,6 +155,96 @@
     </div>
     
     <script>
+    	console.log('${pagecontext.request.contextPath}/profilePhotos/${profile_path}');
+    	/* 프로필사진 변경*/
+    	// 프로필사진 변경 버튼
+    	$("#showPhotoBtnBox").on("click", function(){
+    		$("#showPhotoBtnBox").css("display", "none");
+    		$("#photoBtnBox").css("display", "inline-block");
+    	})
+    	
+    	// 사진선택
+        $("#changePhotoBtn").on("click", function(){
+            $("#searchPhoto").click();
+        })
+        $("#searchPhoto").on("change", function (e) {
+        	
+            //Get count of selected files
+            var countFiles = $(this)[0].files.length
+
+            var imgPath = $(this).val();
+            var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+            var userPhoto = $("#userPhoto");
+            userPhoto.empty();
+
+            // 확장자 유효성 검사
+            if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+                if (typeof (FileReader) != "undefined") {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("<img />", {
+                            "src": e.target.result,
+                                "class": "thumb-image"
+                        }).appendTo(userPhoto);
+                    }
+                    reader.readAsDataURL($(e.target)[0].files[0]);
+                
+
+                } else {
+                    alert("현재 사용하고 계신 브라우저에서 FileReader를 지원하지 않습니다.");
+                }
+            } else {
+                alert("gif, png, jpg, jpeg 파일만 선택가능합니다.");
+            }
+            
+        });        
+        
+        // 기본 프로필사진 선택
+        $("#defaultPhotoBtn").on("click", function(){
+        	
+			if(confirm("기본 프로필 사진으로 변경하시겠습니까?")){
+    			if("${dto.profile_path}" === "myInfo.png"){	// 이미 기본 프로필 사진일 떄
+    				alert("이미 기본 프로필 사진입니다.");
+    				return;
+    			}
+    			
+    			// 기본사진으로 미리보기 화면 변경
+    			// 전에 이미지 비우고 
+    			let userPhoto = $("#userPhoto");
+    			userPhoto.empty();
+    			// 기본 이미지로 미리보기에 띄우기
+                $("<img />", {
+                    "src": "/resources/img/myInfo.png",
+                    "class": "thumb-image"
+                }).appendTo(userPhoto);
+    			$(location).attr("href", "${pagecontext.request.contextPath}/member/defaultPP.do?user_id=${loginSession.user_id}");
+    		}
+        })
+        
+    	
+    	// 프로필사진 변경취소 버튼
+    	$("#cancelPhotoBtn").on("click", function(){
+    		$("#showPhotoBtnBox").css("display", "inline-block");
+    		$("#photoBtnBox").css("display", "none");
+    		
+    		// 기본사진으로 미리보기 화면 변경
+			// 전에 이미지 비우고 
+			let userPhoto = $("#userPhoto");
+			userPhoto.empty();
+			// 기본 이미지로 미리보기에 띄우기
+            $("<img />", {
+                "src": "${pagecontext.request.contextPath}/profilePhotos/${dto.profile_path}",
+                "class": "thumb-image"
+            }).appendTo(userPhoto);
+			$("#searchPhoto").val("");
+    	})
+    	
+    	// 프로필사진 변경 확인 버튼
+    	$("#confirmPhotoBtn").on("click", function(){
+    		$("#modifyProfilePhotoForm").submit();
+    	})
+    
+    	/* 회원정보 수정 */
     	// 회원정보수정 버튼 선택
 	    $("#editProfileBtn").on("click", function(){
 	        console.log("회원정보수정");
@@ -251,31 +352,6 @@
             } else {
                 alert("전화번호 다시 입력해주세요");
             }
-
-			/*
-			$.ajax({
-				url : "${pageContext.request.contextPath}/member/toPhoneCheck.do"
-				, type : "post"
-				, data : {phone : phone}
-			}).done(function(rs){
-				console.log(rs);
-				if($("#phone2").val() !== "" && #("#phone3").val() !== "") {
-					if(rs == "available"){
-						alert("사용할 수 있는 전화번호입니다.");
-						$("#phone").val($("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val()));
-					}else if(rs == "unavailable"){
-						alert("사용할 수 없는 전화번호입니다.");
-						$("#phone2").val("");
-						$("#phone3").val("");
-					}
-				} else {
-					alert("전화번호를 입력해주세요");
-					return;
-				}
-			}).fail(function(e){
-				console.log(e);
-			});
-			*/
 		})
 		
 		//휴대폰 인증번호 대조

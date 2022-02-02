@@ -36,7 +36,7 @@
                     <label for="to_id">수신자</label>
                 </div>
                 <div class="col-5">
-                    <input type="text" class="form-control" id="to_id" name="to_id" value="수신자ID">
+                    <input type="text" class="form-control" id="to_id" name="to_id" value="${dto.to_id}">
                 </div>
                 <div class="col-3"></div>
             </div>
@@ -46,7 +46,7 @@
                     <label for="to_id">송신자</label>
                 </div>
                 <div class="col-5">
-                    <input type="text" class="form-control" id="from_id" name="from_id" value="송신자ID">
+                    <input type="text" class="form-control" id="from_id" name="from_id" value="${dto.from_id}">
                 </div>
                 <div class="col-3"></div>
             </div>
@@ -56,7 +56,7 @@
                     <label>제목</label>
                 </div>
                 <div class="col-5">
-                    <input type="text" class="form-control" id="title" value="쪽지제목">
+                    <input type="text" class="form-control" id="title" value="${dto.title}">
                 </div>
                 <div class="col-3"></div>
             </div>
@@ -66,7 +66,7 @@
                     <label for="content">내용</label>
                 </div>
                 <div class="col-5">
-                    <textarea class="form-control" id="content" name="content"></textarea>
+                    <textarea class="form-control" id="content" name="content">${dto.content}</textarea>
                 </div>
                 <div class="col-3"></div>
             </div>
@@ -90,8 +90,8 @@
 	    })
 	
 	    // 보내기 버튼
-	    $("#toWriteBtn").on("click", function(){
-	        $(location).attr("${pagecontext.request.contextPath}/member/toSendMessage");
+	    $("#towriteBtn").on("click", function(){
+	    	$(location).attr("href", "${pagecontext.request.contextPath}/message/toSendMessage?to_id=${dto.to_id}&from_id=${dto.from_id}");
 	    })
     </script>
 </body>

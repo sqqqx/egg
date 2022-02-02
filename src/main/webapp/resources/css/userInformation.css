@@ -21,10 +21,11 @@
     margin-bottom: 5px;
 }
 #userPhoto img{
-    width: 100%;	
+    width: 100%;
+    height: 175px;	
 }
-#changePhoto {
-    width: 100%; 
+#photoBtnBox {
+	display: none;
 }
 #temp1 {
     border: 1px solid orange;
