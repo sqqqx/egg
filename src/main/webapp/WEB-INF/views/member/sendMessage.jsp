@@ -36,10 +36,10 @@
                     <label for="to_id">수신자</label>
                 </div>
                 <div class="col-5">
-                    <input type="text" class="form-control" id="to_id" name="to_id" value="수신자ID">
+                    <input type="text" class="form-control" id="to_id" name="to_id" value="${dto.to_id}">
                 </div>
                 <div class="col-3">
-                    <input type="text" class="form-control" id="from_id" name="from_id" value="송신자ID">
+                    <input type="text" class="form-control" id="from_id" name="from_id" value="${dto.from_id}" hidden>
                 </div>
             </div>
             <div class="row">
@@ -48,7 +48,7 @@
                     <label>제목</label>
                 </div>
                 <div class="col-5">
-                    <input type="text" class="form-control" id="title" name="title" value="쪽지제목">
+                    <input type="text" class="form-control" id="title" name="title" placeholder="쪽지 제목을 입력해주세요">
                 </div>
                 <div class="col-3"></div>
             </div>
@@ -58,7 +58,7 @@
                     <label for="content">내용</label>
                 </div>
                 <div class="col-5">
-                    <textarea class="form-control" id="content" name="content"></textarea>
+                    <textarea class="form-control" id="content" name="content" placeholder="쪽지 내용을 입력해 주세요"></textarea>
                 </div>
                 <div class="col-3"></div>
             </div>

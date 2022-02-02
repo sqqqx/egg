@@ -1,15 +1,20 @@
 package egg.finalproject.member;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Random;
+
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import egg.finalproject.utils.EncryptionUtils;
@@ -20,6 +25,8 @@ public class MemberController {
 	private MemberService service;
 	@Autowired
 	private HttpSession session;
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	// 아이디 중복검사
 	@RequestMapping(value="toIdCheck.do")
@@ -42,26 +49,27 @@ public class MemberController {
 		return "user/login";
 	}
 	
-
+	// 로그인
 	@RequestMapping(value="/login.do", produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String login(String user_id, String password) throws Exception{
 		password = EncryptionUtils.getSHA512(password);
 		if(service.isLoginOk(user_id, password)) {
-			System.out.println("user_id =" + user_id);
-			System.out.println("password = " + password);
 			MemberDTO dto = service.getMember(user_id);
 			session.setAttribute("loginSession", dto);
 			System.out.println(dto.getType());
-			if(dto.getType() == 1 || dto.getType() == 2) {
-				return "성공";
-			}else if(dto.getType() == 0) {
-				return "관리자";
+			if(dto.getBlacklist() == 0) {
+				if(dto.getType() == 1 || dto.getType() == 2) {
+					return "성공";
+				}else if(dto.getType() == 0) {
+					return "관리자";
+				}
+			}else {
+				return "Y";
 			}
 		}
 		return "실패";
 	}
-
 	
 	// 로그아웃
 	@RequestMapping("/logout")
@@ -106,6 +114,13 @@ public class MemberController {
 		return service.toIdFind(phone);
 	}
 	
+	// 아이디 찾기 -> 이메일 인증 후 -> 아이디 띄워주기
+	@RequestMapping(value="toEmailIdFind.do")
+	@ResponseBody
+	public String toEmailIdFind(String email) throws Exception {
+		return service.toEmailIdFind(email);
+	}
+	
 	// 비밀번호 찾기 페이지로 이동
 	@RequestMapping(value="pwFind.do")
 	public String pwFind() throws Exception {
@@ -130,8 +145,48 @@ public class MemberController {
 		return Integer.toString(randomNumber);
 	}
 
+	// 이메일 인증
+	@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
+    @ResponseBody
+    public String mailCheckGET(String email) throws Exception{
+        
+        System.out.println("이메일 데이터 전송 확인");
+        System.out.println("인증번호 : " + email);
+        
+        Random random = new Random();
+        int checkNum = random.nextInt(888888) + 111111;
+        System.out.println("인증번호" + checkNum);
+        
+        /* 이메일 보내기 */
+        String setFrom = "jak3995@naver.com";
+        String toMail = email;
+        String title = "능력자들 인증 이메일 입니다.";
+        String content = 
+                "능력자들을 방문해주셔서 감사합니다." +
+                "<br><br>" + 
+                "인증 번호는 " + checkNum + "입니다." + 
+                "<br>" + 
+                "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+        try {
+            
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+            helper.setFrom(setFrom);
+            helper.setTo(toMail);
+            helper.setSubject(title);
+            helper.setText(content,true);
+            mailSender.send(message);
+            
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        String num = Integer.toString(checkNum);
+        return num;
+    }
 	
-/////↑↑↑↑↑↑회원가입 및 로그인↑↑↑↑↑↑/////////↓↓↓↓↓↓마이페이지↓↓↓↓↓↓/////////////////////////////
+	
+	
+/////↑↑↑↑↑↑회원가입 및 로그인↑↑↑↑↑↑/////////↓↓↓↓↓↓마이페이지↓↓↓↓↓↓///////////////////////////
 
 	// (마이페이지) 마이페이지 요청
 	@RequestMapping("toMyPage")
@@ -196,6 +251,35 @@ public class MemberController {
 				return "fail";
 			}
 		}
+
+		// (마이페이지) 프로필 사진 변경
+		@RequestMapping(value="/modifyPP.do")
+		public String modifyPP(Model model, String user_id, MultipartFile photo) throws Exception {	// ModifyProfilePhoto
+			System.out.println("MemberController / 프로필사진변경 photo: " + photo);
+			
+			// 저장 경로
+			String realPath = session.getServletContext().getRealPath("profilePhotos");
+			System.out.println("realPath: " + realPath);
+			if(service.modifyPP(realPath, user_id, photo) > 0) {
+				System.out.println("프로필 사진 변경 성공");
+			} else {
+				System.out.println("프로필 사진 변경 실패");
+			}
+			
+			// 변경된 dto 불러오기
+			MemberDTO dto = service.getDTOById(user_id);
+			System.out.println(dto);
+			model.addAttribute("dto", dto);
+			return "/member/userInformation";
+		}
 		
-		
+		// (마이페이지) 기본 프로필 사진 설정
+		@RequestMapping("/defaultPP.do")
+		public String defaultPP(Model model, String user_id) throws Exception {
+			System.out.println("MemberController / 기본 프로필 사진 설정 - user_id: " + user_id);
+			// 기본 프로필 사진명이 myInfo.png라고 할 때
+			service.defaultPP(user_id);
+			model.addAttribute("dto", service.getDTOById(user_id));
+			return "/member/userInformation";
+		}
 }

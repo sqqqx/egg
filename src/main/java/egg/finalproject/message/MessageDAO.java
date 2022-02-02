@@ -86,4 +86,9 @@ public class MessageDAO {
 		return session.update("messageMapper.checkedMsgRead", checkedMsg);
 	}
 	
+	// (마이페이지) 쪽지 상세보기
+	public MessageDTO detailMsg(int message_no) throws Exception {
+		System.out.println("MessageDAO / 쪽지 상세보기 - message_no: " + message_no);
+		return session.selectOne("messageMapper.detailMsg", message_no);
+	}
 }
