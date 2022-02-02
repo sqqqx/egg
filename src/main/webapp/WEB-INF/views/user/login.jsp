@@ -117,14 +117,18 @@
     			, type : "post"
     			, data : data
     		}).done(function(rs){
-    			console.log(rs);
+    			if(rs != "Y") {
     				if(rs == "성공") {
     					location.href="${pageContext.request.contextPath}/online/toMain.do"
     				}else if(rs == "관리자") {
     					location.href = "${pageContext.request.contextPath}/admin/toAdminMain"
     				}else if(rs == "실패"){
-    				alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
+    					alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
     				}
+    			}else {
+    				alert("블랙리스트 등록되어 로그인에 제한됩니다 고객센터에 문의해주세요.");
+    			}
+    				
     		}).fail(function(e){
     			console.log(e);
     		})
