@@ -5,4 +5,33 @@
 
 <mapper namespace="cartMapper">
 
+<!-- 카트에 물품 추가 -->
+<insert id="insertCart" parameterType="cartDTO">
+insert into tbl_cart values(#{user_id}, #{product_no}, #{quantity})
+</insert>
+
+<!-- 카트안에 있는 물품들 불러오기 -->
+<select id="selectCart" resultType="TempOrderDTO">
+select a.product_no, a.name, a.price, a.stock, a.content, a.image_path, b.quantity
+from tbl_product a, tbl_cart b
+where a.product_no=b.product_no
+and b.user_id=#{user_id}
+</select>
+
+<!-- 카트 물품 지우기 -->
+<delete id="deleteCart">
+delete tbl_cart where product_no =
+(select product_no from tbl_product where name=#{name})
+</delete>
+
+<!-- 유저가 물품을 카트에 담았는지 확인 -->
+<select id="selectById" resultType="int">
+select count(*) from tbl_cart where user_id=#{user_id} and product_no=#{product_no}
+</select>
+
+<!-- 카트안의 물품 수량변경 -->
+<update id="updateQuantity">
+update tbl_cart set quantity=#{quantity} where product_no = 
+(select product_no from tbl_product where name=#{name})
+</update>
 </mapper>

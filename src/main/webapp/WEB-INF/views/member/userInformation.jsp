@@ -29,7 +29,12 @@
                 <div class="row" id="profileSection01">
                     <div class="col-2">
                         <div id="userPhoto">
-                            <img src="${pagecontext.request.contextPath}/profilePhotos/${dto.profile_path}">
+                            <c:if test="${dto.profile_path == 'myInfo.png'}">
+                              <img src="${pagecontext.request.contextPath}/resources/img/${dto.profile_path}">
+                           </c:if>
+                           <c:if test="${dto.profile_path != 'myInfo.png'}">
+                              <img src="${pagecontext.request.contextPath}/profilePhotos/${dto.profile_path}">
+                           </c:if>
                         </div>
                         <div>
                         	<form action="${pagecontext.request.contextPath}/member/modifyPP.do" method="post" enctype="multipart/form-data" id="modifyProfilePhotoForm">

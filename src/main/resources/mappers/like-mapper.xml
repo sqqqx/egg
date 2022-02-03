@@ -5,26 +5,28 @@
 
 <mapper namespace="likeMapper">
 
+
+<!-- type 1번:온라인게시글 2번:오프라인게시글 3번:상품게시글 -->
 <!-- 게시글의 총 좋아요 카운트 -->
 <select id="count" resultType="int">
 		select count(*) 
 			from tbl_like
-				where post_no = #{post_no}
+				where type=#{type} and post_no = #{post_no}
 </select>
 
 <!-- 좋아요 추가 -->
 <insert id="plus" parameterType="likeDTO">
-	insert into tbl_like values(#{user_id},#{post_no},sysdate)
+	insert into tbl_like values(#{user_id},#{type},#{post_no},sysdate)
 </insert>
 
 <!-- 좋아요 삭제 -->
 <delete id="minus">
-	delete from tbl_like where user_id=#{user_id} and post_no = #{post_no}
+	delete from tbl_like where user_id=#{user_id} and type=#{type} and post_no = #{post_no}
 </delete>
 
 <!-- 게시글에 유저가 좋아요 했는지 판별  -->
 <select id="selectLike" parameterType="map" resultType="int">
-	select count(*) from tbl_like where user_id=#{user_id} and post_no = #{post_no}
+	select count(*) from tbl_like where user_id=#{user_id} and type=#{type} and post_no = #{post_no}
 </select>
 
 </mapper>
