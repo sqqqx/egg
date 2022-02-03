@@ -9,6 +9,8 @@ public class ReportDAO {
 	@Autowired
 	private SqlSession session;
 	
+	
+	//신고 추가
 	public int insertReport(ReportDTO dto) {
 		return session.insert("reportMapper.insertReport",dto);
 	}

@@ -26,7 +26,6 @@ public class AdminMemberController {
 	}
 	
 	// 회원 정보 수정 
-	// jsp에 수정기능 생기면 수정권한 처리, 비밀번호 수정 탭 별도 주의, member쪽 infor..??
 	@RequestMapping("toUserInfomation")
 	public String toUserInfomation(String user_id) throws Exception {
 		return "redirect:/member/toUserInformation?user_id="+user_id;

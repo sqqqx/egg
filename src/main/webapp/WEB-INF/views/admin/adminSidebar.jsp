@@ -111,7 +111,7 @@
 						href="${pageContext.request.contextPath}/admin/toReportManagement"
 						class="link-dark rounded">신고 관리</a></li>
 					<li><a
-						href="#"
+						href="${pageContext.request.contextPath}/admin/toProductManagement"
 						class="link-dark rounded">상품 관리</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/admin/toOrderManagement"

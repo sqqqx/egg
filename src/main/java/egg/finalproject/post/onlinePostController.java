@@ -94,7 +94,7 @@ public class onlinePostController {
 	}
 	
 	
-	//toWrite.do => 게시글 목록으로 이동 시켜야함~!!!!
+	//TODO : 어드민 글 목록 페이지로 이동 시키기
 	@RequestMapping("/deletePost.do")
 	public String deletePost(int post_no) throws Exception{
 		System.out.println("post_no : "+post_no);
@@ -105,6 +105,9 @@ public class onlinePostController {
 		}
 	}
 	
+	
+	//수정 페이지로 이동
+	//TODO: 관리자 타입일 때만 수정, 삭제 뜨도록 하기
 	@RequestMapping("/toModifyPost.do")
 	public String toModifyPost(int post_no, Model model) throws Exception{
 		System.out.println(post_no);
@@ -125,6 +128,7 @@ public class onlinePostController {
 		return "onlinePost/onlinePostModify";
 	}
 	 
+	//게시글 수정 메서드
 	@RequestMapping("/modify.do")
 	public String modify(int post_no, PostDTO dto,MultipartFile thumbNail) throws Exception{
 		System.out.println("수정될 post_no : "+post_no);

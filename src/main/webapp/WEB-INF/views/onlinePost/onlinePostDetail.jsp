@@ -585,9 +585,9 @@
         </div>
         <div class="row" id="storeLink">
             <div id="product">
-                <a href="">
+                <a href="/product//toProductDetail.do?product_no=${ProductDTO.product_no}">
                     <div id="productPic">
-                        <img src="${pageContext.request.contextPath}/onlinePostThumbNail/${ImageDTO.system_name}"
+                        <img src="${pageContext.request.contextPath}/productThumbnail/${ProductDTO.image_path}"
                             id="productImg">
                     </div>
                     <div id="productInfo">
@@ -775,37 +775,40 @@
         </form>
     </div>
     <script>
-
+    
+        //상단 게시글 수정 버튼 클릭 이벤트
         document.getElementById("modify").onclick = function () {
             /* alert("수정 버튼이 눌렸어!"); */
             location.href = "/onlinePost/toModifyPost.do?post_no=" + ${ PostDTO.post_no };
         }
 
 
-
+        //상단 게시글 삭제 버튼 클릭 이벤트
         document.getElementById("delete").onclick = function () {
             /* alert("삭제 버튼이 눌렸어요!"); */
             location.href = "/onlinePost/deletePost.do?post_no=" + ${ PostDTO.post_no };
         }
 
-        //댓글 수 읽어주는 기능
+        //댓글 입력 시 댓글 글자수를 세어주는 기능
         $(document).ready(function () {
             $('#commentsInput').on('keyup', function () {
                 $('#commentsInput_cnt').html("(" + $(this).val().length + " / 150)");
 
-                if ($(this).val().length > 150) {
-                    $(this).val($(this).val().substring(0, 150));
-                    $('#commentsInput_cnt').html("(150 / 150)");
+                if ($(this).val().length > 150) {//150자가 넘는 경우
+                    $(this).val($(this).val().substring(0, 150)); //150자까지만 잘라서 표기
+                    $('#commentsInput_cnt').html("(150 / 150)"); 
                     alert("150자 이상 입력하실 수 없습니다.");
                 }
             });
         });
-
+        
+        //댓글 편집 버튼을 내려오게 하는 이벤드
         $(document).ready(function () {
             $('.dropdown-toggle').dropdown()
             selectLike(); //좋아요 눌렀는지 확인해주는 함수
         });
 
+        //댓글 수정 입력시 댓글 수를 세어주는 기능
         $(document).on("keyup", ".modifyInput", function () {
             let name = this.name;
             console.log(name);
@@ -818,12 +821,14 @@
                 alert("150자 이상 입력하실 수 없습니다.");
             }
         });
-        
+
+        //댓글 등록 버튼 클릭 시 이벤트
+        //AJAX RETURN : 새로 입력된 댓글이 추가된 전체 리스트 가져오기
         $("#insertComment").on("click", function () {
             console.log("여깄어요");
-            if ($("#commentsInput").val() != "") {
-                let content = $("#commentsInput").val();
-                let post_no = ${ PostDTO.post_no };
+            if ($("#commentsInput").val() != "") { //댓글창이 비어있지 않은 경우
+                let content = $("#commentsInput").val(); //댓글창 내용
+                let post_no = ${ PostDTO.post_no }; //post_no
                 $.ajax({
                     url: "/comment/insertComment.do"
                     , type: "post"
@@ -841,7 +846,9 @@
         })
 
 
-
+        //댓글 삭제 버튼 클릭시 이벤트
+        //삭제 하시겠습니까? 확인창 --> OK누르면 삭제 처리
+        //AJAX RETURN : 댓글 삭제 후 전체 댓글 list 불러오기
         function checkDelete(comment_no) {
             if (confirm("삭제 하시겠습니까?")) {
                 let post_no = ${ PostDTO.post_no }
@@ -860,7 +867,10 @@
                 return false;
             }
         }
-
+        
+        //AJAX로 전체 댓글을 띄워주는 용도의 함수
+        //댓글 변경 시마다 적용되고 있음.
+        //PARAMETER : Commentlist => 리스트를 넣으면 foreach 돌려서 생성
         function printComment(Commentlist) {
             $(".allComments").empty();
             var option = "<div class='commentsLabel'><label id='commentsLabel'>전체 댓글 (" + Commentlist.length + ")</label></div>";
@@ -952,7 +962,7 @@
                 </form>\
                 </div>"
                 $(".allComments").append(option);
-                if (dto.user_nickname == '${loginSession.user_nickname}') {// 내가 쓴 댓글이라면
+                if (dto.user_nickname == '${loginSession.user_nickname}') {// 내가 쓴 댓글이라면 댓글 편집 버튼 띄우기
                     $("div[id='dropdown" + dto.comment_no + "']").append("<ul class='btn btn-default dropdown-toggle' type='button'\
                             id='dropdownMenuButton1' data-bs-toggle='dropdown'\
                             aria-expanded='false' aria-label='Left Align'>\
@@ -965,7 +975,7 @@
                                 삭제\
                             </li>\
                         </ul>")
-                } else {
+                } else { // 다른 사람의 댓글인 경우 신고 버튼 띄우기
                     $("div[id='reactions" + dto.comment_no + "']").append("<div class='reaction reportArea' onclick='showPopup(2,"+dto.comment_no+")'>\
                             <div class='icon' id='reportIcon'><i class='fas fa-times fa-2x'></i>\
                             </div>\
@@ -976,6 +986,9 @@
 
         };
 
+        
+        // 댓글 편집 메뉴에 있는 댓글 '수정'버튼을 눌렀을 때
+        // PARAMETER : comment_no, origin_comment (수정할 댓글 번호 + 기존 댓글 내용을 넣어줌)
         function pressModify(comment_no, origin_comment) {
             console.log("하이루루");
             let commentDiv = $("div[value='" + comment_no + "']");
@@ -995,7 +1008,9 @@
             return;
 
         }
-
+        
+        //댓글 수정창 닫고 기존 댓글 내용으로 보여주기
+        //수정하다 취소 버튼 클릭 시 적용
         function commentFormVisible(comment_no) {
             let commentDiv = $("div[value='" + comment_no + "']");
             modifyComment = commentDiv[0];
@@ -1007,17 +1022,18 @@
             return
         }
 
+        //댓글이 실제로 수정되는 메서드
         function updateComment(comment_no, origin_content) {
             let textarea = $("textarea[name='" + comment_no + "']");
             let content = textarea[0].value;
             let post_no = ${ PostDTO.post_no }
             console.log(textarea);
             console.log(content);
-            if (content == "") {
+            if (content == "") { //수정창이 비어있는 경우 --> 댓글을 입력해 주세요.
                 alert("댓글을 입력해 주세요.");
                 return;
             }
-            if (origin_content != content) {
+            if (origin_content != content) { //수정내용과 기존 내용이 같이 않다면 (수정 되었다면)
                 $.ajax({
                     url: "/comment/modifyComment.do"
                     , type: "post"
@@ -1031,20 +1047,19 @@
             } commentFormVisible(comment_no);
         }
 
+        //답글 등록 메서드
         function insertReply(comment_no) {
             let content = $("input[name='" + comment_no + "']")[0].value;
             console.log(content);
             let post_no = ${ PostDTO.post_no }
-            let user_nickname = '경민쓰';
-            let user_id = 'pipi123';
-            if (content == "") {
+            if (content == "") { //입력창에 내용이 없다면
                 alert("답글을 입력해 주세요.");
                 return;
-            } else {
+            } else { //내용이 있는 경우
                 $.ajax({
                     url: "/comment/insertReply.do"
                     , type: "post"
-                    , data: { comment_no, comment_no, post_no: post_no, content: content, user_nickname: user_nickname, user_id: user_id }
+                    , data: { comment_no, comment_no, post_no: post_no, content: content}
                 }).done(function (data) {
                     console.log(data);
                     $("input[name='" + comment_no + "']").val("");
@@ -1055,11 +1070,12 @@
             }
         }
 
+        //답글 아이콘을 눌렀을 때 답글창 표시
+        //해당 댓글의 모든 답글 가져오기
         $(document).on("click", ".replyArea", function () {
             let comment_no = ($(this)).attr('id');
             let commentForm = ($(this).parent().parent())[0];
-            if (commentForm.children[3].hidden) {
-                commentForm.children[3].hidden = false;
+            if (commentForm.children[3].hidden) { //답글창이 닫혀 있는 경우
                 $.ajax({
                     url: "/comment/getAllReplies.do"
                     , type: "post"
@@ -1070,14 +1086,14 @@
                 }).fail(function (rs) {
                     console.log(rs);
                 })
-                return;
-            } commentForm.children[3].hidden = true;
+            } commentForm.children[3].hidden = !commentForm.children[3].hidden;
         })
 
 
 
-
-        function getReplies(data, comment_no) {
+        //printComment와 같이 리스트를 받아와 띄워주는 메서드
+        //PARAMETER : data, comment_no ==> 답글 리스트, 부모 댓글 번호(그 답글창에 띄워줘야 하므로)
+        function getReplies(data, parent_no) {
             $("div[id='commentReplyArea" + comment_no + "']").empty();
             data.forEach(function (dto) {
                 var option = "<div class='commentReply'>\
@@ -1123,7 +1139,9 @@
                 }
             })
         }
-
+        
+        //대댓글(답글의 답글)쓰기를 누른 경우
+        //@유저 닉네임이 태그된 input창 띄우기
         function reply_reply(comment_no, user_nickname) {
             console.log($("div[id='reply_replyArea" + comment_no + "']"));
             console.log($("Input[id='reply_replyInput" + comment_no + "']")[0]);
@@ -1131,29 +1149,14 @@
             $("div[id='reply_replyArea" + comment_no + "']")[0].hidden = !$("div[id='reply_replyArea" + comment_no + "']")[0].hidden
         }
 
-        /*  $(document).on("click",".replyReplyBtn",function(){
-             let comment_no = $(this).attr('value');
-             console.log(comment_no);
-             let replyInput = $("Input[id='reply_replyInput"+comment_no+"']")[0];
-             console.log(replyInput.value);
-             if(replyInput==""){
-                 alert("답글을 입력해 주세요.");
-             }else{
-                 $.ajax({
-                     url : "/comment/insertReply.do"
-                     ,type:"post"
-                     ,data : {comment_no:comment_no}
-                 })
-             }
-             
-         }) */
+        //대댓글 추가
         function insertReply_reply(parent_no, comment_no) {
             console.log(comment_no);
             let replyInput = $("Input[id='reply_replyInput" + comment_no + "']")[0];
             content = replyInput.value;
             console.log(content);
             let post_no = ${ PostDTO.post_no }
-            if (content == "") {
+            if (content == "") { //대댓글 입력창이 비어있는 경우
                 alert("답글을 입력해 주세요.");
             } else {
                 $.ajax({
@@ -1169,7 +1172,9 @@
             }
         }
 
-
+        
+        //답글 삭제
+        //확인 없이 그냥 삭제
         function deleteReply(comment_no, parent_no) {
             $.ajax({
                 url: "/comment/deleteReply.do"
@@ -1186,6 +1191,9 @@
                     location.href = "/report/toReportPage?comment_no=" + comment_no;
                 }
          */
+         
+        //신고 팝업을 띄우는 메서드
+        //신고 타입(댓글인지, 게시글인지), 해당 번호
         function showPopup(type, target_no) {
             const popup = document.querySelector('#popup');
             popup.classList.add('has-filter');
@@ -1194,24 +1202,27 @@
             $("#target_no").val(target_no);
             $("#type").val(type);
         }
-
+         
+        //팝업 닫기
         function closePopup() {
             const popup = document.querySelector('#popup');
             popup.classList.add('hide');
         }
 
-
+        
+        //신고창에서 신고 사유를 선택하는 경우
         $(".reportType").on("click", function () {
             // $("#phoneCheck").attr("disabled",false);
-            if ($(this).val() == 5) {
-                $("#reportReason").attr("disabled", false);
+            if ($(this).val() == 5) { //기타 선택시 
+                $("#reportReason").attr("disabled", false);//input창 열리기
                 return;
-            } $("#reportReason").attr("disabled", true);
+            } $("#reportReason").attr("disabled", true); //input창 닫기
         })
         
         
+        //신고창에서 신고 버튼 눌렀을 때 처리
         $("#reportBtn").on("click",function(){
-        	var reportForm = $("#reportForm").serialize();
+        	var reportForm = $("#reportForm").serialize(); //form을 json으로 해서 보내기
         	$.ajax({
         		url : "/report/insertReport.do"
         		,type : "post"

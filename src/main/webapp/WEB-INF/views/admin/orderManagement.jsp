@@ -39,7 +39,7 @@
 					</div>
 					<div class="col-6 d-flex justify-content-center">
 						<input type="text" class="form-control" name="searchKeyword"
-							placeholder="">
+							placeholder="" value="${searchKeyword}">
 					</div>
 					<div class="col-3 d-flex justify-content-start">
 						<button type="submit" class="btn btn-outline-dark" id="searchBtn">검색</button>
