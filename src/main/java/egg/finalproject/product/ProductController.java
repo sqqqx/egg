@@ -69,5 +69,21 @@ public class ProductController {
 		return list;
 	}
 	
+	@RequestMapping("/toModify.do")
+	public String toModify(int product_no, Model model) throws Exception{
+		ProductDTO dto = service.getProduct(product_no);
+		model.addAttribute("ProductDTO",dto);
+		return "product/productModify";
+	}
+	
+	@RequestMapping("/deleteProduct.do")
+	@ResponseBody
+	public String deleteProduct(int product_no) throws Exception{
+		if(service.deleteProduct(product_no)) {
+			return "success";
+		}
+		return "fail";
+		
+	}
 	
 }

@@ -152,17 +152,17 @@
         <div class="row">
             <div class="wrapper">
                 <h2 class="text-center">상품 등록</h2>
-                <form action="/product/write.do" method="post" id="writeForm" ENCTYPE="multipart/form-data">
+                <form action="/product/modify.do" method="post" id="modifyForm" ENCTYPE="multipart/form-data">
                     <table class="table table-striped">
                         <tr>
                             <td class="contentName">상품명</td>
-                            <td><input type="text" class="form-control" name="name" id="product_name">
+                            <td><input type="text" class="form-control" name="name" id="product_name" value="${ProductDTO.name}">
                             </td>
                         </tr>
                         <tr>
                             <td class="contentName">썸네일</td>
                             <td>
-                                <div class="thumbNailImg" hidden><img src="" id="thumbNailImg"></div>
+                                <div class="thumbNailImg"><img src="${pageContext.request.contextPath}/productThumbnail/${ProductDTO.image_path}" id="thumbNailImg" id="thumbNailImg"></div>
                                 <input type="file" class="form-control" name="thumbNail" id="thumbNail"
                                     accept=".gif, .jpg, .png, .JPEG">
                             </td>
@@ -179,7 +179,7 @@
                             <td class="contentName">재고</td>
                             <td>
                                 <div class="priceArea"><input type="number" class="form-control" name="stock" id="stock"
-                                        placeholder="0" onkeyup="inputNumberFormat(this)"><span id="priceSpan">개</span>
+                                        placeholder="0" onkeyup="inputNumberFormat(this)" value=${ProductDTO.stock}><span id="priceSpan">개</span>
                                 </div>
                             </td>
                         </tr>
@@ -187,7 +187,7 @@
                         <tr>
                             <td class="contentName">상품 소개</td>
                             <td>
-                                <div><textarea id="summernote" name="content"></textarea></div>
+                                <div><textarea id="summernote" name="content">${ProductDTO.content}</textarea></div>
 
                             </td>
                             <script>
@@ -270,20 +270,19 @@
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    $(".thumbNailImg").attr('hidden', false);
                     $('#thumbNailImg').attr('src', e.target.result);
                 }
 
                 reader.readAsDataURL(input.files[0]);
             }
         }
-
+        
+        
         // 이벤트를 바인딩해서 input에 파일이 올라올때 위의 함수를 this context로 실행합니다.
         $("#thumbNail").change(function () {
             readURL(this);
         });
-
-
+        
         function inputNumberFormat(obj) {
             obj.value = comma(uncomma(obj.value));
         }
@@ -310,9 +309,10 @@
             }
             return sReturn;
         }
-
-
-
+        $(document).ready(function(){
+        	$("#price").val(comma(uncomma(${ProductDTO.price})));
+        	
+        })
     </script>
 </body>
 

@@ -18,4 +18,8 @@
     <insert id="insertProduct" parameterType="ProductDTO">
          INSERT INTO TBL_PRODUCT VALUES (PRODUCT_NO.NEXTVAL,#{name},#{price},#{stock},#{content},#{image_path})
     </insert>
+    
+    <delete id="deleteProduct">
+         DELETE FROM TBL_PRODUCT WHERE PRODUCT_NO = #{product_no}
+    </delete>
 </mapper>

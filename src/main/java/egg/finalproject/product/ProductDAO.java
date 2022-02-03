@@ -31,4 +31,8 @@ public class ProductDAO {
 	public int insertProduct(ProductDTO dto) throws Exception{
 		return session.insert("productMapper.insertProduct",dto);
 	}
+	
+	public int deleteProduct(int product_no) throws Exception{
+		return session.delete("productMapper.deleteProduct",product_no);
+	}
 }

@@ -56,4 +56,8 @@ public class ProductService {
 			dao.insertProduct(dto);
 		}
 	}
+	
+	public boolean deleteProduct(int product_no) throws Exception{
+		return dao.deleteProduct(product_no)>0;
+	}
 }

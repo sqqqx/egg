@@ -202,9 +202,9 @@
 <body>
     <div class="container mt-3">
         <div class="buttons">
-            <button type="button" class="btn btn-warning" id="modify">게시글
+            <button type="button" class="btn btn-warning" id="modify">상품
                 수정</button>
-            <button type="button" class="btn btn-danger" id="delete">게시글
+            <button type="button" class="btn btn-danger" id="delete">상품
                 삭제</button>
         </div>
         <div class="row" id="upperBlank">
@@ -375,6 +375,28 @@
 		console.log(e);
 	});
 }
+        //상품 수정 버튼 클릭 시 수정 페이지로 이동
+        $("#modify").on("click",function(){
+        	console.log("클릭됨");
+        	location.href="/product/toModify.do?product_no=${ProductDTO.product_no}"
+        })
+        
+        $("#delete").on("click",function(){
+        	if(confirm("상품 정보가 모두 삭제됩니다. 정말 삭제하시겠습니까?")){
+        		let product_no = ${ProductDTO.product_no}
+        		$.ajax({
+        			url : "/product/deleteProduct.do"
+        			,type : "post"
+        			,data : {product_no : product_no}
+        		}).done(function(data){
+        			
+        		}).fail(function(rs){
+        			console.log(rs);
+        		});
+        		location.href="/product/deleteProduct.do?product_no=${ProductDTO.product_no}";
+        	}
+        })
+>>>>>>> Stashed changes
     </script>
 </body>
 
