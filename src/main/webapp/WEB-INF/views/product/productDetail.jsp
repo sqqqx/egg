@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@include file="/WEB-INF/views/header.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -180,14 +181,21 @@
             height: 100%;
             background-color: rgb(224, 240, 81);
             padding-top: 23px;
+            cursor:pointer
         }
-        #likeBtn, #cartBtn{
+        #likeBtn, #cartBtn, #likeFullBtn{
             padding: 5px;
             border: 1px solid black;
             width: 100%;
             height: 50%;
+            cursor: pointer;
         }
-
+		#likeFullBtn{
+			display:none;
+		}
+		#heart{
+		 	color:red;
+		}
     </style>
 </head>
 
@@ -217,7 +225,15 @@
                 <div class="productButtons">
                     <div class="parchaseBtn">구매</div>
                     <div class="like_cart_buttons">
-                        <div id="likeBtn">찜하기</div>
+                        <div id="likeBtn">
+	                        찜하기
+                        </div>
+                        <div id="likeFullBtn">
+                        	찜하기
+	                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" id="heart" class="bi bi-heart-fill" viewBox="0 0 16 16">
+							  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+							</svg>
+                        </div>
                         <div id="cartBtn">카트</div>
                     </div>
                 </div>
@@ -230,6 +246,8 @@
         </div>
         </div>
     <script>
+    	
+    
         //수량을 클릭할 때 마다 총합 + 수량 변화주기
         $("#quantityController").on("change",function(){
             let quantity = $(this).val();
@@ -260,6 +278,103 @@
         	console.log(product_no);
         	location.href="/order/toOrder.do?product_no="+product_no+"&quantity="+quantity;
         })
+        
+        //장바구니버튼 클릭시 장바구니 페이지로 이동
+        //장바구니 버튼 클릭시
+	$("#cartBtn").click(function(e){
+		let num = ${ProductDTO.product_no};
+		let id = '${loginSession.user_id}';
+		let quantity = $("#quantityController").val();
+
+		
+					$.ajax({
+						url:"${pageContext.request.contextPath}/cart/insertCart.do?product_no="+num+"&user_id="+id+"&quantity="+quantity,
+						type: "get"
+					}).done(function(data){
+						if(data==1){
+							let con = confirm("상품이 장바구니에 담겼습니다. 장바구니로 이동하시겠습니까??");
+							if(con == true){
+								location.href="${pageContext.request.contextPath}/cart/selectCart.do?user_id="+id;
+							}
+						}else if(data==-1){
+							let con = confirm("장바구니에 중복된 상품이 있습니다. 장바구니로 이동하시겠습니까??");
+							if(con == true){
+								location.href="${pageContext.request.contextPath}/cart/selectCart.do?user_id="+id;
+							}
+						}	
+					}).fail(function(e){
+						console.log(e);
+					})
+	})
+	
+	//좋아요 버튼 처리
+		$('#likeBtn').click(function(){
+		let id= '${loginSession.user_id}'
+		let post_no = ${ProductDTO.product_no};
+			
+		$("#likeBtn").css("display", "none");
+		$("#likeFullBtn").css("display", "block");
+	
+		$.ajax({
+			url : "${pageContext.request.contextPath}/like/plus.do?post_no="+post_no+"&user_id="+id+"&type=3",
+			type : "get"
+		}).done(function(data){
+			if(data == "available"){
+				console.log("찜하기 성공")
+			}else if(data == "unavailable"){
+				alert("찜하기 요청 실패");
+			}
+		}).fail(function(e){
+			console.log(e);
+		})
+	})
+	
+	//좋아요 취소 처리
+		$('#likeFullBtn').click(function(){
+		let id= '${loginSession.user_id}'
+		let post_no = ${ProductDTO.product_no};
+	
+		$("#likeBtn").css("display", "block");
+		$("#likeFullBtn").css("display", "none");
+		
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/like/minus.do?post_no="+post_no+"&user_id="+id+"&type=3",
+			type : "get"
+		}).done(function(data){
+			if(data == "available"){
+				console.log("찜하기 취소")
+			}else if(data == "unavailable"){
+				alert("찜하기 취소 요청 실패");
+			}
+		}).fail(function(e){
+			console.log(e);
+		})
+	})
+	
+	//유저가 이 게시글에 찜하기를 눌렀을 경우 찜하기버튼이 눌린채로 표시
+	$(document).ready(function(){
+    		selectLike();
+    	})
+    	
+	function selectLike(){
+      let id= '${loginSession.user_id}'
+      let post_no = ${ProductDTO.product_no};
+	$.ajax({
+		url:"${pageContext.request.contextPath}/like/selectLike.do?post_no="+post_no+"&user_id="+id+"&type=3",
+		type: "get"
+	}).done(function(data){
+		if(data == "available"){
+			$("#likeBtn").css("display", "none");
+			$("#likeFullBtn").css("display", "block");
+		}else if(data == "unavailable"){
+			$("#likeBtn").css("display", "block");
+			$("#likeFullBtn").css("display", "none");
+		}
+	}).fail(function(e){
+		console.log(e);
+	});
+}
     </script>
 </body>
 

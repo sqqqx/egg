@@ -13,16 +13,16 @@ public class LikeService {
 		return dao.count(post_no);
 	}
 	
-	public int plus(String user_id, int post_no) throws Exception{
-		return dao.plus(user_id, post_no);
+	public int plus(String user_id, int type, int post_no) throws Exception{
+		return dao.plus(user_id, type, post_no);
 	}
 	
-	public int minus(String user_id, int post_no) throws Exception{
-		return dao.minus(user_id, post_no);
+	public int minus(String user_id, int type, int post_no) throws Exception{
+		return dao.minus(user_id, type, post_no);
 	}
 	
-	public int selectLike(String user_id, int post_no) throws Exception{
-		return dao.selectLike(user_id, post_no);
+	public int selectLike(String user_id, int type, int post_no) throws Exception{
+		return dao.selectLike(user_id, type, post_no);
 			
 	}
 }

@@ -20,25 +20,28 @@ public class LikeDAO {
 		}
 		
 		//좋아요 추가
-		public int plus(String user_id, int post_no) throws Exception{
+		public int plus(String user_id, int type, int post_no) throws Exception{
 			Map<String, Object> map = new HashMap<>();
 			map.put("user_id", user_id);
+			map.put("type", type);
 			map.put("post_no", post_no);
 			return session.update("likeMapper.plus", map);
 		}
 		
 		//좋아요 취소
-		public int minus(String user_id, int post_no) throws Exception{
+		public int minus(String user_id, int type, int post_no) throws Exception{
 			Map<String, Object> map = new HashMap<>();
 			map.put("user_id", user_id);
+			map.put("type", type);
 			map.put("post_no", post_no);
 			return session.update("likeMapper.minus", map);
 		}
 		
 		//유저가 게시글에 좋아요 눌렀는지 판별
-		public int selectLike(String user_id, int post_no) throws Exception{
+		public int selectLike(String user_id, int type, int post_no) throws Exception{
 			Map<String, Object> map = new HashMap<>();
 			map.put("user_id", user_id);
+			map.put("type", type);
 			map.put("post_no", post_no);
 			return session.selectOne("likeMapper.selectLike", map);
 		}

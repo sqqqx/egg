@@ -16,7 +16,7 @@ public class LikeController {
 	@Autowired
 	private HttpSession session;
 	
-	//좋아요 카운트
+	//게시글좋아요 카운트
 	@RequestMapping("/count.do")
 	@ResponseBody
 	public int count(int post_no) throws Exception {
@@ -27,8 +27,8 @@ public class LikeController {
 	//좋아요 추가
 	@RequestMapping("/plus.do")
 	@ResponseBody
-	public String plus(String user_id, int post_no) throws Exception{
-		if(service.plus(user_id, post_no) ==1) {
+	public String plus(String user_id, int type, int post_no) throws Exception{
+		if(service.plus(user_id, type, post_no) ==1) {
 			return "available";
 		}else {
 			return "unavailable";
@@ -39,8 +39,8 @@ public class LikeController {
 	//좋아요 취소
 	@RequestMapping("/minus.do")
 	@ResponseBody
-	public String minus(String user_id, int post_no) throws Exception{
-		if(service.minus(user_id, post_no) ==1) {
+	public String minus(String user_id, int type, int post_no) throws Exception{
+		if(service.minus(user_id, type, post_no) ==1) {
 			return "available";
 		}else {
 			return "unavailable";
@@ -51,8 +51,8 @@ public class LikeController {
 	//유저가 게시글에 좋아요 눌렀는지 판별
 	@RequestMapping("/selectLike.do")
 	@ResponseBody
-	public String selectLike(String user_id, int post_no) throws Exception{
-		if(service.selectLike(user_id, post_no) ==1) {
+	public String selectLike(String user_id, int type, int post_no) throws Exception{
+		if(service.selectLike(user_id, type, post_no) ==1) {
 			return "available";
 		}else {
 			return "unavailable";

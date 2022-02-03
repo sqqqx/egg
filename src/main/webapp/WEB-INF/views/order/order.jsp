@@ -8,7 +8,8 @@
 <meta charset="UTF-8">
 <title>Order</title>
 <style>
-	body{width:1400px; margin:auto;}
+	body{margin:auto;}
+	table{width:1400px;}
 	h2,h1{text-align:center}
 	#title{height:100px; vertical-align: middle}
 	#message{width:100%;}
@@ -26,10 +27,10 @@
 <form action ="${pageContext.request.contextPath}/" id="paymentForm" method="post">
 <table class="table">
 <input type="text" name="user_id" value="${loginSession.user_id }" hidden>
-		<h1>주문/결제</h1>
+		<h1 mt-2>주문/결제</h1>
 		<thead>
 			<tr>
-				<th width="90">상품명</th>
+				<th width="200">상품명</th>
 				<th>가격</th>
 				<th>수량</th>
 				<th></th>
@@ -38,14 +39,14 @@
 		<tbody>
 		<c:set var="ttotal" value="0"/>
 			<c:set var="total" value="0"/>
-			<c:forEach items="${cartList}" var="dto">
+			<c:forEach items="${orderList}" var="dto">
 				<tr>
-					<td><input type="text" value="${dto.NAME}" disabled></td>
-					<td>${dto.PRICE}</td>
-					<td>${dto.QUANTITY}</td>
-					<td hidden><input type="text" name="amount" id="amount" value="${dto.QUANTITY }"></td>
+					<td>${dto.name}</td>
+					<td>${dto.price}</td>
+					<td>${dto.quantity}</td>
+					<td hidden><input type="text" name="amount" id="amount" value="${dto.quantity }"></td>
 					<td>
-						<c:set var="total" value="${dto.PRICE * dto.QUANTITY }"/>
+						<c:set var="total" value="${dto.price * dto.quantity }"/>
 						<c:set var="ttotal" value="${ttotal+total}"/>
 						<c:out value="${total }"/>
 					</td>

@@ -1243,13 +1243,13 @@
 		$('.likeClass').click(function(){
 		let bid= '${loginSession.user_id}'
 		let post_no = '${PostDTO.post_no}'
-		
+			
 		
 		$(this).css("display", "none")
 		$(".likeFullClass").css("display", "block");
 	
 		$.ajax({
-			url : "${pageContext.request.contextPath}/like/plus.do?post_no="+post_no+"&user_id="+bid,
+			url : "${pageContext.request.contextPath}/like/plus.do?post_no="+post_no+"&user_id="+bid+"&type=1",
 			type : "get"
 		}).done(function(data){
 			if(data == "available"){
@@ -1272,7 +1272,7 @@
 		$(".likeClass").css("display", "block");
 	
 		$.ajax({
-			url : "${pageContext.request.contextPath}/like/minus.do?post_no="+post_no+"&user_id="+bid,
+			url : "${pageContext.request.contextPath}/like/minus.do?post_no="+post_no+"&user_id="+bid+"&type=1",
 			type : "get"
 		}).done(function(data){
 			if(data == "available"){
@@ -1289,7 +1289,7 @@
       let bid= '${loginSession.user_id}'
       let post_no = '${PostDTO.post_no}'
 	$.ajax({
-		url:"${pageContext.request.contextPath}/like/selectLike.do?post_no="+post_no+"&user_id="+bid,
+		url:"${pageContext.request.contextPath}/like/selectLike.do?post_no="+post_no+"&user_id="+bid+"&type=1",
 		type: "get"
 	}).done(function(data){
 		if(data == "available"){
