@@ -14,11 +14,6 @@
          SELECT * FROM TBL_PRODUCT WHERE PRODUCT_NO = #{product_no}
     </select>
     
-    <!-- 주문 페이지로 ProductDTO + 수량 넘기기 -->
-    <select id="tempOrderInfo" resultType="TempOrderDTO">
-         SELECT * FROM TBL_PRODUCT WHERE PRODUCT_NO = #{product_no}
-    </select>
-    
     <!-- 상품 등록 메서드 -->
     <insert id="insertProduct" parameterType="ProductDTO">
          INSERT INTO TBL_PRODUCT VALUES (PRODUCT_NO.NEXTVAL,#{name},#{price},#{stock},#{content},#{image_path})

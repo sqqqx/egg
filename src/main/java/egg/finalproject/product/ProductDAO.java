@@ -25,12 +25,7 @@ public class ProductDAO {
 	public ProductDTO getProduct(int product_no) throws Exception{
 		return session.selectOne("productMapper.getProduct",product_no);
 	}
-	
-	//product_no로 ProductDTO를 얻어와 controller에서 수량 담아서 반환
-	//RETURN : ProductDTO만 담긴 TempOrderDTO
-	public TempOrderDTO getTempOrderInfo(int product_no) throws Exception{
-		return session.selectOne("productMapper.tempOrderInfo",product_no);
-	}
+
 	
 	//상품 등록 메서드
 	public int insertProduct(ProductDTO dto) throws Exception{

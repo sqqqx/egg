@@ -5,4 +5,10 @@
 
 <mapper namespace="orderMapper">
 
+    <!-- 주문 페이지로 ProductDTO + 수량 넘기기 -->
+    <!-- tbl_product에서 가져오지만, 주문페이지로 넘어가는 부분이어서 order에 넣음 -->
+    <select id="tempOrderInfo" resultType="TempOrderDTO">
+         SELECT * FROM TBL_PRODUCT WHERE PRODUCT_NO = #{product_no}
+    </select>
+    
 </mapper>
