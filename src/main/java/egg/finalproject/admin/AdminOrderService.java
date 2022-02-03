@@ -129,7 +129,8 @@ public class AdminOrderService extends Paging {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
 //		Gson gson = new Gson();
-//		System.out.println(gson.fromJson(br.readLine(), Map.class).get("response").toString())); // 왜 null일까
+//		System.out.println(gson.fromJson(br.readLine(), Map.class).get("response").toString())); 
+		// 왜 null일까
 		
 		StringBuilder sb = new StringBuilder();
 		String line = "";

@@ -33,8 +33,10 @@ public class AdminPostService extends Paging {
 			map.put("searchOption", searchOption);
 			map.put("searchKeyword", searchKeyword);
 		}
+		if(!type.equals("9")) {
+			map.put("type", type);
+		}
 		map.put("currentIdx", currentIdx);
-		map.put("type", type);
 		totalCount = this.getPostCount(searchOption, searchKeyword);
 		List<Map<String, Object>> list = dao.getPostList(map);
 		System.out.println("list size : " + list.size());

@@ -17,10 +17,10 @@
 		<div class="cls-sideBar">
 			<%@include file="/WEB-INF/views/admin/adminSidebar.jsp"%>
 		</div>
-		
+
 		<!-- 본문 -->
 		<div class="cls-main">
-		
+
 			<!-- 검색 영역 -->
 			<form id="searchForm"
 				action="${pageContext.request.contextPath}/admin/getPostList.do?currentIdx=1&type=${type}"
@@ -29,9 +29,12 @@
 					<div class="col-3 d-flex justify-content-end">
 						<select class="form-select" aria-label="Default select example"
 							name="searchOption" id="searchOption">
-							<option value="title" ${searchOption == "title" ? 'selected="selected"' : ''}>제목</option>
-							<option value="content" ${searchOption == "content" ? 'selected="selected"' : ''}>내용</option>
-							<option value="user_nickname" ${searchOption == "user_nickname" ? 'selected="selected"' : ''}>작성자</option>
+							<option value="title"
+								${searchOption == "title" ? 'selected="selected"' : ''}>제목</option>
+							<option value="content"
+								${searchOption == "content" ? 'selected="selected"' : ''}>내용</option>
+							<option value="user_nickname"
+								${searchOption == "user_nickname" ? 'selected="selected"' : ''}>작성자</option>
 						</select>
 					</div>
 					<div class="col-6 d-flex justify-content-center">
@@ -43,7 +46,7 @@
 					</div>
 				</div>
 			</form>
-			
+
 			<!-- 글 유형 -->
 			<div class="row cls-postType">
 				<div class="col-4 d-flex">
@@ -61,7 +64,7 @@
 						수정</button>
 				</div>
 			</div>
-			
+
 			<!-- 회원정보 출력 -->
 			<form id="selectCheckbox" method="post"
 				class="d-flex justify-content-center">
@@ -125,7 +128,7 @@
 					</div>
 				</div>
 			</form>
-			
+
 			<!-- 페이징 영역 -->
 			<div class="row">
 				<div class="col-12 d-flex justify-content-center pt-5">
@@ -159,7 +162,7 @@
 					</nav>
 				</div>
 			</div>
-			
+
 			<!-- 하단 버튼 영역 -->
 			<div class="row">
 				<div class="col-12 d-flex justify-content-end px-0">
@@ -171,67 +174,67 @@
 	</div>
 
 	<script>
-		    // 전체 체크박스 ON / OFF
-	        $("#postCheckBoxAll").on("click", function () {
-	            if ($("#postCheckBoxAll").is(":checked")) {
-	                $("input[name=postCheckBox]").prop("checked", true);
-	                return;
-	            }
-	            $("input[name=postCheckBox]").prop("checked", false);
-	        });
-		    // 검색
-	        $("#searchForm").on("submit");
-		    // 상세페이지 이동
-	      	$(".toDetailPost").on("click", function(e) {
-	      		let post_no = $(e.target).parent().find("*").eq(0).children().val();
-	      		post_no = parseInt(post_no);
- 	      		location.href = "${pageContext.request.contextPath}/admin/toPostDetail?post_no="+post_no;
-	      	});
-            // 글 유형 선택
-            $(".cls-type").on("click", function(e) {
-            	const type = e.target.value;
-                location.href = "${pageContext.request.contextPath}/admin/getPostList.do?currentIdx=1&type="+type;
-            });
-            // 유형 버튼 변경
-            $(document).ready(function() {
-                switch(${type}) {
-                    case 0 :
-                        $("#typeStore").attr("class", "btn btn-dark");
-                        break;
-                    case 1 :
-                        $("#typeOnline").attr("class", "btn btn-dark");
-                        break;
-                    case 2 :
-                        $("#typeOffline").attr("class", "btn btn-dark");
-                        break;
-                }
-            });
-            // 글 작성
-            $("#btnWrite").on("click", function() {
-            	location.href = "${pageContext.request.contextPath}/admin/toPostWrite";
-            });
-            // 글 삭제
-            $("#deletePostbtn").on("click", function() {
-            	if ($(".postCheckBox").is(":checked") && confirm("삭제하겠습니까?")) {
-                    $("#selectCheckbox").attr("action", "${pageContext.request.contextPath}/admin/deletePost.do");
-                    $("#selectCheckbox").submit();
-                }
-            });
-            // 글 수정
-            $("#btnModify").on("click", function() {
-            	const checkBoxLength = $("input:checkbox[name=postCheckBox]:checked").length;
-            	if($("#postCheckBox").is(":checked") && checkBoxLength == 1) {
-            		$("#selectCheckbox").attr("action", "${pageContext.request.contextPath}/admin/toModify");
-                    $("#selectCheckbox").submit();
-                    return;
-	            }
-            	if(checkBoxLength == 0) {
-            		alert("한 개 이상의 글을 선택해주세요.");
-            		return;
-            	}
-            	alert("하나의 글만 선택해주세요.");
-            });
-        </script>
+	    // 전체 체크박스 ON / OFF
+        $("#postCheckBoxAll").on("click", function () {
+            if ($("#postCheckBoxAll").is(":checked")) {
+                $("input[name=postCheckBox]").prop("checked", true);
+                return;
+            }
+            $("input[name=postCheckBox]").prop("checked", false);
+        });
+	    // 검색
+        $("#searchForm").on("submit");
+	    // 상세페이지 이동
+      	$(".toDetailPost").on("click", function(e) {
+      		let post_no = $(e.target).parent().find("*").eq(0).children().val();
+      		post_no = parseInt(post_no);
+	      		location.href = "${pageContext.request.contextPath}/admin/toPostDetail?post_no="+post_no;
+      	});
+           // 글 유형 선택
+           $(".cls-type").on("click", function(e) {
+           	const type = e.target.value;
+               location.href = "${pageContext.request.contextPath}/admin/getPostList.do?currentIdx=1&type="+type;
+           });
+           // 유형 버튼 변경
+           $(document).ready(function() {
+               switch(${type}) {
+                   case 0 :
+                       $("#typeStore").attr("class", "btn btn-dark");
+                       break;
+                   case 1 :
+                       $("#typeOnline").attr("class", "btn btn-dark");
+                       break;
+                   case 2 :
+                       $("#typeOffline").attr("class", "btn btn-dark");
+                       break;
+               }
+           });
+           // 글 작성
+           $("#btnWrite").on("click", function() {
+           	location.href = "${pageContext.request.contextPath}/admin/toPostWrite";
+           });
+           // 글 삭제
+           $("#deletePostbtn").on("click", function() {
+           	if ($(".postCheckBox").is(":checked") && confirm("삭제하겠습니까?")) {
+                   $("#selectCheckbox").attr("action", "${pageContext.request.contextPath}/admin/deletePost.do");
+                   $("#selectCheckbox").submit();
+               }
+           });
+           // 글 수정
+           $("#btnModify").on("click", function() {
+           	const checkBoxLength = $("input:checkbox[name=postCheckBox]:checked").length;
+           	if($("#postCheckBox").is(":checked") && checkBoxLength == 1) {
+           		$("#selectCheckbox").attr("action", "${pageContext.request.contextPath}/admin/toModify");
+                   $("#selectCheckbox").submit();
+                   return;
+            }
+           	if(checkBoxLength == 0) {
+           		alert("한 개 이상의 글을 선택해주세요.");
+           		return;
+           	}
+           	alert("하나의 글만 선택해주세요.");
+           });
+     </script>
 </body>
 
 </html>

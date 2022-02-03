@@ -30,6 +30,9 @@
     		</if>
    		</trim>
     		) WHERE idx BETWEEN #{startRange} AND #{endRange}
+    		<if test="type != null">
+    			AND type = #{type}
+    		</if>
 	</select>
 	
 	<!-- 신고 수 가져오기 -->

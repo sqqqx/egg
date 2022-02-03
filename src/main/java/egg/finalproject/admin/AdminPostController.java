@@ -15,7 +15,7 @@ public class AdminPostController {
 	// 게시글 관리 첫 화면
 	@RequestMapping("toPostManagement")
 	public String toPostManagement() throws Exception {
-		return "redirect:/admin/getPostList.do?currentIdx=1&type=1";
+		return "redirect:/admin/getPostList.do?currentIdx=1&type=9";
 	}
 	
 	// 글 목록 가져오기

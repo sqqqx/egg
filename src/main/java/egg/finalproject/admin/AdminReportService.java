@@ -31,12 +31,15 @@ public class AdminReportService extends Paging {
 	}
 	
 	// 신고 목록 가져오기
-	public List<Map<String, Object>> getReportList(String searchOption, String searchKeyword, int currentIdx) throws Exception {
+	public List<Map<String, Object>> getReportList(String searchOption, String searchKeyword, int currentIdx, String type) throws Exception {
 		System.out.println("searchOption : " + searchOption + " : " + "searchKeyword : " + searchKeyword + " : " + "currentIdx : " + currentIdx);
 		Map<String, Object> map = this.getRange(currentIdx);
 		if(searchOption != null && searchKeyword != null) {
 			map.put("searchOption", searchOption);
 			map.put("searchKeyword", searchKeyword);
+		}
+		if(!type.equals("9")) {
+			map.put("type", type);
 		}
 		totalCount = this.getReportCount(searchOption, searchKeyword);
 		List<Map<String, Object>> list = dao.getReportList(map);

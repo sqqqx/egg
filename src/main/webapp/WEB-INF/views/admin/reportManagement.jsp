@@ -7,9 +7,18 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/resources/css/admin/reportManagement.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+	crossorigin="anonymous"></script>
 <title>신고 관리</title>
 </head>
 
@@ -20,10 +29,10 @@
 		<div class="cls-sideBar">
 			<%@include file="/WEB-INF/views/admin/adminSidebar.jsp"%>
 		</div>
-		
+
 		<!-- 본문 -->
 		<div class="cls-main">
-		
+
 			<!-- 검색 영역 -->
 			<form id="searchForm"
 				action="${pageContext.request.contextPath}/admin/getReportList.do?currentIdx=1"
@@ -33,9 +42,12 @@
 						<select class="form-select" aria-label="Default select example"
 							name="searchOption">
 							<!-- 컬럼 type에 맞춰 value 수정할 것 -->
-							<option value="1" ${searchOption == "1" ? 'selected="selected"' : ''}>게시글</option>
-							<option value="2" ${searchOption == "2" ? 'selected="selected"' : ''}>댓글</option>
-							<option value="3" ${searchOption == "3" ? 'selected="selected"' : ''}>쪽지</option>
+							<option value="1"
+								${searchOption == "1" ? 'selected="selected"' : ''}>게시글</option>
+							<option value="2"
+								${searchOption == "2" ? 'selected="selected"' : ''}>댓글</option>
+							<option value="3"
+								${searchOption == "3" ? 'selected="selected"' : ''}>쪽지</option>
 						</select>
 					</div>
 					<div class="col-6 d-flex justify-content-center">
@@ -47,7 +59,25 @@
 					</div>
 				</div>
 			</form>
-			
+
+			<!-- 신고 유형 -->
+			<div class="row cls-reportType">
+				<div class="col-4 d-flex">
+					<button type="button" class="btn btn-outline-dark cls-type"
+						id="typePost" value="1">게시글</button>
+					<button type="button" class="btn btn-outline-dark cls-type"
+						id="typeComment" value="2">댓글</button>
+					<button type="button" class="btn btn-outline-dark cls-type"
+						id="typeMessage" value="3">쪽지</button>
+				</div>
+				<div class="col-8 d-flex justify-content-end">
+					<button type="button" class="btn btn-outline-dark" id="btnWrite">글
+						작성</button>
+					<button type="button" class="btn btn-outline-dark" id="btnModify">글
+						수정</button>
+				</div>
+			</div>
+
 			<!-- 테이블 영역 -->
 			<form id="selectCheckbox" method="post"
 				class="d-flex justify-content-center">
@@ -108,7 +138,7 @@
 					</div>
 				</div>
 			</form>
-			
+
 			<!-- 페이징 영역 -->
 			<div class="row">
 				<div class="col-12 d-flex justify-content-center pt-5">
@@ -116,23 +146,23 @@
 						<ul class="pagination">
 							<c:if test="${map.needPrev eq true}">
 								<li class="page-item"><a class="page-link"
-									href="${pageContext.request.contextPath}/admin/getReportList.do?currentIdx=${map.firstIdx-1}">Previous</a></li>
+									href="${pageContext.request.contextPath}/admin/getReportList.do?currentIdx=${map.firstIdx-1}&type=${type}">Previous</a></li>
 							</c:if>
 							<c:forEach var="i" begin="${map.firstIdx}" end="${map.lastIdx}">
 								<c:choose>
 									<c:when test="${empty searchOption}">
 										<li class="page-item"><a class="page-link"
-											href="${pageContext.request.contextPath}/admin/getReportList.do?currentIdx=${i}">${i}</a></li>
+											href="${pageContext.request.contextPath}/admin/getReportList.do?currentIdx=${i}&type=${type}">${i}</a></li>
 									</c:when>
 									<c:otherwise>
 										<li class="page-item"><a class="page-link"
-											href="${pageContext.request.contextPath}/admin/getReportList.do?currentIdx=${i}&searchOption=${searchOption}&searchKeyword=${searchKeyword}&key=y">${i}</a></li>
+											href="${pageContext.request.contextPath}/admin/getReportList.do?currentIdx=${i}&searchOption=${searchOption}&searchKeyword=${searchKeyword}&type=${type}">${i}</a></li>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
 							<c:if test="${map.needNext eq true}">
 								<li class="page-item"><a class="page-link"
-									href="${pageContext.request.contextPath}/admin/getReportList.do?currentIdx=${map.lastIdx+1}">Next</a></li>
+									href="${pageContext.request.contextPath}/admin/getReportList.do?currentIdx=${map.lastIdx+1}&type=${type}">Next</a></li>
 							</c:if>
 						</ul>
 					</nav>
@@ -157,6 +187,25 @@
      		const report_no = $(e.target).parent().find("*").eq(0).children().val();
      		window.open("${pageContext.request.contextPath}/admin/getReportDetail?report_no="+report_no+"&type="+type, "reportDetail", "width=550,height=650");
      	});
+     	// 글 유형 선택
+        $(".cls-type").on("click", function(e) {
+        	const type = e.target.value;
+            location.href = "${pageContext.request.contextPath}/admin/getReportList.do?currentIdx=1&type="+type;
+        });
+        // 유형 버튼 변경
+        $(document).ready(function() {
+        	switch(${type}) {
+	            case 1 :
+	                $("#typePost").attr("class", "btn btn-dark");
+	                break;
+	            case 2 :
+	                $("#typeComment").attr("class", "btn btn-dark");
+	                break;
+	            case 3 :
+	                $("#typeMessage").attr("class", "btn btn-dark");
+	                break;
+	    	}
+        });
     </script>
 </body>
 </html>
