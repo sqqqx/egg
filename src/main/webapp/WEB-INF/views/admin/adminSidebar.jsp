@@ -127,7 +127,7 @@
 					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 						<li><a href="#" class="link-dark rounded">메뉴1</a></li>
 						<li><a href="#" class="link-dark rounded">메뉴2</a></li>
-						<li><a href="#" class="link-dark rounded">메뉴3</a></li>
+						<li><a href="${pageContext.request.contextPath}/admin/toLab" class="link-dark rounded">메뉴3</a></li>
 						<li><a href="#" class="link-dark rounded">쓸데가없네</a></li>
 					</ul>
 				</div>

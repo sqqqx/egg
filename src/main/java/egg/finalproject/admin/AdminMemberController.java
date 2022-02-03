@@ -13,10 +13,16 @@ public class AdminMemberController {
 	@Autowired
 	private AdminMemberService service;
 	
+	@RequestMapping("/toLab")
+	public String toLab() throws Exception {
+		return "admin/adminMain";
+	}
+	
 	// 관리자 홈 이동
 	@RequestMapping("/toAdminMain")
 	public String toAdminMain() throws Exception {
-		return "admin/adminMain";
+		//return "admin/adminMain";
+		return "redirect:/admin/toMemberManagement";
 	}
 	
 	// 회원 관리 페이지 이동

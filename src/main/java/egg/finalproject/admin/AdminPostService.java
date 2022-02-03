@@ -53,4 +53,9 @@ public class AdminPostService extends Paging {
 		return dao.deletePost(map);
 	}
 	
+	// 조회수 +1
+	public int addViewCount(int post_no) throws Exception {
+		return dao.addViewCount(post_no);
+	}
+	
 }

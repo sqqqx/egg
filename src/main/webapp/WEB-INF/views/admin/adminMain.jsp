@@ -6,42 +6,60 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/resources/css/admin/memberManagement.css">
-    <title>관리자 홈</title>
-
+<!--     <link rel="stylesheet" href="/resources/css/admin/memberManagement.css">
+ -->    <title>관리자 홈</title>
+	<style>
+		.top {
+			height: 200px !important;
+		}
+		.bottom {
+			width: 100%;
+		}
+		.sector {
+            height: 400px;
+            padding: 32px;
+            background: #fff;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+        }
+	</style>
 </head>
 
 <body>
+	<!-- 헤더 -->
  	<%@include file="/WEB-INF/views/header.jsp" %>
        <div class="main-Wrapper d-flex justify-content-center pt-5">
+       
              <!--사이드 바-->
             <div class="cls-sideBar">
                 <%@include file="/WEB-INF/views/admin/adminSidebar.jsp" %>
             </div>
+            
             <!-- 본문 -->
-            <div>
-            	<h3>11</h3>
-            	<ul>
-            		<li>신고상세 디자인</li>
-            		<li><del>2중 테이블</del></li>
-            		<li>주문-상품 테이블 추가</li>
-            		<li>신고관리 -> 댓글 DB,Mapper수정</li>
-            		<li><del>중복 쿼리</del></li> 
-            		<li>날짜 시간처리</li>
-            		<li></li>
-            	</ul>
-            	<h3>??</h3>
-            	<ul>
-            		<li>구매 성공 이멜</li>
-            		<li>신고 대상 블라인드</li>
-            		<li>고수 증명파일</li>
-            		<li>환불 재고+1</li>
-            		<li></li>
-            		<li></li>
-            	</ul>
-            	<h2>TEST</h2>
-            	<span id="tmp"></span>
+            <div class="container">
+                <div class="row py-3">
+                    <div class="col px-1 sector top">
+                    
+                    </div>
+                </div>
+                <div class="row py-3">
+                    <div class="col-6 sectorWrapper">
+                        <div class="sector bottom">
+                        
+                        </div>
+                    </div>
+                    <div class="col-6 sectorWrapper">
+                        <div class="sector bottom">
+                        
+                        </div>
+                    </div>
+                </div>
             </div>
+
        </div>
        
        <script>
