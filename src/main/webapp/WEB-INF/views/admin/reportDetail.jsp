@@ -18,14 +18,14 @@
                 <table class="cls-table">
                     <tbody>
                         <tr>
-                            <td colspan="2">신고 상세 페이지(css미완성)</td>
+                            <td colspan="2">신고 상세 페이지</td>
                         </tr>
                         <tr class="smallRow">
-                            <td>신고자</td>
+                            <td>신고 대상</td>
                             <td>${map.USER_NICKNAME}</td>
                         </tr>
                         <tr class="smallRow">
-                            <td>대상</td>
+                            <td>유형</td>
                             <td id="checkBoxWrapper">
                             	<input type="checkbox" onClick="return false;"/>게시글
                             	<input type="checkbox" onClick="return false;"/>댓글
@@ -40,10 +40,12 @@
                             <td>신고일</td>
                             <td>${map.REPORT_DATE}</td>
                         </tr>
-                        <tr>
-                            <td>사유</td>
-                            <td>${map.REPORT_CONTENT}</td>
-                        </tr>
+                        <c:if test="${map.REPORT_CONTENT ne null}">
+                        	<tr>
+	                            <td>사유</td>
+	                            <td>${map.REPORT_CONTENT}</td>
+	                        </tr>
+                        </c:if>
                         <tr>
                             <td>내용</td>
                             <td>${map.CONTENT}</td>

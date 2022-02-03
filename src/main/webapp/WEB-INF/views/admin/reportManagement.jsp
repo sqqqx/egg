@@ -58,8 +58,8 @@
 								<th><input type="checkbox" class="reportCheckBoxAll"
 									id="reportCheckBoxAll" name="reportCheckBoxAll"></th>
 								<th>신고자</th>
-								<th>신고 유형</th>
-								<th>내용</th>
+								<th>유형</th>
+								<th>분류</th>
 								<th>처리 상황</th>
 								<th>등록일</th>
 							</thead>
