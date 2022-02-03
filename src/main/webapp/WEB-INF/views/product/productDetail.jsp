@@ -203,7 +203,7 @@
         </div>
         <div class="row" id="thumbNail">
             <div class="col-8">
-                <img src="${pageContext.request.contextPath}/onlinePostThumbNail/${ProductDTO.image_path}" id="thumbNailImg">
+                <img src="${pageContext.request.contextPath}/productThumbnail/${ProductDTO.image_path}" id="thumbNailImg">
             </div>
             <div class="col-4">
                 <div class="productInput">
@@ -225,18 +225,22 @@
         </div>
         <div class="row" id="storeTitle">
             <p class="storeTitleP">
-                <span class="storeTitleP" id="storeTitleSpan">
+                <span class="storeTitleP" id="storeTitleSpan"></span>
             </p>
         </div>
         </div>
-    </div>
     <script>
+        //수량을 클릭할 때 마다 총합 + 수량 변화주기
         $("#quantityController").on("change",function(){
             let quantity = $(this).val();
             console.log(quantity);
-            if(quantity==0){
+            if(quantity<0){
                 alert("1보다 적은 수량은 선택하실 수 없습니다.");
                 $(this).val("1");
+                return;
+            }else if(quantity>${ProductDTO.stock}){
+            	alert(${ProductDTO.stock}+" 개의 재고가 남아있습니다. 이하 수량으로 주문 가능합니다.");
+            	$(this).val("1");
                 return;
             }else{
                 let price = $("#product_price")[0].innerHTML;
@@ -247,13 +251,14 @@
                 $("#priceQuantity").html(" ("+quantity+"개)");
             }
         })
-        
+
+        //구매 버튼 클릭 시 
         $(".parchaseBtn").on("click",function(){
         	console.log("하하하하");
         	let product_no = ${ProductDTO.product_no}
         	let quantity = $("#quantityController").val();
         	console.log(product_no);
-        	location.href="/product/toOrder.do?product_no="+product_no+"&quantity="+quantity;
+        	location.href="/order/toOrder.do?product_no="+product_no+"&quantity="+quantity;
         })
     </script>
 </body>

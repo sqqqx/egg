@@ -4,13 +4,18 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="productMapper">
+    <!-- 온라인 클래스 등록 시 강의 연결 상품 검색 -->
     <select id="searchProduct" resultType="ProductDTO">
          SELECT * FROM TBL_PRODUCT WHERE NAME LIKE '%'|| #{VALUE} ||'%'
     </select>
+    
+    <!-- product_no로 ProductDTO 정보 얻기 -->
     <select id="getProduct" resultType="ProductDTO">
          SELECT * FROM TBL_PRODUCT WHERE PRODUCT_NO = #{product_no}
     </select>
-    <select id="tempOrderInfo" resultType="TempOrderDTO">
-         SELECT * FROM TBL_PRODUCT WHERE PRODUCT_NO = #{product_no}
-    </select>
+    
+    <!-- 상품 등록 메서드 -->
+    <insert id="insertProduct" parameterType="ProductDTO">
+         INSERT INTO TBL_PRODUCT VALUES (PRODUCT_NO.NEXTVAL,#{name},#{price},#{stock},#{content},#{image_path})
+    </insert>
 </mapper>

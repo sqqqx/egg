@@ -17,6 +17,7 @@ public class ReportController {
 	@Autowired
 	private HttpSession session;
 	
+	//신고 추가
 	@RequestMapping("/insertReport.do")
 	@ResponseBody
 	public String insertReport(ReportDTO dto) {
