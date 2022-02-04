@@ -140,6 +140,48 @@
     </div>
 
 	<script>
+	
+	// 문자인증
+    let code2 = "";
+        $("#btn_phone").click(function(){
+        	if( $("#phone2").val() != "" && $("#phone3").val() != "" ){
+        		$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
+            	let phone = $("#phone").val();
+            	let id = $("#id").val();
+            	var data = {"id" : id, "phone" : phone};
+            	$.ajax({
+            		type:"post",
+            		url:"${pageContext.request.contextPath}/member/pwPhoneCheck", 
+            		data: data,
+            		success:function(rs){
+            				if(rs == "error"){
+                				alert("가입시 입력한 번호와 일치하지 않습니다.")
+                			}else{
+                				$("#phoneCheck").attr("disabled",false);
+                				alert("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
+                				code2 = rs;
+                			}
+            			}
+            	})
+        	}else if( $("#phone2").val() == "" || $("#phone3").val() == "" ){
+        		alert("전화번호를 입력후 인증을 진행해주세요.");
+        	}
+        })
+    
+  	//휴대폰 인증번호 대조
+  	$("#btn_phoneCk").click(function(){
+  		if($("#phoneCheck").val() != "") {
+  			if($("#phoneCheck").val() == code2){
+  	  			alert("인증번호가 일치합니다.비밀번호를 교체해주세요.");
+  	  			$("#phoneBox").hide();
+  				$("#pwBox").css("display", "block");
+  				$("#completeBtn").css("display", "block");
+  	  		}else if($("#phoneCheck").val() != code2){
+  	  			alert("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+  	  		}
+  		}
+  	})
+  	
 	// 이메일 인증
     let code = "";
     
@@ -148,14 +190,19 @@
     	if($("#em").val() != "") {
     		if(regExp.test($("#em").val())) {
     			let email = $("#em").val();
-            	
+            	let id = $("#id").val();
+            	var data = {"id" : id, "email" : email}
             	$.ajax({
-                    type:"GET",
-                    url:"${pageContext.request.contextPath}/member/mailCheck?email=" + email,
-                    success:function(data){
-                    	$("#emailSendBox").hide();
-                    	$("#emailCheckBox").css("display", "block");
-                    	code = data;
+                    type:"post",
+                    url:"${pageContext.request.contextPath}/member/pwMailCheck",
+                    data: data,
+                    success:function(rs){
+                    	if(rs == "error"){
+            				alert("가입시 입력한 이메일과 일치하지 않습니다.");
+            			}else{
+                    	alert("이메일을 확인후 인증번호를 입력해주세요.");
+                    	code = rs;
+            			}
                     }
                 })
     		}else {
@@ -206,45 +253,7 @@
     	}
 	})
 
-	// 문자인증
-    let code2 = "";
-        $("#btn_phone").click(function(){
-        	if( $("#phone2").val() != "" || $("#phone3").val() != "" ){
-        		$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
-            	let phone = $("#phone").val();
-            	$.ajax({
-            		type:"GET",
-            		url:"${pageContext.request.contextPath}/member/phoneCheck?phone=" + phone, 
-            		cache : false,
-            		success:function(data){
-            				if(data == "error"){
-                				alert("휴대폰 번호가 올바르지 않습니다.")
-                			}else{
-                				$("#phoneCheck").attr("disabled",false);
-                				alert("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
-                				code2 = data;
-                			}
-            			}
-            	})
-        	}else if( $("#phone2").val() == "" || $("#phone3").val() == "" ){
-        		alert("전화번호를 입력후 인증을 진행해주세요.");
-        	}
-        })
-    
-  	//휴대폰 인증번호 대조
-  	$("#btn_phoneCk").click(function(){
-  		if($("#phoneCheck").val() != "") {
-  			if($("#phoneCheck").val() == code2){
-  	  			alert("인증번호가 일치합니다.비밀번호를 교체해주세요.");
-  	  			$("#phoneBox").hide();
-  				$("#pwBox").css("display", "block");
-  				$("#completeBtn").css("display", "block");
-  	  		}else if($("#phoneCheck").val() != code2){
-  	  			alert("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
-  	  		}
-  		}
-  	})
-  	
+	// 변경완료
   	$("#completeBtn").click(function(){
   		if($("#password").val() == ""){   
         	alert("비밀번호를 입력해주세요.");

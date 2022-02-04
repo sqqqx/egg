@@ -230,6 +230,9 @@
          $("#toLogout").click(function(){
         	 location.href="${pageContext.request.contextPath}/member/logout"
          })
+         
+         //websocket 주소->endpoint로 이동[본인의 포트번호로 바꿀것]
+         ws = new WebSocket("ws://localhost/alarm");
     </script>
 </body>
 </html>
