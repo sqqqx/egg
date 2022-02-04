@@ -38,7 +38,7 @@ public class AdminReportService extends Paging {
 			map.put("searchOption", searchOption);
 			map.put("searchKeyword", searchKeyword);
 		}
-		if(!type.equals("9")) {
+		if(type != null && !type.equals("9")) {
 			map.put("type", type);
 		}
 		totalCount = this.getReportCount(searchOption, searchKeyword);

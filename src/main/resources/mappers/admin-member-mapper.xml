@@ -13,33 +13,33 @@
 	<!-- 검색 한 회원 수 가져오기(위와 병합할 것) -->
 	<select id="getSearchCount" parameterType="map" resultType="int">
 		SELECT COUNT(*) FROM tbl_member 
-			WHERE ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+		WHERE ${searchOption} LIKE '%'||#{searchKeyword}||'%'
 	</select>
 	
 	<!-- 회원 목록 가져오기 -->
 	<select id="getMemberList" parameterType="map" resultType="memberDTO">
 		SELECT * FROM (SELECT row_number() OVER (ORDER BY signup_date DESC) AS idx, tbl_member.* FROM tbl_member) 
-		    WHERE idx BETWEEN #{startRange} AND #{endRange}
-		    <if test ="searchOption != null">
-		    	AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
-		    </if>
-		    <choose>
-		    	<when test="userType == 0">
-		    		AND type = 0
-		    	</when>
-		    	<when test="userType == 1">
-		    		AND type = 1
-		    	</when>
-		    	<when test="userType == 2">
-		    		AND type = 2
-		    	</when>
-		    </choose>
+	    WHERE idx BETWEEN #{startRange} AND #{endRange}
+	    <if test ="searchOption != null">
+	    	AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+	    </if>
+	    <choose>
+	    	<when test="userType == 0">
+	    		AND type = 0
+	    	</when>
+	    	<when test="userType == 1">
+	    		AND type = 1
+	    	</when>
+	    	<when test="userType == 2">
+	    		AND type = 2
+	    	</when>
+	    </choose>
 	</select>
 	
 	<!-- 회원 강제 탈퇴-->
 	<update id="memberExpulsion" parameterType="map">
 		DELETE FROM tbl_member 
-			WHERE user_id IN
+		WHERE user_id IN
 		<foreach collection="userCheckBox" item="user_id" open="(" close=")" separator=",">
 			#{user_id}
 		</foreach>
@@ -77,6 +77,14 @@
 				tbl_message WHERE message_no = #{target_no}
 			</when>
 		</choose>
+	</select>
+	
+	<!-- 일별 가입자 수 -->
+	<select id="getUserCount" resultType="map">
+		SELECT to_char(signup_date, 'MM/DD') AS signup_date, COUNT(*) AS CNT 
+		FROM (SELECT * FROM tbl_member WHERE signup_date >= '20200101' AND signup_date <![CDATA[<= '20220219')]]>
+		GROUP BY to_char(signup_date, 'MM/DD') 
+		ORDER BY signup_date
 	</select>
 	
 </mapper>

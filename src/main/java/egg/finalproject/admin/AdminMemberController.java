@@ -1,5 +1,8 @@
 package egg.finalproject.admin;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +18,7 @@ public class AdminMemberController {
 	
 	@RequestMapping("/toLab")
 	public String toLab() throws Exception {
-		return "admin/adminMain";
+		return "redirect:/admin/getUserCount.do";
 	}
 	
 	// 관리자 홈 이동
@@ -67,6 +70,15 @@ public class AdminMemberController {
 	@ResponseBody
 	public boolean addBlackList(String type, String target_no, String report_no) throws Exception {
 		return service.addBlackList(type, target_no);
+	}
+	
+	// 일별 가입자 수
+	@RequestMapping("/getUserCount.do")
+	public String getUserCount(Model model) throws Exception {
+		String json = service.getUserCount();
+		System.out.println(json);
+		model.addAttribute("json", json);
+		return "admin/adminMain";
 	}
 
 }

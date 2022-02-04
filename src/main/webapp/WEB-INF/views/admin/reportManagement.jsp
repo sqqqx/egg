@@ -70,12 +70,6 @@
 					<button type="button" class="btn btn-outline-dark cls-type"
 						id="typeMessage" value="3">쪽지</button>
 				</div>
-				<div class="col-8 d-flex justify-content-end">
-					<button type="button" class="btn btn-outline-dark" id="btnWrite">글
-						작성</button>
-					<button type="button" class="btn btn-outline-dark" id="btnModify">글
-						수정</button>
-				</div>
 			</div>
 
 			<!-- 테이블 영역 -->

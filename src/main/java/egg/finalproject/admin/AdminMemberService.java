@@ -7,6 +7,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import egg.finalproject.member.MemberDTO;
 
 @Service
@@ -69,6 +73,25 @@ public class AdminMemberService extends Paging {
 		String[] arr = new String[1];
 		arr[0] = dao.addBlackList(map);
 		return this.memberBlackList(arr, 1) == 1 ? true : false;
+	}
+	
+	// 일별 가입자 수
+	public String getUserCount() throws Exception {
+		List<Map<String, Object>> list = dao.getUserCount();
+		for(Map<String, Object> map : list) {
+			System.out.println(map);
+		}
+		Gson gson = new Gson();
+		JsonArray arr = new JsonArray();
+		for(Map<String, Object> map : list) {
+			JsonObject obj = new JsonObject();
+			obj.addProperty("date", (String)map.get("SIGNUP_DATE")); 
+			obj.addProperty("count", String.valueOf(map.get("CNT")));
+			arr.add(obj);
+		}
+		String json = gson.toJson(arr);
+		System.out.println(json);
+		return json;
 	}
 
 }

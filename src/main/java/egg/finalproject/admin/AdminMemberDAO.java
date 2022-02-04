@@ -44,5 +44,10 @@ public class AdminMemberDAO {
 	public String addBlackList(Map<String, String> map) throws Exception {
 		return session.selectOne("adminMemberMapper.getUserId", map);
 	}
+	
+	// 일별 가입자 수
+	public List<Map<String, Object>> getUserCount() throws Exception {
+		return session.selectList("adminMemberMapper.getUserCount");
+	}
 
 }
