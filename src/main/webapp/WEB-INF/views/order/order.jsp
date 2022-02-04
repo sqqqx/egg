@@ -24,7 +24,7 @@
 </head>
 <body>
 <!-- name, phone, email, address, user_id, amount 넘어감 -->
-<form action ="${pageContext.request.contextPath}/" id="paymentForm" method="post">
+<form action ="${pageContext.request.contextPath}/payment/test" id="paymentForm" method="post">
 <table class="table">
 <input type="text" name="user_id" value="${loginSession.user_id }" hidden>
 		<h1 mt-2>주문/결제</h1>
@@ -152,6 +152,7 @@
 				<tr class="inputColor">
 					<td id="priceBox"><h4>최종 결제금액</h4></td>
 					<td colspan="3"><h4><c:out value="${ttotal }"/>원</h4>
+					<input type="text" name="cost" value="${ttotal}" hidden/>
 				</tr>
 				<tr>
 					<td colspan="4" id="btnBox">
@@ -242,8 +243,9 @@ $("#toPayment").click(function(){
 		return;
 	}else{
 		document.getElementById("phone").value = phone1.value + phone2.value + phone3.value;
+		document.getElementByID("user_address").value = 
 		console.log("제출성공");
-		//document.getElementById("paymentForm").submit();
+		document.getElementById("paymentForm").submit();
 	}
 	
 })

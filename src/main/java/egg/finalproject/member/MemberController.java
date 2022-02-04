@@ -196,7 +196,11 @@ public class MemberController {
 
 	// (마이페이지) 내 정보 페이지 요청
 	@RequestMapping("toMyInfo")
-	public String toMyInfo() {
+	public String toMyInfo(Model model, String user_id) throws Exception {
+		System.out.println("MemberController / 내 정보 페이지 요청 user_id - " + user_id);
+		MemberDTO dto = service.getDTOById(user_id);
+		System.out.println(dto);
+		model.addAttribute("dto", dto);
 		return "/member/myInfo";
 	}
 

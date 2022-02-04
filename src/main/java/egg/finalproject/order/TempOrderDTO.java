@@ -78,6 +78,12 @@ public class TempOrderDTO {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
+
+	// (마이페이지) 주문 결제 확인을 위한 메서드추가
+	@Override
+	public String toString() {
+		return "TempOrderDTO [product_no=" + product_no + ", name=" + name + ", price=" + price + ", stock=" + stock
+				+ ", content=" + content + ", image_path=" + image_path + ", quantity=" + quantity + "]";
+	}
 	
 }

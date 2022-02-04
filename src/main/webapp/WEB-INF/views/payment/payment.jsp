@@ -25,8 +25,8 @@
       IMP.request_pay({ // param (name과 amount만 있어도 결제 진행 가능)
           pg: "kakaopay",
           pay_method: "card",
-          merchant_uid: "ORD20180131-0000021",
-          name: "16시39분",
+          merchant_uid: "ORD20180131-0000025",
+          name: "2월4일 13시50분",
           amount: 100,
           buyer_email: "gildong@gmail.com",
           buyer_name: "홍길동",
@@ -44,8 +44,8 @@
     	    		dataType: 'json',
     	    		data: {
     	    			cost : rsp.paid_amount,
-    	    			method : rsp.pay_method,
-    	    			card_name : rsp.pg_provider,
+    	    			method : rsp.pg_provider,
+    	    			card_name : rsp.card_name,
     		    		// imp_uid : rsp.imp_uid // 결제 고유번호 필요한지 확인
     		    		//기타 필요한 데이터가 있으면 추가 전달
     	    		}
