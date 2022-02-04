@@ -15,49 +15,26 @@
   function cancelPay() {
 	  console.log("환불버튼");
     $.ajax({
-      url: "http://www.myservice.com/payments/cancel", // 예: http://www.myservice.com/payments/cancel
+      url: "${pagecontext.request.contextPath}/payment/refund.do", // 예: http://www.myservice.com/payments/cancel
       type: "POST",
-      contentType: "application/json",
-      data: JSON.stringify({
-        merchant_uid: " ORD20180131-0000011", // 예: ORD20180131-0000011
-        cancel_request_amount: 64900, // 환불금액
+      //contentType: "application/json;charset=utf-8",
+      data: {
+        merchant_uid: "ORD20180131-0000025", // 예: ORD20180131-0000011
+        cancel_request_amount: 100, // 환불금액
         reason: "테스트 결제 환불", // 환불사유
         refund_holder: "홍길동", // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
         refund_bank: "88", // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
         refund_account: "56211105948400" // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
-      }),
-      "dataType": "json"
+      },
+      dataType: "text"
+    }).done(function(rs){	// 환불 성공
+    	console.log("환불 성공. 결과메세지: " + rs);
+    }).fail(function(e){	// 환불 실패
+    	console.log("환불 실패. 에러메세지: " + e);
+    	console.log(e);
     });
-    console.log("ajax지남");
+    console.log("환불 ajax지남");
   }
-</script>
-
-<script>
-	    
-	    if($('#pay_coupon').text() >= 5){
-		$.ajax({
-				url: "/samsam/coupon_cancel.do",
-				type:"post",
-				//datatype:"json",
-				contentType : 'application/x-www-form-urlencoded; charset = utf-8',
-				data : {
-					//"biz_email" :  // 주문번호
-					//"cancle_request_amount" : 2000, //환불금액
-					//"reason": "테스트 결제 환불", //환불사유
-					//"refund_holder": "홍길동", //[가상계좌 환불시 필수입력] 환불 가상계좌 예금주
-					//"refund_bank":"88", //[가상계좌 환불시 필수입력] 환불 가상계좌 은행코드(ex Kg이니시스의 경우 신한은행 88)
-					//"refund_account": "56211105948400" // [가상계좌 환불시 필수입력] 환불 가상계좌 번호
-				}
-			}).done(function(result){ //환불 성공
-				 pay -= 5;
-				 $('#pay_coupon').html(pay);	
-				console.log("환불 성공 : "+ result);
-			}).fail(function(error){
-				console.log("환불 실패 : "+ error);
-			});//ajax
-		} else{
-			console.log("환불 실패 : 남은 결제권 환불 불가");
-		}
 </script>
 </body>
 </html>
