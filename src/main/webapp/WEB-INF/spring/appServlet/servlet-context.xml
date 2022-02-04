@@ -18,8 +18,6 @@
 	<resources mapping="/css/**" location="/resources/css/" />
 	<resources mapping="/file/**" location="/resources/file/" />
 	<resources mapping="/onlinePostThumbNail/**" location="/onlinePostThumbNail/"/>
-	<resources mapping="/productThumbnail/**" location="/productThumbnail/"/>
-	<resources mapping="/profilePhotos/**" location="/profilePhotos/"/>  
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -53,6 +51,11 @@
 			<exclude-mapping path="/member/toEmailIdFind.do"/>
 			<exclude-mapping path="/member/toIdFind.do"/>
 			<exclude-mapping path="/member/toPwfind.do"/>
+			<exclude-mapping path="/member/toPhoneCheck.do"/>
+			<exclude-mapping path="/member/toinfo.do"/>
+			<exclude-mapping path="/member/pwPhoneCheck"/>
+			<exclude-mapping path="/member/pwMailCheck"/>
+			
 			<beans:bean class="egg.finalproject.utils.LoginInterceptor"/>
 		</interceptor>
 	</interceptors>

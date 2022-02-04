@@ -39,6 +39,12 @@
 				where email = #{email}
 	</select>
 	
+	<select id="phoneCheckSignup" resultType="int">
+		select count(*) 
+			from tbl_member
+				where phone = #{phone}
+	</select>
+	
 	<select id="idFind" resultType="String">
 		select user_id
 			from tbl_member
@@ -51,9 +57,28 @@
 				where email = #{email}
 	</select>
 	
+	<select id="toPwInfo" resultType="int">
+		select count(*) 
+			from tbl_member
+				where user_id = #{id}
+	</select>
+	
+	<select id="getPwId" parameterType="map" resultType="int">
+		select count(*) 
+			from tbl_member
+				where user_id = #{id} and phone = #{phone}
+	</select>
+	
+	<select id="getPwMailId" parameterType="map" resultType="int">
+		select count(*) 
+			from tbl_member
+				where user_id = #{id} and email = #{email}
+	</select>
+	
 	<update id="pwFind" parameterType="map">
 		update tbl_member set password = #{password} where user_id = #{user_id}
 	</update>
+
 
 
 <!-- ↑↑↑↑↑↑회원가입 및 로그인↑↑↑↑↑↑/////////↓↓↓↓↓↓마이페이지↓↓↓↓↓↓ -->

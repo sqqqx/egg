@@ -101,6 +101,17 @@ public class MemberController {
 		}
 	}
 	
+	// 휴대전화 중복검사
+	@RequestMapping(value="toPhoneCheck.do")
+	@ResponseBody
+	public String toPhonecheck(String phone) throws Exception {
+		if(service.phoneCheckSignup(phone)) {
+			return "available";
+		}else {
+			return "unavailable";
+		}
+	}
+	
 	// 아이디 찾기 페이지로 이동
 	@RequestMapping(value="idFind.do")
 	public String idFind() throws Exception {
@@ -135,6 +146,59 @@ public class MemberController {
 		return "user/login";
 	}
 	
+	// 비밀번호찾기 문자인증
+	@RequestMapping(value = "/pwPhoneCheck")
+	@ResponseBody
+	public String sendPwSMS(String phone, String id) throws Exception { // 휴대폰 문자보내기
+		String userPhoneNumber = phone;
+		if(service.getPwId(id, phone)) {
+			int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000); //난수 생성
+			service.certifiedPhoneNumber(userPhoneNumber,randomNumber);
+			return Integer.toString(randomNumber);
+		}
+		return "error";
+	}
+	
+	// 비밀번호 찾기 이메일 인증
+		@RequestMapping(value = "/pwMailCheck")
+	    @ResponseBody
+	    public String pwmailCheckGET(String email, String id) throws Exception{
+	        if(service.getPwMailId(id, email)) {
+	        	System.out.println("이메일 데이터 전송 확인");
+		        System.out.println("인증번호 : " + email);
+		        
+		        Random random = new Random();
+		        int checkNum = random.nextInt(888888) + 111111;
+		        System.out.println("인증번호" + checkNum);
+		        
+		        /* 이메일 보내기 */
+		        String setFrom = "jak3995@naver.com";
+		        String toMail = email;
+		        String title = "능력자들 인증 이메일 입니다.";
+		        String content = 
+		                "능력자들을 방문해주셔서 감사합니다." +
+		                "<br><br>" + 
+		                "인증 번호는 " + checkNum + "입니다." + 
+		                "<br>" + 
+		                "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+		        try {
+		            
+		            MimeMessage message = mailSender.createMimeMessage();
+		            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+		            helper.setFrom(setFrom);
+		            helper.setTo(toMail);
+		            helper.setSubject(title);
+		            helper.setText(content,true);
+		            mailSender.send(message);
+		            
+		        }catch(Exception e) {
+		            e.printStackTrace();
+		        }
+		        String num = Integer.toString(checkNum);
+		        return num;
+	        }
+	        return "error";
+	    }
 	
 	// 문자인증
 	@RequestMapping(value = "/phoneCheck", method = RequestMethod.GET)
