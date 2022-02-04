@@ -5,4 +5,8 @@
 
 <mapper namespace="noticeMapper">
 
+	<insert id="insert" parameterType="noticeDTO">
+	insert into tbl_notice values(NOTICE_NO.NEXTVAL,#{type}, #{post_no}, #{content}, sysdate, #{from_id}, #{to_id})
+	</insert>
+
 </mapper>

@@ -23,6 +23,7 @@
 </style>
 </head>
 <body>
+${orderList }
 <!-- name, phone, email, address, user_id, amount 넘어감 -->
 <form action ="${pageContext.request.contextPath}/payment/test" id="paymentForm" method="post">
 <table class="table">
@@ -243,7 +244,7 @@ $("#toPayment").click(function(){
 		return;
 	}else{
 		document.getElementById("phone").value = phone1.value + phone2.value + phone3.value;
-		document.getElementByID("user_address").value = 
+		document.getElementById("user_address").value = "경기 용인시 기흥구 용구대로";
 		console.log("제출성공");
 		document.getElementById("paymentForm").submit();
 	}
