@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/resources/css/header.css"> 
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
  <div class="container-fluid">
@@ -20,7 +19,7 @@
 		                </a>
             		</c:when>
             		<c:otherwise>
-            			 <a href="/online/toMain.do">
+            			 <a href="/offline/toMain.do">
 		                	<img src="/resources/img/logo.png">
 		                </a>
             		</c:otherwise>
@@ -35,9 +34,9 @@
             	<button class="btn btn-outline-secondary" type="button" id="searchBtn">검색</button>       
             	</div>
             </div>
-            <!--오프라인클래스 이동-->
+            <!--온라인클래스 이동-->
             <div class="col-1">
-                <button type="button" class="btn btn-dark" id="toOffline">오프라인</button>
+                <button type="button" class="btn btn-dark" id="toOnline">온라인</button>
             </div>
             <!--쇼핑몰(이었던것)-->
             <div class="col-1">        
@@ -86,107 +85,11 @@
             	</c:otherwise>
             </c:choose>
         </div>
-       
-
-        <!--카테고리영역-->
-        <div class="container-fluid categoryBox">
-            <div class="row category_big">
-                <div class="col">
-                    대분류
-                </div>
-                <div class="col">
-                    대분류
-                </div>
-                <div class="col">
-                    대분류
-                </div>
-                <div class="col">
-                    대분류
-                </div>
-                <div class="col">
-                    대분류
-                </div>
-                <div class="col">
-                    대분류
-                </div>
-                <div class="col">
-                    대분류
-                </div>
-                <div class="col">
-                    대분류
-                </div>
-            </div>
-            <div class="row category_small" style="display:none;">
-                <div class="col">
-                    <ul>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <ul>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <ul>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <ul>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <ul>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <ul>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <ul>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <ul>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
+    
     	//계정표시아이콘 눌렀을 경우 마이페이지,정보수정,로그아웃 할수 있는 div창이 내려옴
         $(".account").click(function(){
             let accountBox = $("#accountInfoBox")
@@ -196,18 +99,7 @@
 			    accountBox.fadeIn();
 			}
         }); 
-    
-    	//카테고리 창 눌렀을 경우 소분류 창이 내려옴
-         $(".category_big").click(function(){
-            let category = $(".category_small")
-            if(category.is(":visible")){
-            	category.css("display", "none")
-			}else{
-				category.css("display", "")
-			    
-			}
-        }); 
-         
+           
     	//로그인 버튼 눌렀을 경우 login.jsp로 이동(HomeController이용)
          $("#toLogin").click(function(){
         	 location.href="${pageContext.request.contextPath}/toLogin.do"
@@ -231,9 +123,10 @@
         	 location.href="${pageContext.request.contextPath}/member/logout"
          })
          
-         $("#toOffline").click(function(){
-        	 location.href="${pageContext.request.contextPath}/offline/toMain.do"
+         $("#toOnline").click(function(){
+        	 location.href="${pageContext.request.contextPath}/online/toMain.do"
          })
+         
          //websocket 주소->endpoint로 이동[본인의 포트번호로 바꿀것]
          ws = new WebSocket("ws://localhost/alarm");
     </script>
