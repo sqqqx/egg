@@ -1,5 +1,6 @@
 package egg.finalproject.comment;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -11,8 +12,11 @@ public class CommentDAO {
 	@Autowired
 	private SqlSession session;
 	
-	public List<CommentDTO> getAllComments(int post_no) throws Exception{
-		return session.selectList("commentMapper.getAllComments",post_no);
+	public List<CommentDTO> getAllComments(int post_no, int type) throws Exception{
+		HashMap<String,Integer> map = new HashMap<String, Integer>();
+		map.put("post_no", post_no);
+		map.put("type", type);
+		return session.selectList("commentMapper.getAllComments",map);
 	}
 	
 	public int insertComment(CommentDTO dto) throws Exception{

@@ -103,7 +103,7 @@
 
         #productName {
             font-family: 'BMHANNAAir';
-            height: 65%;
+            height: 30%;
             font-size: 17px;
             /* border: 1px solid black; */
             padding-top: 10px;
@@ -114,6 +114,7 @@
             height: 35%;
             /* border: 1px solid black; */
             padding-bottom: 10px;
+            margin-top:0px;
         }
 
         #productPrice {
@@ -1093,7 +1094,7 @@
 
         //printComment와 같이 리스트를 받아와 띄워주는 메서드
         //PARAMETER : data, comment_no ==> 답글 리스트, 부모 댓글 번호(그 답글창에 띄워줘야 하므로)
-        function getReplies(data, parent_no) {
+        function getReplies(data, comment_no) {
             $("div[id='commentReplyArea" + comment_no + "']").empty();
             data.forEach(function (dto) {
                 var option = "<div class='commentReply'>\

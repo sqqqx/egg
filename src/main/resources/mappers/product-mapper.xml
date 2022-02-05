@@ -22,4 +22,9 @@
     <delete id="deleteProduct">
          DELETE FROM TBL_PRODUCT WHERE PRODUCT_NO = #{product_no}
     </delete>
+    
+    <update id="modifyProduct" parameterType="ProductDTO">
+         UPDATE TBL_PRODUCT SET NAME=#{name}, PRICE=#{price}, STOCK=#{stock}, CONTENT=#{content}, IMAGE_PATH=#{image_path} 
+         WHERE PRODUCT_NO = #{product_no}
+    </update>
 </mapper>

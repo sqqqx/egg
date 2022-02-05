@@ -37,6 +37,10 @@
             text-align: right;
             height: 30px;
         }
+        
+        i{
+           margint-right : 10px;
+        }
 
         #title {
 
@@ -47,7 +51,7 @@
             /* border: 1px solid; */
         }
 
-        #thumbNail{
+        #thumbNail {
             height: 400px;
             /* border: 1px solid black; */
         }
@@ -111,8 +115,8 @@
             font-size: 17px;
             /* border: 1px solid black; */
             padding-top: 10px;
-            padding-left : 8px;
-            text-align : left;
+            padding-left: 8px;
+            text-align: left;
         }
 
         #productPrice {
@@ -126,33 +130,39 @@
 
         }
 
-        #upperBlank{
-            height : 90px;
+        #upperBlank {
+            height: 90px;
         }
-        #productName{
+
+        #productName {
             font-family: 'BMHANNAAir';
             font-size: 23px;
             font-weight: bold;
         }
-        #productQuantity{
+
+        #productQuantity {
             font-family: 'BMHANNAAir';
             text-align: left;
             padding-left: 8px;
         }
-        #quantityController{
+
+        #quantityController {
             display: inline-block;
             width: 60%;
             height: 30px;
         }
-        .priceTitle{
+
+        .priceTitle {
             font-family: 'BMHANNAAir';
             font-size: 15px;
         }
-        #price{
+
+        #price {
             font-family: 'BMHANNAAir';
             font-size: 25px;
         }
-        .productTotalArea{
+
+        .productTotalArea {
             height: 60px;
             padding-top: 10px;
             margin-top: 20px;
@@ -160,46 +170,390 @@
             text-align: left;
             padding-left: 8px;
         }
-        .productButtons{
+
+        .productButtons {
             width: 100%;
-            border: 1px solid black;
-            height: 80px;
+            border: 1px solid grey;
+            height: 70px;
         }
-        .parchaseBtn, .like_cart_buttons{
+
+        .parchaseBtn,
+        .cart_buttons {
             float: left;
             font-family: 'BMHANNAAir';
             font-size: 20px;
         }
-        .like_cart_buttons{
-            width: 70%;
+
+        .cart_buttons {
+            width: 50%;
             height: 100%;
         }
-        .parchaseBtn{
+
+        .parchaseBtn {
             vertical-align: middle;
-            width: 30%;
-            border: 1px solid black;
+            width: 50%;
+            border: 1px solid grey;
             height: 100%;
-            background-color: rgb(224, 240, 81);
-            padding-top: 23px;
-            cursor:pointer
+            background-color: #FFBD3550;
+            padding-top: 8px;
+            cursor: pointer
         }
-        #likeBtn, #cartBtn, #likeFullBtn{
-            padding: 5px;
-            border: 1px solid black;
+
+
+        #cartBtn{
+            background-color : #F2789F50;
+            padding-top: 8px;
+            border: 1px solid grey;
             width: 100%;
-            height: 50%;
+            height: 100%;
             cursor: pointer;
         }
-		#likeFullBtn{
-			display:none;
-		}
-		#heart{
-		 	color:red;
-		}
+/* 
+        #likeFullBtn {
+            display: none;
+        }
+
+        #heart {
+            color: red;
+        } */
+        .likeClass{
+            position: fixed;
+            left: 370px;
+            top : 230px;          
+            height : 62px;
+            width : 60px;
+            padding : 3px;        
+            text-align : center;
+            cursor : pointer;
+            font-size: 15px;
+            font-family: 'BMHANNAAir';
+            border: 3px solid #e05885;
+        	border-radius : 10px;
+        }
+		
+        #likeEmpty{
+            color : #e05885;
+        }
+        #likefull{
+        	color: white;
+        }
+        #likeBtnTitle{
+             color : #e05885;
+        }
+        #likeFullBtnTitle{
+        	color:white;
+        }
+        .likeClass:hover{
+             background-color: #e05885;
+        }
+        
+        .likeClass:hover #likeEmpty{
+             color: white;
+        }
+        
+        .likeClass:hover #likeBtnTitle{
+             color : white;
+        }
+   .likeFullClass{
+            position: fixed;
+            left: 370px;
+            top : 230px;          
+            height : 62px;
+            width : 60px;
+            padding : 3px;        
+            text-align : center;
+            cursor : pointer;
+            font-size: 15px;
+            font-family: 'BMHANNAAir';
+            border: 3px solid #e05885;
+        	border-radius : 10px;
+        	background-color: #e05885;
+        	display:none;
+        }
+        #naviTab{
+            font-size: 22px;
+            font-family: 'BMHANNAAir';
+        }
+        #detailContent{
+            margin-top : 70px;
+        }
+        .comments {
+            /* width: 100%; */
+            margin-top: 50px;
+            /* border: 1px solid black; */
+            height: 800px;
+            font-family: 'BMHANNAAir';
+        }
+
+        .comment {
+            position: relative;
+        }
+
+        .modifyComment {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            z-index: 1;
+            /* border: 1px solid black; */
+            border-top: 1px dotted black;
+            /* border-bottom: 1px dotted black; */
+        }
+
+        .commentsModifyInput {
+            padding-top: 5px;
+            /* border-bottom: 1px dotted black; */
+            padding-bottom: 5px;
+        }
+
+        .tab-content {
+            height: 0;
+        }
+
+        .commentsInputArea {
+            height: 300px;
+            /* border: 1px solid black; */
+        }
+
+        .commentsLabel {
+            text-align: left;
+            font-size: 25px;
+            height: 50px;
+            /* border: 1px solid black; */
+            vertical-align: middle;
+            padding-left: 5px;
+            padding-top: 10px;
+            /* margin-bottom: 10px; */
+            margin-bottom: 5px;
+        }
+
+        #commentsInput {
+            height: 180px;
+            width: 100%;
+            resize: none;
+            padding: 8px;
+            font-size: 20px;
+        }
+
+        #commentsInput_cnt {
+            height: 20px;
+            text-align: left;
+            padding-right: 10px;
+        }
+
+        #commentInsertBtn {
+            text-align: right;
+            margin-top: 10px;
+            padding-right: 5px;
+        }
+        
+        
+        #commentModifyBtn {
+            margin-top: 5px;
+            text-align: right;
+            padding-right: 5px;
+        }
+
+        .user_nickname {
+            text-align: left;
+            padding-left: 10px;
+            padding-top: 10px;
+            height: 22px;
+            /* border: 1px solid black; */
+            font-size: 20px;
+            border-top: 1px dotted #494646;
+            font-weight: bold;
+            display: flex;
+        }
+
+        #user_id {
+            padding-top: 5px;
+        }
+
+        .written_date {
+            font-size: 15px;
+            margin-left: 8px;
+        }
+
+        .comment_content {
+            text-align: left;
+            padding-left: 13px;
+            padding-right: 10px;
+            margin-top: 25px;
+            font-size: 22px;
+        }
+
+        .divGroup {
+            flex: 1;
+        }
+
+        #commentChange {
+            text-align: right;
+            font-size: 12px;
+            color: #494646;
+            padding-right: 10px;
+            /* padding-top: 5px; */
+            margin-bottom: 10px;
+        }
+
+        .dropdown {
+            vertical-align: top;
+            text-align: right;
+        }
+
+        #editComments {
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .reactions {
+            height: 33px;
+            /* border: 1px solid black; */
+            margin-top: 10px;
+            padding-right: 63%;
+            padding-left: 10px;
+            margin-bottom: 10px;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .reaction {
+            /* width: 40px; */
+            /* border: 1px solid black; */
+            height: 100%;
+            float: left;
+            margin-right: 15px;
+        }
+
+        .icon {
+            /* border: 1px solid black; */
+            /* width: 40px; */
+            height: 100%;
+            float: left;
+        }
+
+        .title {
+            float: left;
+            padding-left: 5px;
+            font-size: 20px;
+        }
+
+        i {
+            height: 50%;
+            width: 100%;
+            font-family: 'BMHANNAAir';
+        }
+
+        #likeTitle {
+            text-align: left;
+        }
+
+        .blank {
+            height: 20px;
+            /* border-bottom: 1px dotted black; */
+        }
+
+        .modifyInput {
+            height: 70px;
+            width: 100%;
+            resize: none;
+            font-size: 20px;
+            /* border-top : 1px dotted black; */
+        }
+
+
+        .replyInputDiv input {
+            width: 100%;
+            padding-left: 10px;
+            padding-right: 10px;
+            border-top: 0px;
+            border-left: 0px;
+            border-right: 0px;
+            font-size: 20px;
+            border-radius: 0px;
+
+        }
+
+        .replyInputDiv input:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .InsertReplyBtnArea {
+            margin-top: 10px;
+            text-align: right;
+            /* margin-right: 10px; */
+        }
+
+        .reply_nickname,
+        .reply_written_date,
+        .reference_nickname {
+            margin-left: 20px;
+        }
+
+        .reply_reactions div {
+            float: left;
+            margin-left: 20px;
+        }
+
+        .commentReply {
+            text-align: left;
+            margin-top: 10px;
+            height: 70px;
+        }
+
+        .reply_nickname {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .reply_written_date {
+            font-size: 14px;
+            margin-left: 8px;
+        }
+
+        .deleteReply {
+            font-size: 14px;
+            margin-left: 10px;
+            color: red;
+            cursor: pointer;
+        }
+
+        .reply_content,
+        .reference_nickname {
+            font-size: 20px;
+            font-family: 'BMHANNAAir';
+        }
+
+        .reply_content div {
+            padding-left: 15px;
+        }
+
+        .reference_nickname {
+            font-size: 20px;
+            color: #6495ed;
+            padding: 0;
+
+        }
+
+        .reply_replyArea:after {
+            position: absolute;
+        }
+
+        
     </style>
 </head>
 
 <body>
+<!-- 종아요 버튼 -->
+    <div class="likeClass">
+    		<i class="far fa-heart fa-2x" id="likeEmpty"></i><br>
+         	<span id="likeBtnTitle">찜하기</span>
+    </div>
+    <div class="likeFullClass">
+    		<i class="far fa-heart fa-2x" id="likefull"></i><br>
+         	<span id="likeFullBtnTitle">찜하기</span>
+    </div>
     <div class="container mt-3">
         <div class="buttons">
             <button type="button" class="btn btn-warning" id="modify">상품
@@ -211,30 +565,36 @@
         </div>
         <div class="row" id="thumbNail">
             <div class="col-8">
-                <img src="${pageContext.request.contextPath}/productThumbnail/${ProductDTO.image_path}" id="thumbNailImg">
+                <img src="${pageContext.request.contextPath}/productThumbnail/${ProductDTO.image_path}"
+                    id="thumbNailImg">
             </div>
             <div class="col-4">
                 <div class="productInput">
                     <div id="productName">${ProductDTO.name}</div>
                     <div id="productPrice">가격 : <span id="product_price">${ProductDTO.price}</span><span> 원</span></div>
-                    <div id="productQuantity" ><span>수량 : </span><span><input type="number" value="1" id="quantityController" class="form-control"></span></div>
+                    <div id="productQuantity"><span>수량 : </span><span><input type="number" value="1"
+                                id="quantityController" class="form-control"></span></div>
                 </div>
                 <div class="productTotalArea">
-                    <div class="productTotal"><span class="priceTitle">총 금액(수량) : </span><span id="price">${ProductDTO.price}원</span><span class="priceTitle" id="priceQuantity"> (1개)</span></div>
+                    <div class="productTotal"><span class="priceTitle">총 금액(수량) : </span><span
+                            id="price">${ProductDTO.price}원</span><span class="priceTitle" id="priceQuantity">
+                            (1개)</span></div>
                 </div>
                 <div class="productButtons">
-                    <div class="parchaseBtn">구매</div>
-                    <div class="like_cart_buttons">
-                        <div id="likeBtn">
-	                        찜하기
+                    <div class="parchaseBtn"><i class="far fa-credit-card fa-1x"></i> 바로 구매</div>
+                    <div class="cart_buttons">
+<!--                         <div id="likeBtn">
+                            찜하기
                         </div>
                         <div id="likeFullBtn">
-                        	찜하기
-	                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" id="heart" class="bi bi-heart-fill" viewBox="0 0 16 16">
-							  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-							</svg>
-                        </div>
-                        <div id="cartBtn">카트</div>
+                            찜하기
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                id="heart" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                            </svg>
+                        </div> -->
+                        <div id="cartBtn"><i class="fas fa-shopping-cart fa-1x"></i> 장바구니</div>
                     </div>
                 </div>
             </div>
@@ -244,108 +604,276 @@
                 <span class="storeTitleP" id="storeTitleSpan"></span>
             </p>
         </div>
-        </div>
+        <div class="row" id="naviTab">
+
+            <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="detail-tab" data-bs-toggle="tab" data-bs-target="#detail"
+                        type="button" role="tab" aria-controls="detail" aria-selected="true">상세설명</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments"
+                        type="button" role="tab" aria-controls="comments" aria-selected="false">상품 후기</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="detail" role="tabpanel" aria-labelledby="detail-tab">
+                    <div id="detailContent">${ProductDTO.content}</div>
+                </div>
+                <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+                    <div class="comments">
+                        <div class="commentsInputArea">
+                            <div class="commentsLabel">
+                                <label id="commentsLabel">댓글 달기</label>
+                            </div>
+                            <div class="commentsInput">
+                                <!-- <textarea id="commentsInput"></textarea> -->
+                                <textarea id="commentsInput" name="commentsInput" cols="30" rows="10"
+                                    placeholder="상품 후기 또는 궁금한 점을 남겨주세요! (150자 이내)"></textarea>
+
+                                <div id="commentInsertBtn">
+                                    <span id="commentsInput_cnt">(0 / 150)</span>
+                                    <button id="insertComment" class="btn btn-success">댓글
+                                        등록</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="allComments">
+                            <div class="commentsLabel">
+                                <label id="commentsLabel">전체 댓글 (${CommentList.size()})</label>
+                            </div>
+                            <c:forEach var="dto" items="${CommentList}">
+                                <div class="comment">
+                                    <div class="modifyComment" value="${dto.comment_no}" hidden>
+                                        <div>
+                                            <div class="commentsModifyInput">
+                                                <!-- <textarea id="commentsInput"></textarea> -->
+                                                <textarea class="modifyInput" name="${dto.comment_no}" cols="30"
+                                                    rows="10">${dto.content}</textarea>
+
+                                                <div id="commentModifyBtn">
+                                                    <span class="modifyInput_cnt" name="${dto.comment_no}">(0
+                                                        / 150)</span>
+                                                    <button id="cancelModify" class="btn btn-warning"
+                                                        onclick="commentFormVisible(${dto.comment_no})">취소</button>
+                                                    <button id="updateComment" class="btn btn-primary"
+                                                        onclick="updateComment(${dto.comment_no},'${dto.content}')">댓글
+                                                        수정</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="commentForm" value="${dto.comment_no}">
+                                        <div class="user_nickname">
+                                            <div class="divGroup" id="user_id">
+                                                <label>${dto.user_nickname} |</label><label class="written_date">
+                                                    ${dto.written_date}</label>
+                                            </div>
+                                            <div class="divGroup"></div>
+                                            <div class="divGroup" id="commentChange">
+                                                <div class="dropdown">
+                                                    <c:if test="${dto.user_nickname eq loginSession.user_nickname}">
+                                                        <ul class="btn btn-default dropdown-toggle" type="button"
+                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                            aria-expanded="false" aria-label="Left Align">
+                                                            <!-- <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span> -->
+                                                            <label id="editComments">댓글 편집</label>
+                                                        </ul>
+                                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                            <li class="dropdown-item"
+                                                                onclick="pressModify(${dto.comment_no},'${dto.content}')">
+                                                                수정</li>
+                                                            <li class="dropdown-item"
+                                                                onclick="checkDelete(${dto.comment_no})">삭제</li>
+                                                        </ul>
+                                                    </c:if>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="comment_content">${dto.content}</div>
+
+                                        <div class="reactions">
+                                            <div class="reaction replyArea" id="${dto.comment_no}">
+                                                <div class="icon" id="replyIcon">
+                                                    <i class="far fa-comment-dots fa-2x"></i>
+                                                </div>
+                                                <div class="title" id="replyTitle">답글</div>
+                                            </div>
+                                            <div class="reaction" id="likeArea">
+                                                <div class="icon" id="likeIcon">
+                                                    <i class="far fa-heart fa-2x"></i>
+                                                </div>
+                                                <!-- <i class="fas fa-heart"></i> -->
+                                                <div class="title" id="likeTitle">좋아요</div>
+                                            </div>
+                                            <c:if test="${dto.user_nickname ne loginSession.user_nickname}">
+                                                <div class="reaction reportArea" onclick="showPopup(2,${dto.comment_no})">
+                                                    <div class="icon" id="reportIcon">
+                                                        <i class="fas fa-times fa-2x"></i>
+                                                    </div>
+                                                    <div class="title" id="reportTitle">신고</div>
+                                                </div>
+                                            </c:if>
+                                        </div>
+
+
+                                        <div class="replies" name="${dto.comment_no}" hidden>
+                                            <div class="replyInputArea">
+                                                <div class="replyInputDiv">
+                                                    <input type="text" class="form-control" placeholder="답글을 입력해 주세요."
+                                                        name="${dto.comment_no}">
+                                                </div>
+                                                <div class="InsertReplyBtnArea">
+                                                    <button type="button" class="btn btn-secondary insertReplyBtn"
+                                                        name="${dto.comment_no}"
+                                                        onclick="insertReply(${dto.comment_no})">답글 등록</button>
+                                                </div>
+                                            </div>
+                                            <div class="commentReplyArea" id="commentReplyArea${dto.comment_no}">
+                                            </div>
+                                            <div class="blank"></div>
+                                        </div>
+                                    </div>
+                            </c:forEach>
+
+                        </div>
+                    </div>
+                </div>
+            </div>    
+         </div>
+    </div>
     <script>
-    	
-    
+
+
         //수량을 클릭할 때 마다 총합 + 수량 변화주기
-        $("#quantityController").on("change",function(){
+        $("#quantityController").on("change", function () {
             let quantity = $(this).val();
             console.log(quantity);
-            if(quantity<0){
+            if (quantity < 0) {
                 alert("1보다 적은 수량은 선택하실 수 없습니다.");
                 $(this).val("1");
                 return;
-            }else if(quantity>${ProductDTO.stock}){
-            	alert(${ProductDTO.stock}+" 개의 재고가 남아있습니다. 이하 수량으로 주문 가능합니다.");
-            	$(this).val("1");
-                return;
-            }else{
-                let price = $("#product_price")[0].innerHTML;
-                console.log(price);
-                let total = parseInt(quantity)*parseInt(price);
-                console.log(total);
-                $("#price").html(total+"원");
-                $("#priceQuantity").html(" ("+quantity+"개)");
-            }
+            } else if (quantity > ${ ProductDTO.stock }){
+            alert(${ ProductDTO.stock } + " 개의 재고가 남아있습니다. 이하 수량으로 주문 가능합니다.");
+            $(this).val("1");
+            return;
+        }else {
+            let price = $("#product_price")[0].innerHTML;
+            console.log(price);
+            let total = parseInt(quantity) * parseInt(price);
+            console.log(total);
+            $("#price").html(total + "원");
+            $("#priceQuantity").html(" (" + quantity + "개)");
+        }
         })
 
         //구매 버튼 클릭 시 
-        $(".parchaseBtn").on("click",function(){
-        	console.log("하하하하");
-        	let product_no = ${ProductDTO.product_no}
-        	let quantity = $("#quantityController").val();
-        	console.log(product_no);
-        	location.href="/order/toOrder.do?product_no="+product_no+"&quantity="+quantity;
+        $(".parchaseBtn").on("click", function () {
+            console.log("하하하하");
+            let product_no = ${ ProductDTO.product_no }
+            let quantity = $("#quantityController").val();
+            console.log(product_no);
+            location.href = "/order/toOrder.do?product_no=" + product_no + "&quantity=" + quantity;
         })
-        
+
         //장바구니버튼 클릭시 장바구니 페이지로 이동
         //장바구니 버튼 클릭시
-	$("#cartBtn").click(function(e){
-		let num = ${ProductDTO.product_no};
-		let id = '${loginSession.user_id}';
-		let quantity = $("#quantityController").val();
+        $("#cartBtn").click(function (e) {
+            let num = ${ ProductDTO.product_no };
+            let id = '${loginSession.user_id}';
+            let quantity = $("#quantityController").val();
 
-		
-					$.ajax({
-						url:"${pageContext.request.contextPath}/cart/insertCart.do?product_no="+num+"&user_id="+id+"&quantity="+quantity,
-						type: "get"
-					}).done(function(data){
-						if(data==1){
-							let con = confirm("상품이 장바구니에 담겼습니다. 장바구니로 이동하시겠습니까??");
-							if(con == true){
-								location.href="${pageContext.request.contextPath}/cart/selectCart.do?user_id="+id;
-							}
-						}else if(data==-1){
-							let con = confirm("장바구니에 중복된 상품이 있습니다. 장바구니로 이동하시겠습니까??");
-							if(con == true){
-								location.href="${pageContext.request.contextPath}/cart/selectCart.do?user_id="+id;
-							}
-						}	
-					}).fail(function(e){
-						console.log(e);
-					})
-	})
-	
-	//좋아요 버튼 처리
-		$('#likeBtn').click(function(){
-		let id= '${loginSession.user_id}'
-		let post_no = ${ProductDTO.product_no};
+
+            $.ajax({
+                url: "${pageContext.request.contextPath}/cart/insertCart.do?product_no=" + num + "&user_id=" + id + "&quantity=" + quantity,
+                type: "get"
+            }).done(function (data) {
+                if (data == 1) {
+                    let con = confirm("상품이 장바구니에 담겼습니다. 장바구니로 이동하시겠습니까??");
+                    if (con == true) {
+                        location.href = "${pageContext.request.contextPath}/cart/selectCart.do?user_id=" + id;
+                    }
+                } else if (data == -1) {
+                    let con = confirm("장바구니에 중복된 상품이 있습니다. 장바구니로 이동하시겠습니까??");
+                    if (con == true) {
+                        location.href = "${pageContext.request.contextPath}/cart/selectCart.do?user_id=" + id;
+                    }
+                }
+            }).fail(function (e) {
+                console.log(e);
+            })
+        })
+
+        //상품 수정 버튼 클릭 시 수정 페이지로 이동
+        $("#modify").on("click", function () {
+            console.log("클릭됨");
+            location.href = "/product/toModify.do?product_no=${ProductDTO.product_no}";
+        })
+        
+        //삭제 버튼 클릭 시 삭제 후 목록으로 이동
+        //삭제 후 주소값 "어드민 목록"으로 보낼 것
+        $("#delete").on("click", function () {
+            if (confirm("상품 정보가 모두 삭제됩니다. 정말 삭제하시겠습니까?")) {
+                let product_no = ${ ProductDTO.product_no }
+                $.ajax({
+                    url: "/product/deleteProduct.do"
+                    , type: "post"
+                    , data: { product_no: product_no }
+                }).done(function (data) {
+                	if(data=="success"){
+                		location.href="어드민 목록";
+                	}else{
+                		alert("알 수 없는 오류가 생겼습니다. 개발팀으로 문의 부탁 드립니다.");
+                	}
+                }).fail(function (rs) {
+                	alert("알 수 없는 오류가 생겼습니다. 개발팀으로 문의 부탁 드립니다.");
+                	console.log(rs);
+                });
+                location.href = "/product/deleteProduct.do?product_no=${ProductDTO.product_no}";
+            }
+        })
+        
+        
+        //좋아요 버튼 처리
+		$('.likeClass').click(function(){
+		let bid= '${loginSession.user_id}'
+		let post_no = '${ProductDTO.product_no}'
 			
-		$("#likeBtn").css("display", "none");
-		$("#likeFullBtn").css("display", "block");
+		
+		$(this).css("display", "none")
+		$(".likeFullClass").css("display", "block");
 	
 		$.ajax({
-			url : "${pageContext.request.contextPath}/like/plus.do?post_no="+post_no+"&user_id="+id+"&type=3",
+			url : "${pageContext.request.contextPath}/like/plus.do?post_no="+post_no+"&user_id="+bid+"&type=3",
 			type : "get"
 		}).done(function(data){
 			if(data == "available"){
-				console.log("찜하기 성공")
+				console.log("좋아요 성공")
 			}else if(data == "unavailable"){
-				alert("찜하기 요청 실패");
+				alert("좋아요 요청 실패");
 			}
 		}).fail(function(e){
 			console.log(e);
 		})
 	})
 	
-	//좋아요 취소 처리
-		$('#likeFullBtn').click(function(){
-		let id= '${loginSession.user_id}'
-		let post_no = ${ProductDTO.product_no};
+		//좋아요 취소 처리
+		$('.likeFullClass').click(function(){
+		let bid= '${loginSession.user_id}'
+		let post_no = '${ProductDTO.product_no}'
+		
+		
+		$(this).css("display", "none")
+		$(".likeClass").css("display", "block");
 	
-		$("#likeBtn").css("display", "block");
-		$("#likeFullBtn").css("display", "none");
-		
-		
 		$.ajax({
-			url : "${pageContext.request.contextPath}/like/minus.do?post_no="+post_no+"&user_id="+id+"&type=3",
+			url : "${pageContext.request.contextPath}/like/minus.do?post_no="+post_no+"&user_id="+bid+"&type=3",
 			type : "get"
 		}).done(function(data){
 			if(data == "available"){
-				console.log("찜하기 취소")
+				console.log("좋아요 취소 성공")
 			}else if(data == "unavailable"){
-				alert("찜하기 취소 요청 실패");
+				alert("좋아요 취소 요청 실패");
 			}
 		}).fail(function(e){
 			console.log(e);
@@ -353,50 +881,396 @@
 	})
 	
 	//유저가 이 게시글에 찜하기를 눌렀을 경우 찜하기버튼이 눌린채로 표시
-	$(document).ready(function(){
-    		selectLike();
-    	})
-    	
+        $(document).ready(function () {
+            selectLike();
+        })
+        
+	//유저가 이 게시글에 좋아요를 눌렀을 경우 좋아요버튼이 눌린채로 표시
 	function selectLike(){
-      let id= '${loginSession.user_id}'
-      let post_no = ${ProductDTO.product_no};
+      let bid= '${loginSession.user_id}'
+      let post_no = '${ProductDTO.product_no}'
 	$.ajax({
-		url:"${pageContext.request.contextPath}/like/selectLike.do?post_no="+post_no+"&user_id="+id+"&type=3",
+		url:"${pageContext.request.contextPath}/like/selectLike.do?post_no="+post_no+"&user_id="+bid+"&type=3",
 		type: "get"
 	}).done(function(data){
 		if(data == "available"){
-			$("#likeBtn").css("display", "none");
-			$("#likeFullBtn").css("display", "block");
+			$(".likeFullClass").css("display", "block")
+			$(".likeClass").css("display", "none");
 		}else if(data == "unavailable"){
-			$("#likeBtn").css("display", "block");
-			$("#likeFullBtn").css("display", "none");
+			$(".likeFullClass").css("display", "none")
+			$(".likeClass").css("display", "block");
 		}
 	}).fail(function(e){
 		console.log(e);
 	});
 }
-        //상품 수정 버튼 클릭 시 수정 페이지로 이동
-        $("#modify").on("click",function(){
-        	console.log("클릭됨");
-        	location.href="/product/toModify.do?product_no=${ProductDTO.product_no}"
-        })
         
-        $("#delete").on("click",function(){
-        	if(confirm("상품 정보가 모두 삭제됩니다. 정말 삭제하시겠습니까?")){
-        		let product_no = ${ProductDTO.product_no}
-        		$.ajax({
-        			url : "/product/deleteProduct.do"
-        			,type : "post"
-        			,data : {product_no : product_no}
-        		}).done(function(data){
-        			
-        		}).fail(function(rs){
-        			console.log(rs);
-        		});
-        		location.href="/product/deleteProduct.do?product_no=${ProductDTO.product_no}";
-        	}
+      //댓글 입력 시 댓글 글자수를 세어주는 기능
+        $(document).ready(function () {
+            $('#commentsInput').on('keyup', function () {
+                $('#commentsInput_cnt').html("(" + $(this).val().length + " / 150)");
+
+                if ($(this).val().length > 150) {//150자가 넘는 경우
+                    $(this).val($(this).val().substring(0, 150)); //150자까지만 잘라서 표기
+                    $('#commentsInput_cnt').html("(150 / 150)"); 
+                    alert("150자 이상 입력하실 수 없습니다.");
+                }
+            });
+        });
+        
+        //댓글 편집 버튼을 내려오게 하는 이벤드
+        $(document).ready(function () {
+            $('.dropdown-toggle').dropdown()
+            selectLike(); //좋아요 눌렀는지 확인해주는 함수
+        });
+
+        //댓글 수정 입력시 댓글 수를 세어주는 기능
+        $(document).on("keyup", ".modifyInput", function () {
+            let name = this.name;
+            console.log(name);
+            commentCnt = $("span[name='" + name + "']")[0];
+            console.log(commentCnt);
+            commentCnt.innerHTML = "(" + $(this).val().length + " / 150)"
+            if ($(this).val().length > 150) {
+                $(this).val($(this).val().substring(0, 150));
+                commentCnt.innerHTML = "(" + $(this).val().length + " / 150)"
+                alert("150자 이상 입력하실 수 없습니다.");
+            }
+        });
+
+        //댓글 등록 버튼 클릭 시 이벤트
+        //AJAX RETURN : 새로 입력된 댓글이 추가된 전체 리스트 가져오기
+        $("#insertComment").on("click", function () {
+            console.log("여깄어요");
+            if ($("#commentsInput").val() != "") { //댓글창이 비어있지 않은 경우
+                let content = $("#commentsInput").val(); //댓글창 내용
+                let post_no = ${ PostDTO.post_no }; //post_no
+                $.ajax({
+                    url: "/comment/insertComment.do"
+                    , type: "post"
+                    , data: { content: content, post_no: post_no }
+                }).done(function (data) {
+                    console.log(data);
+                    $("#commentsInput").val("");
+                    printComment(data);
+                }).fail(function (rs) {
+                    console.log(rs);
+                })
+            } else {
+                alert("댓글을 입력해 주세요.");
+            }
         })
->>>>>>> Stashed changes
+
+
+        //댓글 삭제 버튼 클릭시 이벤트
+        //삭제 하시겠습니까? 확인창 --> OK누르면 삭제 처리
+        //AJAX RETURN : 댓글 삭제 후 전체 댓글 list 불러오기
+        function checkDelete(comment_no) {
+            if (confirm("삭제 하시겠습니까?")) {
+                let post_no = ${ PostDTO.post_no }
+                $.ajax({
+                    url: "/comment/deleteComment.do"
+                    , type: "post"
+                    , data: { comment_no: comment_no, post_no: post_no }
+                }).done(function (data) {
+                    console.log(data);
+                    printComment(data);
+                }).fail(function (rs) {
+                    console.log(rs);
+                });
+            } else {
+                console.log(comment_no);
+                return false;
+            }
+        }
+        
+        //AJAX로 전체 댓글을 띄워주는 용도의 함수
+        //댓글 변경 시마다 적용되고 있음.
+        //PARAMETER : Commentlist => 리스트를 넣으면 foreach 돌려서 생성
+        function printComment(Commentlist) {
+            $(".allComments").empty();
+            var option = "<div class='commentsLabel'><label id='commentsLabel'>전체 댓글 (" + Commentlist.length + ")</label></div>";
+            $(".allComments").append(option);
+            Commentlist.forEach(function (dto) {
+                option = "<div class='comment'>\
+                    <div class='modifyComment' value='"+ dto.comment_no + "' hidden>\
+                        <div >\
+                            <div class='commentsModifyInput'>\
+                                <textarea class='modifyInput' name='"+ dto.comment_no + "' cols='30' rows='10'\
+                                    >"+ dto.content + "</textarea>\
+                                <div id='commentModifyBtn'>\
+                                    <span class='modifyInput_cnt' name='"+ dto.comment_no + "'>(0 / 150)</span>\
+                                    <button id='cancelModify' class='btn btn-warning' onclick='commentFormVisible("+ dto.comment_no + ")'>취소</button>\
+                                    <button id='updateComment' class='btn btn-primary' onclick=\"updateComment("+ dto.comment_no + ",'" + dto.content + "')\">댓글 수정</button>\
+                                </div>\
+                            </div>\
+                        </div>\
+                    </div>\
+                    <div class='commentForm' value='"+ dto.comment_no + "'>\
+                        <div class='user_nickname'>\
+                            <div class='divGroup' id='user_id'>\
+                            <label>"+ dto.user_nickname + " |</label><label class='written_date'> " + dto.written_date + "</label>\
+                            </div>\
+                            <div class='divGroup'></div>\
+                            <div class='divGroup' id='commentChange"+ dto.comment_no + "'>\
+                            <div class='dropdown' id='dropdown"+ dto.comment_no + "'>\
+                            </div>\
+                            </div>\
+                        </div>\
+                        <div class='comment_content'>"+ dto.content + "</div>\
+                        <div class='reactions' id='reactions"+ dto.comment_no + "'>\
+                            <div class='reaction replyArea' id='"+ dto.comment_no + "'>\
+                                <div class='icon' id='replyIcon'><i\
+                                        class='far fa-comment-dots fa-2x'></i>\
+                                </div>\
+                                <div class='title' id='replyTitle'>답글</div>\
+                            </div>\
+                            <div class='reaction' id='likeArea'>\
+                                <div class='icon' id='likeIcon'> <i class='far fa-heart fa-2x'></i>\
+                                </div>\
+                                <div class='title' id='likeTitle'>좋아요</div>\
+                            </div>\
+                        </div>\
+                        <div class='replies' hidden>\
+                        <div class='replyInputArea'>\
+                            <div class='replyInputDiv'>\
+                                <input type='text' class='form-control' placeholder='답글을 입력해 주세요.' name='"+ dto.comment_no + "'>\
+                            </div>\
+                            <div class='InsertReplyBtnArea'>\
+                                <button type='button' class='btn btn-secondary insertReplyBtn' name='"+ dto.comment_no + "' onclick='insertReply(" + dto.comment_no + ")'>답글 등록</button>\
+                            </div>\
+                        </div>\
+                        <div class='commentReplyArea' id='commentReplyArea"+ dto.comment_no + "'>\
+                        </div>\
+                    </div>\
+                        <div class='blank'></div>\
+                    </div>\
+                </div>"
+                $(".allComments").append(option);
+                if (dto.user_nickname == '${loginSession.user_nickname}') {// 내가 쓴 댓글이라면 댓글 편집 버튼 띄우기
+                    $("div[id='dropdown" + dto.comment_no + "']").append("<ul class='btn btn-default dropdown-toggle' type='button'\
+                            id='dropdownMenuButton1' data-bs-toggle='dropdown'\
+                            aria-expanded='false' aria-label='Left Align'>\
+                            <label id='editComments'>댓글 편집</label>\
+                        </ul>\
+                        <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'>\
+                        <li class='dropdown-item' onclick=\"pressModify("+ dto.comment_no + ",'" + dto.content + "')\">수정</li>\
+                            <li class='dropdown-item'\
+                                onclick='checkDelete("+ dto.comment_no + "," + dto.post_no + ")'>\
+                                삭제\
+                            </li>\
+                        </ul>")
+                }
+            })
+
+        };
+
+        
+        // 댓글 편집 메뉴에 있는 댓글 '수정'버튼을 눌렀을 때
+        // PARAMETER : comment_no, origin_comment (수정할 댓글 번호 + 기존 댓글 내용을 넣어줌)
+        function pressModify(comment_no, origin_comment) {
+            console.log("하이루루");
+            let commentDiv = $("div[value='" + comment_no + "']");
+            modifyComment = commentDiv[0];
+            let modifyInput = $("textarea[name='" + comment_no + "']")
+            commentForm = commentDiv[1];
+            console.log(modifyComment);
+            console.log(commentForm);
+            modifyComment.hidden = false;
+            commentForm.style.visibility = "hidden";
+            let textarea = ($("textarea[name='" + comment_no + "']")[0])
+            textarea.value = origin_comment;
+            console.log((textarea.value).length);
+            commentCnt = $("span[name='" + comment_no + "']")[0];
+            console.log(commentCnt);
+            commentCnt.innerHTML = "(" + (textarea.value).length + " / 150)"
+            return;
+
+        }
+        
+        //댓글 수정창 닫고 기존 댓글 내용으로 보여주기
+        //수정하다 취소 버튼 클릭 시 적용
+        function commentFormVisible(comment_no) {
+            let commentDiv = $("div[value='" + comment_no + "']");
+            modifyComment = commentDiv[0];
+            commentForm = commentDiv[1];
+            console.log(modifyComment);
+            console.log(commentForm);
+            commentForm.style.visibility = "visible"
+            modifyComment.hidden = true;
+            return
+        }
+
+        //댓글이 실제로 수정되는 메서드
+        function updateComment(comment_no, origin_content) {
+            let textarea = $("textarea[name='" + comment_no + "']");
+            let content = textarea[0].value;
+            let post_no = ${ PostDTO.post_no }
+            console.log(textarea);
+            console.log(content);
+            if (content == "") { //수정창이 비어있는 경우 --> 댓글을 입력해 주세요.
+                alert("댓글을 입력해 주세요.");
+                return;
+            }
+            if (origin_content != content) { //수정내용과 기존 내용이 같이 않다면 (수정 되었다면)
+                $.ajax({
+                    url: "/comment/modifyComment.do"
+                    , type: "post"
+                    , data: { comment_no: comment_no, content: content, post_no }
+                }).done(function (data) {
+                    console.log(data);
+                    printComment(data);
+                }).fail(function (rs) {
+                    console.log(rs);
+                })
+            } commentFormVisible(comment_no);
+        }
+
+        //답글 등록 메서드
+        function insertReply(comment_no) {
+            let content = $("input[name='" + comment_no + "']")[0].value;
+            console.log(content);
+            let post_no = ${ PostDTO.post_no }
+            if (content == "") { //입력창에 내용이 없다면
+                alert("답글을 입력해 주세요.");
+                return;
+            } else { //내용이 있는 경우
+                $.ajax({
+                    url: "/comment/insertReply.do"
+                    , type: "post"
+                    , data: { comment_no, comment_no, post_no: post_no, content: content}
+                }).done(function (data) {
+                    console.log(data);
+                    $("input[name='" + comment_no + "']").val("");
+                    getReplies(data, comment_no);
+                }).fail(function (rs) {
+                    console.log(rs);
+                })
+            }
+        }
+
+        //답글 아이콘을 눌렀을 때 답글창 표시
+        //해당 댓글의 모든 답글 가져오기
+        $(document).on("click", ".replyArea", function () {
+            let comment_no = ($(this)).attr('id');
+            let commentForm = ($(this).parent().parent())[0];
+            if (commentForm.children[3].hidden) { //답글창이 닫혀 있는 경우
+                $.ajax({
+                    url: "/comment/getAllReplies.do"
+                    , type: "post"
+                    , data: { comment_no: comment_no }
+                }).done(function (data) {
+                    console.log(data);
+                    getReplies(data, comment_no);
+                }).fail(function (rs) {
+                    console.log(rs);
+                })
+            } commentForm.children[3].hidden = !commentForm.children[3].hidden;
+        })
+
+
+
+        //printComment와 같이 리스트를 받아와 띄워주는 메서드
+        //PARAMETER : data, comment_no ==> 답글 리스트, 부모 댓글 번호(그 답글창에 띄워줘야 하므로)
+        function getReplies(data, parent_no) {
+            $("div[id='commentReplyArea" + comment_no + "']").empty();
+            data.forEach(function (dto) {
+                var option = "<div class='commentReply'>\
+                   <div class='reply_nickname' id='reply_nickname"+ dto.comment_no + "'><span>" + dto.user_nickname + " |</span>\
+                                               <span class='reply_written_date'>"+ dto.written_date + "</span>\
+                                               </div>\
+                   <div class='reply_content' id='reply_content"+ dto.comment_no + "'></div>\
+                   <div class='reply_reactions' id='reply_reactions"+ dto.comment_no + "'>\
+                   </div>\
+               </div>\
+               <div class='blank'></div>\
+               <div class='reply_replyArea' id='reply_replyArea"+ dto.comment_no + "' hidden>\
+               <div class='replyInputDiv' >\
+                   <input type='text' class='form-control reply_replyInput' id='reply_replyInput"+ dto.comment_no + "' name=" + dto.comment_no + ">\
+               </div>\
+               <div class='InsertReplyBtnArea' >\
+                   <button type='button' class='btn btn-secondary replyReplyBtn' value='"+ dto.comment_no + "' onclick='insertReply_reply(" + dto.parent_no + "," + dto.comment_no + ")'>답글 등록</button>\
+               </div>\
+          </div>"
+
+                $("div[id='commentReplyArea" + comment_no + "']").append(option);
+                if (dto.reference_nickname != " ") {
+                    $("div[id='reply_content" + dto.comment_no + "']").append("<span class='reference_nickname'>@" + dto.reference_nickname + " </span>" + dto.content);
+                } else {
+                    $("div[id='reply_content" + dto.comment_no + "']").append("<span class='reference_nickname'></span>" + dto.content);
+                }
+
+                if (dto.user_nickname == '${loginSession.user_nickname}') {
+                    $("div[id='reply_nickname" + dto.comment_no + "']").append("<span class='deleteReply' onclick='deleteReply(" + dto.comment_no + "," + dto.parent_no + ")'>삭제</span>")
+                    $("div[id='reply_reactions" + dto.comment_no + "']").append("<div class='reply_like'>\
+                                <i class='far fa-heart fa-1x'></i>\
+                            </div>")
+                } else {
+                    $("div[id='reply_reactions" + dto.comment_no + "']").append("<div class='reply_reply' id='reply_reply"+ dto.comment_no + "' onclick=\"reply_reply(" + dto.comment_no + ",'" + dto.user_nickname + "')\">\
+                            <i class='far fa-comment-dots fa-1x reply_reply'></i>\
+                            </div>\
+                            <div class='reply_like'>\
+                                <i class='far fa-heart fa-1x'></i>\
+                            </div>\
+                    		<div class='reportArea' onclick='showPopup(2,"+dto.comment_no+")''>\
+    	                   <i class='fas fa-times fa-1x'></i>\
+    		               </div>")
+                }
+            })
+        }
+        
+        //대댓글(답글의 답글)쓰기를 누른 경우
+        //@유저 닉네임이 태그된 input창 띄우기
+        function reply_reply(comment_no, user_nickname) {
+            console.log($("div[id='reply_replyArea" + comment_no + "']"));
+            console.log($("Input[id='reply_replyInput" + comment_no + "']")[0]);
+            console.log($("Input[id='reply_replyInput" + comment_no + "']").attr("placeholder", "@" + user_nickname + " 답글을 입력해 주세요."));
+            $("div[id='reply_replyArea" + comment_no + "']")[0].hidden = !$("div[id='reply_replyArea" + comment_no + "']")[0].hidden
+        }
+
+        //대댓글 추가
+        function insertReply_reply(parent_no, comment_no) {
+            console.log(comment_no);
+            let replyInput = $("Input[id='reply_replyInput" + comment_no + "']")[0];
+            content = replyInput.value;
+            console.log(content);
+            let post_no = ${ PostDTO.post_no }
+            if (content == "") { //대댓글 입력창이 비어있는 경우
+                alert("답글을 입력해 주세요.");
+            } else {
+                $.ajax({
+                    url: "/comment/insertReply_reply.do"
+                    , type: "post"
+                    , data: { comment_no: comment_no, parent_no: parent_no, content: content, post_no: post_no }
+                }).done(function (data) {
+                    console.log(data);
+                    getReplies(data, parent_no);
+                }).fail(function (rs) {
+                    console.log(rs);
+                })
+            }
+        }
+
+        
+        //답글 삭제
+        //확인 없이 그냥 삭제
+        function deleteReply(comment_no, parent_no) {
+            $.ajax({
+                url: "/comment/deleteReply.do"
+                , type: "post"
+                , data: { comment_no: comment_no, parent_no: parent_no }
+            }).done(function (data) {
+                getReplies(data, parent_no);
+            }).fail(function (rs) {
+                console.log(rs);
+            })
+        }
+
+        /*         function toReportPage(comment_no) {
+                    location.href = "/report/toReportPage?comment_no=" + comment_no;
+                }
+         */
+         
     </script>
 </body>
 

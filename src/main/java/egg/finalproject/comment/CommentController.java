@@ -25,8 +25,8 @@ public class CommentController {
 	//RETURN : List<CommentDTO>
 	@RequestMapping("/getAllComments.do")
 	@ResponseBody
-	public List<CommentDTO> getAllComments(int post_no) throws Exception{
-		return service.getAllComments(post_no);
+	public List<CommentDTO> getAllComments(int post_no, int type) throws Exception{
+		return service.getAllComments(post_no,type);
 	}
 	
 	//댓글 등록(댓글 등록 후 AJAX로 다시 띄우기(LIST반환해서 띄우기))
@@ -39,9 +39,10 @@ public class CommentController {
 		dto.setUser_id(user_id);
 		dto.setUser_nickname(user_nickname);
 		if(service.insertComment(dto)) {
-			return service.getAllComments(dto.getPost_no());
+			return service.getAllComments(dto.getPost_no(),1);
 		}return null;
 	}
+	
 	
 	//댓글 삭제 (댓글 삭제 후 AJAX로 리스트 다시 띄워주기)
 	//RETURN : List<CommentDTO>
@@ -51,7 +52,7 @@ public class CommentController {
 		System.out.println("post_no : "+dto.getPost_no());
 		System.out.println("comment_no : "+dto.getComment_no());
 		if(service.deleteComment(dto.getComment_no())){
-			return service.getAllComments(dto.getPost_no());
+			return service.getAllComments(dto.getPost_no(),1);
 		}
 		return null;
 	}
@@ -67,7 +68,7 @@ public class CommentController {
 		if(service.modifyComment(dto)) {
 			System.out.println("true가 들어왔어!!");
 		    System.out.println(dto.getPost_no());
-			List<CommentDTO> list = service.getAllComments(dto.getPost_no());
+			List<CommentDTO> list = service.getAllComments(dto.getPost_no(),1);
 			for(CommentDTO comment : list) {
 				System.out.println(comment.getContent());
 			}
@@ -126,4 +127,6 @@ public class CommentController {
 			return service.getAllReplies(dto.getParent_no());
 		}return null;
 	}
+	
+	
 }

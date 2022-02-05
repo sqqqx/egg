@@ -60,4 +60,31 @@ public class ProductService {
 	public boolean deleteProduct(int product_no) throws Exception{
 		return dao.deleteProduct(product_no)>0;
 	}
+	
+	public boolean modifyProduct(ProductDTO dto,MultipartFile thumbNail, String realPath) throws Exception{
+		System.out.println("service 들어옴");
+        File realPathFile = new File(realPath);
+		
+		if (!realPathFile.exists()) {
+			realPathFile.mkdir(); // 경로가 존재하지 않는 경우 파일을 새로 생성하는 작업.
+		}
+		if (!thumbNail.isEmpty()) {// 파일이 넘어왔다면
+			// 1번 ori_name 얻어오기
+			String origin_name = thumbNail.getOriginalFilename();
+			System.out.println("ori_name : " + origin_name);
+
+			// 2번 sys_name 지정하기
+			String system_name = UUID.randomUUID() + "_" + origin_name;
+			System.out.println(system_name);
+
+			// 3번 sys_name으로 경로에 실제 저장하기
+			// 이 부분이 없는 경우 파일이 넘어오더라도 저장되지 않음.
+			thumbNail.transferTo(new File(realPath + File.separator + system_name));
+			System.out.println(realPath + File.separator + system_name);
+			dto.setImage_path(system_name);
+		}
+		int result = dao.modifyProduct(dto);
+		System.out.println("result"+result);
+		return result>0;
+	}
 }

@@ -10,8 +10,8 @@ public class CommentService {
 	@Autowired
 	private CommentDAO dao;
 	
-	public List<CommentDTO> getAllComments(int post_no) throws Exception{
-		return dao.getAllComments(post_no);
+	public List<CommentDTO> getAllComments(int post_no, int type) throws Exception{
+		return dao.getAllComments(post_no,type);
 	}
 	public boolean insertComment(CommentDTO dto) throws Exception{
 		return dao.insertComment(dto)>0;

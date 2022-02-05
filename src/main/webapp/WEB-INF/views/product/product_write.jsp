@@ -228,8 +228,6 @@
             </div>
         </div>
     </div>
-    <a href="/onlinePost/toDetail.do?post_no=22">여기로 가자</a>
-
     <script>
 
 

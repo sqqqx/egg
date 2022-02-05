@@ -152,7 +152,7 @@
         <div class="row">
             <div class="wrapper">
                 <h2 class="text-center">상품 등록</h2>
-                <form action="/product/modify.do" method="post" id="modifyForm" ENCTYPE="multipart/form-data">
+                <form action="/product/modify.do?product_no=${ProductDTO.product_no}" method="post" id="modifyForm" ENCTYPE="multipart/form-data">
                     <table class="table table-striped">
                         <tr>
                             <td class="contentName">상품명</td>
@@ -162,7 +162,7 @@
                         <tr>
                             <td class="contentName">썸네일</td>
                             <td>
-                                <div class="thumbNailImg"><img src="${pageContext.request.contextPath}/productThumbnail/${ProductDTO.image_path}" id="thumbNailImg" id="thumbNailImg"></div>
+                                <div class="thumbNailImg"><img src="${pageContext.request.contextPath}/productThumbnail/${ProductDTO.image_path}" id="thumbNailImg" ></div>
                                 <input type="file" class="form-control" name="thumbNail" id="thumbNail"
                                     accept=".gif, .jpg, .png, .JPEG">
                             </td>
@@ -216,7 +216,7 @@
                         <tr>
 
                             <td colspan="2" class="text-center">
-                                <button type="button" class="btn btn-success" id="insert">등록</button>
+                                <button type="button" class="btn btn-success" id="modify">수정</button>
                                 <button type="button" class="btn btn-warning" id="reset">새로
                                     작성</button>
                                 <button type="button" class="btn btn-primary">취소</button>
@@ -228,8 +228,6 @@
             </div>
         </div>
     </div>
-    <a href="/onlinePost/toDetail.do?post_no=22">여기로 가자</a>
-
     <script>
 
 
@@ -242,23 +240,28 @@
 
 
         //등록 버튼 눌렀을 때
-        $("#insert").on("click", function () {
+        
+        $("#modify").on("click", function () {
             if ($("#product_name").val() == "") {
                 alert("상품명을 입력해 주세요.");
             } else if ($("#price").val() == "") {
                 alert("가격을 입력해 주세요.");
-                $("#title").focus();
-            } else if ($("#thumbNail").val() == "") {
-                alert("썸네일을 첨부해 주세요.");
             } else if ($("#summernote").val() == "") {
                 alert("상품 설명을 입력하여 주세요.");
             } else {
             	let price = $("#price").val()
             	price = cf_getNumberOnly (price);
-            	console.log($("input[name='price']")[0])
-            	$("input[name='price']")[0].value = price;
-            	console.log($("input[name='price']")[0].value);
-                $("#writeForm").submit(); 
+            	if($("#product_name").val()=="${ProductDTO.name}" &&
+            	   price==${ProductDTO.price}&&
+            	   $("#stock").val()==${ProductDTO.stock}&&
+            	   $("#thumbNail").val()==""){
+            		alert("변경 사항이 없습니다. 상품 목록으로 이동합니다.");
+            		location.href="/product/toWrite.do"
+            	}else{
+            		console.log("변경사항 있음")
+            		$("input[name='price']")[0].value = price;
+            		$("#modifyForm").submit(); 
+            	} 
             }
             return;
         })

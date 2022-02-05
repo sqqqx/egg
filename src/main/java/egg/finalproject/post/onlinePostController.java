@@ -48,9 +48,7 @@ public class onlinePostController {
 		return "onlinePost/onlinePost_write";
 	}
 	
-	
-	
-	
+
 	//toWrite.do => 게시글 목록으로 이동 시켜야함~!!!!
 	@RequestMapping("/write.do")
 	public String insert(PostDTO dto,MultipartFile thumbNail) throws Exception{
@@ -81,7 +79,7 @@ public class onlinePostController {
 		System.out.println(dto);
 		ImageDTO imageDto = imageService.getThumbNail(post_no);
 		ProductDTO productDto = productService.getProduct(dto.getProduct_no());
-		List<CommentDTO> commentList = commentService.getAllComments(post_no);
+		List<CommentDTO> commentList = commentService.getAllComments(post_no,1);
 		if(commentList.size()!=0) {
 	         System.out.println(commentList.get(0).getContent());
 	      }
@@ -129,6 +127,7 @@ public class onlinePostController {
 	}
 	 
 	//게시글 수정 메서드
+	//TODO : 어드민 게시글 조회 목록으로 옮기기!
 	@RequestMapping("/modify.do")
 	public String modify(int post_no, PostDTO dto,MultipartFile thumbNail) throws Exception{
 		System.out.println("수정될 post_no : "+post_no);

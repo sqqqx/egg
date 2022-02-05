@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.maven.shared.invoker.SystemOutHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,6 +46,7 @@ public class ProductController {
 	@RequestMapping("/toProductDetail.do")
 	public String toProductDetail(int product_no,Model model) throws Exception{
 		ProductDTO dto = service.getProduct(product_no);
+//		CommentDTO commentDto = service.getComment()
 		model.addAttribute("ProductDTO",dto);
 		return "product/productDetail";
 	}
@@ -76,6 +78,7 @@ public class ProductController {
 		return "product/productModify";
 	}
 	
+	//TODO : 삭제 후 주소값 "어드민 목록"으로 보낼 것
 	@RequestMapping("/deleteProduct.do")
 	@ResponseBody
 	public String deleteProduct(int product_no) throws Exception{
@@ -86,4 +89,19 @@ public class ProductController {
 		
 	}
 	
+	//TODO : 어드민으로 돌리기
+	@RequestMapping("/modify.do")
+	public String modify(ProductDTO dto, MultipartFile thumbNail, int product_no) throws Exception{
+		System.out.println("product_no : "+product_no);
+		System.out.println(dto.getContent());
+		System.out.println(dto.getName());
+		dto.setProduct_no(product_no);
+		String realPath = session.getServletContext().getRealPath("productThumbnail");
+		if(service.modifyProduct(dto,thumbNail, realPath)){
+			System.out.println("true");
+			return "redirect:toWrite.do";
+		}
+		System.out.println("false");
+		return "redirect:toWrite.do";
+	}
 }
