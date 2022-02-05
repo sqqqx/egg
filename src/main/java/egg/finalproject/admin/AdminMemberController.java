@@ -29,7 +29,7 @@ public class AdminMemberController {
 	@RequestMapping("/toAdminMain")
 	public String toAdminMain() throws Exception {
 		//return "admin/adminMain";
-		return "redirect:/admin/toMemberManagement";
+		return "redirect:/admin/getUserCount.do";
 	}
 	
 	// 회원 관리 페이지 이동
@@ -76,7 +76,7 @@ public class AdminMemberController {
 		return service.addBlackList(type, target_no);
 	}
 	
-	// 일별 가입자 수
+	// 일별 가입자 수(홈 이동)
 	@RequestMapping("/getUserCount.do")
 	public String getUserCount(Model model) throws Exception {
 		model.addAttribute("json", service.getUserCount());

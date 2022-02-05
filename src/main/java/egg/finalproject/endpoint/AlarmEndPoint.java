@@ -32,7 +32,7 @@ public class AlarmEndPoint {
 	private static Map<String, HttpSession> hMap = new HashMap<>();
 	private static int totalUserCount; 
 	private static int loginUserCount;
-	private boolean checkLogin = false;
+	private boolean checkLogin;
 	private MemberDTO dto;
 	private HttpSession hsession;
 	private MemberService mservice;
@@ -52,6 +52,7 @@ public class AlarmEndPoint {
 		// HTTP 세션 세팅
 		this.hsession = (HttpSession) config.getUserProperties().get("hSession");
 		// 로그인 판별
+		checkLogin = false;
 		if(hsession.getAttribute("loginSession") != null) {
 			checkLogin = true;
 			dto = (MemberDTO)(hsession.getAttribute("loginSession"));
@@ -74,7 +75,7 @@ public class AlarmEndPoint {
 		// String userID = (String)this.session.getAttribute("loginID");
 		String[] mg = message.split(",");
 		
-		// 세션 제거
+		// 강제 로그아웃
 		if(mg[0].equals("deleteSession")) {
 			this.deleteSession(mg[1]);
 		}
@@ -179,7 +180,7 @@ public class AlarmEndPoint {
 	
 	// 강제 로그아웃
 	public void deleteSession(String user_id) {
-		this.hMap.get(user_id).removeAttribute("loginSession");
+		AlarmEndPoint.hMap.get(user_id).removeAttribute("loginSession");
 	}
 
 }

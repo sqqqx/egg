@@ -86,7 +86,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">회원
+                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2 test33">회원
                                             접속자</span> <span class="h3 font-bold mb-0" id="loginCount">215</span>
                                     </div>
                                     <div class="col-auto">
@@ -204,9 +204,9 @@
                     data: JSON.stringify(msgObj)
                     //dataType: "json"
                 }).done(function (list) {
-                    console.log(list);
+                    // console.log(list);
                     for (let item of list) {
-                        console.log(item.user_id);
+                        // console.log(item.user_id);
                     }
                     insertUserInfo(list);
                 }).fail(function (e) {
@@ -226,8 +226,8 @@
                 $("#totalUserCount").empty();
                 $("#totalUserCount").append(totalUserCount);
                 for(let dto of list) {
-                    info = '<li>\
-                        <a href="#" class="nav-link d-flex align-items-center">\
+                    info = '<li id="li_' + dto.user_id + '">\
+                        <a href="#" class="nav-link d-flex align-items-center" onclick="return false;">\
                             <div class="me-4">\
                                 <div class="position-relative d-inline-block text-white">\
                                     <img alt="Image Placeholder"\
@@ -241,20 +241,31 @@
                                     Seoul, KR </span>\
                             </div>\
                             <div class="ms-auto">\
-                                <i class="bi bi-chat remove" id="' + dto.user_id + '"></i>\
+                                <i class="bi bi-trash remove" id="' + dto.user_id + '"></i>\
                             </div>\
                         </a>\
                     </li>';
                     $("#userInfo_Wrapper").append(info);
                 }
             }
-            // TEST
-            $(document).on("click", $(".remove"), function(e) {
-            	const id = e.target.id;
-            	console.log(id);
-            	const msg = "deleteSession," + id;
-            	console.log(msg);
-            	ws.send(msg);
+            // 강제 로그아웃 TEST
+            document.addEventListener("click", function(e) {
+            	const cls = e.target.getAttribute("class");
+            	if(cls == "bi bi-trash remove" && confirm("이 회원을 로그아웃 시키겠습니까?")) {
+            		const id = e.target.id;
+                	const msg = "deleteSession," + id;
+                	ws.send(msg);
+                	$("#li_" + id).empty();
+                	const loginCount = parseInt($("#loginCount").html()) - 1;
+                	$("#loginCount").empty();
+                	$("#loginCount").append(loginCount);
+                	$("#totalUserCount").empty();
+                	$("#totalUserCount").append(loginCount);
+                	const nLoginCount = parseInt($("#nLoginCount").html()) + 1;
+                	$("#nLoginCount").empty();
+                	$("#nLoginCount").append(nLoginCount);
+                	//location.href = "${pageContext.request.contextPath}/admin/toAdminMain";
+            	}
             });
         </script>
 </body>
