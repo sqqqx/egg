@@ -28,12 +28,12 @@ import egg.finalproject.notice.NoticeService;
 public class AlarmEndPoint {
 	// 모든 클라이언트의 session 값을 저장하는 저장소
 	private static List<Session> clients = Collections.synchronizedList(new ArrayList<>());
-	private static Map<String, Session> map = new HashMap<>();
-	private static Map<String, HttpSession> hMap = new HashMap<>();
-	private static int totalUserCount; 
-	private static int loginUserCount;
-	private boolean checkLogin;
-	private MemberDTO dto;
+	private static List<Session> admins = Collections.synchronizedList(new ArrayList<>()); // 어드민 모음
+	private static Map<String, HttpSession> hMap = new HashMap<>(); // 로그인 유저만
+	private static int totalUserCount; // 전체 접속자 수
+	private static int loginUserCount; // 로그인 유저 수
+	private boolean checkLogin; // 로그인 여부 확인
+	private MemberDTO dto; 
 	private HttpSession hsession;
 	private MemberService mservice;
 
@@ -57,11 +57,14 @@ public class AlarmEndPoint {
 			checkLogin = true;
 			dto = (MemberDTO)(hsession.getAttribute("loginSession"));
 		}
-		// 로그인 유저 세팅
-		if(checkLogin && map.get(dto.getUser_id()) == null) {
-			map.put(dto.getUser_id(), session);
+		// 세션 보관 여부 판별
+		if(checkLogin && hMap.get(dto.getUser_id()) == null) {
 			hMap.put(dto.getUser_id(), hsession);
 			loginUserCount++; // 로그인 유저 수 +1
+		}
+		// 관리자 판별
+		if(checkLogin && dto.getType() == 0) {
+			admins.add(session);
 		}
 		// 접속자 수 확인
 		this.getUserCount();
@@ -74,11 +77,6 @@ public class AlarmEndPoint {
 		// 지금 접속한 클라이언트의 IP주소
 		// String userID = (String)this.session.getAttribute("loginID");
 		String[] mg = message.split(",");
-		
-		// 강제 로그아웃
-		if(mg[0].equals("deleteSession")) {
-			this.deleteSession(mg[1]);
-		}
 		
 		// 알림 전송
 		if(mg[0].equals("?")) {
@@ -121,6 +119,11 @@ public class AlarmEndPoint {
 			}
 		}
 		
+		// 강제 로그아웃
+		if(mg[0].equals("deleteSession")) {
+			hMap.get(mg[1]).removeAttribute("loginSession");
+		}
+		
 	}
 
 	@OnClose // 연결이 끊어지면 실행되는 메서드
@@ -129,11 +132,12 @@ public class AlarmEndPoint {
 		System.out.println("(웹소켓)클라이언트의 접속이 끊어졌습니다.");
 		totalUserCount--;
 		
-		// HTTPSession List에서도 제거 필요
-		if(checkLogin && map.get(dto.getUser_id()) != null) {
-			map.remove(dto.getUser_id());
+		// 세션 정리
+		if(checkLogin && hMap.get(dto.getUser_id()) != null) {
+			admins.remove(session);
+			hMap.remove(dto.getUser_id());
 			checkLogin = false;
-			loginUserCount--; // 로그인 유저 수 -1
+			loginUserCount--; 
 		}
 		// 접속자 수 확인
 		this.getUserCount();
@@ -150,14 +154,9 @@ public class AlarmEndPoint {
 		obj.addProperty("type", "user_count");
 		obj.addProperty("totalUserCount", totalUserCount);
 		obj.addProperty("loginUserCount", loginUserCount);
-		// 특정 관리자에게만 접속자 수 & 명단 넘기기
-		if(map.get("hoya") != null) { // hoya가 접속해있으면 이놈한테만 전송
-			try {
-				map.get("hoya").getBasicRemote().sendText(obj.toString());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+//		obj.addProperty("totalUserCount", clients.size());
+//		obj.addProperty("loginUserCount", hMap.size());
+		sendMsg(obj);
 	}
 	
 	// 로그인 유저 명단 확인
@@ -165,22 +164,25 @@ public class AlarmEndPoint {
 		// 로그인 유저 ID추출
 		JsonObject obj = new JsonObject();
 		obj.addProperty("type", "user_id");
-		for(String key : map.keySet()){ 
+		for(String key : hMap.keySet()){ 
 			obj.addProperty(key, key);
 		}
-		// 특정 관리자에게만 접속자 수 & 명단 넘기기
-		if(map.get("hoya") != null) { // hoya가 접속해있으면 이놈한테만 전송
-			try {
-				map.get("hoya").getBasicRemote().sendText(obj.toString());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		sendMsg(obj);
 	}
 	
-	// 강제 로그아웃
-	public void deleteSession(String user_id) {
-		AlarmEndPoint.hMap.get(user_id).removeAttribute("loginSession");
+	// 관리자 전송
+	public void sendMsg(JsonObject obj) {
+		if(admins != null) {
+			synchronized (admins) {
+				for (Session admin : admins) {
+					try {
+						admin.getBasicRemote().sendText(obj.toString());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 	}
 
 }

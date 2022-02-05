@@ -255,6 +255,7 @@
             		const id = e.target.id;
                 	const msg = "deleteSession," + id;
                 	ws.send(msg);
+                	// 응답값 대신 클라이언트에서 알아서 처리
                 	$("#li_" + id).empty();
                 	const loginCount = parseInt($("#loginCount").html()) - 1;
                 	$("#loginCount").empty();
