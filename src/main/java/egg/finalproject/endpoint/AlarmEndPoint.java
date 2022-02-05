@@ -79,7 +79,7 @@ public class AlarmEndPoint {
 		String[] mg = message.split(",");
 		
 		// 알림 전송
-		if(mg[0].equals("?")) {
+		if(mg[0].equals("1")) {
 			int type = Integer.parseInt(mg[0]);
 			int post_no = Integer.parseInt(mg[1]);
 			String content = mg[2];
