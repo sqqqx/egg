@@ -87,4 +87,18 @@
 		ORDER BY signup_date
 	</select>
 	
+	<!-- 오늘 가입자 -->
+	<select id="getTodayCount" resultType="int">
+		SELECT COUNT(*) FROM tbl_member
+    	WHERE TO_CHAR(signup_date,'YYMMDD') = TO_CHAR(SYSDATE,'YYMMDD')
+	</select>
+	
+	<!-- 접속자 정보 가져오기 -->
+	<select id="getUserInfo" parameterType="map" resultType="memberDTO">
+		SELECT user_id, user_nickname, address, profile_path FROM tbl_member WHERE user_id IN
+		<foreach collection="_parameter.entrySet()" index="key" item="value" open="(" close=")" separator=",">
+			#{key}
+		</foreach>
+	</select>
+	
 </mapper>

@@ -6,8 +6,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import egg.finalproject.member.MemberDTO;
 
 @Controller
 @RequestMapping("/admin")
@@ -75,10 +79,17 @@ public class AdminMemberController {
 	// 일별 가입자 수
 	@RequestMapping("/getUserCount.do")
 	public String getUserCount(Model model) throws Exception {
-		String json = service.getUserCount();
-		System.out.println(json);
-		model.addAttribute("json", json);
+		model.addAttribute("json", service.getUserCount());
+		model.addAttribute("getTodayCount", service.getTodayCount());
 		return "admin/adminMain";
+	}
+	
+	// 접속자 정보 가져오기
+	@RequestMapping(value = "/getUserInfo.do", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public List<MemberDTO> getUserInfo(@RequestBody Map<String, String> map) throws Exception {
+		List<MemberDTO> list = service.getUserInfo(map);
+		return list;
 	}
 
 }

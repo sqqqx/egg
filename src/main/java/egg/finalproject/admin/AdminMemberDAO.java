@@ -49,5 +49,14 @@ public class AdminMemberDAO {
 	public List<Map<String, Object>> getUserCount() throws Exception {
 		return session.selectList("adminMemberMapper.getUserCount");
 	}
-
+	
+	// 오늘 가입자
+	public int getTodayCount() throws Exception {
+		return session.selectOne("adminMemberMapper.getTodayCount");
+	}
+	
+	// 접속자 정보 가져오기
+	public List<MemberDTO> getUserInfo(Map<String, String> map) throws Exception {
+		return session.selectList("adminMemberMapper.getUserInfo", map);
+	}
 }

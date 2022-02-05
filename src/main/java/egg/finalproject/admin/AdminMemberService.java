@@ -93,5 +93,23 @@ public class AdminMemberService extends Paging {
 		System.out.println(json);
 		return json;
 	}
+	
+	// 오늘 가입자
+	public int getTodayCount() throws Exception {
+		return dao.getTodayCount();
+	}
+	
+	// 접속자 정보 가져오기
+	public List<MemberDTO> getUserInfo(Map<String, String> map) throws Exception {
+		map.remove("type");
+		map.forEach((strKey, strValue)->{
+			System.out.println( strKey +" : "+ strValue );
+		});
+		List<MemberDTO> list = dao.getUserInfo(map);
+		for(MemberDTO dto : list) {
+			System.out.println(dto);
+		}
+		return list;
+	}
 
 }
