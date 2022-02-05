@@ -55,6 +55,11 @@ public class MemberDAO {
 		return session.selectOne("memberMapper.emailCheck", email);
 	}
 	
+	// 휴대전화 중복검사
+	public int phoneCheckSignup(String phone) throws Exception{
+		return session.selectOne("memberMapper.phoneCheckSignup", phone);
+	}
+	
 	// 아이디 찾기
 	public String toIdFind(String phone) throws Exception {
 		return session.selectOne("memberMapper.idFind", phone);
@@ -63,6 +68,20 @@ public class MemberDAO {
 	// 이메일 아이디 찾기
 	public String toEmailIdFind(String email) throws Exception {
 		return session.selectOne("memberMapper.emailIdFind", email);
+	}
+	
+	public int getPwId(String id, String phone) throws Exception{
+		Map<String, String> map = new HashMap<>();
+		map.put("id", id);
+		map.put("phone", phone);
+		return session.selectOne("memberMapper.getPwId", map);
+	}
+	
+	public int getPwMailId(String id, String email) throws Exception{
+		Map<String, String> map = new HashMap<>();
+		map.put("id", id);
+		map.put("email", email);
+		return session.selectOne("memberMapper.getPwMailId", map);
 	}
 	
 	// 비밀번호 찾기(수정)

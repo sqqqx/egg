@@ -63,6 +63,15 @@ public class MemberService {
 		}
 	}
 	
+	// 휴대전화 중복검사
+		public boolean phoneCheckSignup(String phone) throws Exception{
+			if(dao.phoneCheckSignup(phone) == 1) { 
+				return false;
+			}else {
+				return true;
+			}
+		}
+	
 	// 아이디 찾기
 	public String toIdFind(String phone) throws Exception {
 		return dao.toIdFind(phone);
@@ -73,12 +82,28 @@ public class MemberService {
 		return dao.toEmailIdFind(email);
 	}
 	
+	// 비밀번호 찾기 핸드폰번호 아이디 일치 확인
+	public boolean getPwId(String id, String phone) throws Exception{
+		if (dao.getPwId(id, phone) == 1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	// 비밀번호 찾기 이메일 아이디 일치 확인
+		public boolean getPwMailId(String id, String email) throws Exception{
+			if (dao.getPwMailId(id, email) == 1) {
+				return true;
+			}else {
+				return false;
+			}
+		}
+	
 	// 비밀번호 찾기(수정)
 	public int toPwFind(String password, String user_id) throws Exception {
 		return dao.toPwFind(password, user_id);
 	}
-	
-	
 	
 	// (회원가입)문자인증
 	public void certifiedPhoneNumber(String userPhoneNumber, int randomNumber) {

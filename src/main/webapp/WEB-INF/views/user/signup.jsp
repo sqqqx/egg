@@ -159,7 +159,7 @@
                 <input type="text" class="form-control" id="phone3" maxlength="4">
             </div>
             <div class="col-2">
-                <button type="button" class="btn btn-dark" id="btn_phone">인증전송</button>
+                <button type="button" class="btn btn-dark" id="btn_phoneCheck">중복확인</button>
             </div>
         </div>
         
@@ -167,8 +167,11 @@
             <div class="col-10">
                 <input id="phoneCheck" class="form-control" type="text" >
             </div>
-            <div class="col-2">
-                <button type="button" id="btn_phoneCk" class="btn btn-dark">인증확인</button>
+            <div class="col-2" id="btn_phoneBox">
+                <button type="button" class="btn btn-dark" id="btn_phone">인증전송</button>
+            </div>
+            <div class="col-2" style="display:none;" id="btn_phoneCkBox">
+                <button type="button" id="btn_phoneCk" class="btn btn-dark ">인증확인</button>
             </div>
         </div>
         <input type="hidden" id="phoneDoubleChk">
@@ -271,6 +274,7 @@
                     type:"GET",
                     url:"${pageContext.request.contextPath}/member/mailCheck?email=" + email,
                     success:function(data){
+                    	alert("인증번호를 전송했습니다. \n이메일을 확인해주세요.");
                     	$("#emailSendBox").hide();
                     	$("#emailCheckBox").css("display", "block");
                     	code = data;
@@ -301,8 +305,7 @@
     // 문자인증
     let code2 = "";
     $("#btn_phone").click(function(){
-    	if( $("#phone2").val() != "" || $("#phone3").val() != "" ){
-    		$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
+    	if($("#phone").val() != ""){
         	let phone = $("#phone").val();
         	$.ajax({
         		type:"GET",
@@ -312,17 +315,17 @@
         				if(data == "error"){
             				alert("휴대폰 번호가 올바르지 않습니다.")
             			}else{
-            				$("#phoneCheck").attr("disabled",false);
+            				$("#btn_phoneBox").hide();
+            				$("#btn_phoneCkBox").css("display", "block");
             				alert("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
             				code2 = data;
             			}
         			}
         	})
-    	}else if( $("#phone2").val() == "" || $("#phone3").val() == "" ){
-    		alert("전화번호를 입력후 인증을 진행해주세요.");
+    	}else {
+    		alert("전화번호 중복확인 후 진행해주세요.");
     	}
     })
-    
     
   	//휴대폰 인증번호 대조
   	$("#btn_phoneCk").click(function(){
@@ -338,15 +341,6 @@
 	  		}
   		}
   	})
-  	
-  	// 휴대전화 저장
-    $("#phone2").blur(function(){
-    	$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
-    })
-    
-    $("#phone3").blur(function(){
-    	$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
-    })
 
     // 유효성검사
     // ID 정규식
@@ -416,6 +410,8 @@
     
     // 이메일 정규식
     $("#em").on("keyup", function(){
+    	$("#emailCheckBox").hide();
+    	$("#emailSendBox").css("display", "block");
     	$("#email").val("");
 		let regExp = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 		if($("#em").val() != "") {
@@ -431,6 +427,8 @@
     
     // 휴대전화 정규식
 	$("#phone2").on("keyup", function(){
+		$("#btn_phoneCkBox").hide();
+		$("#btn_phoneBox").css("display", "block");
 		$("#phone").val("");
 		if( !( (event.keyCode >= 48 && event.keyCode<=57) || (event.keyCode >= 96 && event.keyCode <= 105)
 			|| event.keyCode==8 || event.keyCode==9 || event.keyCode==13 || event.keyCode==144) ){
@@ -441,6 +439,8 @@
     })
     
     $("#phone3").on("keyup", function(){
+    	$("#btn_phoneCkBox").hide();
+		$("#btn_phoneBox").css("display", "block");
     	$("#phone").val("");
 		if( !( (event.keyCode >= 48 && event.keyCode<=57) || (event.keyCode >= 96 && event.keyCode <= 105)
 			|| event.keyCode==8 || event.keyCode==9 || event.keyCode==13 || event.keyCode==144) ){
@@ -523,6 +523,8 @@
 			if(rs == "available"){
 				alert("사용할 수 있는 이메일입니다.");
 				$("#email").val($("#em").val());
+				$("#emailCheckBox").hide();
+            	$("#emailSendBox").css("display", "block");
 			}else if(rs == "unavailable"){
 				alert("사용할 수 없는 이메일입니다.");
 			}
@@ -534,6 +536,34 @@
     		return;
     	}
 	})
+	
+	// 핸드폰 중복확인
+    $("#btn_phoneCheck").on("click", function(){
+    	if($("#phone2").val() != "" && $("#phone3").val() != ""){
+		let phone = $("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val();
+		$.ajax({
+			url : "${pageContext.request.contextPath}/member/toPhoneCheck.do"
+			, type : "post"
+			, data : {phone : phone}
+		}).done(function(rs){
+			console.log(rs);
+				if(rs == "available"){
+					$("#phone").val($("#phone1 option:selected").val() + $("#phone2").val() + $("#phone3").val());
+					$("#btn_phoneCkBox").hide();
+    				$("#btn_phoneBox").css("display", "block");
+					alert("사용할 수 있는 전화번호입니다.");
+				}else if(rs == "unavailable"){
+					alert("사용할 수 없는 휴대전화번호 입니다.");
+				}
+		}).fail(function(e){
+			console.log(e);
+		});
+    	}else {
+    		alert("양식에 맞게 입력해주세요.");
+    		return;
+    	}
+	})
+	
 	
 	// 회원가입 버튼 클릭시
 	$("#submitBtn").click(function(){
@@ -562,7 +592,7 @@
 	            $("#nickname").focus();
 	            return
 	         }else if($("#phone").val() == ""){
-		        alert("휴대전화 번호를 입력 해주세요");
+		        alert("휴대전화 중복확인을 해주세요");
 		        $("#phone2").focus();
 		        return
 		     }else if($("#phoneDoubleChk").val() == "" && $("#emailDoubleChk").val() == ""){

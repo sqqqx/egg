@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class OrderDTO {
 
-	private int order_no;
+	private String order_no;
 	private Date order_time;
 	private int cost;
 	private String name;
@@ -17,7 +17,7 @@ public class OrderDTO {
 	
 	public OrderDTO() {}
 
-	public OrderDTO(int order_no, Date order_time, int cost, String name, String address, String message,
+	public OrderDTO(String order_no, Date order_time, int cost, String name, String address, String message,
 			String status, String tracking_no, int payment_no, String user_id) {
 		super();
 		this.order_no = order_no;
@@ -32,11 +32,11 @@ public class OrderDTO {
 		this.user_id = user_id;
 	}
 
-	public int getOrder_no() {
+	public String getOrder_no() {
 		return order_no;
 	}
 
-	public void setOrder_no(int order_no) {
+	public void setOrder_no(String order_no) {
 		this.order_no = order_no;
 	}
 
@@ -111,6 +111,12 @@ public class OrderDTO {
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
-	
-	
+
+	// (마이페이지) 멤버필드 확인위한 toString 오버라이딩
+	@Override
+	public String toString() {
+		return "OrderDTO [order_no=" + order_no + ", order_time=" + order_time + ", cost=" + cost + ", name=" + name
+				+ ", address=" + address + ", message=" + message + ", status=" + status + ", tracking_no="
+				+ tracking_no + ", payment_no=" + payment_no + ", user_id=" + user_id + "]";
+	}
 }

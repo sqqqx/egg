@@ -11,4 +11,13 @@
          SELECT * FROM TBL_PRODUCT WHERE PRODUCT_NO = #{product_no}
     </select>
     
+    <!-- (마이페이지) 당일 주문량 조회 -->
+	<select id="countOrder" parameterType="int">
+		select count(*) from tbl_order where order_time like #{today};
+	</select>
+    
+    <!-- (마이페이지) 환불 처리 -->
+    <update id="refund">
+    	update tbl_order set status = 'cancled' where payment_no = 1
+    </update>
 </mapper>
