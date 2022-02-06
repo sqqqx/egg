@@ -92,93 +92,93 @@
         <div class="container-fluid categoryBox">
             <div class="row category_big">
                 <div class="col">
-                    대분류
+                    운동
                 </div>
                 <div class="col">
-                    대분류
+                    요리, 베이킹
                 </div>
                 <div class="col">
-                    대분류
+                    외국어
                 </div>
                 <div class="col">
-                    대분류
+                    IT
                 </div>
                 <div class="col">
-                    대분류
+                    라이프
                 </div>
                 <div class="col">
-                    대분류
+                    드로잉
                 </div>
                 <div class="col">
-                    대분류
+                    공예
                 </div>
                 <div class="col">
-                    대분류
+                    아동교육
                 </div>
             </div>
             <div class="row category_small" style="display:none;">
                 <div class="col">
                     <ul>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
+                        <li value=11>요가</li>
+                        <li value=12>필라테스</li>
+                        <li value=13>피트니스</li>
+                     
                     </ul>
                 </div>
                 <div class="col">
                     <ul>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
+                        <li value=21>아시안</li>
+                        <li value=22>서양</li>
+                        <li value=23>제빵</li>
+                        
                     </ul>
                 </div>
                 <div class="col">
                     <ul>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
+                        <li value=31>영어</li>
+                        <li value=32>중국어</li>
+                        <li value=33>스페인어</li>
+                  
                     </ul>
                 </div>
                 <div class="col">
                     <ul>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
+                        <li value=41>프로그래밍</li>
+                        <li value=42>정보보안</li>
+                        <li value=43>모바일App개발</li>
+                   
                     </ul>
                 </div>
                 <div class="col">
                     <ul>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
+                        <li value=51>뷰티</li>
+                        <li value=52>명상</li>
+                        <li value=53>반려동물</li>
+           
                     </ul>
                 </div>
                 <div class="col">
                     <ul>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
+                        <li value=61>펜, 연필</li>
+                        <li value=62>마카</li>
+                        <li value=63>색연필</li>
+               
                     </ul>
                 </div>
                 <div class="col">
                     <ul>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
+                        <li value=71>뜨개질, 자수</li>
+                        <li value=72>패브릭공예</li>
+                        <li value=73>종이공예</li>
+  
                     </ul>
                 </div>
                 <div class="col">
                     <ul>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
-                        <li>소분류</li>
+                        <li value=81>자연, 과학</li>
+                        <li value=82>신체, 건강</li>
+                        <li value=83>수학, 코딩</li>
+      
                     </ul>
                 </div>
             </div>
