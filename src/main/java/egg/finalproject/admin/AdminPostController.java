@@ -15,7 +15,7 @@ public class AdminPostController {
 	// 게시글 관리 첫 화면
 	@RequestMapping("toPostManagement")
 	public String toPostManagement() throws Exception {
-		return "redirect:/admin/getPostList.do?currentIdx=1&type=1";
+		return "redirect:/admin/getPostList.do?currentIdx=1&type=9";
 	}
 	
 	// 글 목록 가져오기
@@ -31,8 +31,11 @@ public class AdminPostController {
 	
 	// 글 상세페이지 이동
 	@RequestMapping("toPostDetail")
-	public String toPostDetail(int post_no) throws Exception {
-		System.out.println("post_no : " + post_no);
+	public String toPostDetail(int post_no, int checkViewCount) throws Exception {
+		System.out.println("post_no : " + post_no + " : checkViewCount : " + checkViewCount);
+		if(checkViewCount == 0) {
+			service.addViewCount(post_no);
+		}
 		return "redirect:/onlinePost/toDetail.do?post_no="+post_no;
 	}
 	

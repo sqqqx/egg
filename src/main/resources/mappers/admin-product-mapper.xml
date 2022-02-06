@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminProductMapper">
+
+	<!-- 상품 수 가져오기 -->
+	<select id="getProductCount" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM tbl_product 
+	</select>
+	
+	<!-- 상품 목록 가져오기 -->
+	<select id="getProductsList" parameterType="map" resultType="map">
+		SELECT product_no, name, to_char(price, '999,999,999') "PRICE", stock, content, image_path 
+		FROM tbl_product 
+		WHERE product_no BETWEEN #{startRange} AND #{endRange}
+		<if test="searchKeyword != null and searchKeyword != ''">
+			AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+		</if>
+	</select>
+	
+	<!-- 상품 삭제 -->
+	<update id="deleteProduct">
+		DELETE FROM tbl_product
+		WHERE product_no IN
+		<foreach collection="array" item="product_no" open="(" close=")" separator=",">
+			#{product_no}
+		</foreach>
+	</update>
+
+</mapper>

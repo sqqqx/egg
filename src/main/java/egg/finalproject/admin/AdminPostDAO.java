@@ -27,5 +27,10 @@ public class AdminPostDAO {
 	public int deletePost(Map<String, String[]> map) throws Exception {
 		return session.delete("adminPostMapper.deletePost", map);
 	}
+	
+	// 조회수 +1
+	public int addViewCount(int post_no) throws Exception {
+		return session.update("adminPostMapper.addViewCount", post_no);
+	}
 
 }

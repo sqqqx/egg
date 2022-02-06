@@ -7,15 +7,17 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import egg.finalproject.member.MemberDTO;
 
 @Service
-public class AdminMemberService {
+public class AdminMemberService extends Paging {
 	
 	@Autowired
 	private AdminMemberDAO dao;
-	
-	private int totalCount;
 	
 	// 전체 회원 수 가져오기
 	public int getMemberCountAll() throws Exception {
@@ -73,54 +75,41 @@ public class AdminMemberService {
 		return this.memberBlackList(arr, 1) == 1 ? true : false;
 	}
 	
-	/********** paging **********/
-	
-	// getNavi
-	public Map<String, Object> getNavi(int currentIdx) throws Exception {
-		int rowCnt = this.totalCount; // 
-		int rowCntPage = 10; // 
-		
-		int naviCnt = rowCnt % rowCntPage > 0 ? (rowCnt / rowCntPage) + 1 : (rowCnt / rowCntPage);
-		int naviCntPage = 5; // 
-		
-		if(currentIdx < 1) {
-			currentIdx = 1;
+	// 일별 가입자 수
+	public String getUserCount() throws Exception {
+		List<Map<String, Object>> list = dao.getUserCount();
+		for(Map<String, Object> map : list) {
+			System.out.println(map);
 		}
-		if(currentIdx > naviCnt) {
-			currentIdx = naviCnt;
+		Gson gson = new Gson();
+		JsonArray arr = new JsonArray();
+		for(Map<String, Object> map : list) {
+			JsonObject obj = new JsonObject();
+			obj.addProperty("date", (String)map.get("SIGNUP_DATE")); 
+			obj.addProperty("count", String.valueOf(map.get("CNT")));
+			arr.add(obj);
 		}
-		
-		int firstIdx = ((currentIdx - 1) / naviCntPage) * naviCntPage + 1; // 
-		int lastIdx = firstIdx + naviCntPage - 1; // 
-		
-		if(lastIdx > naviCnt) {
-			lastIdx = naviCnt;
-		}
-		
-		boolean needPrev = firstIdx == 1 ? false : true;
-		boolean needNext = lastIdx == naviCnt ? false : true; 
-		
-		System.out.println("firstIdx : " + firstIdx + " : " + "lastIdx : " + lastIdx + " : needPrev : " + needPrev + " : " + "needNext : " + needNext);
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("currentIdx", currentIdx);
-		map.put("firstIdx", firstIdx);
-		map.put("lastIdx", lastIdx);
-		map.put("needPrev", needPrev);
-		map.put("needNext", needNext);
-		return map;
+		String json = gson.toJson(arr);
+		System.out.println(json);
+		return json;
 	}
 	
-	// get startRange, endRange
-	public Map<String, Object> getRange(int currentIdx) {
-		int rowCntPage = 10; // 
-		int startRange = currentIdx * rowCntPage - (rowCntPage - 1);
-		int endRange = currentIdx * rowCntPage;
-		System.out.println("startRange : " + startRange + " : endRange : " + endRange);
-		Map<String, Object> map = new HashMap<>();
-		map.put("startRange", startRange);
-		map.put("endRange", endRange);
-		return map;
+	// 오늘 가입자
+	public int getTodayCount() throws Exception {
+		return dao.getTodayCount();
+	}
+	
+	// 접속자 정보 가져오기
+	public List<MemberDTO> getUserInfo(Map<String, String> map) throws Exception {
+		map.remove("type");
+		map.forEach((strKey, strValue)->{
+			System.out.println( strKey +" : "+ strValue );
+		});
+		List<MemberDTO> list = dao.getUserInfo(map);
+		for(MemberDTO dto : list) {
+			System.out.println(dto);
+		}
+		return list;
 	}
 
 }

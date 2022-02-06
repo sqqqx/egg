@@ -1,10 +1,17 @@
 package egg.finalproject.admin;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import egg.finalproject.member.MemberDTO;
 
 @Controller
 @RequestMapping("/admin")
@@ -13,10 +20,16 @@ public class AdminMemberController {
 	@Autowired
 	private AdminMemberService service;
 	
+	@RequestMapping("/toLab")
+	public String toLab() throws Exception {
+		return "redirect:/admin/getUserCount.do";
+	}
+	
 	// 관리자 홈 이동
 	@RequestMapping("/toAdminMain")
 	public String toAdminMain() throws Exception {
-		return "admin/adminMain";
+		//return "admin/adminMain";
+		return "redirect:/admin/getUserCount.do";
 	}
 	
 	// 회원 관리 페이지 이동
@@ -26,7 +39,6 @@ public class AdminMemberController {
 	}
 	
 	// 회원 정보 수정 
-	// jsp에 수정기능 생기면 수정권한 처리, 비밀번호 수정 탭 별도 주의, member쪽 infor..??
 	@RequestMapping("toUserInfomation")
 	public String toUserInfomation(String user_id) throws Exception {
 		return "redirect:/member/toUserInformation?user_id="+user_id;
@@ -62,6 +74,22 @@ public class AdminMemberController {
 	@ResponseBody
 	public boolean addBlackList(String type, String target_no, String report_no) throws Exception {
 		return service.addBlackList(type, target_no);
+	}
+	
+	// 일별 가입자 수(홈 이동)
+	@RequestMapping("/getUserCount.do")
+	public String getUserCount(Model model) throws Exception {
+		model.addAttribute("json", service.getUserCount());
+		model.addAttribute("getTodayCount", service.getTodayCount());
+		return "admin/adminMain";
+	}
+	
+	// 접속자 정보 가져오기
+	@RequestMapping(value = "/getUserInfo.do", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public List<MemberDTO> getUserInfo(@RequestBody Map<String, String> map) throws Exception {
+		List<MemberDTO> list = service.getUserInfo(map);
+		return list;
 	}
 
 }

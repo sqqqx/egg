@@ -111,7 +111,7 @@
 						href="${pageContext.request.contextPath}/admin/toReportManagement"
 						class="link-dark rounded">신고 관리</a></li>
 					<li><a
-						href="#"
+						href="${pageContext.request.contextPath}/admin/toProductManagement"
 						class="link-dark rounded">상품 관리</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/admin/toOrderManagement"
@@ -127,7 +127,7 @@
 					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 						<li><a href="#" class="link-dark rounded">메뉴1</a></li>
 						<li><a href="#" class="link-dark rounded">메뉴2</a></li>
-						<li><a href="#" class="link-dark rounded">메뉴3</a></li>
+						<li><a href="${pageContext.request.contextPath}/admin/toLab" class="link-dark rounded">메뉴3</a></li>
 						<li><a href="#" class="link-dark rounded">쓸데가없네</a></li>
 					</ul>
 				</div>

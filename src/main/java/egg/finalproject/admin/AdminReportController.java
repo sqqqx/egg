@@ -15,7 +15,7 @@ public class AdminReportController {
 	// 신고 페이지 이동
 	@RequestMapping("/toReportManagement")
 	public String toReportManagement() throws Exception {
-		return "redirect:/admin/getReportList.do?currentIdx=1";
+		return "redirect:/admin/getReportList.do?currentIdx=1&type=9";
 	}
 	
 	// 신고 상세 페이지 이동
@@ -27,18 +27,22 @@ public class AdminReportController {
 	
 	// 신고 목록 가져오기 
 	@RequestMapping("/getReportList.do")
-	public String getReportList(Model model, String searchOption, String searchKeyword, int currentIdx) throws Exception {
-		model.addAttribute("list", service.getReportList(searchOption, searchKeyword, currentIdx));
+	public String getReportList(Model model, String searchOption, String searchKeyword, int currentIdx, String type) throws Exception {
+		model.addAttribute("list", service.getReportList(searchOption, searchKeyword, currentIdx, type));
 		model.addAttribute("map", service.getNavi(currentIdx));
 		model.addAttribute("searchOption", searchOption);
 		model.addAttribute("searchKeyword", searchKeyword);
+		model.addAttribute("type", type);
 		return "admin/reportManagement";
 	}
 	
 	// 신고 처리 상태 변경
-	@RequestMapping("/changeReportStatus")
-	public String changeReportStatus(String report_no) throws Exception {
-		service.changeReportStatus(report_no);
+	@RequestMapping("/changeReportStatus.do")
+	public String changeReportStatus(String[] reportCheckBox) throws Exception {
+		for(String s : reportCheckBox) {
+			System.out.println(s);
+		}
+		service.changeReportStatus(reportCheckBox);
 		return "redirect:/admin/toReportManagement";
 	}
 

@@ -34,18 +34,9 @@
     width: 100%;
     text-align: center;
 }
-.orderRow {
+.toReportDetail {
 	cursor: pointer !important;
 }
-.hiddenRow {
-	padding: 0 !important;
-}
-.cls-tr > td {
-	vertical-align: middle !important;
-}
-/* .cls-tr > td:nth-child(7) {
-	width: 25% !important;
-} */
 
 /*** 폰트 관련 ***/
 .cls-blacklist {
@@ -63,10 +54,3 @@
 	font-weight: bold;
 	color: green !important;
 }
-
-/*** modal ***/
-.address_input {
-	border-left: none !important;
-	border-top: none !important;
-}
-
