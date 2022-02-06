@@ -46,14 +46,6 @@
 				</div>
 			</form>
 			
-			<!-- 글 유형 -->
-			<div class="row cls-postType">
-				<div class="col-12 d-flex justify-content-end">
-					<button type="button" class="btn btn-outline-dark" id="btnWrite">상품 등록</button>
- 					<button type="button" class="btn btn-outline-dark" id="btnModify">상품 수정</button>
-				</div>
-			</div>
-			
 			<!-- 상품 출력 -->
 			<form id="selectCheckbox" method="post"
 				class="d-flex justify-content-center">
@@ -128,8 +120,9 @@
 			<!-- 하단 버튼 영역 -->
 			<div class="row">
 				<div class="col-12 d-flex justify-content-end px-0">
-					<button type="button" class="btn btn-outline-dark"
-						id="deleteProductbtn">삭제</button>
+					<button type="button" class="btn btn-outline-dark" id="btnWrite">상품 등록</button>
+ 					<button type="button" class="btn btn-outline-dark" id="btnModify">상품 수정</button>
+					<button type="button" class="btn btn-outline-dark" id="deleteProductbtn">삭제</button>
 				</div>
 			</div>
 		</div>
