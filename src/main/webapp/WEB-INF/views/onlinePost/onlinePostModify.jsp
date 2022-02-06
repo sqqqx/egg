@@ -333,11 +333,12 @@
             		 ($("#title").val()) == "${PostDTO.title}" && 
                   	 ($("#thumbNail").val())=="" && 
                   	 ($("#summernote").val())=='${PostDTO.content}' && 
-                  	 ($("#product_no").val()) ==${PostDTO.product_no}){
+                  	 ($("#product_no").val()) ==${PostDTO.product_no}){//수정사항이 없는 경우
             		console.log("똑같아요");
-            		return "onlinePost/toWrite.do" 
+            		location.href="onlinePost/toWrite.do";
+            	 }else{
+            		 $("#modifyForm").submit();
             	 }           	
-                $("#modifyForm").submit();
             }return;
         });
         

@@ -1,6 +1,5 @@
 package egg.finalproject.product;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -12,15 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import egg.finalproject.member.MemberDTO;
-import egg.finalproject.order.TempOrderDTO;
-import egg.finalproject.post.PostDTO;
+import egg.finalproject.comment.CommentDTO;
+import egg.finalproject.comment.CommentService;
 
 @Controller
 @RequestMapping("/product")
 public class ProductController {
 	@Autowired
 	private ProductService service;
+	@Autowired
+	private CommentService commentService;
 	
 	@Autowired
 	private HttpSession session;
@@ -45,7 +45,9 @@ public class ProductController {
 	@RequestMapping("/toProductDetail.do")
 	public String toProductDetail(int product_no,Model model) throws Exception{
 		ProductDTO dto = service.getProduct(product_no);
+		List<CommentDTO> commentList = commentService.getAllComments(product_no, 0);
 		model.addAttribute("ProductDTO",dto);
+		model.addAttribute("CommentList",commentList);
 		return "product/productDetail";
 	}
 	
@@ -69,5 +71,37 @@ public class ProductController {
 		return list;
 	}
 	
+	@RequestMapping("/toModify.do")
+	public String toModify(int product_no, Model model) throws Exception{
+		ProductDTO dto = service.getProduct(product_no);
+		model.addAttribute("ProductDTO",dto);
+		return "product/productModify";
+	}
 	
+	//TODO : 삭제 후 주소값 "어드민 목록"으로 보낼 것
+	@RequestMapping("/deleteProduct.do")
+	@ResponseBody
+	public String deleteProduct(int product_no) throws Exception{
+		if(service.deleteProduct(product_no)) {
+			return "success";
+		}
+		return "fail";
+		
+	}
+	
+	//TODO : 어드민으로 돌리기
+	@RequestMapping("/modify.do")
+	public String modify(ProductDTO dto, MultipartFile thumbNail, int product_no) throws Exception{
+		System.out.println("product_no : "+product_no);
+		System.out.println(dto.getContent());
+		System.out.println(dto.getName());
+		dto.setProduct_no(product_no);
+		String realPath = session.getServletContext().getRealPath("productThumbnail");
+		if(service.modifyProduct(dto,thumbNail, realPath)){
+			System.out.println("true");
+			return "redirect:toWrite.do";
+		}
+		System.out.println("false");
+		return "redirect:toWrite.do";
+	}
 }
