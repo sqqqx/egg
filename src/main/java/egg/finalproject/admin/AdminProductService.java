@@ -43,5 +43,10 @@ public class AdminProductService extends Paging {
 		}
 		return list;
 	}
+	
+	// 상품 삭제
+	public int deleteProduct(String[] productCheckBox) throws Exception {
+		return dao.deleteProduct(productCheckBox);
+	}
 
 }

@@ -22,5 +22,10 @@ public class AdminProductDAO {
 	public List<Map<String, Object>> getProductsList(Map<String, Object> map) throws Exception {
 		return session.selectList("adminProductMapper.getProductsList", map);
 	}
+	
+	// 상품 삭제
+	public int deleteProduct(String[] productCheckBox) throws Exception {
+		return session.delete("adminProductMapper.deleteProduct", productCheckBox);
+	}
 
 }

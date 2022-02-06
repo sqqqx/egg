@@ -147,8 +147,6 @@ public class AlarmEndPoint {
 	
 	// 접속자 수 확인
 	public void getUserCount() {
-		// 접속자 수 확인
-		System.out.println("전체 접속자 수 : " + totalUserCount + " : 로그인 유저 수 : " + loginUserCount);
 		// 패키징
 		JsonObject obj = new JsonObject();
 		obj.addProperty("type", "user_count");
@@ -172,7 +170,6 @@ public class AlarmEndPoint {
 	
 	// 관리자 전송
 	public void sendMsg(JsonObject obj) {
-		System.out.println("관리자 전송 모드 : " + admins.isEmpty());
 		if(!admins.isEmpty()) {
 			synchronized (admins) {
 				for (Session admin : admins) {

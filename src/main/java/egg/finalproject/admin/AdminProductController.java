@@ -12,13 +12,13 @@ public class AdminProductController {
 	@Autowired
 	private AdminProductService service;
 	
-	// 제품 관리 페이지 이동
+	// 상품 관리 페이지 이동
 	@RequestMapping("/toProductManagement")
 	public String toProductManagement() throws Exception {
 		return "redirect:/admin/getProductsList.do?currentIdx=1";
 	}
 	
-	// 제품 목록 가져오기
+	// 상품 목록 가져오기
 	@RequestMapping("/getProductsList.do")
 	public String getProductsLists(Model model, int currentIdx, String searchOption, String searchKeyword) throws Exception {
 		model.addAttribute("list", service.getProductsList(currentIdx, searchOption, searchKeyword));
@@ -28,4 +28,10 @@ public class AdminProductController {
 		return "admin/productManagement";
 	}
 	
+	// 상품 삭제
+	@RequestMapping("/deleteProduct.do")
+	public String deleteProduct(Model model, String[] productCheckBox) throws Exception {
+		service.deleteProduct(productCheckBox);
+		return "redirect:/getProductsList.do";
+	}
 }

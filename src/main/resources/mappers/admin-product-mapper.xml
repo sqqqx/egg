@@ -12,11 +12,21 @@
 	
 	<!-- 상품 목록 가져오기 -->
 	<select id="getProductsList" parameterType="map" resultType="map">
-		SELECT * FROM tbl_product 
-			WHERE product_no BETWEEN #{startRange} AND #{endRange}
+		SELECT product_no, name, to_char(price, '999,999,999') "PRICE", stock, content, image_path 
+		FROM tbl_product 
+		WHERE product_no BETWEEN #{startRange} AND #{endRange}
 		<if test="searchKeyword != null and searchKeyword != ''">
 			AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
 		</if>
 	</select>
+	
+	<!-- 상품 삭제 -->
+	<update id="deleteProduct">
+		DELETE FROM tbl_product
+		WHERE product_no IN
+		<foreach collection="array" item="product_no" open="(" close=")" separator=",">
+			#{product_no}
+		</foreach>
+	</update>
 
 </mapper>

@@ -10,6 +10,10 @@
     <style>
         @import url(https://unpkg.com/@webpixels/css@1.1.5/dist/index.css);
         @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css");
+        /*** 프레임 ***/
+		.main-Wrapper {
+			padding: 12px;
+		}
         .top {
             height: 200px !important;
         }

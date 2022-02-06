@@ -14,7 +14,7 @@
 </head>
 
 <body>
-	<%@include file="/WEB-INF/views/header.jsp"%>
+	<%@include file="/WEB-INF/views/admin/adminHeader.jsp"%>
 	<div class="main-Wrapper d-flex justify-content-center pt-5">
 		<!--사이드 바-->
 		<div class="cls-sideBar">
@@ -46,7 +46,15 @@
 				</div>
 			</form>
 			
-			<!-- 테이블 영역 -->
+			<!-- 글 유형 -->
+			<div class="row cls-postType">
+				<div class="col-12 d-flex justify-content-end">
+					<button type="button" class="btn btn-outline-dark" id="btnWrite">상품 등록</button>
+ 					<button type="button" class="btn btn-outline-dark" id="btnModify">상품 수정</button>
+				</div>
+			</div>
+			
+			<!-- 상품 출력 -->
 			<form id="selectCheckbox" method="post"
 				class="d-flex justify-content-center">
 				<div class="row tableWrapper">
@@ -75,7 +83,7 @@
 													name="productCheckBox"></td>
 												<td class="toProductDetail">${map.PRODUCT_NO}</td>
 												<td class="toProductDetail">${map.NAME}</td>
-												<td class="toProductDetail">${map.PRICE}</td>
+												<td class="toProductDetail">₩ ${map.PRICE}</td>
 												<td class="toProductDetail">${map.STOCK}</td>
 											</tr>
 										</c:forEach>
@@ -116,6 +124,14 @@
 					</nav>
 				</div>
 			</div>
+			
+			<!-- 하단 버튼 영역 -->
+			<div class="row">
+				<div class="col-12 d-flex justify-content-end px-0">
+					<button type="button" class="btn btn-outline-dark"
+						id="deleteProductbtn">삭제</button>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script>
@@ -131,8 +147,25 @@
         $("#searchForm").on("submit");
      	// 상품 상세페이지 이동
      	$(".toProductDetail").on("click", function(e) {
-     		const product_no = $(e.target).parent().children().eq(0).children().val();
+     		let product_no = $(e.target).parent().children().eq(0).children().val();
+     		product_no = parseInt(product_no);
      		console.log("p_no : " + product_no);
+     		location.href = "${pageContext.request.contextPath}/product/toProductDetail.do?product_no="+product_no;
+     	});
+     	// 상품 등록
+     	$("#btnWrite").on("click", function() {
+     		location.href = "${pageContext.request.contextPath}/product/toWrite.do";
+     	});
+     	// 상품 수정
+     	$("#btnModify").on("click", function() {
+     		// location.href = "${pageContext.request.contextPath}/product/";
+     	});
+     	// 상품 삭제
+     	$("#deleteProductbtn").on("click", function() {
+     		if ($(".productCheckBox").is(":checked") && confirm("삭제하겠습니까?")) {
+                $("#selectCheckbox").attr("action", "${pageContext.request.contextPath}/admin/deleteProduct.do");
+                $("#selectCheckbox").submit();
+            }
      	});
     </script>
 </body>
