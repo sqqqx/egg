@@ -79,7 +79,30 @@
             		</div>		
             	</div>
                 <div class="row mediaBox">
-                	<c:forEach items="${listRecent }" var="recent">
+                	<c:forEach items="${listLike }" var="recent">
+                		<div class="col">
+	                			<a href="${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no=${recent.POST_NO}">
+			                		<div class="row mediaPhoto">
+			                			<img class="photo" src="${pageContext.request.contextPath}/onlinePostThumbNail/${recent.SYSTEM_NAME }">
+			                		</div>
+			                		<div class="row mediaText">
+			             				<span>${recent.TITLE }</span>
+			                		</div>
+		                		</a>
+	                		</div>
+                	</c:forEach>
+                </div>
+            </div>      
+            
+            <!-- 관리자 추천 강의 -->
+            <div class="col-12 mt-5 class">
+            	<div class="row titleBox">
+            		<div class="col-2 mt-2 mainTitle">
+            			<label><h4>★관리자 추천 강의★</h4></label>
+            		</div>	
+            	</div>
+                <div class="row mediaBox">
+                	<c:forEach items="${listAdmin }" var="recent">
                 		<div class="col">
 	                			<a href="${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no=${recent.POST_NO}">
 			                		<div class="row mediaPhoto">

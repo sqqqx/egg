@@ -34,11 +34,9 @@
 </head>
 
 <body>
-    <!-- 헤더 -->
-    <%@include file="/WEB-INF/views/header.jsp" %>
-        <div class="main-Wrapper d-flex justify-content-center pt-5">
-
-            <!--사이드 바-->
+ 	<%@include file="/WEB-INF/views/admin/adminHeader.jsp" %>
+       <div class="main-Wrapper d-flex justify-content-center pt-5">
+             <!--사이드 바-->
             <div class="cls-sideBar">
                 <%@include file="/WEB-INF/views/admin/adminSidebar.jsp" %>
             </div>

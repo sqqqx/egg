@@ -36,7 +36,15 @@ public class onlinePostDAO {
 	}
 	
 	//================================================================================
-	public List<Object> selectRecent() throws Exception{
-		return session.selectList("onlinePostMapper.selectRecent");
+	public List<Object> selectRecent4() throws Exception{
+		return session.selectList("onlinePostMapper.selectRecent4");
 	}
+	public List<Object> selectLike4() throws Exception{
+		return session.selectList("onlinePostMapper.selectLike4");
+	}
+	
+	public List<Object> selectAdmin() throws Exception{
+		return session.selectList("onlinePostMapper.selectAdmin");
+	}
+	
 }
