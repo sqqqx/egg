@@ -13,7 +13,7 @@
 </head>
 
 <body>
-	<%@include file="/WEB-INF/views/header.jsp"%>
+	<%@include file="/WEB-INF/views/admin/adminHeader.jsp" %>
 	<div class="main-Wrapper d-flex justify-content-center pt-5">
 		<!--사이드 바-->
 		<div class="cls-sideBar">

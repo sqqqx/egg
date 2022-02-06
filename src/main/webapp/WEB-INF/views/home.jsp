@@ -42,7 +42,7 @@
             </div>
             <div class="col ctnBox">
                 <img class="img-fluid" src="https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/PER/image/5GbHMQjW3hZ9qGz7SjB_5CDE46w.jpg">
-                <button type="button" id="toOnlineBtn" class="btn btn-primary toBtn">오프라인 클래스</button>
+                <button type="button" id="toOfflineBtn" class="btn btn-primary toBtn">오프라인 클래스</button>
             </div>
         </div>
     </div>
@@ -50,6 +50,9 @@
     <script>
     	$("#toOnlineBtn").click(function(){
     		location.href="${pageContext.request.contextPath}/online/toMain.do"
+    	})
+    	$("#toOfflineBtn").click(function(){
+    		location.href="${pageContext.request.contextPath}/offline/toMain.do"
     	})
     </script>
 </body>

@@ -22,9 +22,12 @@ public class OnlineController {
 	
 	@RequestMapping("/toMain.do")
 	public String toMain(Model model) throws Exception{
-		List<Object> listRecent = service.selectRecent();
+		List<Object> listRecent = service.selectRecent4();
+		List<Object> listLike = service.selectLike4();
+		List<Object> listAdmin = service.selectAdmin();
 		model.addAttribute("listRecent", listRecent);
-		
+		model.addAttribute("listLike", listLike);
+		model.addAttribute("listAdmin", listAdmin);
 		return "online/onlineMain";
 	}
 }

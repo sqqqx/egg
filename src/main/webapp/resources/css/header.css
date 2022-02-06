@@ -83,7 +83,7 @@ margin:0;
    border: 1px solid white;
 }
 .category_small{
-   background-color: #80808090;
+   background-color: lightgray;
    position: absolute;
    width:1777px;
    height:auto;
@@ -100,4 +100,9 @@ margin:0;
 }
 .category_small>div>ul>li:hover{
    color: white;
+}
+
+.adminBox{
+    padding-top: 40px;
+    text-align:center;
 }
