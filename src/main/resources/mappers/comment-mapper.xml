@@ -4,17 +4,18 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="commentMapper">
-     <select id="getAllComments" resultType="CommentDTO">
-           SELECT * FROM TBL_COMMENT WHERE POST_NO=#{post_no} and PARENT_NO = 0 ORDER BY WRITTEN_DATE DESC
+     <select id="getAllComments" resultType="CommentDTO" parameterType="map">
+           SELECT * FROM TBL_COMMENT WHERE POST_NO=#{post_no} and PARENT_NO = 0 and type=#{type} ORDER BY WRITTEN_DATE DESC
      </select>
      
      <insert id="insertComment">
-           INSERT INTO TBL_COMMENT VALUES (COMMENT_NO.NEXTVAL, 0,0,#{user_nickname},#{content},SYSDATE,#{post_no},#{user_id})
+           INSERT INTO TBL_COMMENT VALUES (COMMENT_NO.NEXTVAL,#{type},0,0,#{user_nickname},#{content},SYSDATE,#{post_no},#{user_id})
      </insert>
      
      <delete id="deleteComment"> 
            DELETE FROM TBL_COMMENT WHERE COMMENT_NO=#{comment_no}
      </delete>
+     
      <update id="modifyComment">
            UPDATE TBL_COMMENT SET CONTENT=#{content} WHERE COMMENT_NO = #{comment_no}
      </update>
@@ -26,14 +27,17 @@
            WHERE E1.PARENT_NO = #{comment_no}
            ORDER BY E1.WRITTEN_DATE
      </select>
+     
      <insert id="insertReply" parameterType="ReplyDTO">
-           INSERT INTO TBL_COMMENT VALUES(COMMENT_NO.NEXTVAL,#{comment_no},0,#{user_nickname},#{content},SYSDATE,#{post_no},#{user_id})
+           INSERT INTO TBL_COMMENT VALUES(COMMENT_NO.NEXTVAL,#{type},#{comment_no},0,#{user_nickname},#{content},SYSDATE,#{post_no},#{user_id})
      </insert>
+     
      <delete id="deleteReply">
            DELETE FROM TBL_COMMENT WHERE COMMENT_NO = #{comment_no}
      </delete>
-     <insert id="insertReply_reply">
-           INSERT INTO TBL_COMMENT VALUES (COMMENT_NO.NEXTVAL,#{parent_no},#{comment_no},#{user_nickname},#{content},SYSDATE,#{post_no},#{user_id})
+     
+     <insert id="insertReply_reply" parameterType="ReplyDTO">
+           INSERT INTO TBL_COMMENT VALUES (COMMENT_NO.NEXTVAL,#{type},#{parent_no},#{comment_no},#{user_nickname},#{content},SYSDATE,#{post_no},#{user_id})
      </insert>
      
 </mapper>

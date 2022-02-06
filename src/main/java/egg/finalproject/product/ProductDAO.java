@@ -31,4 +31,18 @@ public class ProductDAO {
 	public int insertProduct(ProductDTO dto) throws Exception{
 		return session.insert("productMapper.insertProduct",dto);
 	}
+	
+	public int deleteProduct(int product_no) throws Exception{
+		return session.delete("productMapper.deleteProduct",product_no);
+	}
+	
+	public int modifyProduct(ProductDTO dto) throws Exception{
+		System.out.println("dao들어옴");
+		System.out.println(dto.getName());
+		System.out.println(dto.getContent());
+		int rs = session.update("productMapper.modifyProduct",dto);
+		System.out.println("dao rs : "+rs);
+//		return session.update("productMapper.modifyProduct",dto);
+		return rs;
+	}
 }
