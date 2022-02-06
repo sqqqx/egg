@@ -162,6 +162,14 @@
 					</nav>
 				</div>
 			</div>
+			
+			<!-- 하단 버튼 영역 -->
+			<div class="row">
+				<div class="col-12 d-flex justify-content-end px-0">
+					<button type="button" class="btn btn-outline-dark"
+						id="btnClear">처리 완료</button>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script>
@@ -179,7 +187,7 @@
      	$(".toReportDetail").on("click", function(e) {
      		const type = $(e.target).parent().find("*").eq(3).text();
      		const report_no = $(e.target).parent().find("*").eq(0).children().val();
-     		window.open("${pageContext.request.contextPath}/admin/getReportDetail?report_no="+report_no+"&type="+type, "reportDetail", "width=550,height=650");
+     		window.open("${pageContext.request.contextPath}/admin/getReportDetail?report_no="+report_no+"&type="+type, "reportDetail", "width=750,height=730");
      	});
      	// 글 유형 선택
         $(".cls-type").on("click", function(e) {
@@ -199,6 +207,13 @@
 	                $("#typeMessage").attr("class", "btn btn-dark");
 	                break;
 	    	}
+        });
+     	// 처리 완료
+        $("#btnClear").on("click", function () {
+            if ($(".reportCheckBox").is(":checked") && confirm("처리 상태를 변경하시겠습니까?")) {
+                $("#selectCheckbox").attr("action", "${pageContext.request.contextPath}/admin/changeReportStatus.do");
+                $("#selectCheckbox").submit();
+            }
         });
     </script>
 </body>

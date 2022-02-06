@@ -90,7 +90,7 @@
 												class="orderCheckBox" name="orderCheckBox"
 												id="orderCheckBox"></td> --%>
 											<td>${map.ORDER_NO}</td>
-											<td>${map.COST} 원</td>
+											<td>₩ ${map.COST}</td>
 											<td>${map.USER_ID}</td>
 											<td>${map.STATUS}</td>
 											<td>${map.ORDER_TIME}</td>

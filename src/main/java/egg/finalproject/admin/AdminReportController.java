@@ -37,9 +37,12 @@ public class AdminReportController {
 	}
 	
 	// 신고 처리 상태 변경
-	@RequestMapping("/changeReportStatus")
-	public String changeReportStatus(String report_no) throws Exception {
-		service.changeReportStatus(report_no);
+	@RequestMapping("/changeReportStatus.do")
+	public String changeReportStatus(String[] reportCheckBox) throws Exception {
+		for(String s : reportCheckBox) {
+			System.out.println(s);
+		}
+		service.changeReportStatus(reportCheckBox);
 		return "redirect:/admin/toReportManagement";
 	}
 

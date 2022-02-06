@@ -158,7 +158,17 @@
      	});
      	// 상품 수정
      	$("#btnModify").on("click", function() {
-     		// location.href = "${pageContext.request.contextPath}/product/";
+     		const checkBox = $("input:checkbox[name=productCheckBox]:checked");
+           if($("#productCheckBox").is(":checked") && checkBox.length == 1) {
+        	   const product_no = parseInt(checkBox.val());
+        	   location.href = "${pageContext.request.contextPath}/product/toModify.do?product_no="+product_no;
+               return;
+            }
+            if (checkBoxLength == 0) {
+                alert("한 개 이상의 글을 선택해주세요.");
+                return;
+            }
+            alert("하나의 글만 선택해주세요.");
      	});
      	// 상품 삭제
      	$("#deleteProductbtn").on("click", function() {

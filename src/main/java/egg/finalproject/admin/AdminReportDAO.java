@@ -34,7 +34,7 @@ public class AdminReportDAO {
 	}
 	
 	// 신고 처리 상태 변경
-	public int changeReportStatus(String report_no) throws Exception {
+	public int changeReportStatus(String[] report_no) throws Exception {
 		return session.update("adminReportMapper.changeReportStatus", report_no);
 	}
 	

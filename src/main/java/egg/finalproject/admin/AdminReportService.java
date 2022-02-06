@@ -57,7 +57,7 @@ public class AdminReportService extends Paging {
 	}
 	
 	// 신고 처리 상태 변경
-	public int changeReportStatus(String report_no) throws Exception {
+	public int changeReportStatus(String[] report_no) throws Exception {
 		return dao.changeReportStatus(report_no);
 	}
 

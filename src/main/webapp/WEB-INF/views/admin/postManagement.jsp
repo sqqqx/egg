@@ -196,7 +196,7 @@
                 post_no = parseInt(post_no);
                 location.href = "${pageContext.request.contextPath}/admin/toPostDetail?post_no=" + post_no + "&checkViewCount=" + checkViewCount;
             });
-            // 조회수 뻥튀기 방지
+            // 조회수 중복 방지
             function setCookie(post_no) {
                 const expireDate = new Date();
                 expireDate.setDate(expireDate.getDate() + 1);
