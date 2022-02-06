@@ -20,7 +20,7 @@ public class CommentService {
 	public boolean  deleteComment(int comment_no) throws Exception{
 		return dao.deleteComment(comment_no)>0;
 	}
-	
+	 
 	public boolean modifyComment(CommentDTO dto) throws Exception{
 		return dao.modifyComment(dto)>0;
 	}

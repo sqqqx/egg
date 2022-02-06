@@ -39,7 +39,7 @@ public class CommentController {
 		dto.setUser_id(user_id);
 		dto.setUser_nickname(user_nickname);
 		if(service.insertComment(dto)) {
-			return service.getAllComments(dto.getPost_no(),1);
+			return service.getAllComments(dto.getPost_no(),dto.getType());
 		}return null;
 	}
 	
@@ -52,7 +52,7 @@ public class CommentController {
 		System.out.println("post_no : "+dto.getPost_no());
 		System.out.println("comment_no : "+dto.getComment_no());
 		if(service.deleteComment(dto.getComment_no())){
-			return service.getAllComments(dto.getPost_no(),1);
+			return service.getAllComments(dto.getPost_no(),dto.getType());
 		}
 		return null;
 	}
@@ -68,7 +68,7 @@ public class CommentController {
 		if(service.modifyComment(dto)) {
 			System.out.println("true가 들어왔어!!");
 		    System.out.println(dto.getPost_no());
-			List<CommentDTO> list = service.getAllComments(dto.getPost_no(),1);
+			List<CommentDTO> list = service.getAllComments(dto.getPost_no(),dto.getType());
 			for(CommentDTO comment : list) {
 				System.out.println(comment.getContent());
 			}

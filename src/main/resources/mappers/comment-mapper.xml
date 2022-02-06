@@ -9,7 +9,7 @@
      </select>
      
      <insert id="insertComment">
-           INSERT INTO TBL_COMMENT VALUES (COMMENT_NO.NEXTVAL,1,0,0,#{user_nickname},#{content},SYSDATE,#{post_no},#{user_id})
+           INSERT INTO TBL_COMMENT VALUES (COMMENT_NO.NEXTVAL,#{type},0,0,#{user_nickname},#{content},SYSDATE,#{post_no},#{user_id})
      </insert>
      
      <delete id="deleteComment"> 
@@ -29,15 +29,15 @@
      </select>
      
      <insert id="insertReply" parameterType="ReplyDTO">
-           INSERT INTO TBL_COMMENT VALUES(COMMENT_NO.NEXTVAL,1,#{comment_no},0,#{user_nickname},#{content},SYSDATE,#{post_no},#{user_id})
+           INSERT INTO TBL_COMMENT VALUES(COMMENT_NO.NEXTVAL,#{type},#{comment_no},0,#{user_nickname},#{content},SYSDATE,#{post_no},#{user_id})
      </insert>
      
      <delete id="deleteReply">
            DELETE FROM TBL_COMMENT WHERE COMMENT_NO = #{comment_no}
      </delete>
      
-     <insert id="insertReply_reply">
-           INSERT INTO TBL_COMMENT VALUES (COMMENT_NO.NEXTVAL,1,#{parent_no},#{comment_no},#{user_nickname},#{content},SYSDATE,#{post_no},#{user_id})
+     <insert id="insertReply_reply" parameterType="ReplyDTO">
+           INSERT INTO TBL_COMMENT VALUES (COMMENT_NO.NEXTVAL,#{type},#{parent_no},#{comment_no},#{user_nickname},#{content},SYSDATE,#{post_no},#{user_id})
      </insert>
      
 </mapper>

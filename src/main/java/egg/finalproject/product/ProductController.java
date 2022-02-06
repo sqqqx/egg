@@ -1,11 +1,9 @@
 package egg.finalproject.product;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.maven.shared.invoker.SystemOutHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,15 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import egg.finalproject.member.MemberDTO;
-import egg.finalproject.order.TempOrderDTO;
-import egg.finalproject.post.PostDTO;
+import egg.finalproject.comment.CommentDTO;
+import egg.finalproject.comment.CommentService;
 
 @Controller
 @RequestMapping("/product")
 public class ProductController {
 	@Autowired
 	private ProductService service;
+	@Autowired
+	private CommentService commentService;
 	
 	@Autowired
 	private HttpSession session;
@@ -46,8 +45,9 @@ public class ProductController {
 	@RequestMapping("/toProductDetail.do")
 	public String toProductDetail(int product_no,Model model) throws Exception{
 		ProductDTO dto = service.getProduct(product_no);
-//		CommentDTO commentDto = service.getComment()
+		List<CommentDTO> commentList = commentService.getAllComments(product_no, 0);
 		model.addAttribute("ProductDTO",dto);
+		model.addAttribute("CommentList",commentList);
 		return "product/productDetail";
 	}
 	

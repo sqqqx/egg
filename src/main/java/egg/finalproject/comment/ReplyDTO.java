@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ReplyDTO {
 	private int comment_no;
+	private int type;
 	private int parent_no;
 	private int reference_no;
 	private String user_nickname;
@@ -18,10 +19,11 @@ public class ReplyDTO {
 	
 	public ReplyDTO() {}
 
-	public ReplyDTO(int comment_no, int parent_no, int reference_no, String user_nickname, String content,
+	public ReplyDTO(int comment_no, int type, int parent_no, int reference_no, String user_nickname, String content,
 			Date written_date, int post_no, String user_id, String reference_nickname) {
 		super();
 		this.comment_no = comment_no;
+		this.type = type;
 		this.parent_no = parent_no;
 		this.reference_no = reference_no;
 		this.user_nickname = user_nickname;
@@ -38,6 +40,15 @@ public class ReplyDTO {
 
 	public void setComment_no(int comment_no) {
 		this.comment_no = comment_no;
+	}
+
+	
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 
 	public int getParent_no() {
