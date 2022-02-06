@@ -59,5 +59,18 @@ public class AdminOrderController {
 		return "fail";
 	}
 	
+	// 주문 상세 정보
+	@RequestMapping("/orderDetailView")
+	public String orderDetailView(Model model, String order_no) throws Exception {
+		model.addAttribute("map", service.getOrderDetail(order_no));
+		return "admin/orderDetail";
+	}
+	
+	// 배송지 변경
+	@RequestMapping("/changeAddress.do")
+	@ResponseBody
+	public String changeAddress(String address, String order_no) throws Exception {
+		return service.changeAddress(address, order_no) == 1 ? "success" : null;
+	}
 	
 }

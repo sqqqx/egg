@@ -15,18 +15,18 @@
 
 	<!-- 주문 목록 가져오기 -->
 	<select id="getOrderList" parameterType="map" resultType="map">
-		SELECT * FROM tbl_order
-    		INNER JOIN tbl_payment USING(payment_no)
-    		WHERE order_no BETWEEN #{startRange} AND #{endRange}
-    		<if test="searchKeyword != null and searchKeyword != ''">
-    			AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
-    		</if>
+		SELECT order_no, order_time, to_char(cost, '999,999,999') "COST", status, user_id, address
+		FROM (SELECT row_number() OVER (ORDER BY order_time DESC) AS idx, tbl_order.* FROM tbl_order)
+   		WHERE idx BETWEEN #{startRange} AND #{endRange}
+   		<if test="searchKeyword != null and searchKeyword != ''">
+   			AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+   		</if>
 	</select>
 	
 	<!-- 구매 상품 목록 가져오기 -->
 	<select id="getProductList" resultType="map">
 		SELECT * FROM tbl_product
-    		INNER JOIN test_tbl_order_product USING(product_no) WHERE order_no = #{order_no}
+   		INNER JOIN test_tbl_order_product USING(product_no) WHERE order_no = #{order_no}
 	</select>
 	
 	<!-- 주문 상태 확인 -->
@@ -37,6 +37,25 @@
 	<!-- 주문 상태 변경 -->
 	<update id="updateStatus">
 		UPDATE tbl_order SET status = 'cancel' WHERE order_no = #{order_no}
+	</update>
+	
+	<!-- 주문 상세 정보 -->
+	<select id="getOrderDetail" resultType="map">
+		SELECT 
+		    o.name, o.phone, o.email, o.message, o.address,
+		    pay.payment_no, to_char(pay.cost, '999,999,999') "COST", pay.payment_time, pay.method, pay.card_name,
+		    op.quantity,
+		    p.name "PRODUCT_NAME", to_char(p.price, '999,999,999') "PRICE", p.content, p.image_path
+		FROM tbl_order o
+		    INNER JOIN tbl_payment pay ON(o.payment_no = pay.payment_no)
+		    INNER JOIN tbl_orderproduct op ON(o.order_no = op.order_no)
+		    INNER JOIN tbl_product p ON(op.product_no = p.product_no)
+		    WHERE o.order_no = #{order_no}
+	</select>
+	
+	<!-- 배송지 변경 -->
+	<update id="changeAddress" parameterType="map">
+		UPDATE tbl_order SET address = #{address} WHERE order_no = #{order_no}
 	</update>
 
 </mapper>

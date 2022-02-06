@@ -68,6 +68,21 @@ public class AdminOrderService extends Paging {
 		return dao.updateStatus(order_no);
 	}
 	
+	// 주문 상세 정보
+	public Map<String, Object> getOrderDetail(String order_no) throws Exception {
+		Map<String, Object> map = dao.getOrderDetail(order_no);
+		System.out.println(map.size());
+		return map;
+	}
+	
+	// 배송지 변경
+	public int changeAddress(String address, String order_no) throws Exception {
+		Map<String, String> map = new HashMap<>();
+		map.put("address", address);
+		map.put("order_no", order_no);
+		return dao.changeAddress(map);
+	}
+	
 	// 토큰 가져오기
 	public String getToken() throws Exception {
 		HttpURLConnection conn = null;

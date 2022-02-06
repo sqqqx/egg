@@ -187,10 +187,10 @@
                     ]
                 },
                 options: {
-                    responsive: false,
+                    responsive: true,
                     title: {
                         display: true,
-                        text: '방문자 & 가입자 통계'
+                        text: '가입자 통계'
                     }
                 }
             });

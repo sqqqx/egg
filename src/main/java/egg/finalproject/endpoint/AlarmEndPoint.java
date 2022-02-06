@@ -172,6 +172,7 @@ public class AlarmEndPoint {
 	
 	// 관리자 전송
 	public void sendMsg(JsonObject obj) {
+		System.out.println("관리자 전송 모드 : " + admins.isEmpty());
 		if(!admins.isEmpty()) {
 			synchronized (admins) {
 				for (Session admin : admins) {
