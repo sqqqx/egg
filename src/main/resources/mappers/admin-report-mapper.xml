@@ -5,7 +5,7 @@
 
 <mapper namespace="adminReportMapper">
 
-	<!-- 신고 목록 가져오기(row_number제거할것) -->
+	<!-- 신고 목록 가져오기 -->
 	<select id="getReportList" parameterType="map" resultType="map">
 		SELECT * 
 		FROM (SELECT row_number() OVER (ORDER BY r.report_date DESC) AS idx
