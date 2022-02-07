@@ -575,7 +575,28 @@
         .nickname_reply {
             margin-left: 15px;
         }
+        #likeArea:hover i{
+            color :#e05885;   
+        }
     </style>
+    <script>
+    //유저가 좋아요 누른 댓글 좋아요 처리하기
+    function selectLike_comment(comment_no){
+    	let bid='${loginSession.user_id}';
+    	let post_no = comment_no;
+    		$.ajax({
+                url: "${pageContext.request.contextPath}/like/selectLike.do?post_no=" + post_no + "&user_id=" + bid + "&type=4",
+                type: "get"
+            }).done(function (data) {
+                if (data == "available") {
+                	$("#likeBtn"+comment_no).css("color", "#e05885"); 
+                    $("#likeArea"+comment_no).attr("value","1");
+                }
+            }).fail(function (e) {
+                console.log(e);
+            });
+    }
+    </script>
 </head>
 
 <body>
@@ -725,10 +746,11 @@
                                                 </div>
                                                 <div class="title" id="replyTitle">답글</div>
                                             </div>
-                                            <div class="reaction" id="likeArea">
+                                            <div class="reaction" id="likeArea${dto.comment_no}" onclick="likeComment(${dto.comment_no})" value="0">
                                                 <div class="icon" id="likeIcon">
-                                                    <i class="far fa-heart fa-2x"></i>
+                                                    <i class="fas fa-heart fa-2x" id="likeBtn${dto.comment_no}"></i>
                                                 </div>
+                                                <script>selectLike_comment(${dto.comment_no})</script>
                                                 <!-- <i class="fas fa-heart"></i> -->
                                                 <div class="title" id="likeTitle">좋아요</div>
                                             </div>
@@ -763,6 +785,7 @@
                                             <div class="blank"></div>
                                         </div>
                                     </div>
+                                    
                             </c:forEach>
 
                         </div>
@@ -823,6 +846,8 @@
                     alert("150자 이상 입력하실 수 없습니다.");
                 }
             });
+            
+            
 
         });
         $(document).on("keyup", ".reply_input", function () {
@@ -964,8 +989,8 @@
                                 </div>\
                                 <div class='title' id='replyTitle'>답글</div>\
                             </div>\
-                            <div class='reaction' id='likeArea'>\
-                                <div class='icon' id='likeIcon'> <i class='far fa-heart fa-2x'></i>\
+                            <div class='reaction' id='likeArea"+dto.comment_no+"' onclick='likeComment("+dto.comment_no+")' value='0'>\
+                                <div class='icon' id='likeIcon'> <i class='fas fa-heart fa-2x' id='likeBtn"+dto.comment_no+"'></i>\
                                 </div>\
                                 <div class='title' id='likeTitle'>좋아요</div>\
                             </div>\
@@ -1037,6 +1062,7 @@
                             <div class='title' id='reportTitle'>신고</div>\
                         </div>")
             }
+            selectLike_comment(dto.comment_no);
         })
 
         };
@@ -1184,16 +1210,16 @@
 
                 if (dto.user_id == '${loginSession.user_id}') {
                     $("div[id='reply_nickname" + dto.comment_no + "']").append("<span class='deleteReply' onclick='deleteReply(" + dto.comment_no + "," + dto.parent_no + ")'>삭제</span>")
-                    $("div[id='reply_reactions" + dto.comment_no + "']").append("<div class='reply_like'>\
-                                <i class='far fa-heart fa-1x'></i>\
+                    $("div[id='reply_reactions" + dto.comment_no + "']").append("<div class='reply_like' id='likeArea"+dto.comment_no+"' onclick='likeComment("+dto.comment_no+")' value='0'>\
+                                <i class='fas fa-heart fa-1x'  id='likeBtn"+dto.comment_no+"'></i>\
                             </div>")
                 } else if (${ loginSession.type }== 0){
                 $("div[id='reply_nickname" + dto.comment_no + "']").append("<span class='deleteReply' onclick='deleteReply(" + dto.comment_no + "," + dto.parent_no + ")'>삭제</span>")
                 $("div[id='reply_reactions" + dto.comment_no + "']").append("<div class='reply_reply' id='reply_reply" + dto.comment_no + "' onclick=\"reply_reply(" + dto.comment_no + ",'" + dto.user_nickname + "')\">\
-                            <i class='far fa-comment-dots fa-1x reply_reply'></i>\
+                            <i class='fas fa-comment-dots fa-1x reply_reply'></i>\
                             </div>\
-                    		<div class='reply_like'>\
-                                <i class='far fa-heart fa-1x'></i>\
+                    		<div class='reply_like' id='likeArea"+dto.comment_no+"' onclick='likeComment("+dto.comment_no+")' value='0'>\
+                                <i class='far fa-heart fa-1x'  id='likeBtn"+dto.comment_no+"'></i>\
                             </div>\
                             ")
             } 
@@ -1201,13 +1227,14 @@
                 $("div[id='reply_reactions" + dto.comment_no + "']").append("<div class='reply_reply' id='reply_reply" + dto.comment_no + "' onclick=\"reply_reply(" + dto.comment_no + ",'" + dto.user_nickname + "')\">\
                             <i class='far fa-comment-dots fa-1x reply_reply'></i>\
                             </div>\
-                            <div class='reply_like'>\
-                                <i class='far fa-heart fa-1x'></i>\
+                            <div class='reply_like' id='likeArea"+dto.comment_no+"' onclick='likeComment("+dto.comment_no+")' value='0'>\
+                                <i class='fas fa-heart fa-1x'  id='likeBtn"+dto.comment_no+"'></i>\
                             </div>\
                     		<div class='reportArea' onclick='showPopup(2,"+ dto.comment_no + ")''>\
-    	                   <i class='fas fa-times fa-1x'></i>\
+    	                   <i class='far fa-times fa-1x'></i>\
     		               </div>")
             }
+            selectLike_comment(dto.comment_no);
         })
         }
         //대댓글(답글의 답글)쓰기를 누른 경우
@@ -1309,7 +1336,7 @@
         })
 
 
-        //좋아요 버튼 처리
+        //온라인 게시글 좋아요 버튼 처리
         $('.likeClass').click(function () {
             let bid = '${loginSession.user_id}'
             let post_no = '${PostDTO.post_no}'
@@ -1373,6 +1400,52 @@
                 console.log(e);
             });
         }
+        
+
+        //댓글 좋아요 처리
+        function likeComment(comment_no){
+        	let bid = '${loginSession.user_id}';
+        	let post_no = comment_no;
+        	let value = $("#likeArea"+comment_no).attr("value");
+        	if(value=="0"){ //좋아요가 눌려있지 않는 경우
+        		$("#likeBtn"+comment_no).css("color", "#e05885"); 
+                $("#likeArea"+comment_no).attr("value","1");
+                console.log($("#likeArea"+comment_no).attr("value"));
+            	$.ajax({
+                    url: "${pageContext.request.contextPath}/like/plus.do?post_no=" + post_no + "&user_id=" + bid + "&type=4",
+                    type: "get"
+                }).done(function (data) {
+                    if (data == "available") {
+                        console.log("좋아요 성공")
+                    } else if (data == "unavailable") {
+                        alert("좋아요 요청 실패");
+                    }
+                    return;
+                }).fail(function (e) {
+                    console.log(e);
+                })
+        	}else{//좋아요가 눌려있는 경우
+        		$("#likeBtn"+comment_no).css("color", "black"); 
+                $("#likeArea"+comment_no).attr("value","0");
+                console.log($("#likeArea"+comment_no).attr("value"));
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/like/minus.do?post_no=" + post_no + "&user_id=" + bid + "&type=4",
+                    type: "get"
+                }).done(function (data) {
+                    if (data == "available") {
+                        console.log("좋아요 취소 성공")
+                    } else if (data == "unavailable") {
+                        alert("좋아요 취소 요청 실패");
+                    }
+                }).fail(function (e) {
+                    console.log(e);
+                })
+        	}
+        	
+        	
+        }
+        
+        
     </script>
 </body>
 

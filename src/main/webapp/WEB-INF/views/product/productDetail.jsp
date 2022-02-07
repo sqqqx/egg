@@ -557,6 +557,24 @@
             border-bottom: 1px dotted grey;
         }
     </style>
+    <script>
+    //유저가 좋아요 누른 댓글 좋아요 처리하기
+    function selectLike_comment(comment_no){
+    	let bid='${loginSession.user_id}';
+    	let post_no = comment_no;
+    		$.ajax({
+                url: "${pageContext.request.contextPath}/like/selectLike.do?post_no=" + post_no + "&user_id=" + bid + "&type=5",
+                type: "get"
+            }).done(function (data) {
+                if (data == "available") {
+                	$("#likeBtn"+comment_no).css("color", "#e05885"); 
+                    $("#likeArea"+comment_no).attr("value","1");
+                }
+            }).fail(function (e) {
+                console.log(e);
+            });
+    }
+    </script>
 </head>
 
 <body>
@@ -718,10 +736,11 @@
                                                 </div>
                                                 <div class="title" id="replyTitle">답글</div>
                                             </div>
-                                            <div class="reaction" id="likeArea">
+                                            <div class="reaction" id="likeArea${dto.comment_no}" value="0" onclick="likeComment(${dto.comment_no})">
                                                 <div class="icon" id="likeIcon">
-                                                    <i class="far fa-heart fa-2x"></i>
+                                                    <i class="fas fa-heart fa-2x" id="likeBtn${dto.comment_no}"></i>
                                                 </div>
+                                                <script>selectLike_comment(${dto.comment_no})</script>
                                                 <!-- <i class="fas fa-heart"></i> -->
                                                 <div class="title" id="likeTitle">도움돼요</div>
                                             </div>
@@ -1047,8 +1066,8 @@
                                 </div>\
                                 <div class='title' id='replyTitle'>답글</div>\
                             </div>\
-                            <div class='reaction' id='likeArea'>\
-                                <div class='icon' id='likeIcon'> <i class='far fa-heart fa-2x'></i>\
+                            <div class='reaction' id='likeArea"+dto.comment_no+"' value='0' onclick='lickComment("+dto.comment_no+")'>\
+                                <div class='icon' id='likeIcon'> <i class='fas fa-heart fa-2x' id='likeBtn"+dto.comment_no+"'></i>\
                                 </div>\
                                 <div class='title' id='likeTitle'>도움돼요</div>\
                             </div>\
@@ -1084,6 +1103,7 @@
                                 <button type='button' class='btn btn-secondary insertReplyBtn' name='"+ dto.comment_no + "' onclick='insertReply(" + dto.comment_no + ")'>답글 등록</button>\
                             </div>");
             }
+            selectLike_comment(dto.comment_no);
         })
 
         };
@@ -1273,7 +1293,49 @@
                     location.href = "/report/toReportPage?comment_no=" + comment_no;
                 }
          */
-
+         
+       //댓글 좋아요 처리
+         function likeComment(comment_no){
+         	let bid = '${loginSession.user_id}';
+         	let post_no = comment_no;
+         	let value = $("#likeArea"+comment_no).attr("value");
+         	if(value=="0"){ //좋아요가 눌려있지 않는 경우
+         		$("#likeBtn"+comment_no).css("color", "#e05885"); 
+                 $("#likeArea"+comment_no).attr("value","1");
+                 console.log($("#likeArea"+comment_no).attr("value"));
+             	$.ajax({
+                     url: "${pageContext.request.contextPath}/like/plus.do?post_no=" + post_no + "&user_id=" + bid + "&type=5",
+                     type: "get"
+                 }).done(function (data) {
+                     if (data == "available") {
+                         console.log("좋아요 성공")
+                     } else if (data == "unavailable") {
+                         alert("좋아요 요청 실패");
+                     }
+                     return;
+                 }).fail(function (e) {
+                     console.log(e);
+                 })
+         	}else{//좋아요가 눌려있는 경우
+         		$("#likeBtn"+comment_no).css("color", "black"); 
+                 $("#likeArea"+comment_no).attr("value","0");
+                 console.log($("#likeArea"+comment_no).attr("value"));
+                 $.ajax({
+                     url: "${pageContext.request.contextPath}/like/minus.do?post_no=" + post_no + "&user_id=" + bid + "&type=5",
+                     type: "get"
+                 }).done(function (data) {
+                     if (data == "available") {
+                         console.log("좋아요 취소 성공")
+                     } else if (data == "unavailable") {
+                         alert("좋아요 취소 요청 실패");
+                     }
+                 }).fail(function (e) {
+                     console.log(e);
+                 })
+         	}
+         	
+         	
+         }
     </script>
 </body>
 
