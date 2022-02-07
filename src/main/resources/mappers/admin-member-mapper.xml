@@ -6,15 +6,23 @@
 <mapper namespace="adminMemberMapper">
 	
 	<!-- 전체 회원 수 가져오기 -->
-	<select id="getMemberCountAll" resultType="int">
+	<select id="getMemberCount" resultType="int">
 		SELECT COUNT(*) FROM tbl_member
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="searchOption != null">
+				${searchOption} LIKE '%'||#{searchKeyword}||'%'
+			</if>
+			<if test="userType != null">
+				AND type = ${userType}
+			</if>
+		</trim>
 	</select>
 	
 	<!-- 검색 한 회원 수 가져오기(위와 병합할 것) -->
-	<select id="getSearchCount" parameterType="map" resultType="int">
+	<!-- <select id="getSearchCount" parameterType="map" resultType="int">
 		SELECT COUNT(*) FROM tbl_member 
 		WHERE ${searchOption} LIKE '%'||#{searchKeyword}||'%'
-	</select>
+	</select> -->
 	
 	<!-- 회원 목록 가져오기 -->
 	<select id="getMemberList" parameterType="map" resultType="memberDTO">

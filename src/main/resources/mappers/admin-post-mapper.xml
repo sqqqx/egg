@@ -8,9 +8,15 @@
 	<!-- 게시글 수 가져오기 -->
 	<select id="getPostCount" resultType="int">
 		SELECT COUNT(*) FROM tbl_post
-		<if test="searchKeyword != null and searchKeyword != ''">
-			WHERE ${searchOption} LIKE '%'||#{searchKeyword}||'%'
-		</if>
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="searchKeyword != null and searchKeyword != ''">
+				${searchOption} LIKE '%'||#{searchKeyword}||'%'
+			</if>
+			<if test="type != null">
+				AND type = ${type}
+			</if>
+		</trim>
+		
 	</select>
 
 	<!-- 게시글 목록 가져오기 -->
