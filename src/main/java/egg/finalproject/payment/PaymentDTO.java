@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class PaymentDTO {
 	
-	private int payment_no;
+	private String payment_no;
 	private int cost;
 	private Date payment_time;
 	private String method;
@@ -12,7 +12,7 @@ public class PaymentDTO {
 	
 	public PaymentDTO() {}
 
-	public PaymentDTO(int payment_no, int cost, Date payment_time, String method, String card_name) {
+	public PaymentDTO(String payment_no, int cost, Date payment_time, String method, String card_name) {
 		super();
 		this.payment_no = payment_no;
 		this.cost = cost;
@@ -21,11 +21,11 @@ public class PaymentDTO {
 		this.card_name = card_name;
 	}
 
-	public int getPayment_no() {
+	public String getPayment_no() {
 		return payment_no;
 	}
 
-	public void setPayment_no(int payment_no) {
+	public void setPayment_no(String payment_no) {
 		this.payment_no = payment_no;
 	}
 
@@ -66,4 +66,6 @@ public class PaymentDTO {
 		return "PaymentDTO [payment_no=" + payment_no + ", cost=" + cost + ", payment_time=" + payment_time
 				+ ", method=" + method + ", card_name=" + card_name + "]";
 	}
+
+	
 }

@@ -47,4 +47,11 @@ public class onlinePostDAO {
 		return session.selectList("onlinePostMapper.selectAdmin");
 	}
 	
+	public List<Object> selectRecent() throws Exception{
+		return session.selectList("onlinePostMapper.selectRecent");
+	}
+	
+	public List<Object> selectLike() throws Exception{
+		return session.selectList("onlinePostMapper.selectLike");
+	}
 }

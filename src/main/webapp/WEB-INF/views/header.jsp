@@ -232,7 +232,14 @@
          })
          
          $("#toOffline").click(function(){
-        	 location.href="${pageContext.request.contextPath}/offline/toMain.do"
+        	 let id = '${loginSession.user_id}'
+        	
+        	 if('${loginSession.type}'==2){
+        		 location.href="${pageContext.request.contextPath}/offline/toMainEx.do?expert_id="+id
+        	 }else{
+        		 location.href="${pageContext.request.contextPath}/offline/toMain.do"
+        	 }
+        	 
          })
          //websocket 주소->endpoint로 이동[본인의 포트번호로 바꿀것]
          ws = new WebSocket("ws://localhost/alarm");

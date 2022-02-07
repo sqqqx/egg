@@ -77,7 +77,7 @@
             			<label><h4>★최신 강의★</h4></label>
             		</div>
             		<div class="col-1 mt-2 mainbutton">
-            			<button type="button" class="btn btn-primary">더보기</button>
+            			<button type="button" class="btn btn-primary" id="tolistRecent">더보기</button>
             		</div>		
             	</div>
                 <div class="row mediaBox">
@@ -125,6 +125,14 @@
             푸터
         </div>
     </div> 
-
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script>
+$("#tolistLike").click(function(){
+	location.href="${pageContext.request.contextPath}/online/toLike.do"
+})
+$("#tolistRecent").click(function(){
+	location.href="${pageContext.request.contextPath}/online/toRecent.do"
+})
+</script>
 </body>
 </html>

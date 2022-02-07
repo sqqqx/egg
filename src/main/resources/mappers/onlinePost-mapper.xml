@@ -24,6 +24,11 @@
     
     <!-- ============================================================================================================================================ -->
     
+    <select id="selectRecent" resultType="map" parameterType="Object">
+    	select a.post_no, a.title, b.system_name, rank() over(order by written_date DESC) as ranking from tbl_post a, tbl_image b where a.post_no = b.post_no
+    	 
+    </select>
+    
     <select id="selectRecent4" resultType="map" parameterType="Object">
     	select * from (select a.post_no, a.title, b.system_name, rank() over(order by written_date DESC) as ranking from tbl_post a, tbl_image b where a.post_no = b.post_no)
     	 where ranking &lt; 5
@@ -46,6 +51,6 @@
     
     <select id="selectAdmin" resultType="map" parameterType="Object">
     	select * from (select a.post_no, a.title, b.system_name from tbl_post a, tbl_image b where a.post_no = b.post_no)
-   		 where post_no between 6 and 9
+   		 where post_no between 8 and 11
     </select>
 </mapper>

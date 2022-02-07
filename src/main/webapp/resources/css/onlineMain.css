@@ -83,7 +83,7 @@ body{
 }
 .mediaText>span{
 	display:table-cell;
-	font-size: x-large;
+	font-size: large;
 	vertical-align: middle;
 }
 a{

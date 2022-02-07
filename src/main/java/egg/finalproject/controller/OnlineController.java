@@ -30,4 +30,18 @@ public class OnlineController {
 		model.addAttribute("listAdmin", listAdmin);
 		return "online/onlineMain";
 	}
+	
+	@RequestMapping("/toLike.do")
+	public String toLike(Model model) throws Exception{
+		List<Object> listLike = service.selectLike();
+		model.addAttribute("listLike",listLike);
+		return "online/onlineLike";
+	}
+	
+	@RequestMapping("/toRecent.do")
+	public String toRecent(Model model) throws Exception{
+		List<Object> listRecent = service.selectRecent();
+		model.addAttribute("listRecent",listRecent);
+		return "online/onlineRecent";
+	}
 }

@@ -5,4 +5,10 @@
 
 <mapper namespace="expertcategoryMapper">
 
+	 <select id="ExpertCategory" resultType="map" parameterType="Object">
+    	select b.category_no, a.parent_group
+		from tbl_category a inner join tbl_expert_category b on a.category_no = b.category_no 
+		where b.expert_id=#{expert_id} group by b.category_no, a.parent_group
+    </select>
+	
 </mapper>
