@@ -23,9 +23,8 @@
 </style>
 </head>
 <body>
-${orderList }
 <!-- name, phone, email, address, user_id, amount 넘어감 -->
-<                                                        action ="${pageContext.request.contextPath}/payment/test" id="paymentForm" method="post">
+<form action ="${pageContext.request.contextPath}/payment/test" id="paymentForm" method="post">
 <table class="table">
 <input type="text" name="user_id" value="${loginSession.user_id }" hidden>
 		<h1 mt-2>주문/결제</h1>

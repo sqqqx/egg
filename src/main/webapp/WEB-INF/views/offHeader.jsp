@@ -6,24 +6,18 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/resources/css/header.css"> 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<style>
+.imgBox>a>img{margin-top:0px;}
+</style>
 </head>
 <body>
  <div class="container-fluid">
         <div class="row header">
             <!--로고영역-->
             <div class="col-2 imgBox">
-            	<c:choose>
-            		<c:when test="${loginSession.type==0}">
-            			 <a href="/admin/toAdminMain">
-		                	<img src="/resources/img/logo.png">
-		                </a>
-            		</c:when>
-            		<c:otherwise>
-            			 <a href="/offline/toMain.do">
-		                	<img src="/resources/img/logo.png">
-		                </a>
-            		</c:otherwise>
-            	</c:choose>
+            	<a href="/offline/toMain.do">
+		            <img src="/resources/img/logo.png">
+		        </a>
             </div>
             <!-- 검색창 -->
             <div class="col-5 searchBox">

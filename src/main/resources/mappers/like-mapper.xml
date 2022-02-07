@@ -6,7 +6,7 @@
 <mapper namespace="likeMapper">
 
 
-<!-- type 1번:온라인게시글 2번:오프라인게시글 3번:상품게시글 -->
+<!-- type 1번:온라인게시글 2번:오프라인게시글 3번:상품게시글 4번:온라인게시글댓글 5:상품게시글댓글 -->
 <!-- 게시글의 총 좋아요 카운트 -->
 <select id="count" resultType="int">
 		select count(*) 

@@ -114,7 +114,6 @@
 
         #productName {
             font-family: 'BMHANNAAir';
-           height: 30%; 
             font-size: 17px;
             /* border: 1px solid black; */
             padding-top: 10px;
@@ -575,6 +574,7 @@
         .nickname_reply {
             margin-left: 15px;
         }
+
         #likeArea:hover i{
             color :#e05885;   
         }
@@ -1061,9 +1061,11 @@
                             </div>\
                             <div class='title' id='reportTitle'>신고</div>\
                         </div>")
+
             }
             selectLike_comment(dto.comment_no);
         })
+
 
         };
 
