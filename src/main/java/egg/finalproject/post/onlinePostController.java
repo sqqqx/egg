@@ -64,7 +64,7 @@ public class onlinePostController {
 		String realPath = session.getServletContext().getRealPath("onlinePostThumbNail");
 		System.out.println(realPath);
 		imageService.insertThumbNail(realPath, thumbNail,post_no);
-		return "admin/postManagement";
+		return "redirect:/admin/toPostManagement";
 		//여기에 어드민 게시글 조회 부분링크로 가면 좋을듯
 	}
 	

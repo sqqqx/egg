@@ -36,7 +36,7 @@ public class ProductController {
 	public String insertProduct(ProductDTO dto,MultipartFile thumbNail) throws Exception{
 		String realPath = session.getServletContext().getRealPath("productThumbnail");
 		service.insertProduct(dto,thumbNail, realPath);
-		return "redirect:toWrite.do";
+		return "redirect:/admin/toProductManagement";
 		//여기에 어드민 게시글 조회 부분링크로 가면 좋을듯
 	}
 	

@@ -18,6 +18,7 @@
 		<if test="searchKeyword != null and searchKeyword != ''">
 			AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
 		</if>
+		order by 1 DESC
 	</select>
 	
 	<!-- 상품 삭제 -->

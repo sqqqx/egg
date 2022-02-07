@@ -24,6 +24,7 @@
     		<if test="type != null">
     			AND type = #{type}
     		</if>
+    		order by 1 DESC
 	</select>
 	
 	<!-- 글 삭제 -->

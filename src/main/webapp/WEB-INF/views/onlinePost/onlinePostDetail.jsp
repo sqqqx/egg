@@ -559,6 +559,10 @@
         .nickname_reply{
             margin-left : 15px;
         }
+        
+        #relikeIcon{
+        display : none;
+        }
     </style>
 </head>
 
@@ -1009,6 +1013,7 @@
                             <div class='title' id='reportTitle'>신고</div>\
                         </div>")
                 }
+                
             })
 
         };
