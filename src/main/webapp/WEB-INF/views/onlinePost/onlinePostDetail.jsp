@@ -114,7 +114,7 @@
 
         #productName {
             font-family: 'BMHANNAAir';
-            height: 30%;
+           height: 30%; 
             font-size: 17px;
             /* border: 1px solid black; */
             padding-top: 10px;
