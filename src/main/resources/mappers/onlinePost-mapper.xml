@@ -29,6 +29,13 @@
     	 where ranking &lt; 5
     </select>
     
+    <select id="selectLike" resultType="map" parameterType="Object">
+    	select b.post_no, a.title, c.system_name, rank() over(order by count(b.post_no) DESC) as ranking 
+		from tbl_post a inner join tbl_like b on a.post_no = b.post_no 
+		inner join tbl_image c on a.post_no = c.post_no
+		where b.type=1 group by b.post_no, a.title, c.system_name
+    </select>
+    
     <select id="selectLike4" resultType="map" parameterType="Object">
     	select * from(select b.post_no, a.title, c.system_name, rank() over(order by count(b.post_no) DESC) as ranking 
 		from tbl_post a inner join tbl_like b on a.post_no = b.post_no 

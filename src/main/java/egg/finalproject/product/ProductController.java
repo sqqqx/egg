@@ -29,10 +29,8 @@ public class ProductController {
 	public String toWrite() {
 		return "product/product_write";
 	}
-	//TODO : 어드민 페이지 링크와 연결
-	//TODO : insertProduct.do로 바꾸기
 	//상품 등록
-	@RequestMapping("/write.do")
+	@RequestMapping("/insertProduct.do")
 	public String insertProduct(ProductDTO dto,MultipartFile thumbNail) throws Exception{
 		String realPath = session.getServletContext().getRealPath("productThumbnail");
 		service.insertProduct(dto,thumbNail, realPath);
@@ -78,7 +76,6 @@ public class ProductController {
 		return "product/productModify";
 	}
 	
-	//TODO : 삭제 후 주소값 "어드민 목록"으로 보낼 것
 	@RequestMapping("/deleteProduct.do")
 	@ResponseBody
 	public String deleteProduct(int product_no) throws Exception{
@@ -89,7 +86,7 @@ public class ProductController {
 		
 	}
 	
-	//TODO : 어드민으로 돌리기
+
 	@RequestMapping("/modify.do")
 	public String modify(ProductDTO dto, MultipartFile thumbNail, int product_no) throws Exception{
 		System.out.println("product_no : "+product_no);
@@ -99,9 +96,9 @@ public class ProductController {
 		String realPath = session.getServletContext().getRealPath("productThumbnail");
 		if(service.modifyProduct(dto,thumbNail, realPath)){
 			System.out.println("true");
-			return "redirect:toWrite.do";
+			return "redirect:/admin/toProductManagement";
 		}
 		System.out.println("false");
-		return "redirect:toWrite.do";
+		return "error";
 	}
 }

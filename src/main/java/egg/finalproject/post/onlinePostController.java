@@ -70,7 +70,6 @@ public class onlinePostController {
 	
 	
 	
-	//TODO : ProductDTO 추가 예정
 	@RequestMapping("/toDetail.do")
 	public String toDetail(int post_no, Model model) throws Exception{
 		System.out.println("pont_no : " + post_no);
@@ -92,12 +91,11 @@ public class onlinePostController {
 	}
 	
 	
-	//TODO : 어드민 글 목록 페이지로 이동 시키기
 	@RequestMapping("/deletePost.do")
 	public String deletePost(int post_no) throws Exception{
 		System.out.println("post_no : "+post_no);
 		if(service.deletePost(post_no)) {
-			return "redirect:toWrite.do";
+			return "redirect:/admin/toPostManagement";
 		}else {
 			return "error";
 		}
@@ -105,7 +103,6 @@ public class onlinePostController {
 	
 	
 	//수정 페이지로 이동
-	//TODO: 관리자 타입일 때만 수정, 삭제 뜨도록 하기
 	@RequestMapping("/toModifyPost.do")
 	public String toModifyPost(int post_no, Model model) throws Exception{
 		System.out.println(post_no);
@@ -127,7 +124,6 @@ public class onlinePostController {
 	}
 	 
 	//게시글 수정 메서드
-	//TODO : 어드민 게시글 조회 목록으로 옮기기!
 	@RequestMapping("/modify.do")
 	public String modify(int post_no, PostDTO dto,MultipartFile thumbNail) throws Exception{
 		System.out.println("수정될 post_no : "+post_no);
@@ -142,7 +138,7 @@ public class onlinePostController {
 //		String realPath = session.getServletContext().getRealPath("onlinePostThumbNail");
 //		System.out.println(realPath);
 //		imageService.insertThumbNail(realPath, thumbNail,post_no);
-		return "redirect:toWrite.do";
+		return "redirect:/admin/toPostManagement";
 		//여기에 어드민 게시글 조회 부분링크로 가면 좋을듯
 	}
 }

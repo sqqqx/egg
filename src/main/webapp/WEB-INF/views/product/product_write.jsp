@@ -101,6 +101,7 @@
         #thumbNailImg {
             width: 100%;
             height: 100%;
+            object-fit: contain;
         }
 
         .priceArea {
@@ -152,7 +153,7 @@
         <div class="row">
             <div class="wrapper">
                 <h2 class="text-center">상품 등록</h2>
-                <form action="/product/write.do" method="post" id="writeForm" ENCTYPE="multipart/form-data">
+                <form action="/product/insertProduct.do" method="post" id="writeForm" ENCTYPE="multipart/form-data">
                     <table class="table table-striped">
                         <tr>
                             <td class="contentName">상품명</td>
