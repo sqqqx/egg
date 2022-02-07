@@ -13,7 +13,8 @@ public class Paging {
 		int rowCntPage = 10; // 
 		
 		int naviCnt = rowCnt % rowCntPage > 0 ? (rowCnt / rowCntPage) + 1 : (rowCnt / rowCntPage);
-		int naviCntPage = 5; // 
+		int naviCntPage = 10; // 
+		System.out.println("naviCnt : " + naviCnt);
 		
 		if(currentIdx < 1) {
 			currentIdx = 1;
@@ -21,6 +22,7 @@ public class Paging {
 		if(currentIdx > naviCnt) {
 			currentIdx = naviCnt;
 		}
+		System.out.println("currentIdx : " + currentIdx);
 		
 		int firstIdx = ((currentIdx - 1) / naviCntPage) * naviCntPage + 1; // 
 		int lastIdx = firstIdx + naviCntPage - 1; // 

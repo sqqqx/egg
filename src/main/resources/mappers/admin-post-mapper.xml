@@ -15,15 +15,15 @@
 
 	<!-- 게시글 목록 가져오기 -->
 	<select id="getPostList" parameterType="map" resultType="map">
-		SELECT * FROM tbl_post 
-    		LEFT OUTER JOIN (SELECT post_no, COUNT(*) "COUNT" FROM tbl_like GROUP BY post_no) USING(post_no)
-    		WHERE post_no BETWEEN #{startRange} AND #{endRange}
-    		<if test="searchKeyword != null and searchKeyword != ''">
-    			AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
-    		</if>
-    		<if test="type != null">
-    			AND type = #{type}
-    		</if>
+		SELECT * FROM (SELECT row_number() OVER (ORDER BY written_Date DESC) AS idx, tbl_post.* FROM tbl_post) 
+   		LEFT OUTER JOIN (SELECT post_no, COUNT(*) "COUNT" FROM tbl_like GROUP BY post_no) USING(post_no)
+   		WHERE idx BETWEEN #{startRange} AND #{endRange}
+   		<if test="searchKeyword != null and searchKeyword != ''">
+   			AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+   		</if>
+   		<if test="type != null">
+   			AND type = #{type}
+   		</if>
 	</select>
 	
 	<!-- 글 삭제 -->
