@@ -60,7 +60,7 @@
 			                			<img class="photo" src="${pageContext.request.contextPath}/onlinePostThumbNail/${recent.SYSTEM_NAME }">
 			                		</div>
 			                		<div class="row mediaText">
-			             				<span>${recent.TITLE }</span>
+			             				<span><b>${recent.TITLE }</b></span>
 			                		</div>
 		                		</a>
 	                		</div>
@@ -88,7 +88,7 @@
 			                			<img class="photo" src="${pageContext.request.contextPath}/onlinePostThumbNail/${recent.SYSTEM_NAME }">
 			                		</div>
 			                		<div class="row mediaText">
-			             				<span>${recent.TITLE }</span>
+			             				<span><b>${recent.TITLE }</b></span>
 			                		</div>
 		                		</a>
 	                		</div>
@@ -113,7 +113,7 @@
 			                			<img class="photo" src="${pageContext.request.contextPath}/onlinePostThumbNail/${recent.SYSTEM_NAME }">
 			                		</div>
 			                		<div class="row mediaText">
-			             				<span>${recent.TITLE }</span>
+			             				<span><b>${recent.TITLE }</b></span>
 			                		</div>
 		                		</a>
 	                		</div>

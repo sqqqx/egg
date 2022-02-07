@@ -114,7 +114,7 @@
 
         #productName {
             font-family: 'BMHANNAAir';
-            height: 30%;
+            /*height: 30%;*/
             font-size: 17px;
             /* border: 1px solid black; */
             padding-top: 10px;
@@ -575,14 +575,9 @@
         .nickname_reply {
             margin-left: 15px;
         }
-<<<<<<< HEAD
-        
-        #relikeIcon{
-        display : none;
-=======
+
         #likeArea:hover i{
             color :#e05885;   
->>>>>>> 4065b7e3025e62f99351d64d529a9f81389789b1
         }
     </style>
     <script>
