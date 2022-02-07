@@ -54,4 +54,10 @@ public class onlinePostService {
 	public List<Object> selectAdmin() throws Exception{
 		return dao.selectAdmin();
 	}
+	public List<Object> selectRecent() throws Exception{
+		return dao.selectRecent();
+	}
+	public List<Object> selectLike() throws Exception{
+		return dao.selectLike();
+	}
 }

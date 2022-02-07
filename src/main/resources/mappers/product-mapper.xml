@@ -11,7 +11,7 @@
     
     <!-- product_no로 ProductDTO 정보 얻기 -->
     <select id="getProduct" resultType="ProductDTO">
-         SELECT * FROM TBL_PRODUCT WHERE PRODUCT_NO = #{product_no}
+         SELECT * FROM TBL_PRODUCT WHERE PRODUCT_NO = #{product_no} 
     </select>
     
     <!-- 상품 등록 메서드 -->

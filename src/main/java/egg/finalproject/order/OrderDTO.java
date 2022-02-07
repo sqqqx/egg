@@ -12,13 +12,14 @@ public class OrderDTO {
 	private String message;
 	private String status;
 	private String tracking_no;
-	private int payment_no;
 	private String user_id;
+	private String phone;
+	private String email;
 	
 	public OrderDTO() {}
 
 	public OrderDTO(String order_no, Date order_time, int cost, String name, String address, String message,
-			String status, String tracking_no, int payment_no, String user_id) {
+			String status, String tracking_no, String user_id, String phone, String email) {
 		super();
 		this.order_no = order_no;
 		this.order_time = order_time;
@@ -28,8 +29,9 @@ public class OrderDTO {
 		this.message = message;
 		this.status = status;
 		this.tracking_no = tracking_no;
-		this.payment_no = payment_no;
 		this.user_id = user_id;
+		this.phone = phone;
+		this.email = email;
 	}
 
 	public String getOrder_no() {
@@ -96,14 +98,6 @@ public class OrderDTO {
 		this.tracking_no = tracking_no;
 	}
 
-	public int getPayment_no() {
-		return payment_no;
-	}
-
-	public void setPayment_no(int payment_no) {
-		this.payment_no = payment_no;
-	}
-
 	public String getUser_id() {
 		return user_id;
 	}
@@ -112,11 +106,28 @@ public class OrderDTO {
 		this.user_id = user_id;
 	}
 
-	// (마이페이지) 멤버필드 확인위한 toString 오버라이딩
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Override
 	public String toString() {
 		return "OrderDTO [order_no=" + order_no + ", order_time=" + order_time + ", cost=" + cost + ", name=" + name
 				+ ", address=" + address + ", message=" + message + ", status=" + status + ", tracking_no="
-				+ tracking_no + ", payment_no=" + payment_no + ", user_id=" + user_id + "]";
+				+ tracking_no + ", user_id=" + user_id + ", phone=" + phone + ", email=" + email + "]";
 	}
+
+
 }
