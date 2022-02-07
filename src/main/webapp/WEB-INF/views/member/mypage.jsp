@@ -18,11 +18,11 @@
             <div class="col-12">My Page</div>
             <div class="col-12">${loginSession.user_nickname}님 환영합니다.</div>
         </div>
-        <c:if test="${dto.type eq 2}">
+        <c:if test="${loginSession.type == 2}">
         	<div class="row expert_box">
 	            <div class="col-10 row activity_box">
 	                <div class="col-8">
-	                    <p>내 포인트 : 800p</p>
+	                    <p>내 포인트 : 8900p</p>
 	                    <p>총 게시글 : 0 개</p>
 	                </div>
 	                <div class="col-3">
@@ -34,22 +34,6 @@
 	            </div>
        		</div>
         </c:if>
-        
-        <!-- 능력자 회원 등록이 안되어있어서 임시로 박스 띄워주기. 능력자 회원 생성 시 아래 expert_box 삭제 -->
-        	<div class="row expert_box">
-	            <div class="col-10 row activity_box">
-	                <div class="col-8">
-	                    <p>내 포인트 : 800p</p>
-	                    <p>총 게시글 : 0 개</p>
-	                </div>
-	                <div class="col-3">
-	                    <p><button type="button">충전내역</button></p>
-	                </div>
-	            </div>
-	            <div class="col-2">
-	                <button type="button" id="toProfileBtn" class="btn btn-dark">프로필 바로가기</button>
-	            </div>
-       		</div>
         
 		<!-- MyProfile box -->
         <div class="row box_mp">
@@ -96,10 +80,12 @@
             </div>
             <div class="col-4 menu_mp delivery">
                 <div>
-                    <img src="/resources/img/delivery.png">
+                	<a href="${pagecontext.request.contextPath}/cart/selectCart.do?user_id=${loginSession.user_id}">
+                		<img src="/resources/img/cart.png">
+                	</a>
                 </div>
                 <div>
-                    <span>배송 조회</span>
+                    <span id="toCart">장바구니</span>
                 </div>
             </div>
         </div>
@@ -114,6 +100,11 @@
 		// 쪽지함
 		$("#toViewMessage").on("click", function(){
 			$(location).attr("href", "${pagecontext.request.contextPath}/message/toViewMessage?type=received&user_id=${loginSession.user_id}&currentPage=1");
+		})
+		
+		// 장바구니
+		$("#toCart").on("click", function(){
+			$(location).attr("href", "${pagecontext.request.contextPath}/cart/selectCart.do?user_id=${loginSession.user_id}");
 		})
     </script>
 </body>

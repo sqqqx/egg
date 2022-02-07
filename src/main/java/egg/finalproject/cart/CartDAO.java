@@ -40,4 +40,10 @@ public class CartDAO {
 		map.put("name", name);
 		return session.update("cartMapper.updateQuantity",map);
 	}
+	
+	// (마이페이지) user_id로 카트 비우기
+	public int clearCart(String user_id) throws Exception {
+		System.out.println("CartDAO / 카트 비우기 - user_id: " + user_id);
+		return session.delete("cartMapper.clearCart", user_id);
+	}
 }

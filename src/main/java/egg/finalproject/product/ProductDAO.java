@@ -1,12 +1,11 @@
 package egg.finalproject.product;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import egg.finalproject.order.TempOrderDTO;
 
 @Repository
 public class ProductDAO {
@@ -44,5 +43,11 @@ public class ProductDAO {
 		System.out.println("dao rs : "+rs);
 //		return session.update("productMapper.modifyProduct",dto);
 		return rs;
+	}
+	
+	// (마이페이지) 주문 후 재고수량 수정
+	public int modifyStock(Map map) throws Exception {
+		System.out.println("ProductDAO / 재고수량 수정 - map: " + map);
+		return session.update("productMapper.modifyStock", map);
 	}
 }
