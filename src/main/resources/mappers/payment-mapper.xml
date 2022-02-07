@@ -6,6 +6,6 @@
 <mapper namespace="paymentMapper">
 	<!-- (마이페이지) 결제 내역 저장 -->
 	<insert id="completePaid" parameterType="paymentDTO">
-		insert into tbl_payment values (payment_no.nextval, #{cost}, sysdate, #{method}, #{card_name})
+		insert into tbl_payment values (#{payment_no}, #{cost}, sysdate, #{method}, #{card_name})
 	</insert>
 </mapper>

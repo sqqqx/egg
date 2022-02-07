@@ -24,7 +24,7 @@
 </head>
 <body>
 <!-- name, phone, email, address, user_id, amount 넘어감 -->
-<form action ="${pageContext.request.contextPath}/payment/test" id="paymentForm" method="post">
+<form action ="${pageContext.request.contextPath}/payment/toPayment" id="paymentForm" method="post">
 <table class="table">
 <input type="text" name="user_id" value="${loginSession.user_id }" hidden>
 		<h1 mt-2>주문/결제</h1>
@@ -44,7 +44,10 @@
 					<td>${dto.name}</td>
 					<td>${dto.price}</td>
 					<td>${dto.quantity}</td>
-					<td hidden><input type="text" name="amount" id="amount" value="${dto.quantity }"></td>
+					<td hidden><input type="checkbox" name="amount" id="amount" value="${dto.quantity}" checked></td>
+					<td hidden><input type="checkbox" name="productNames" value="${dto.name}" checked></td>
+					<td hidden><input type="checkbox" name="productQuantities" value="${dto.quantity}" checked></td>
+					<td hidden><input type="checkbox" name="productNos" value="${dto.product_no}" checked></td>
 					<td>
 						<c:set var="total" value="${dto.price * dto.quantity }"/>
 						<c:set var="ttotal" value="${ttotal+total}"/>
@@ -67,7 +70,7 @@
 				</tr>
 				<tr>
 					<td>이메일</td>
-					<td colspan="3"><input type="text" class="form-control" value="${loginSession.email }"></td>
+					<td colspan="3"><input type="text" class="form-control" value="${loginSession.email }" name="buyer_email"></td>
 				</tr>
 				<tr>
 					<td>휴대전화</td>
@@ -82,6 +85,13 @@
 		                <input type="text" class="form-control" id="phone2" maxlength="4">
 		                <input type="text" class="form-control" id="phone3" maxlength="4">
 					</td>
+				</tr>
+				<!-- 주문자 정보 - 결제시 필요 -->
+				<tr hidden>
+					<td><input type="text" value="${loginSession.user_nickname}" name="buyer_name"></td>
+					<td><input type="text" value="${loginSession.phone}" name="buyer_tel"></td>
+					<td><input type="text" value="${loginSession.address}" name="buyer_addr"></td>
+					<td><input type="text" id="buyer_postcode" name="buyer_postcode"></td>
 				</tr>
 				
 				<!-- 배송정보칸 -->
@@ -167,32 +177,32 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 
-//핸드폰 값 분할해서 찢어줌
-let phone = "${loginSession.phone}"
-console.log(phone);
-document.getElementById("phone2").value = phone.substring(3,7);
-document.getElementById("phone3").value = phone.substring(3,7);
-$("#phone3").value = phone.substring(7);
-
-
-$("#selectInfo").click(function(){
-	let nn = '${loginSession.user_nickname}'
-	let email = '${loginSession.email}'
-	let phone = '${loginSession.phone}'
-	if($(this).is(':checked')){
-		$("#name").val(nn)
-		$("#email").val(email)
-		document.getElementById("phone22").value = phone.substring(3,7);
-		document.getElementById("phone33").value = phone.substring(3,7);
-	}else{
-		$("#name").val("")
-		$("#email").val("")
-		$("#phone22").val("")
-		$("#phone33").val("")
-	}
-	})
-
+	//핸드폰 값 분할해서 찢어줌
+	let phone = "${loginSession.phone}"
+	console.log(phone);
+	document.getElementById("phone2").value = phone.substring(3,7);
+	document.getElementById("phone3").value = phone.substring(3,7);
+	$("#phone3").value = phone.substring(7);
 	
+	
+	$("#selectInfo").click(function(){
+		let nn = '${loginSession.user_nickname}'
+		let email = '${loginSession.email}'
+		let phone = '${loginSession.phone}'
+		if($(this).is(':checked')){
+			$("#name").val(nn)
+			$("#email").val(email)
+			document.getElementById("phone22").value = phone.substring(3,7);
+			document.getElementById("phone33").value = phone.substring(3,7);
+		}else{
+			$("#name").val("")
+			$("#email").val("")
+			$("#phone22").val("")
+			$("#phone33").val("")
+		}
+		})
+	let addr = "${loginSession.address}";
+	$("#buyer_postcode").val(addr.substring(0,5));
 	
 	
 	//regex 처리 
@@ -204,51 +214,52 @@ $("#selectInfo").click(function(){
 	let phone3 = document.getElementById("phone33"); // 번호 뒷자리 영역
 	let email = document.getElementById("email");
 
-function regexName(){//이름 regex
-	let regexName = /^[가-힣]{2,5}$/;
-	return regexName.test(name.value);
-}
-	
-function regexPhone() {
-	let regexPhone2 = /[0-9]{4,4}/;
-	let regexPhone3 = /[0-9]{4,4}/;
-	// 휴대전화 번호 중간 영역, 마지막 영역 모두 정규식 통과했을 경우
-	if (regexPhone2.test(phone2.value) && regexPhone3.test(phone3.value)) {
-		return true;
-	} else {
-		return false;
+	function regexName(){//이름 regex
+		let regexName = /^[가-힣]{2,5}$/;
+		return regexName.test(name.value);
 	}
-}
-
-function regexEmail(){
-	let regexEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-	return regexEmail.test(email.value);
-}
-
-
-$("#toPayment").click(function(){
-
-	
-	if(!regexName()||name.value==""){
-		alert("이름을 정확히 입력해주세요.");
-		return;
-	}else if(!regexPhone()||phone2 == ""||phone3==""){
-		alert("핸드폰 번호를 정확히 입력해주세요.");
-		return;
-	}else if(!regexEmail()||email == ""){
-		alert("이메일을 정확히 입력해주세요.");
-		return;
-	}else if(postcode.value == ""){
-		alert("주소를 입력해주세요.");
-		return;
-	}else{
-		document.getElementById("phone").value = phone1.value + phone2.value + phone3.value;
-		document.getElementById("user_address").value = "경기 용인시 기흥구 용구대로";
-		console.log("제출성공");
-		document.getElementById("paymentForm").submit();
+		
+	function regexPhone() {
+		let regexPhone2 = /[0-9]{4,4}/;
+		let regexPhone3 = /[0-9]{4,4}/;
+		// 휴대전화 번호 중간 영역, 마지막 영역 모두 정규식 통과했을 경우
+		if (regexPhone2.test(phone2.value) && regexPhone3.test(phone3.value)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
-})
+	function regexEmail(){
+		let regexEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+		return regexEmail.test(email.value);
+	}
+	
+	
+	$("#toPayment").click(function(){
+	
+		
+		if(!regexName()||name.value==""){
+			alert("이름을 정확히 입력해주세요.");
+			return;
+		}else if(!regexPhone()||phone2 == ""||phone3==""){
+			alert("핸드폰 번호를 정확히 입력해주세요.");
+			return;
+		}else if(!regexEmail()||email == ""){
+			alert("이메일을 정확히 입력해주세요.");
+			return;
+		}else if(postcode.value == ""){
+			alert("주소를 입력해주세요.");
+			return;
+		}else{
+			document.getElementById("phone").value = phone1.value + phone2.value + phone3.value;
+			$("#user_address").val($("#sample4_postcode").val() + " " + $("#sample4_roadAddress").val() + " " + $("#sample4_jibunAddress").val() + " " + $("#sample4_detailAddress").val() + " " + $("#sample4_extraAddress").val());
+			console.log("제출성공");
+			
+			document.getElementById("paymentForm").submit();
+		}
+		
+	})
 </script>
 
 

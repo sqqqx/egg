@@ -3,7 +3,7 @@ package egg.finalproject.payment;
 public class IamportPayment {
 	private String pg;	// pg사
 	private String pay_method;	// 결제방법
-	private String merchang_uid;	// 승인번호
+	private String merchant_uid;	// 승인번호
 	private String name;	// 상품명
 	private int amount;		// 금액
 	private String buyer_email;	// 구매자 이메일
@@ -13,14 +13,12 @@ public class IamportPayment {
 	private String buyer_postcode;	// 구매자 우편번호
 	
 	public IamportPayment() {}
-	
-
-	public IamportPayment(String pg, String pay_method, String merchang_uid, String name, int amount,
+	public IamportPayment(String pg, String pay_method, String merchant_uid, String name, int amount,
 			String buyer_email, String buyer_name, String buyer_tel, String buyer_addr, String buyer_postcode) {
 		super();
 		this.pg = pg;
 		this.pay_method = pay_method;
-		this.merchang_uid = merchang_uid;
+		this.merchant_uid = merchant_uid;
 		this.name = name;
 		this.amount = amount;
 		this.buyer_email = buyer_email;
@@ -47,12 +45,12 @@ public class IamportPayment {
 		this.pay_method = pay_method;
 	}
 
-	public String getMerchang_uid() {
-		return merchang_uid;
+	public String getMerchant_uid() {
+		return merchant_uid;
 	}
 
-	public void setMerchang_uid(String merchang_uid) {
-		this.merchang_uid = merchang_uid;
+	public void setMerchant_uid(String merchant_uid) {
+		this.merchant_uid = merchant_uid;
 	}
 
 	public String getName() {
@@ -114,7 +112,7 @@ public class IamportPayment {
 
 	@Override
 	public String toString() {
-		return "IamportPayment [pg=" + pg + ", pay_method=" + pay_method + ", merchang_uid=" + merchang_uid + ", name="
+		return "IamportPayment [pg=" + pg + ", pay_method=" + pay_method + ", merchant_uid=" + merchant_uid + ", name="
 				+ name + ", amount=" + amount + ", buyer_email=" + buyer_email + ", buyer_name=" + buyer_name
 				+ ", buyer_tel=" + buyer_tel + ", buyer_addr=" + buyer_addr + ", buyer_postcode=" + buyer_postcode
 				+ "]";

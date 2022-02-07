@@ -440,7 +440,7 @@
 	    	} else if($("#email").val() === "") {
 	    		alert("이메일 중복검사를 실행해주세요");
 	    		return ;
-	    	} else if($("#inputAddress").val() === "" || $("#edited_detailAddress").val() === "") {
+	    	} else if($("#inputAddress").val() === "" && $("#edited_detailAddress").val() === "") {
 	    		alert("주소를 상세히 입력해 주세요");
 	    		return ;
 	    	}
