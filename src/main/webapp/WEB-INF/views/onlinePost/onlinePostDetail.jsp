@@ -16,9 +16,10 @@
 
     <title>게시글 조회</title>
     <style>
-    *{
-       word-break:break-all;
-    }
+        * {
+            word-break: break-all;
+        }
+
         @font-face {
             font-family: 'BMHANNAAir';
             src:
@@ -49,6 +50,12 @@
         #thumbNail {
             height: 500px;
             /* border: 1px solid black; */
+            object-fit: contain;
+        }
+        
+        #thumbNailImg{
+           height : 500px;
+           object-fit: contain;
         }
 
         #storeTitle {
@@ -77,7 +84,8 @@
 
         #productImg {
             width: 100%;
-            height: 100%;
+            height : 100%;
+            object-fit: contain;
         }
 
         #storeLink {
@@ -117,7 +125,7 @@
             height: 35%;
             /* border: 1px solid black; */
             padding-bottom: 10px;
-            margin-top:0px;
+            margin-top: 0px;
         }
 
         #productPrice {
@@ -352,7 +360,7 @@
 
         .reply_nickname,
         .reply_written_date,
-        {
+            {
             margin-left: 20px;
         }
 
@@ -387,7 +395,7 @@
         .reference_nickname {
             font-size: 20px;
             font-family: 'BMHANNAAir';
-            padding-left : 15px;
+            padding-left: 15px;
         }
 
         .reply_content div {
@@ -499,90 +507,98 @@
             text-align: center;
             margin-top: 10px;
         }
-        .likeClass{
+
+        .likeClass {
             position: fixed;
             left: 370px;
-            top : 230px;          
-            height : 62px;
-            width : 60px;
-            padding : 3px;        
-            text-align : center;
-            cursor : pointer;
+            top: 230px;
+            height: 62px;
+            width: 60px;
+            padding: 3px;
+            text-align: center;
+            cursor: pointer;
             font-size: 15px;
             font-family: 'BMHANNAAir';
             border: 3px solid #e05885;
-        	border-radius : 10px;
+            border-radius: 10px;
         }
-		
-        #likeEmpty{
-            color : #e05885;
+
+        #likeEmpty {
+            color: #e05885;
         }
-        #likefull{
-        	color: white;
+
+        #likefull {
+            color: white;
         }
-        #likeBtnTitle{
-             color : #e05885;
+
+        #likeBtnTitle {
+            color: #e05885;
         }
-        #likeFullBtnTitle{
-        	color:white;
+
+        #likeFullBtnTitle {
+            color: white;
         }
-        .likeClass:hover{
-             background-color: #e05885;
+
+        .likeClass:hover {
+            background-color: #e05885;
         }
-        
-        .likeClass:hover #likeEmpty{
-             color: white;
+
+        .likeClass:hover #likeEmpty {
+            color: white;
         }
-        
-        .likeClass:hover #likeBtnTitle{
-             color : white;
+
+        .likeClass:hover #likeBtnTitle {
+            color: white;
         }
-   .likeFullClass{
+
+        .likeFullClass {
             position: fixed;
             left: 370px;
-            top : 230px;          
-            height : 62px;
-            width : 60px;
-            padding : 3px;        
-            text-align : center;
-            cursor : pointer;
+            top: 230px;
+            height: 62px;
+            width: 60px;
+            padding: 3px;
+            text-align: center;
+            cursor: pointer;
             font-size: 15px;
             font-family: 'BMHANNAAir';
             border: 3px solid #e05885;
-        	border-radius : 10px;
-        	background-color: #e05885;
-        	display:none;
+            border-radius: 10px;
+            background-color: #e05885;
+            display: none;
         }
-        .reply_content span{
-            width : 300px;
+
+        .reply_content span {
+            width: 300px;
         }
-        .nickname_reply{
-            margin-left : 15px;
+
+        .nickname_reply {
+            margin-left: 15px;
         }
     </style>
 </head>
 
 <body>
-	<!-- 종아요 버튼 -->
+    <!-- 종아요 버튼 -->
     <div class="likeClass">
-    		<i class="far fa-heart fa-2x" id="likeEmpty"></i>
-         	<span id="likeBtnTitle">찜하기</span>
+        <i class="far fa-heart fa-2x" id="likeEmpty"></i>
+        <span id="likeBtnTitle">찜하기</span>
     </div>
     <div class="likeFullClass">
-    		<i class="far fa-heart fa-2x" id="likefull"></i>
-         	<span id="likeFullBtnTitle">찜하기</span>
+        <i class="far fa-heart fa-2x" id="likefull"></i>
+        <span id="likeFullBtnTitle">찜하기</span>
     </div>
-    
-    
+
+
     <div class="container mt-3">
         <c:if test="${loginSession.type==0}">
-        <div class="buttons">
-            <button type="button" class="btn btn-warning" id="modify">게시글
-                수정</button>
-            <button type="button" class="btn btn-danger" id="delete">게시글
-                삭제</button>
-        </div>
-       </c:if>
+            <div class="buttons">
+                <button type="button" class="btn btn-warning" id="modify">게시글
+                    수정</button>
+                <button type="button" class="btn btn-danger" id="delete">게시글
+                    삭제</button>
+            </div>
+        </c:if>
         <div class="row" id="title">
             <h2>${PostDTO.title}</h2>
         </div>
@@ -681,7 +697,8 @@
                                             <div class="divGroup"></div>
                                             <div class="divGroup" id="commentChange">
                                                 <div class="dropdown">
-                                                    <c:if test="${dto.user_id eq loginSession.user_id || loginSession.type==0}">
+                                                    <c:if
+                                                        test="${dto.user_id eq loginSession.user_id || loginSession.type==0}">
                                                         <ul class="btn btn-default dropdown-toggle" type="button"
                                                             id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                             aria-expanded="false" aria-label="Left Align">
@@ -700,7 +717,7 @@
                                             </div>
                                         </div>
                                         <div class="comment_content">${dto.content}</div>
-                                        
+
                                         <div class="reactions">
                                             <div class="reaction replyArea" id="${dto.comment_no}">
                                                 <div class="icon" id="replyIcon">
@@ -708,16 +725,18 @@
                                                 </div>
                                                 <div class="title" id="replyTitle">답글</div>
                                             </div>
-                                              <div class="reaction" id="likeArea">
+                                            <div class="reaction" id="likeArea">
                                                 <div class="icon" id="likeIcon">
                                                     <i class="far fa-heart fa-2x"></i>
                                                 </div>
                                                 <!-- <i class="fas fa-heart"></i> -->
                                                 <div class="title" id="likeTitle">좋아요</div>
-                                              </div>
-                                            
-                                            <c:if test="${dto.user_nickname ne loginSession.user_nickname && loginSession.type!=0}">
-                                                <div class="reaction reportArea" onclick="showPopup(2,${dto.comment_no})">
+                                            </div>
+
+                                            <c:if
+                                                test="${dto.user_nickname ne loginSession.user_nickname && loginSession.type!=0}">
+                                                <div class="reaction reportArea"
+                                                    onclick="showPopup(2,${dto.comment_no})">
                                                     <div class="icon" id="reportIcon">
                                                         <i class="fas fa-times fa-2x"></i>
                                                     </div>
@@ -730,8 +749,8 @@
                                         <div class="replies" name="${dto.comment_no}" hidden>
                                             <div class="replyInputArea">
                                                 <div class="replyInputDiv">
-                                                    <input type="text" class="form-control" placeholder="답글을 입력해 주세요."
-                                                        name="${dto.comment_no}">
+                                                    <input type="text" class="form-control reply_input"
+                                                        placeholder="답글을 입력해 주세요." name="${dto.comment_no}">
                                                 </div>
                                                 <div class="InsertReplyBtnArea">
                                                     <button type="button" class="btn btn-secondary insertReplyBtn"
@@ -751,21 +770,23 @@
                 </div>
             </div>
         </div>
-        <form method="post" id="reportForm" action="/report/insertReport.do"> 
+        <form method="post" id="reportForm" action="/report/insertReport.do">
             <div id="popup" class="hide">
 
                 <div class="content">
                     <input type="hidden" name="type" id="type" value=2>
-                    <input type= "hidden" name="target_no" id="target_no">
+                    <input type="hidden" name="target_no" id="target_no">
                     <div class="reportTitle">
                         <p>신고하기</p>
                     </div>
                     <div class=" radios">
-                        <input type="radio" class="reportType" name="report_title" value=1> <span>부적절한 언행 사용(욕설, 성적 발언, 정치,
+                        <input type="radio" class="reportType" name="report_title" value=1> <span>부적절한 언행 사용(욕설, 성적 발언,
+                            정치,
                             종교 혐오 발언 등)</span><br>
                     </div>
                     <div class=" radios">
-                        <input type="radio" class="reportType" name="report_title" value=2> <span>유해한 컨텐츠 사용(광고, 거짓정보, 자극적인
+                        <input type="radio" class="reportType" name="report_title" value=2> <span>유해한 컨텐츠 사용(광고, 거짓정보,
+                            자극적인
                             컨텐츠)</span><br>
                     </div>
                     <div class=" radios">
@@ -788,8 +809,8 @@
         </form>
     </div>
     <script>
-    
-        
+
+
 
         //댓글 입력 시 댓글 글자수를 세어주는 기능
         $(document).ready(function () {
@@ -798,12 +819,19 @@
 
                 if ($(this).val().length > 150) {//150자가 넘는 경우
                     $(this).val($(this).val().substring(0, 150)); //150자까지만 잘라서 표기
-                    $('#commentsInput_cnt').html("(150 / 150)"); 
+                    $('#commentsInput_cnt').html("(150 / 150)");
                     alert("150자 이상 입력하실 수 없습니다.");
                 }
             });
+
         });
-        
+        $(document).on("keyup", ".reply_input", function () {
+            if ($(this).val().length > 150) {//150자가 넘는 경우
+                $(this).val($(this).val().substring(0, 150)); //150자까지만 잘라서 표기 
+                alert("150자 이상 입력하실 수 없습니다.");
+            }
+        })
+
         //댓글 편집 버튼을 내려오게 하는 이벤드
         $(document).ready(function () {
             $('.dropdown-toggle').dropdown()
@@ -835,7 +863,7 @@
                 $.ajax({
                     url: "/comment/insertComment.do"
                     , type: "post"
-                    , data: { content: content, post_no: post_no, type:type }
+                    , data: { content: content, post_no: post_no, type: type }
                 }).done(function (data) {
                     console.log(data);
                     $("#commentsInput").val("");
@@ -847,22 +875,22 @@
                 alert("댓글을 입력해 주세요.");
             }
         })
-        
-        $(document).on("click","#modify",function(){
-        	location.href = "/onlinePost/toModifyPost.do?post_no=" + ${ PostDTO.post_no };
+
+        $(document).on("click", "#modify", function () {
+            location.href = "/onlinePost/toModifyPost.do?post_no=" + ${ PostDTO.post_no };
         })
-        
-        $(document).on("click","#delete",function(){
-        	if(confirm("게시글을 정말 삭제하시겠습니까?")){
-        		location.href = "/onlinePost/deletePost.do?post_no=" + ${ PostDTO.post_no };
-        	}
+
+        $(document).on("click", "#delete", function () {
+            if (confirm("게시글을 정말 삭제하시겠습니까?")) {
+                location.href = "/onlinePost/deletePost.do?post_no=" + ${ PostDTO.post_no };
+            }
 
         })
-        
+
         /* //상단 게시글 수정 버튼 클릭 이벤트
         document.getElementById("modify").onclick = function () {
             alert("수정 버튼이 눌렸어!");
-        	location.href = "/onlinePost/toModifyPost.do?post_no=" + ${ PostDTO.post_no };
+            location.href = "/onlinePost/toModifyPost.do?post_no=" + ${ PostDTO.post_no };
         } */
 
 
@@ -882,7 +910,7 @@
                 $.ajax({
                     url: "/comment/deleteComment.do"
                     , type: "post"
-                    , data: { comment_no: comment_no, post_no: post_no, type:type }
+                    , data: { comment_no: comment_no, post_no: post_no, type: type }
                 }).done(function (data) {
                     console.log(data);
                     printComment(data);
@@ -894,7 +922,7 @@
                 return false;
             }
         }
-        
+
         //AJAX로 전체 댓글을 띄워주는 용도의 함수
         //댓글 변경 시마다 적용되고 있음.
         //PARAMETER : Commentlist => 리스트를 넣으면 foreach 돌려서 생성
@@ -945,7 +973,7 @@
                         <div class='replies' hidden>\
                         <div class='replyInputArea'>\
                             <div class='replyInputDiv'>\
-                                <input type='text' class='form-control' placeholder='답글을 입력해 주세요.' name='"+ dto.comment_no + "'>\
+                                <input type='text' class='form-control reply_input' placeholder='답글을 입력해 주세요.' name='"+ dto.comment_no + "'>\
                             </div>\
                             <div class='InsertReplyBtnArea'>\
                                 <button type='button' class='btn btn-secondary insertReplyBtn' name='"+ dto.comment_no + "' onclick='insertReply(" + dto.comment_no + ")'>답글 등록</button>\
@@ -989,8 +1017,8 @@
                 </form>\
                 </div>"
                 $(".allComments").append(option);
-                if (dto.user_nickname == '${loginSession.user_nickname}' || ${loginSession.type}==0) {// 내가 쓴 댓글이라면 댓글 편집 버튼 띄우기
-                    $("div[id='dropdown" + dto.comment_no + "']").append("<ul class='btn btn-default dropdown-toggle' type='button'\
+                if (dto.user_nickname == '${loginSession.user_nickname}' || ${ loginSession.type }== 0) {// 내가 쓴 댓글이라면 댓글 편집 버튼 띄우기
+                $("div[id='dropdown" + dto.comment_no + "']").append("<ul class='btn btn-default dropdown-toggle' type='button'\
                             id='dropdownMenuButton1' data-bs-toggle='dropdown'\
                             aria-expanded='false' aria-label='Left Align'>\
                             <label id='editComments'>댓글 편집</label>\
@@ -1002,18 +1030,18 @@
                                 삭제\
                             </li>\
                         </ul>")
-                }else { // 다른 사람의 댓글인 경우 신고 버튼 띄우기
-                    $("div[id='reactions" + dto.comment_no + "']").append("<div class='reaction reportArea' onclick='showPopup(2,"+dto.comment_no+")'>\
+            }else { // 다른 사람의 댓글인 경우 신고 버튼 띄우기
+                $("div[id='reactions" + dto.comment_no + "']").append("<div class='reaction reportArea' onclick='showPopup(2," + dto.comment_no + ")'>\
                             <div class='icon' id='reportIcon'><i class='fas fa-times fa-2x'></i>\
                             </div>\
                             <div class='title' id='reportTitle'>신고</div>\
                         </div>")
-                }
-            })
+            }
+        })
 
         };
 
-        
+
         // 댓글 편집 메뉴에 있는 댓글 '수정'버튼을 눌렀을 때
         // PARAMETER : comment_no, origin_comment (수정할 댓글 번호 + 기존 댓글 내용을 넣어줌)
         function pressModify(comment_no, origin_comment) {
@@ -1035,7 +1063,7 @@
             return;
 
         }
-        
+
         //댓글 수정창 닫고 기존 댓글 내용으로 보여주기
         //수정하다 취소 버튼 클릭 시 적용
         function commentFormVisible(comment_no) {
@@ -1054,7 +1082,7 @@
             let textarea = $("textarea[name='" + comment_no + "']");
             let content = textarea[0].value;
             let post_no = ${ PostDTO.post_no }
-            let type =1;
+            let type = 1;
             console.log(textarea);
             console.log(content);
             if (content == "") { //수정창이 비어있는 경우 --> 댓글을 입력해 주세요.
@@ -1065,7 +1093,7 @@
                 $.ajax({
                     url: "/comment/modifyComment.do"
                     , type: "post"
-                    , data: { comment_no: comment_no, content: content, post_no:post_no, type:type }
+                    , data: { comment_no: comment_no, content: content, post_no: post_no, type: type }
                 }).done(function (data) {
                     console.log(data);
                     printComment(data);
@@ -1080,7 +1108,7 @@
             let content = $("input[name='" + comment_no + "']")[0].value;
             console.log(content);
             let post_no = ${ PostDTO.post_no }
-            let type =1;
+            let type = 1;
             if (content == "") { //입력창에 내용이 없다면
                 alert("답글을 입력해 주세요.");
                 return;
@@ -1088,7 +1116,7 @@
                 $.ajax({
                     url: "/comment/insertReply.do"
                     , type: "post"
-                    , data: { comment_no, comment_no, post_no: post_no, content: content, type:type}
+                    , data: { comment_no, comment_no, post_no: post_no, content: content, type: type }
                 }).done(function (data) {
                     console.log(data);
                     $("input[name='" + comment_no + "']").val("");
@@ -1117,15 +1145,15 @@
                 })
             } commentForm.children[3].hidden = !commentForm.children[3].hidden;
         })
-        
-      
+
+
 
         //printComment와 같이 리스트를 받아와 띄워주는 메서드
         //PARAMETER : data, comment_no ==> 답글 리스트, 부모 댓글 번호(그 답글창에 띄워줘야 하므로)
         function getReplies(data, comment_no) {
             $("div[id='commentReplyArea" + comment_no + "']").empty();
-            if(data.length==0){ //답글이 없는 경우
-            	$("div[id='commentReplyArea" + comment_no + "']").append("등록된 답글이 없습니다.");
+            if (data.length == 0) { //답글이 없는 경우
+                $("div[id='commentReplyArea" + comment_no + "']").append("등록된 답글이 없습니다.");
                 return;
             }
             data.forEach(function (dto) {
@@ -1140,7 +1168,7 @@
                <div class='blank'></div>\
                <div class='reply_replyArea' id='reply_replyArea"+ dto.comment_no + "' hidden>\
                <div class='replyInputDiv' >\
-                   <input type='text' class='form-control reply_replyInput' id='reply_replyInput"+ dto.comment_no + "' name=" + dto.comment_no + ">\
+                   <input type='text' class='form-control reply_input' id='reply_replyInput"+ dto.comment_no + "' name=" + dto.comment_no + ">\
                </div>\
                <div class='InsertReplyBtnArea' >\
                    <button type='button' class='btn btn-secondary replyReplyBtn' value='"+ dto.comment_no + "' onclick='insertReply_reply(" + dto.parent_no + "," + dto.comment_no + ")'>답글 등록</button>\
@@ -1148,7 +1176,7 @@
           </div/ >"
 
                 $("div[id='commentReplyArea" + comment_no + "']").append(option);
-               if (dto.reference_nickname != " ") {
+                if (dto.reference_nickname != " ") {
                     $("div[id='reply_content" + dto.comment_no + "']").append("<span class='reference_nickname'>@" + dto.reference_nickname + " </span>" + dto.content);
                 } else {
                     $("div[id='reply_content" + dto.comment_no + "']").append("<span class='reference_nickname'></span>" + dto.content);
@@ -1159,29 +1187,29 @@
                     $("div[id='reply_reactions" + dto.comment_no + "']").append("<div class='reply_like'>\
                                 <i class='far fa-heart fa-1x'></i>\
                             </div>")
-                } else if(${loginSession.type}==0){
-                	$("div[id='reply_nickname" + dto.comment_no + "']").append("<span class='deleteReply' onclick='deleteReply(" + dto.comment_no + "," + dto.parent_no + ")'>삭제</span>")
-                    $("div[id='reply_reactions" + dto.comment_no + "']").append("<div class='reply_reply' id='reply_reply"+ dto.comment_no + "' onclick=\"reply_reply(" + dto.comment_no + ",'" + dto.user_nickname + "')\">\
+                } else if (${ loginSession.type }== 0){
+                $("div[id='reply_nickname" + dto.comment_no + "']").append("<span class='deleteReply' onclick='deleteReply(" + dto.comment_no + "," + dto.parent_no + ")'>삭제</span>")
+                $("div[id='reply_reactions" + dto.comment_no + "']").append("<div class='reply_reply' id='reply_reply" + dto.comment_no + "' onclick=\"reply_reply(" + dto.comment_no + ",'" + dto.user_nickname + "')\">\
                             <i class='far fa-comment-dots fa-1x reply_reply'></i>\
                             </div>\
                     		<div class='reply_like'>\
                                 <i class='far fa-heart fa-1x'></i>\
                             </div>\
                             ")
-                } 
+            } 
                 else {
-                    $("div[id='reply_reactions" + dto.comment_no + "']").append("<div class='reply_reply' id='reply_reply"+ dto.comment_no + "' onclick=\"reply_reply(" + dto.comment_no + ",'" + dto.user_nickname + "')\">\
+                $("div[id='reply_reactions" + dto.comment_no + "']").append("<div class='reply_reply' id='reply_reply" + dto.comment_no + "' onclick=\"reply_reply(" + dto.comment_no + ",'" + dto.user_nickname + "')\">\
                             <i class='far fa-comment-dots fa-1x reply_reply'></i>\
                             </div>\
                             <div class='reply_like'>\
                                 <i class='far fa-heart fa-1x'></i>\
                             </div>\
-                    		<div class='reportArea' onclick='showPopup(2,"+dto.comment_no+")''>\
+                    		<div class='reportArea' onclick='showPopup(2,"+ dto.comment_no + ")''>\
     	                   <i class='fas fa-times fa-1x'></i>\
     		               </div>")
-                }
-            })
-        } 
+            }
+        })
+        }
         //대댓글(답글의 답글)쓰기를 누른 경우
         //@유저 닉네임이 태그된 input창 띄우기
         function reply_reply(comment_no, user_nickname) {
@@ -1214,7 +1242,7 @@
             }
         }
 
-        
+
         //답글 삭제
         //확인 없이 그냥 삭제
         function deleteReply(comment_no, parent_no) {
@@ -1233,7 +1261,7 @@
                     location.href = "/report/toReportPage?comment_no=" + comment_no;
                 }
          */
-         
+
         //신고 팝업을 띄우는 메서드
         //신고 타입(댓글인지, 게시글인지), 해당 번호
         function showPopup(type, target_no) {
@@ -1244,14 +1272,14 @@
             $("#target_no").val(target_no);
             $("#type").val(type);
         }
-         
+
         //팝업 닫기
         function closePopup() {
             const popup = document.querySelector('#popup');
             popup.classList.add('hide');
         }
 
-        
+
         //신고창에서 신고 사유를 선택하는 경우
         $(".reportType").on("click", function () {
             // $("#phoneCheck").attr("disabled",false);
@@ -1260,91 +1288,91 @@
                 return;
             } $("#reportReason").attr("disabled", true); //input창 닫기
         })
-        
-        
+
+
         //신고창에서 신고 버튼 눌렀을 때 처리
-        $(document).on("click","#reportBtn",function(){
-        	var reportForm = $("#reportForm").serialize(); //form을 json으로 해서 보내기
-        	$.ajax({
-        		url : "/report/insertReport.do"
-        		,type : "post"
-        		,data : reportForm
-        	}).done(function(rs){
-        		if(rs=="success"){
-        			alert("신고 완료되었습니다.");
-        		}else{
-        			alert("오류가 생겼습니다. 다시 시도해 주시길 바랍니다.");
-        		}closePopup();
-        	}).fail(function(rs){
-        		console.log(rs);
-        	});
+        $(document).on("click", "#reportBtn", function () {
+            var reportForm = $("#reportForm").serialize(); //form을 json으로 해서 보내기
+            $.ajax({
+                url: "/report/insertReport.do"
+                , type: "post"
+                , data: reportForm
+            }).done(function (rs) {
+                if (rs == "success") {
+                    alert("신고 완료되었습니다.");
+                } else {
+                    alert("오류가 생겼습니다. 다시 시도해 주시길 바랍니다.");
+                } closePopup();
+            }).fail(function (rs) {
+                console.log(rs);
+            });
         })
-        
-        
-		//좋아요 버튼 처리
-		$('.likeClass').click(function(){
-		let bid= '${loginSession.user_id}'
-		let post_no = '${PostDTO.post_no}'
-			
-		
-		$(this).css("display", "none")
-		$(".likeFullClass").css("display", "block");
-	
-		$.ajax({
-			url : "${pageContext.request.contextPath}/like/plus.do?post_no="+post_no+"&user_id="+bid+"&type=1",
-			type : "get"
-		}).done(function(data){
-			if(data == "available"){
-				console.log("좋아요 성공")
-			}else if(data == "unavailable"){
-				alert("좋아요 요청 실패");
-			}
-		}).fail(function(e){
-			console.log(e);
-		})
-	})
-	
-		//좋아요 취소 처리
-		$('.likeFullClass').click(function(){
-		let bid= '${loginSession.user_id}'
-		let post_no = '${PostDTO.post_no}'
-		
-		
-		$(this).css("display", "none")
-		$(".likeClass").css("display", "block");
-	
-		$.ajax({
-			url : "${pageContext.request.contextPath}/like/minus.do?post_no="+post_no+"&user_id="+bid+"&type=1",
-			type : "get"
-		}).done(function(data){
-			if(data == "available"){
-				console.log("좋아요 취소 성공")
-			}else if(data == "unavailable"){
-				alert("좋아요 취소 요청 실패");
-			}
-		}).fail(function(e){
-			console.log(e);
-		})
-	})
-	//유저가 이 게시글에 좋아요를 눌렀을 경우 좋아요버튼이 눌린채로 표시
-	function selectLike(){
-      let bid= '${loginSession.user_id}'
-      let post_no = '${PostDTO.post_no}'
-	$.ajax({
-		url:"${pageContext.request.contextPath}/like/selectLike.do?post_no="+post_no+"&user_id="+bid+"&type=1",
-		type: "get"
-	}).done(function(data){
-		if(data == "available"){
-			$(".likeFullClass").css("display", "block")
-			$(".likeClass").css("display", "none");
-		}else if(data == "unavailable"){
-			$(".likeFullClass").css("display", "none")
-			$(".likeClass").css("display", "block");
-		}
-	}).fail(function(e){
-		console.log(e);
-	});
-}
+
+
+        //좋아요 버튼 처리
+        $('.likeClass').click(function () {
+            let bid = '${loginSession.user_id}'
+            let post_no = '${PostDTO.post_no}'
+
+
+            $(this).css("display", "none")
+            $(".likeFullClass").css("display", "block");
+
+            $.ajax({
+                url: "${pageContext.request.contextPath}/like/plus.do?post_no=" + post_no + "&user_id=" + bid + "&type=1",
+                type: "get"
+            }).done(function (data) {
+                if (data == "available") {
+                    console.log("좋아요 성공")
+                } else if (data == "unavailable") {
+                    alert("좋아요 요청 실패");
+                }
+            }).fail(function (e) {
+                console.log(e);
+            })
+        })
+
+        //좋아요 취소 처리
+        $('.likeFullClass').click(function () {
+            let bid = '${loginSession.user_id}'
+            let post_no = '${PostDTO.post_no}'
+
+
+            $(this).css("display", "none")
+            $(".likeClass").css("display", "block");
+
+            $.ajax({
+                url: "${pageContext.request.contextPath}/like/minus.do?post_no=" + post_no + "&user_id=" + bid + "&type=1",
+                type: "get"
+            }).done(function (data) {
+                if (data == "available") {
+                    console.log("좋아요 취소 성공")
+                } else if (data == "unavailable") {
+                    alert("좋아요 취소 요청 실패");
+                }
+            }).fail(function (e) {
+                console.log(e);
+            })
+        })
+        //유저가 이 게시글에 좋아요를 눌렀을 경우 좋아요버튼이 눌린채로 표시
+        function selectLike() {
+            let bid = '${loginSession.user_id}'
+            let post_no = '${PostDTO.post_no}'
+            $.ajax({
+                url: "${pageContext.request.contextPath}/like/selectLike.do?post_no=" + post_no + "&user_id=" + bid + "&type=1",
+                type: "get"
+            }).done(function (data) {
+                if (data == "available") {
+                    $(".likeFullClass").css("display", "block")
+                    $(".likeClass").css("display", "none");
+                } else if (data == "unavailable") {
+                    $(".likeFullClass").css("display", "none")
+                    $(".likeClass").css("display", "block");
+                }
+            }).fail(function (e) {
+                console.log(e);
+            });
+        }
     </script>
 </body>
 
