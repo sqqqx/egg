@@ -11,8 +11,9 @@ public class offlinePostService {
 	@Autowired
 	private offlinePostDAO dao;
 
-	public List<PostDTO> selectByCg(int type, int category_no) throws Exception{
-		return dao.selectByCg(type, category_no);
+	public List<PostDTO> selectByCg(String parent_group) throws Exception{
+		System.out.println("offlinePostService : " + parent_group);
+		return dao.selectByCg(parent_group);
 	}
 	
 }

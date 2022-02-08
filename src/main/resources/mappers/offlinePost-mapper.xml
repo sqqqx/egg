@@ -5,7 +5,7 @@
 
 <mapper namespace="offlinePostMapper">
 
-	<select id="selectByCg" resultType="PostDTO">
-         SELECT * from tbl_post where type=#{type} and category_no = #{category_no}
+	<select id="selectByCg" resultType="map" parameterType="PostDTO">
+         select * from tbl_post p inner join tbl_category c using(category_no) where type=2 and c.parent_group = #{parent_group}
     </select>
 </mapper>

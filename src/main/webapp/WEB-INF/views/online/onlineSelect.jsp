@@ -8,53 +8,85 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/resources/css/onlineMain.css"> 
+<style>
+*{margin:0;}
+body{
+    width:1800px;
+    height: auto;
+    margin:0 auto;
+}
+	h2{text-align:center; padding-top:20px;}
+	
+	.class{
+   height: auto;
+   width:1800px;
+}
+
+.mediaBox{
+	height:auto;
+	width:100%;
+	 float:left;
+	 margin:auto;
+	 background-color:#f0f2ed;
+}
+.content{
+	height:500px;
+	width:420px;
+	border:1px solid black;
+	border-radius:10px;
+	margin:10px;
+	background-color:white;
+	padding-right:0;
+	padding-left:0;
+	
+}
+.mediaPhoto{
+   height: 75%;
+   width:100%;
+   border-radius:10px;
+   margin-right:0;
+   margin-left:0;
+}
+.photo{
+	width:100%;
+	height:100%;
+	padding-left:0;
+	padding-right:0;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	filter: brightness(70%);
+}
+.photo:hover{
+  filter: brightness(100%);
+}
+.mediaText{
+	display:table;
+   height: 25%;
+   width:100%;
+   padding-left:10px;
+   text-decoration-line: none;
+   text-align:center;
+   vertical-align: middle;
+}
+.mediaText>span{
+	display:table-cell;
+	font-size: x-large;
+	vertical-align: middle;
+}
+a{
+	text-decoration-line: none;
+	color:black;
+}
+</style>
 </head>
 <body>
-    <div class="container-fluid">
-        
+        <h2>검색결과 : ${search} </h2>
         <div class="row main">
-         <!-- 인기 강의 -->
+         <!-- 최신 강의 -->
             <div class="col-12 mt-5 class">
-            	<div class="row titleBox">
-            		<div class="col-2 mt-2 mainTitle">
-            			<label><h4>★인기 강의★</h4></label>
-            		</div>
-            		<div class="col-1 mt-2 mainbutton">
-            			<button type="button" class="btn btn-primary">더보기</button>
-            		</div>		
-            	</div>
-                <div class="row mediaBox">
-                	<c:forEach items="${listLike }" var="recent">
-                		<div class="col">
-	                			<a href="${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no=${recent.POST_NO}">
-			                		<div class="row mediaPhoto">
-			                			<img class="photo" src="${pageContext.request.contextPath}/onlinePostThumbNail/${recent.SYSTEM_NAME }">
-			                		</div>
-			                		<div class="row mediaText">
-			             				<span>${recent.TITLE }</span>
-			                		</div>
-		                		</a>
-	                		</div>
-                	</c:forEach>
-                </div>
-            </div>    
-        
-        
-        
-        	<!-- 최신강의 -->
-            <div class="col-12 mt-5 class">
-            	<div class="row titleBox">
-            		<div class="col-2 mt-2 mainTitle">
-            			<label><h4>★최신 강의★</h4></label>
-            		</div>
-            		<div class="col-1 mt-2 mainbutton">
-            			<button type="button" class="btn btn-primary">더보기</button>
-            		</div>		
-            	</div>
                 <div class="row mediaBox">
                 	<c:forEach items="${listRecent }" var="recent">
-	                		<div class="col">
+                		<div class="col-3 content">
 	                			<a href="${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no=${recent.POST_NO}">
 			                		<div class="row mediaPhoto">
 			                			<img class="photo" src="${pageContext.request.contextPath}/onlinePostThumbNail/${recent.SYSTEM_NAME }">
@@ -66,37 +98,7 @@
 	                		</div>
                 	</c:forEach>
                 </div>
-            </div>
-            
-    
-            
-            <!-- 관리자 추천 강의 -->
-            <div class="col-12 mt-5 class">
-            	<div class="row titleBox">
-            		<div class="col-2 mt-2 mainTitle">
-            			<label><h4>★관리자 추천 강의★</h4></label>
-            		</div>	
-            	</div>
-                <div class="row mediaBox">
-                	<c:forEach items="${listAdmin }" var="recent">
-                		<div class="col">
-	                			<a href="${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no=${recent.POST_NO}">
-			                		<div class="row mediaPhoto">
-			                			<img class="photo" src="${pageContext.request.contextPath}/onlinePostThumbNail/${recent.SYSTEM_NAME }">
-			                		</div>
-			                		<div class="row mediaText">
-			             				<span>${recent.TITLE }</span>
-			                		</div>
-		                		</a>
-	                		</div>
-                	</c:forEach>
-                </div>
-            </div>      
-        </div>
-        <div class="row footer">
-            푸터
-        </div>
-    </div> 
-
+            </div>             
+ 
 </body>
 </html>

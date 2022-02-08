@@ -15,25 +15,34 @@
         <div class="row header">
             <!--로고영역-->
             <div class="col-2 imgBox">
-            	<a href="/offline/toMain.do">
-		            <img src="/resources/img/logo.png">
-		        </a>
+            	<c:choose>
+            		<c:when test="${loginSession.type==2}">
+            			 <a href="${pageContext.request.contextPath}/offline/toMainEx.do?expert_id=${loginSession.user_id}">
+		                	<img src="/resources/img/logo.png">
+		                </a>
+            		</c:when>
+            		<c:otherwise>
+            			 <a href="/online/toMain.do">
+		                	<img src="/resources/img/logo.png">
+		                </a>
+            		</c:otherwise>
+            	</c:choose>
             </div>
-            <!-- 검색창 -->
+            <!-- 검색창(오프라인은 각 분야게시판의 검색기능으로 대체)-->
             <div class="col-5 searchBox">
-            	<div class="col-10">
-            	<input type="text" class="form-control" id="searchInput" placeholder="검색할 내용을 입력해주세요." aria-describedby="searchText">
-            	</div>
-            	<div class="col-2">
-            	<button class="btn btn-outline-secondary" type="button" id="searchBtn">검색</button>       
-            	</div>
+            	<h2>뭐라고 넣을까....</h2>
             </div>
             <!--온라인클래스 이동-->
             <div class="col-1">
                 <button type="button" class="btn btn-dark" id="toOnline">온라인</button>
             </div>
-            <!--쇼핑몰(이었던것)-->
-            <div class="col-1">        
+            <!-- 장바구니 -->
+            <div class="col-1">    
+            	<c:if test = "${not empty loginSession }">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" class="bi bi-cart4" id="toCart" viewBox="0 0 16 16">
+					  <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+					</svg>
+                </c:if>    
             </div>
             <!--알림(비로그인시 svg 안보여야함) // 로그인세션활용하여 c:if처리 할것-->
             <div class="col-1">
@@ -119,6 +128,17 @@
          
          $("#toOnline").click(function(){
         	 location.href="${pageContext.request.contextPath}/online/toMain.do"
+         })
+         
+         $("#toOffline").click(function(){
+        	 let id = '${loginSession.user_id}'
+        	
+        	 if('${loginSession.type}'==2){
+        		 location.href="${pageContext.request.contextPath}/offline/toMainEx.do?expert_id="+id
+        	 }else{
+        		 location.href="${pageContext.request.contextPath}/offline/toMain.do"
+        	 }
+        	 
          })
          
          //websocket 주소->endpoint로 이동[본인의 포트번호로 바꿀것]
