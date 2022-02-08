@@ -12,12 +12,38 @@
     </select>
     
     <!-- (마이페이지) 당일 주문량 조회 -->
-	<select id="countOrder" parameterType="int">
-		select count(*) from tbl_order where order_time like #{today};
+	<select id="countOrder" resultType="int">
+		select count(*) from tbl_order where order_time like #{today}
 	</select>
     
     <!-- (마이페이지) 환불 처리 -->
     <update id="refund">
     	update tbl_order set status = 'cancled' where payment_no = 1
     </update>
+    
+    <!-- (마이페이지) 주문정보 저장 -->
+    <insert id="insertOrder" parameterType="orderDTO">
+    	insert into tbl_order
+    		values(#{order_no}, sysdate, #{cost}, #{name}, #{address}, #{message}, 'ready', 'none', #{user_id}, #{phone}, #{email})
+    </insert>
+    
+    <!-- (마이페이지) 마지막 주문번호 불러오기 -->
+    <select id="getLastOrder_no" resultType="string">
+    	select order_no from (select row_number() over (order by order_no desc) r, o.* from tbl_order o where user_id=#{user_id}) where r=1
+    </select>
+    
+    <!-- (마이페이지) 마지막 주문 건 삭제 -->
+    <select id="deleteLastOrder">
+    	delete from tbl_order where order_no = #{merchant_uid}
+    </select>
+    
+    <!-- (마이페이지) 주문상품 저장 -->
+    <insert id="insertOrderProduct" parameterType="map">
+    	insert into tbl_orderproduct values(#{order_no}, #{product_no}, #{quantity})
+    </insert>
+    
+    <!-- (마이페이지) 주문상품 불러오기 -->
+    <select id="getOrderProduct" resultType="OrderProduct">
+    	select * from tbl_orderproduct where order_no = #{order_no}
+    </select>
 </mapper>

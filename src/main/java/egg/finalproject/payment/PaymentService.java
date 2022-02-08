@@ -19,6 +19,7 @@ public class PaymentService {
 	// (마이페이지) 결제 성공 후 결제내역 저장
 	public int completePaid(PaymentDTO dto) throws Exception {
 		System.out.println("PaymentService / 결제내역 저장 - PaymentDTO: " + dto);
+		// 결제 성공 후 장바구니에서 목록 삭제
 		return dao.completePaid(dto);
 	}
 	

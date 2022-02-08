@@ -29,5 +29,6 @@
 			<typeAlias type="egg.finalproject.career.CareerDTO" alias="careerDTO"/>
 			<typeAlias type="egg.finalproject.expert_category.Expert_categoryDTO" alias="expert_categoryDTO"/>
 			<typeAlias type="egg.finalproject.report.ReportDTO" alias="reportDTO"/>
+			<typeAlias type="egg.finalproject.order.OrderProduct" alias="OrderProduct"/>
 		</typeAliases>
 	</configuration>

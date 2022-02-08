@@ -34,4 +34,9 @@ select count(*) from tbl_cart where user_id=#{user_id} and product_no=#{product_
 update tbl_cart set quantity=#{quantity} where product_no = 
 (select product_no from tbl_product where name=#{name})
 </update>
+
+<!-- (마이페이지) user_id로 카트 비우기 -->
+<delete id="clearCart">
+	delete from tbl_cart where user_id = #{user_id}
+</delete>
 </mapper>

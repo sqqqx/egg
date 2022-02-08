@@ -35,7 +35,7 @@ public class TempOrderDTO {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setProductName(String name) {
 		this.name = name;
 	}
 
