@@ -184,9 +184,32 @@
             </div>
         </div>
     </div>
+    
+    <div class="d-none">
+	    <form id="searchForm" action="${pageContext.request.contextPath}/online/search.do" method="post">
+	    	<input type="text" id="searchInputGo" name="search">
+	    </form>
+    </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
+		 // 검색
+		$("#searchInput").on("keypress", function(e){
+			if(e.keyCode == "13"){
+				$('#searchBtn').click();
+			}
+		});
+			
+		$("#searchBtn").click(function(){
+			if($("#searchInput").val().length >= 2) {
+				$("#searchInputGo").val($("#searchInput").val());
+		   		$("#searchForm").submit();
+			}else {
+				alert("2글자 이상 입력해주세요.");
+			}
+		});
+    
     	//계정표시아이콘 눌렀을 경우 마이페이지,정보수정,로그아웃 할수 있는 div창이 내려옴
         $(".account").click(function(){
             let accountBox = $("#accountInfoBox")

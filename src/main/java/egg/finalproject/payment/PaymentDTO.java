@@ -66,6 +66,4 @@ public class PaymentDTO {
 		return "PaymentDTO [payment_no=" + payment_no + ", cost=" + cost + ", payment_time=" + payment_time
 				+ ", method=" + method + ", card_name=" + card_name + "]";
 	}
-
-	
 }
