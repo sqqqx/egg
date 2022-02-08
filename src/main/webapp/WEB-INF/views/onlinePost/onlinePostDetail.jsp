@@ -114,7 +114,6 @@
 
         #productName {
             font-family: 'BMHANNAAir';
-            /*height: 30%;*/
             font-size: 17px;
             /* border: 1px solid black; */
             padding-top: 10px;
@@ -1211,12 +1210,12 @@
                     $("div[id='reply_content" + dto.comment_no + "']").append("<span class='reference_nickname'></span>" + dto.content);
                 }
 
-                if (dto.user_id == '${loginSession.user_id}') {
+                if (dto.user_id == '${loginSession.user_id}') { //내가 쓴 댓글인 경우, 삭제 버튼과 좋아요 버튼 넣기
                     $("div[id='reply_nickname" + dto.comment_no + "']").append("<span class='deleteReply' onclick='deleteReply(" + dto.comment_no + "," + dto.parent_no + ")'>삭제</span>")
                     $("div[id='reply_reactions" + dto.comment_no + "']").append("<div class='reply_like' id='likeArea"+dto.comment_no+"' onclick='likeComment("+dto.comment_no+")' value='0'>\
                                 <i class='fas fa-heart fa-1x'  id='likeBtn"+dto.comment_no+"'></i>\
                             </div>")
-                } else if (${ loginSession.type }== 0){
+                } else if (${ loginSession.type }== 0){ //내가 관리자라면 다른 댓글에 신고 빼고, 모든 댓글 삭제버튼 넣기
                 $("div[id='reply_nickname" + dto.comment_no + "']").append("<span class='deleteReply' onclick='deleteReply(" + dto.comment_no + "," + dto.parent_no + ")'>삭제</span>")
                 $("div[id='reply_reactions" + dto.comment_no + "']").append("<div class='reply_reply' id='reply_reply" + dto.comment_no + "' onclick=\"reply_reply(" + dto.comment_no + ",'" + dto.user_nickname + "')\">\
                             <i class='fas fa-comment-dots fa-1x reply_reply'></i>\
@@ -1226,7 +1225,7 @@
                             </div>\
                             ")
             } 
-                else {
+                else{ //일반 유저인 경우
                 $("div[id='reply_reactions" + dto.comment_no + "']").append("<div class='reply_reply' id='reply_reply" + dto.comment_no + "' onclick=\"reply_reply(" + dto.comment_no + ",'" + dto.user_nickname + "')\">\
                             <i class='far fa-comment-dots fa-1x reply_reply'></i>\
                             </div>\
@@ -1234,7 +1233,7 @@
                                 <i class='fas fa-heart fa-1x'  id='likeBtn"+dto.comment_no+"'></i>\
                             </div>\
                     		<div class='reportArea' onclick='showPopup(2,"+ dto.comment_no + ")''>\
-    	                   <i class='far fa-times fa-1x'></i>\
+    	                   <i class='fas fa-times fa-1x'></i>\
     		               </div>")
             }
             selectLike_comment(dto.comment_no);
