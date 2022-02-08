@@ -39,7 +39,7 @@
             <div class="col-1">
                 <button type="button" class="btn btn-dark" id="toOffline">오프라인</button>
             </div>
-            <!--장바구니-->
+            <!-- 장바구니 -->
             <div class="col-1">  
             	<c:if test = "${not empty loginSession }">
                    <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" class="bi bi-cart4" id="toCart" viewBox="0 0 16 16">

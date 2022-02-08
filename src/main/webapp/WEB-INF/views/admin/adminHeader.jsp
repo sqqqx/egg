@@ -12,11 +12,9 @@
         <div class="row header">
             <!--로고영역-->
             <div class="col-2 imgBox">
-            	
             	 <a href="/admin/toAdminMain">
 		               <img src="/resources/img/logo.png">
-		         </a>
-            		
+		         </a>		
             </div>
             <!-- 검색창 -->
             <div class="col-9 adminBox">

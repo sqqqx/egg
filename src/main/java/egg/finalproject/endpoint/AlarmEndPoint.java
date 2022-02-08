@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.mail.Session;
+import javax.websocket.Session;
 import javax.servlet.http.HttpSession;
 import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;

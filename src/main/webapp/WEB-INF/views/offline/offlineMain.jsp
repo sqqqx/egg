@@ -15,13 +15,13 @@
 		width:1800px;
     	height: 1000px;
 	}
-	table{width:1400px; margin:auto; border:1px solid black}
+	table{width:1400px; margin:auto;}
 	#header{margin-top:10px; height:100px;}
 	.category{height:400px;}
 	#btnBox{text-align:center}
 	td{margin:auto;}
 	img{width:300px; height:300px; margin:40px}
-	h2,h4{text-align:center}
+	h2,h4{text-align:center; margin-top:10px;}
 	.contentBox{width:100%; height:100%;}
 	a{text-decoration-line: none;
 	color:black;}
@@ -37,7 +37,7 @@
 			<tr>
 				<th colspan="4" id="btnBox">
 					<c:forEach items="${ExpertCategory}" var="ex">
-					<button type="button" class="btn btn-dark btn-lg" value="${ex.CATEGORY_NO}">${ex.PARENT_GROUP }</button>
+					<button type="button" class="btn btn-dark btn-lg toList" value="${ex.PARENT_GROUP }">${ex.PARENT_GROUP }</button>
 					</c:forEach>
 				</th>	
 			</tr>
@@ -104,7 +104,12 @@
 	</table>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script>
-	
+	$(".toList").click(function(e){
+		let text = e.target.value;
+		let id = '${loginSession.user_id}'
+		console.log(text)
+		location.href="${pageContext.request.contextPath}/offlinePost/toList.do?parent_group="+text+"&expert_id="+id;
+	})
 </script>
 </body>
 </html>

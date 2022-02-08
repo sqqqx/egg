@@ -50,6 +50,7 @@ public class OnlineController {
 		System.out.println("search확인 == " + search);
 		List<Object> listRecent = service.mainSearch(search);
 		model.addAttribute("listRecent", listRecent);
+		model.addAttribute("search", search);
 		return "online/onlineSelect";
 	}
 }
