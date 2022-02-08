@@ -204,11 +204,8 @@
                     type: "post",
                     contentType: "application/json",
                     data: JSON.stringify(msgObj)
-                    //dataType: "json"
                 }).done(function (list) {
-                    // console.log(list);
                     for (let item of list) {
-                        // console.log(item.user_id);
                     }
                     insertUserInfo(list);
                 }).fail(function (e) {
@@ -267,7 +264,6 @@
                 	const nLoginCount = parseInt($("#nLoginCount").html()) + 1;
                 	$("#nLoginCount").empty();
                 	$("#nLoginCount").append(nLoginCount);
-                	//location.href = "${pageContext.request.contextPath}/admin/toAdminMain";
             	}
             });
         </script>

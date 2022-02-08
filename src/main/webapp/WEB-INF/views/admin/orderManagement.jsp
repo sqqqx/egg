@@ -340,17 +340,13 @@
 		}); */
 		// 결제 취소 (NEW)
 		$(".orderCancel").on("click", function(e) {
-			//const order_no = e.target.id;
 			const status = e.target.parentNode.parentNode.childNodes[7];
 			if(status.innerText == "cancled") {
 				alert("이미 취소 된 결제입니다.");
 				return;
 			}
 			const payment_no = $(e.target).attr("pno"); // payment_no와 order_no은 동일(구분을 위한 명시)
-			//let cost = $(e.target).attr("cost");
-			//cost = cost.replace(/,/gi, "");
 			if(confirm("주문을 취소하겠습니까?") && checkOrder(payment_no)) {
-				//canclePay(payment_no, cost, order_no);
 				$.ajax({
 					type: "post",
 					url: "${pageContext.request.contextPath}/payment/refund.do",
