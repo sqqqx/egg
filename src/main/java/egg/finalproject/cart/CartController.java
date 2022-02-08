@@ -58,6 +58,7 @@ public class CartController {
 	public String toOrder(Model model, String user_id) throws Exception{
 		List<TempOrderDTO> list = service.selectCart(user_id);
 		model.addAttribute("orderList", list);
+		model.addAttribute("route", "cart");
 		return "order/order";
 		
 	}
