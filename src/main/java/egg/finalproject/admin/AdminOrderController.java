@@ -43,7 +43,7 @@ public class AdminOrderController {
 	@RequestMapping("/checkOrder.do")
 	@ResponseBody
 	public String checkOrder(String payment_no) throws Exception {
-		return service.checkOrder(payment_no).equals("success") ? "success" : "ns";
+		return service.checkOrder(payment_no);
 	}
 	
 	// 결제 취소

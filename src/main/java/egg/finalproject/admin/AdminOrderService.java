@@ -71,7 +71,7 @@ public class AdminOrderService extends Paging {
 	// 주문 상세 정보
 	public Map<String, Object> getOrderDetail(String order_no) throws Exception {
 		Map<String, Object> map = dao.getOrderDetail(order_no);
-		System.out.println(map.size());
+		//System.out.println(map.size());
 		return map;
 	}
 	

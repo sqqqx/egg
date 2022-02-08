@@ -97,7 +97,7 @@
 											<td style="width: 25%">
 												<button type="button" class="btn btn-outline-dark orderDetailView" id="${map.ORDER_NO}">상세 정보</button>
 												<button type="button" class="btn btn-outline-dark changeAddress" id="${map.ORDER_NO}" addr="${map.ADDRESS}">배송지 변경</button>
-												<button type="button" class="btn btn-outline-dark orderCancel" id="${map.ORDER_NO}" pno="${map.PAYMENT_NO}" cost="${map.COST}">주문 취소</button>
+												<button type="button" class="btn btn-outline-dark orderCancel" id="${map.ORDER_NO}" pno="${map.ORDER_NO}" cost="${map.COST}">주문 취소</button>
 											</td>
 										</tr>
 										<!-- depth 1 -->
@@ -242,7 +242,10 @@
 		let order_no = "";
 		$(".changeAddress").on("click", function(e) {
 			$(".address_input").val("");
-			const address = $(".changeAddress").attr("addr");
+			const address = $(e.target).attr("addr");
+			const postRegex = /[0-9]{5}/i;
+			console.log(address);
+			console.log(address.match(postRegex));
 			order_no = e.target.id;
 			console.log(order_no);
 			$('#exampleModalCenteredScrollable').modal('toggle');
@@ -337,12 +340,32 @@
 		}); */
 		// 결제 취소 (NEW)
 		$(".orderCancel").on("click", function(e) {
-			const order_no = e.target.id;
-			const payment_no = $(e.target).attr("pno");
-			let cost = $(e.target).attr("cost");
-			cost = cost.replace(/,/gi, "");
+			//const order_no = e.target.id;
+			const status = e.target.parentNode.parentNode.childNodes[7];
+			if(status.innerText == "cancled") {
+				alert("이미 취소 된 결제입니다.");
+				return;
+			}
+			const payment_no = $(e.target).attr("pno"); // payment_no와 order_no은 동일(구분을 위한 명시)
+			//let cost = $(e.target).attr("cost");
+			//cost = cost.replace(/,/gi, "");
 			if(confirm("주문을 취소하겠습니까?") && checkOrder(payment_no)) {
-				canclePay(payment_no, cost, order_no);
+				//canclePay(payment_no, cost, order_no);
+				$.ajax({
+					type: "post",
+					url: "${pageContext.request.contextPath}/payment/refund.do",
+					data: {merchant_uid: payment_no}
+				}).done(function(rs){
+					console.log(rs);
+					if(rs == "success") {
+						alert("주문 취소 성공");
+						location.href = "${pageContext.request.contextPath}/admin/toOrderManagement";
+					}
+					alert("주문 취소 실패");
+				}).fail(function(e){
+					console.log(e);
+				});
+				return;
 			} 
 		});
 		// 주문 상태 확인
@@ -357,7 +380,7 @@
 				}
 			}).done(function(rs) {
 				console.log(rs);
-				if(rs == "success") {
+				if(rs == "ready") {
 					bl = true;
 				}
 			}).fail(function(e) {

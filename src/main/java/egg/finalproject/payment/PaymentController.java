@@ -169,6 +169,7 @@ public class PaymentController {
 		// 환불 처리
 		merchant_uid = "ORD20180131-0000024";	// 작동확인을 위해 명시적으로 임시값 지정
 		if(service.refund(access_token, merchant_uid).equals("success")){
+			System.out.println(merchant_uid);
 			System.out.println("아임포트 환불처리 완료");
 			if(orderService.refund(merchant_uid) > 0) {
 				System.out.println("주문테이블 주문상태 취소로 변경");

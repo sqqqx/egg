@@ -35,7 +35,7 @@
 
 			<!-- 검색 영역 -->
 			<form id="searchForm"
-				action="${pageContext.request.contextPath}/admin/getReportList.do?currentIdx=1"
+				action="${pageContext.request.contextPath}/admin/getReportList.do?currentIdx=1&type=${type}"
 				method="post" class="d-flex justify-content-center">
 				<div class="row searchArea">
 					<div class="col-3 d-flex justify-content-end">
@@ -64,6 +64,8 @@
 			<div class="row cls-reportType">
 				<div class="col-4 d-flex">
 					<button type="button" class="btn btn-outline-dark cls-type"
+						id="typeAll" value="9">전체</button>
+					<button type="button" class="btn btn-outline-dark cls-type"
 						id="typePost" value="1">게시글</button>
 					<button type="button" class="btn btn-outline-dark cls-type"
 						id="typeComment" value="2">댓글</button>
@@ -84,6 +86,7 @@
 								<th>신고자</th>
 								<th>유형</th>
 								<th>분류</th>
+								<th>누적 신고 수</th>
 								<th>처리 상황</th>
 								<th>등록일</th>
 							</thead>
@@ -91,7 +94,7 @@
 								<c:choose>
 									<c:when test="${empty list}">
 										<tr>
-											<td colspan="6">신고 내역이 존재하지 않습니다.</td>
+											<td colspan="7">신고 내역이 존재하지 않습니다.</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
@@ -114,6 +117,7 @@
 													</c:when>
 												</c:choose>
 												<td class="toReportDetail">${map.REPORT_CONTENT}</td>
+												<td class="toReportDetail">${map.COUNT}</td>
 												<c:choose>
 													<c:when test="${map.YN eq 0}">
 														<td class="toReportDetail">미처리</td>
@@ -205,6 +209,9 @@
 	                break;
 	            case 3 :
 	                $("#typeMessage").attr("class", "btn btn-dark");
+	                break;
+	            case 9 :
+	                $("#typeAll").attr("class", "btn btn-dark");
 	                break;
 	    	}
         });

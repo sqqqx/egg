@@ -37,13 +37,11 @@
             top: 50%;
             left: 50%;
             margin-top: -360px;
-            /* -half height and width to center */
             margin-left: -180px;
             box-shadow: 14px 14px 22px -18px;
             padding: 20px
         }
 
-        /* Heading */
         .name {
             text-transform: uppercase;
             text-align: center;
@@ -53,7 +51,6 @@
             margin-top: 10px
         }
 
-        /* Big thank */
         .greeting {
             font-size: 21px;
             text-transform: capitalize;
@@ -63,7 +60,6 @@
             letter-spacing: 1.2px
         }
 
-        /* Order info */
         .order p {
             font-size: 13px;
             color: #aaa;
@@ -71,13 +67,11 @@
             letter-spacing: .7px
         }
 
-        /* Our line */
         hr {
             border: .7px solid #ddd;
             margin: 15px 0;
         }
 
-        /* Order details */
         .details {
             padding-left: 10px;
             margin-bottom: 35px;
@@ -91,7 +85,6 @@
             margin-bottom: 15px
         }
 
-        /* Image and the info of the order */
         .product {
             float: left;
             width: 83%
@@ -119,14 +112,12 @@
             color: #aaa;
         }
 
-        /* Net price */
         .details>p {
             color: #6f8d90;
             margin-top: 25px;
             font-size: 15px
         }
 
-        /* Total price */
         .totalprice p {
             padding-left: 10px
         }
@@ -147,12 +138,10 @@
             font-size: 15px
         }
 
-        /* Footer */
         footer {
             font-size: 10px;
             text-align: center;
             margin-top: 135px;
-            /* You can make it with position try it */
             color: #aaa
         }
     </style>
@@ -163,11 +152,10 @@
         <!-- <h2 class="name"> 주문 정보 </h2> -->
         <p class="greeting"> 주문 정보 </p>
 
-        <!-- Order info -->
         <div class="order">
             <p> 결제번호 : <span>${map.PAYMENT_NO}</span> </p>
             <p> 결제수단 : <span>${map.METHOD}</span> </p>
-            <p> 카드명 : <span>${map.CARD_NAME}</span> </p>
+            <%-- <p> 카드명 : <span>${map.CARD_NAME}</span> </p> --%>
         </div>
         <hr>
 
@@ -180,7 +168,6 @@
         </div>
         <hr>
 
-        <!-- Details -->
         <div class="details">
             <!-- <h3> 상품 </h3> -->
             <div class="product">
@@ -195,24 +182,26 @@
             <!-- <p> ---  </p> -->
         </div>
 
-        <!-- Sub and total price -->
         <div class="totalprice">
             <p class="sub"> 주문 금액 <span> ₩ ${map.COST} </span></p>
             <p class="del"> 배송비 <span> ₩ 3,000 </span> </p>
             <hr>
-            <p class="tot"> Total <span id="finalCost"> ₩ 138 </span> </p>
+            <p class="tot"> Total <span id="finalCost"> ₩ 0 </span> </p>
         </div>
 
         <!-- Footer -->
-        <footer> <!-- Lorem ipsum dolor sit amet consectetur adipisicing. --> </footer>
+        <footer>  </footer>
     </div>
 	
 	<script>
 		// 배송비 합쳐서 total에 넣기
 		window.onload = function(){
 			let cost = "${map.COST}";
-			cost = parseInt(cost.replace(",", "")) + 3000;
+			const regex = /,/gi;
+			cost = cost.replace(regex, "");
+			cost = parseInt(cost) + 3000;
 			cost = cost.toLocaleString();
+			console.log(cost);
 			document.getElementById("finalCost").textContent = "₩ " + cost;
 		}
 	</script>

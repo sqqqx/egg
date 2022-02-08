@@ -52,11 +52,13 @@
 			<div class="row cls-postType">
 				<div class="col-4 d-flex">
 					<button type="button" class="btn btn-outline-dark cls-type"
+						id="typeAll" value="9">전체</button>
+					<button type="button" class="btn btn-outline-dark cls-type"
 						id="typeOnline" value="1">온라인</button>
 					<button type="button" class="btn btn-outline-dark cls-type"
 						id="typeOffline" value="2">오프라인</button>
-					<!-- <button type="button" class="btn btn-outline-dark cls-type"
-						id="typeStore" value="0">스토어</button> -->
+					<%-- <button type="button" class="btn btn-outline-dark cls-type"
+						id="typeStore" value="0">스토어</button> --%>
 				</div>
 				<div class="col-8 d-flex justify-content-end">
 					<button type="button" class="btn btn-outline-dark" id="btnWrite">글
@@ -225,6 +227,9 @@
                 break;
                    case 2 :
                 $("#typeOffline").attr("class", "btn btn-dark");
+                break;
+                   case 9 :
+                $("#typeAll").attr("class", "btn btn-dark");
                 break;
             }
            });
