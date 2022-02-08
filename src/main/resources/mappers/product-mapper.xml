@@ -30,6 +30,6 @@
     
     <!-- (마이페이지) 주문 후 재고수량 수정 -->
     <update id="modifyStock" parameterType="map">
-    	update tbl_product set stock = #{stock}
+    	update tbl_product set stock = #{stock} where product_no = #{product_no}
     </update>
 </mapper>
