@@ -54,4 +54,8 @@ public class onlinePostDAO {
 	public List<Object> selectLike() throws Exception{
 		return session.selectList("onlinePostMapper.selectLike");
 	}
+	//================================================================================
+	public List<Object> mainSearch(String search) throws Exception{
+		return session.selectList("onlinePostMapper.mainSearch", search);
+	}
 }

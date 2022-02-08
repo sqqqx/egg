@@ -53,4 +53,31 @@
     	select * from (select a.post_no, a.title, b.system_name from tbl_post a, tbl_image b where a.post_no = b.post_no)
    		 where post_no between 8 and 11
     </select>
+    
+    <!-- ============================================================================================================================================ -->
+    
+    <select id="mainSearch" resultType="map" parameterType="String">
+    SELECT
+        P.POST_NO      
+        ,P.TITLE           
+        ,I.SYSTEM_NAME        
+   	FROM TBL_POST P INNER JOIN TBL_IMAGE I
+   	ON P.POST_NO = I.POST_NO 
+   	WHERE P.TITLE LIKE '%${search}%'
+
+   	UNION
+
+   	SELECT
+    	P.POST_NO            
+        ,P.TITLE                 
+        ,I.SYSTEM_NAME          	
+   	FROM  TBL_POST P INNER JOIN TBL_IMAGE I
+   	ON P.POST_NO = I.POST_NO
+   	INNER JOIN TBL_CATEGORY C
+   	ON P.CATEGORY_NO = C.CATEGORY_NO
+   	WHERE C.CHILD_GROUP LIKE '%${search}%'
+   	</select>
+    
+    
+    
 </mapper>

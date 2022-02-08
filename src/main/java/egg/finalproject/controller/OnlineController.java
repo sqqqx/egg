@@ -44,4 +44,12 @@ public class OnlineController {
 		model.addAttribute("listRecent",listRecent);
 		return "online/onlineRecent";
 	}
+	
+	@RequestMapping("/search.do")
+	public String mainSearch(Model model, String search) throws Exception{
+		System.out.println("search확인 == " + search);
+		List<Object> listRecent = service.mainSearch(search);
+		model.addAttribute("listRecent", listRecent);
+		return "online/onlineSelect";
+	}
 }
