@@ -48,6 +48,7 @@
 					<td hidden><input type="checkbox" name="productNames" value="${dto.name}" checked></td>
 					<td hidden><input type="checkbox" name="productQuantities" value="${dto.quantity}" checked></td>
 					<td hidden><input type="checkbox" name="productNos" value="${dto.product_no}" checked></td>
+					<td hidden><input type="text" name="route" value="${route}"></td>
 					<td>
 						<c:set var="total" value="${dto.price * dto.quantity }"/>
 						<c:set var="ttotal" value="${ttotal+total}"/>

@@ -47,13 +47,13 @@ public class PaymentController {
 		
 		// 이름
 		String productName = "";
-		System.out.println("productName 개수 - " + productNames.length);
+		System.out.println("productName 개수: " + productNames.length);
 		i = 0;
 		for(String p : productNames) {
 			System.out.println(++i + "상품명: " + p);
 		}
 		// 개수
-		System.out.println("productQuntaties 개수 - " + productQuantities.length);
+		System.out.println("productQuntaties 개수: " + productQuantities.length);
 		i = 0;
 		for(String q : productQuantities) {
 			System.out.println(++i + "상품개수: " + q);
@@ -87,7 +87,20 @@ public class PaymentController {
 				}
 				
 			} else {
+				// payment.jsp에 넘길 상품명 지정
 				productName = productNames[0];
+				
+				Map<String, Object> map = new HashMap<>();
+				
+				// 주문번호
+				map.put("order_no", merchant_uid);
+				// 상품번호
+				map.put("product_no", Integer.parseInt(productNos[0]));
+				// 수량
+				map.put("quantity", Integer.parseInt(productQuantities[0]));
+				
+				System.out.println(i + "번째 상품추가 / 주문번호" + merchant_uid + ", 상품번호: " + productNos[0] + ", 수량: " + productQuantities[0]);
+				orderService.insertOrderProduct(map);
 			}
 			
 			// payment.jsp로 넘겨줘야 할 것
@@ -98,6 +111,7 @@ public class PaymentController {
 //			 amount (결제 총금액)
 			buyer_info.setAmount(dto.getCost());
 			System.out.println(buyer_info.toString());
+			// sortCnt(상품 종류 수)
 			model.addAttribute("iamdto", buyer_info);
 			return "/payment/payment";
 		} else {
@@ -110,17 +124,20 @@ public class PaymentController {
 	// (마이페이지) 결제 성공 후 결제내역 저장
 	@RequestMapping(value="/completePaid.do", produces="application/json;charset=UTF-8")
 	@ResponseBody()
-	public String completePaid(PaymentDTO dto) throws Exception {
+	public String completePaid(PaymentDTO dto, String route) throws Exception {
 		System.out.println("PaymentController / 결제내역 저장 - PaymentDTO : " + dto);
+		System.out.println("구매경로가 장바구니?: " + route);
 		
 		if(service.completePaid(dto) > 0) {	// 결제 성공 시
 			System.out.println("결제 성공");
 			// 재고 수량 수정
 			productService.modifyStock(dto.getPayment_no(), 0);	// 매개변수1: 주문번호, 매개변수2: 0(감소) / 1(증가)
 			System.out.println("재고 수량 조정 마침");
-			// 장바구니 비우기
-			cartService.clearCart(((MemberDTO)session.getAttribute("loginSession")).getUser_id());
-			System.out.println("장바구니 비우기 마침");
+			// 장바구니 비우기(장바구니 구매일 경우)
+			if(route.equals("cart")) {
+				cartService.clearCart(((MemberDTO)session.getAttribute("loginSession")).getUser_id());
+				System.out.println("장바구니 비우기 마침");
+			}
 			return "success";
 		} else {
 			System.out.println("결제 실패");

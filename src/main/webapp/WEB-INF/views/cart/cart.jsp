@@ -114,7 +114,7 @@
 	$("#toOrder").click(function(){
 
 			let id = '${loginSession.user_id}';
-			location.href="${pageContext.request.contextPath}/cart/toOrder.do?user_id="+id
+			location.href="${pageContext.request.contextPath}/cart/toOrder.do?user_id="+ id + "&route=cart";
 		
 	})
 	

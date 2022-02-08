@@ -69,7 +69,7 @@
     	    			cost : rsp.paid_amount,
     	    			method : rsp.pg_provider,
     	    			card_name : rsp.card_name,
-    	    			user_id : "${user_id}"
+    	    			route : "${iamdto.route}"
     		    		// imp_uid : rsp.imp_uid // 결제 고유번호 필요한지 확인
     		    		//기타 필요한 데이터가 있으면 추가 전달
     	    		}
@@ -98,6 +98,7 @@
     	    } else {
     	        var msg = '결제에 실패하였습니다.';
     	        msg += '에러내용 : ' + rsp.error_msg;
+    	        console.log(rsp);
     	        
     	        alert(msg + " / ec: " + rsp.error_code);
     	    }
