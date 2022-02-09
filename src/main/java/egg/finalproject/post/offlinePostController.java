@@ -30,6 +30,7 @@ public class offlinePostController {
 	@Autowired
 	private HttpSession session;
 	
+	//게시글 리스트 페이지로 이동
 //	@RequestMapping("/toList.do")
 //	public String toList(String parent_group,String expert_id, Model model) throws Exception{
 //		System.out.println(parent_group);
@@ -41,11 +42,9 @@ public class offlinePostController {
 //		return "offline/offlineList";
 //	}
 	
-	//게시글 리스트 페이지로 이동
+	// 전체 목록 가져오기
 	@RequestMapping("/toList.do")
 	public String toList(String parent_group, String expert_id, String currentPage, Model model) throws Exception{
-		System.out.println(parent_group + " : " + expert_id + " : " + currentPage);
-		// 페이징 필요 정보 추출
 		int currentIdx = service.currentPageReform(currentPage);
 		service.getPostCountAll(parent_group); 
 		Map<String, Object> navi = service.getNavi(currentIdx);
@@ -63,15 +62,14 @@ public class offlinePostController {
 		return "offline/offlineList";
 	}
 	
-	@RequestMapping("/test")
-	public String test(String searchKeyword, String searchOption, String parent_group, String expert_id, int currentIdx, Model model) throws Exception {
-		System.out.println(searchKeyword + " : " + searchOption + " : " + parent_group + " : " + expert_id + " : " + currentIdx);
-		// 페이징 필요 정보 추출
+	// 검색 목록 가져오기
+	@RequestMapping("/getPostbySearch")
+	public String getPostbySearch(String searchKeyword, String searchOption, String parent_group, String expert_id, int currentIdx, Model model) throws Exception {
 		service.getPostCountSearch(parent_group, searchOption, searchKeyword); 
 		Map<String, Object> navi = service.getNavi(currentIdx);
 		Map<String, Object> range = service.getRange(currentIdx);
 		
-		List<PostDTO> list = service.selectByCg(parent_group, range);
+		List<PostDTO> list = service.getPostbySearch(parent_group, range, searchOption, searchKeyword);
 		List<Object> Exlist = exService.ExpertCategory(expert_id);
 		
 		model.addAttribute("navi", navi);
@@ -79,6 +77,8 @@ public class offlinePostController {
 		model.addAttribute("list", list);
 		model.addAttribute("expert_id", expert_id);
 		model.addAttribute("parent_group", parent_group);
+		model.addAttribute("searchOption", searchOption);
+		model.addAttribute("searchKeyword", searchKeyword);
 		return "offline/offlineList";
 	}
 	

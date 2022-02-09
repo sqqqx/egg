@@ -58,16 +58,16 @@
 	</table>
 	
 	<div class="container">
-		<form action="${pageContext.request.contextPath}/offlinePost/test?currentIdx=1&parent_group=${parent_group}&expert_id=${expert_id}" method="post" id="searchForm">
+		<form action="${pageContext.request.contextPath}/offlinePost/getPostbySearch?currentIdx=1&parent_group=${parent_group}&expert_id=${expert_id}" method="post" id="searchForm">
 			<div class="row search">
 				<div class="col-3" id="textBox">
-					<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" aria-label="Text input with dropdown button">			
+					<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" value="${searchKeyword }" aria-label="Text input with dropdown button">			
 				</div>
 				<div class="col-1" id="selectBox">
 					<select class="form-select" id="searchOption" name="searchOption">
-					    <option>제목</option>
-						<option>내용</option>
-						<option>작성자</option>		
+					    <option value="title" ${searchOption == "title" ? 'selected="selected"' : ''}>제목</option>
+						<option value="content" ${searchOption == "content" ? 'selected="selected"' : ''}>내용</option>
+						<option value="user_nickname" ${searchOption == "user_nickname" ? 'selected="selected"' : ''}>작성자</option>		
 					 </select>
 				</div>
 			</div>
@@ -110,7 +110,6 @@
 	// 검색
 	$("#searchKeyword").on("keydown", function(key) {
 		if(key.keyCode == 13) {
-			console.log("1212");
 			$("#searchForm").submit();
 		}
 	})

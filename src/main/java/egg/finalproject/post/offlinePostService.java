@@ -49,18 +49,20 @@ public class offlinePostService extends Paging {
 		map.put("endRange", range.get("endRange"));
 		map.put("searchOption", searchOption);
 		map.put("searchKeyword", searchKeyword);
+//		System.out.println("parent_group : " + parent_group + " : startRange :" + range.get("startRange")  + " : endRange :" + range.get("endRange")  + " : searchOption :" + searchOption  + " : searchKeyword :" + searchKeyword);
 		List<PostDTO> list = dao.getPostbySearch(map);
 		return list;
 	}
 	
 	// 검색 결과 COUNT
-	public void getPostCountSearch(String searchKeyword, String searchOption, String parent_group) throws Exception {
+	public void getPostCountSearch(String parent_group, String searchOption, String searchKeyword) throws Exception {
 		parent_group = "운동"; // exam
 		Map<String, Object> map = new HashMap<>();
 		map.put("searchOption", searchOption);
 		map.put("searchKeyword", searchKeyword);
 		map.put("parent_group", parent_group);
 		int rs =  dao.getPostCountSearch(map);
+		System.out.println("search count : " + rs);
 		this.totalCount = rs;
 	}
 	
