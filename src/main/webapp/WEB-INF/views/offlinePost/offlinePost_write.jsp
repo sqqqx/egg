@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>.
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,18 +68,24 @@
         .btn {
             font-size: 25px;
         }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            resize: none;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <div class="category_menu">
-            <span class="category_menu_title">"프로그래밍"</span><br>
+            <span class="category_menu_title">"${parent_group}"</span><br>
             <span class="category_menu_explain">[당신에게 딱맞는 <strong class="proTitle">"능력자"</strong>를 찾아드리겠습니다!]</span><br>
             <span class="category_menu_explain"><strong>잠깐! 그전에 아래 항목을 작성해 주세요!</strong></span>
 
         </div>
-        <form action="/offlinePost/write.do" method="post" id="writeForm">
+        <form action="/offlinePost/insertPost.do" method="post" id="writeForm">
             <div class="accordion" id="accordionExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
@@ -92,10 +97,10 @@
                     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
                         data-bs-parent="#accordionExample" value="1">
                         <div class="accordion-body">
-                            <input type="radio" name="category" class="inputRadio"> 드로잉<br>
-                            <input type="radio" name="category" class="inputRadio"> 공예<br>
-                            <input type="radio" name="category" class="inputRadio"> 가죽 공예<br>
-                            <input type="radio" name="category" class="inputRadio"> 기타<br>
+                            <c:forEach var="dto" items="${categoryList}">
+                                <input type="radio" name="category_no" class="inputRadio" value="${dto.category_no}">
+                                ${dto.child_group}<br>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
@@ -109,11 +114,11 @@
                     <div id="collapseTwo" class="accordion-collapse collapse " aria-labelledby="headingTwo"
                         data-bs-parent="#accordionExample" value="2">
                         <div class="accordion-body">
-                            <input type="radio" name="method" class="inputRadio"> 제가 있는 곳에서 진행하고 싶습니다.<br>
-                            <input type="radio" name="method" class="inputRadio"> 카페/스터디룸에서 진행하고 싶습니다.<br>
-                            <input type="radio" name="method" class="inputRadio"> 능력자분이 있는 곳으로 가겠습니다.<br>
-                            <input type="radio" name="method" class="inputRadio"> 온라인/화상 수업을 원합니다.<br>
-                            <input type="radio" name="method" class="inputRadio"> 다 괜찮습니다.<br>
+                            <input type="radio" name="method" class="inputRadio" value="제가 있는 곳에서 진행하고 싶습니다."> 제가 있는 곳에서 진행하고 싶습니다.<br>
+                            <input type="radio" name="method" class="inputRadio" value="카페/스터디룸에서 진행하고 싶습니다."> 카페/스터디룸에서 진행하고 싶습니다.<br>
+                            <input type="radio" name="method" class="inputRadio" value="능력자분이 있는 곳으로 가겠습니다."> 능력자분이 있는 곳으로 가겠습니다.<br>
+                            <input type="radio" name="method" class="inputRadio" value="온라인/화상 수업을 원합니다."> 온라인/화상 수업을 원합니다.<br>
+                            <input type="radio" name="method" class="inputRadio" value="다 괜찮습니다."> 다 괜찮습니다.<br>
 
                         </div>
                     </div>
@@ -122,16 +127,16 @@
                     <h2 class="accordion-header" id="headingThree">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            <strong class="question"> 3. "닉네임"님의 연령대는 어떻게 되시나요?</strong>
+                            <strong class="question"> 3. ${loginSession.user_nickname}님의 연령대는 어떻게 되시나요?</strong>
                         </button>
                     </h2>
                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
                         data-bs-parent="#accordionExample" value="3">
                         <div class="accordion-body">
-                            <input type="radio" name="age" class="inputRadio"> 20대<br>
-                            <input type="radio" name="age" class="inputRadio"> 30대<br>
-                            <input type="radio" name="age" class="inputRadio"> 40대<br>
-                            <input type="radio" name="age" class="inputRadio"> 50대 이상<br>
+                            <input type="radio" name="age" class="inputRadio" value="20대"> 20대<br>
+                            <input type="radio" name="age" class="inputRadio" value="30대"> 30대<br>
+                            <input type="radio" name="age" class="inputRadio" value="40대"> 40대<br>
+                            <input type="radio" name="age" class="inputRadio" value="50대 이상"> 50대 이상<br>
                         </div>
                     </div>
                 </div>
@@ -139,15 +144,15 @@
                     <h2 class="accordion-header" id="headingFour">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                            <strong class="question"> 4. "닉네임"님의 성별은 어떻게 되시나요?</strong>
+                            <strong class="question"> 4. ${loginSession.user_nickname}님의 성별은 어떻게 되시나요?</strong>
                         </button>
                     </h2>
                     <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
                         data-bs-parent="#accordionExample" value="4">
                         <div class="accordion-body">
-                            <input type="radio" name="gender" class="inputRadio"> 남<br>
-                            <input type="radio" name="gender" class="inputRadio"> 여<br>
-                            <input type="radio" name="gender" class="inputRadio"> 혼성<br>
+                            <input type="radio" name="gender" class="inputRadio" value="남"> 남<br>
+                            <input type="radio" name="gender" class="inputRadio" value="여"> 여<br>
+                            <input type="radio" name="gender" class="inputRadio" value="혼성"> 혼성<br>
                         </div>
                     </div>
                 </div>
@@ -155,16 +160,16 @@
                     <h2 class="accordion-header" id="headingFive">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                            <strong class="question"> 5. 지역을 선택해 주세요</strong>
+                            <strong class="question"> 5. 능력자가 필요하신 날짜는 언제인가요?</strong>
                         </button>
                     </h2>
                     <div id="collapseFive" class="accordion-collapse collapse " aria-labelledby="headingFive"
                         data-bs-parent="#accordionExample" value="5">
                         <div class="accordion-body">
-                            <input type="radio" name="location" class="inputRadio"> 서울<br>
-                            <input type="radio" name="location" class="inputRadio"> 부산<br>
-                            <input type="radio" name="location" class="inputRadio"> 경기도<br>
-                            <input type="radio" name="location" class="inputRadio"> 어쩌구<br>
+                            <input type="radio" name="reservation_time" class="inputRadio" value="능력자와 혐의하고 싶습니다."> 능력자와 혐의하고 싶습니다.<br>
+                            <input type="radio" name="reservation_time" class="inputRadio" value="가능한 빨리 진행하고 싶습니다."> 가능한 빨리 진행하고 싶습니다.<br>
+                            <input type="radio" name="reservation_time" class="inputRadio" value="일주일 이내로 진행하고 싶습니다."> 일주일 이내로 진행하고 싶습니다.<br>
+                            <input type="radio" name="reservation_time" class="inputRadio" value="원하는 날짜가 따로 있어요"> 원하는 날짜가 따로 있어요<br>
                         </div>
                     </div>
                 </div>
@@ -172,24 +177,21 @@
                     <h2 class="accordion-header" id="headingSix">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                            <strong class="question"> 6. 능력자가 필요하신 날짜는 언제인가요? </strong>
+                            <strong class="question"> 6. 수업과 관련된 희망사항이 있으신가요? </strong>
                         </button>
                     </h2>
                     <div id="collapseSix" class="accordion-collapse collapse " aria-labelledby="headingSix"
                         data-bs-parent="#accordionExample" value="6">
                         <div class="accordion-body">
-                            <input type="radio" name="class_day" class="inputRadio"> 능력자와 혐의하고 싶습니다.<br>
-                            <input type="radio" name="class_day" class="inputRadio"> 가능한 빨리 진행하고 싶습니다.<br>
-                            <input type="radio" name="class_day" class="inputRadio"> 일주일 이내로 진행하고 싶습니다.<br>
-                            <input type="radio" name="class_day" class="inputRadio"> 원하는 날짜가 따로 있어요<br>
+                            <textarea id="wish" placeholder="희망사항을 구체적으로 적어주세요."></textarea>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="buttons">
-                <button type="button" class="btn btn-warning" id="submitBtn">1:1 고수 찾기</button>
-                <button type="button" class="btn btn-secondary" id="cancelBtn">취소</button>
-            </div>
+                <input class="titleInput" name="title" value="${loginSession.user_nickname}님의 요청입니다." hidden>
+                <div class="buttons">
+                    <button type="button" class="btn btn-warning" id="submitBtn">1:1 고수 찾기</button>
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">취소</button>
+                </div>
         </form>
 
         <script>
@@ -203,11 +205,7 @@
                 let parent = $(this).parent().parent()[0];
                 let number = parent.getAttribute("value");
                 console.log($("input:radio:checked").length);
-                if ($("input:radio:checked").length != "6") {
-                    openMenu(parseInt(number) + 1);
-                } else {
-                    // document.getElementById("openBtn").hidden=false;
-                }
+                openMenu(parseInt(number) + 1);
             })
 
             function openMenu(number) { //다음 메뉴바를 연다
@@ -216,7 +214,7 @@
 
             $("#submitBtn").on("click", function () {
 
-                if (!$('input:radio[name=category]').is(':checked')) {
+                if (!$('input:radio[name=category_no]').is(':checked')) {
                     alert("능력 분야를 선택해 주세요.");
                     $("#collapseOne").collapse('show');
                     return;
@@ -225,22 +223,30 @@
                     $("#collapseTwo").collapse('show');
                     return;
                 } else if (!$('input:radio[name=age]').is(':checked')) {
-                    alert("닉네임님의 나이를 선택해 주세요.");
+                    alert("${loginSession.user_nickname}님의 나이를 선택해 주세요.");
                     $("#collapseThree").collapse('show');
                     return;
                 } else if (!$('input:radio[name=gender]').is(':checked')) {
-                    alert("닉네임님의 성별을 선택해 주세요.");
+                    alert("${loginSession.user_nickname}의 성별을 선택해 주세요.");
                     $("#collapseFour").collapse('show');
                     return;
                 } else if (!$('input:radio[name=location]').is(':checked')) {
                     alert("지역을 선택해 주세요.");
                     $("#collapseFive").collapse('show');
                     return;
-                } else if (!$('input:radio[name=class_day]').is(':checked')) {
+                } else if (!$('input:radio[name=reservation_time]').is(':checked')) {
                     alert("날짜를 선택해 주세요.");
                     $("#collapseSix").collapse('show');
                     return;
+                } else if ($("#wish").val() == "") {
+                    if (confirm("희망사항을 적지 않았습니다. 이대로 진행하시겠습니까?")) {
+                        $("#writeForm").submit();
+                    } else {
+                        $("#collapseSeven").collapse('show');
+                        return
+                    }
                 } else {
+                	$("#title").val()
                     $("#writeForm").submit();
                 }
             })

@@ -44,10 +44,14 @@ public class offlinePostController {
 	
 	//게시글 작성 페이지로 이동 : written by 경민
 	@RequestMapping("/toWrite.do")
-	public String toWrite(String parent_category, Model model) throws Exception{
-		List<CategoryDTO> categoryList = cService.getChildCategory(parent_category);
+	public String toWrite(String parent_group, Model model) throws Exception{
+		List<CategoryDTO> categoryList = cService.getChildCategory(parent_group);
 		model.addAttribute("categoryList",categoryList);
+		model.addAttribute("parent_group",parent_group);
 		return "/offlinePost/offlinePost_write";
-		
 	}
+	
+//	//게시글 작성 : written by 경민
+//	@RequestMapping("/insertPost.do")
+//	public String insertPost()
 }
