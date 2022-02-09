@@ -41,6 +41,7 @@ public class offlinePostController {
 //		return "offline/offlineList";
 //	}
 	
+	//게시글 리스트 페이지로 이동
 	@RequestMapping("/toList.do")
 	public String toList(String parent_group, String expert_id, String currentPage, Model model) throws Exception{
 		System.out.println(parent_group + " : " + expert_id + " : " + currentPage);
@@ -55,6 +56,7 @@ public class offlinePostController {
 		
 		model.addAttribute("navi", navi);
 		model.addAttribute("ExpertCategory", Exlist);
+		model.addAttribute("ExpertCategory",Exlist);
 		model.addAttribute("list", list);
 		model.addAttribute("expert_id", expert_id);
 		model.addAttribute("parent_group", parent_group);

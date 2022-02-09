@@ -26,39 +26,31 @@
             		</c:otherwise>
             	</c:choose>
             </div>
-            <!-- 검색창 -->
-            <div class="col-5 searchBox">
-            	<div class="col-10">
-            	<input type="text" class="form-control" id="searchInput" placeholder="검색할 내용을 입력해주세요." aria-describedby="searchText">
-            	</div>
-            	<div class="col-2">
-            	<button class="btn btn-outline-secondary" type="button" id="searchBtn">검색</button>       
-            	</div>
-            </div>
+           <div class="col-3"></div>
             <!--오프라인클래스 이동-->
-            <div class="col-1">
+            <div class="col-1 offlineBox">
                 <button type="button" class="btn btn-dark" id="toOffline">오프라인</button>
             </div>
             <!-- 장바구니 -->
-            <div class="col-1">  
+            <div class="col-1 cartBox">  
             	<c:if test = "${not empty loginSession }">
-                   <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" class="bi bi-cart4" id="toCart" viewBox="0 0 16 16">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="25%" height="25%" fill="currentColor" class="bi bi-cart4" id="cart" viewBox="0 0 16 16">
 					  <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
 					</svg>
                 </c:if>      
             </div>
             <!--알림(비로그인시 svg 안보여야함) // 로그인세션활용하여 c:if처리 할것-->
-            <div class="col-1">
+            <div class="col-1 alarmBox">
             	<c:if test = "${not empty loginSession }">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25%" height="25%" fill="currentColor" id="alarm" class="bi bi-bell" viewBox="0 0 16 16">
                     <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
                   </svg>
                 </c:if>
             </div>
             <!--쪽지함(비로그인시 svg 안보여야함) // 로그인세션활용하여 c:if처리 할것-->
-            <div class="col-1">
+            <div class="col-1 messageBox">
             	<c:if test = "${not empty loginSession }">
-	                <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" id="toMessage" class="bi bi-envelope" viewBox="0 0 16 16">
+	                <svg xmlns="http://www.w3.org/2000/svg" width="25%" height="25%" fill="currentColor" id="toMessage" class="bi bi-envelope" viewBox="0 0 16 16">
 	                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
 	                  </svg>
                 </c:if>
@@ -72,7 +64,7 @@
             	</c:when>
             	<c:otherwise>
 		            <div class="col-1 accountBox" >
-		                <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" class="bi bi-person-square account" viewBox="0 0 16 16">
+		                <svg xmlns="http://www.w3.org/2000/svg" width="25%" height="25%" fill="currentColor" class="bi bi-person-square account" viewBox="0 0 16 16">
 		                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
 		                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12z"/>
 		                </svg>
@@ -90,6 +82,15 @@
 		            </div>
             	</c:otherwise>
             </c:choose>
+             <!-- 검색창 -->
+            <div class="col-2 searchBox">
+            	<div class="col-10">
+            	<input type="text" class="form-control" id="searchInput" placeholder="검색할 내용을 입력해주세요." aria-describedby="searchText">
+            	</div>
+            	<div class="col-2">
+            	<button class="btn btn-outline-secondary" type="button" id="searchBtn">검색</button>       
+            	</div>
+            </div>
         </div>
        
 
@@ -97,92 +98,92 @@
         <div class="container-fluid categoryBox">
             <div class="row category_big">
                 <div class="col">
-                    운동
+                    <span>운동</span>
                 </div>
                 <div class="col">
-                    요리, 베이킹
+                    <span>요리</span>
                 </div>
                 <div class="col">
-                    외국어
+                    <span>외국어</span>
                 </div>
                 <div class="col">
-                    IT
+                    <span>IT</span>
                 </div>
                 <div class="col">
-                    라이프
+                    <span>라이프</span>
                 </div>
                 <div class="col">
-                    드로잉
+                    <span>드로잉</span>
                 </div>
                 <div class="col">
-                    공예
+                    <span>공예</span>
                 </div>
                 <div class="col">
-                    아동교육
+                    <span>아동교육</span>
                 </div>
             </div>
             <div class="row category_small" style="display:none;">
                 <div class="col">
                     <ul>
-                        <li value=11>요가</li>
-                        <li value=12>필라테스</li>
-                        <li value=13>피트니스</li>
+                        <li value=11><span>요가</span></li>
+                        <li value=12><span>필라테스</span></li>
+                        <li value=13><span>피트니스</span></li>
                      
                     </ul>
                 </div>
                 <div class="col">
                     <ul>
-                        <li value=21>아시안</li>
-                        <li value=22>서양</li>
-                        <li value=23>제빵</li>
+                        <li value=21><span>아시안</span></li>
+                        <li value=22><span>서양</span></li>
+                        <li value=23><span>제빵</span></li>
                         
                     </ul>
                 </div>
                 <div class="col">
                     <ul>
-                        <li value=31>영어</li>
-                        <li value=32>중국어</li>
-                        <li value=33>스페인어</li>
+                        <li value=31><span>영어</span></li>
+                        <li value=32><span>중국어</span></li>
+                        <li value=33><span>스페인어</span></li>
                   
                     </ul>
                 </div>
                 <div class="col">
                     <ul>
-                        <li value=41>프로그래밍</li>
-                        <li value=42>정보보안</li>
-                        <li value=43>모바일App개발</li>
+                        <li value=41><span>프로그래밍</span></li>
+                        <li value=42><span>정보보안</span></li>
+                        <li value=43><span>모바일App개발</span></li>
                    
                     </ul>
                 </div>
                 <div class="col">
                     <ul>
-                        <li value=51>뷰티</li>
-                        <li value=52>명상</li>
-                        <li value=53>반려동물</li>
+                        <li value=51><span>뷰티</span></li>
+                        <li value=52><span>명상</span></li>
+                        <li value=53><span>반려동물</span></li>
            
                     </ul>
                 </div>
                 <div class="col">
                     <ul>
-                        <li value=61>펜, 연필</li>
-                        <li value=62>마카</li>
-                        <li value=63>색연필</li>
+                        <li value=61><span>펜, 연필</span></li>
+                        <li value=62><span>마카</span></li>
+                        <li value=63><span>색연필</span></li>
                
                     </ul>
                 </div>
                 <div class="col">
                     <ul>
-                        <li value=71>뜨개질, 자수</li>
-                        <li value=72>패브릭공예</li>
-                        <li value=73>종이공예</li>
+                        <li value=71><span>뜨개질, 자수</span></li>
+                        <li value=72><span>패브릭공예</span></li>
+                        <li value=73><span>종이공예</span></li>
   
                     </ul>
                 </div>
                 <div class="col">
                     <ul>
-                        <li value=81>자연, 과학</li>
-                        <li value=82>신체, 건강</li>
-                        <li value=83>수학, 코딩</li>
+                        <li value=81><span>자연, 과학</span></li>
+                        <li value=82><span>신체, 건강</span></li>
+                        <li value=83><span>수학, 코딩</span></li>
       
                     </ul>
                 </div>
@@ -246,7 +247,7 @@
         	 location.href="${pageContext.request.contextPath}/member/toMyPage"
          })
          //장바구니 버튼 클릭시 장바구니로 이동 
-         $("#toCart").click(function(){
+         $("#cart").click(function(){
         	 location.href="${pagecontext.request.contextPath}/cart/selectCart.do?user_id=${loginSession.user_id}";
          })
          //쪽지함 버튼 클릭시 쪽지함으로 이동 

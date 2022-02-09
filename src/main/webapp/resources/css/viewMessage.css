@@ -1,13 +1,19 @@
 @charset "UTF-8";
 
+*{margin:0;}
+body{
+    width:1800px;
+    height: 1000px;
+    margin:0 auto;
+}
 
-    div {
-        text-align: center;
-    }
+   table, p{
+   	text-align:center;
+   }
     p {
         font-size: 40pt;
     }
-    #searchBox {
+    #mSearchBox {
         margin-bottom: 30px;
     }
     .msgTab {
@@ -18,6 +24,10 @@
     #receivedMsgTab {
         border: 5px solid skyblue;
         border-radius: 10px;
+        text-align:center;
+    }
+    #sentMsgTab{
+    	text-align:center;
     }
     #checkBtnBox {
         float: right;

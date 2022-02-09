@@ -16,7 +16,7 @@
     	height: 1000px;
 	}
 	.title{height:100px; border:1px solid blue;}
-	h1{text-align:center; vertical-align: middle}
+	h1{text-align:center; padding-top:20px;}
 	.container{margin-left:0;}
 	.search{padding-top:10px;}
 	#textBox{padding-right:0;}
@@ -29,8 +29,10 @@
 	</div>
 	<!-- 여기 아래에다가 테이블 만들어주시면 됩니다 헤헤;;; ^^;;;; -->
 	<!-- 내가 만든다  -->
-	<div class="Category">
-		
+	<div class="my-2 Category">
+		<c:forEach items="${ExpertCategory}" var="ex">
+			<button type="button" class="btn btn-dark btn-lg toList" value="${ex.PARENT_GROUP }">${ex.PARENT_GROUP }</button>
+		</c:forEach>
 	</div>
 	<table class="table table-striped">
 		<thead>

@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
+*{margin:0;}
+body{
+    width:1800px;
+    height: 1000px;
+    margin:0 auto;
+}
+
 .header_mp {
     font-size: 30pt;
     margin: 20px 0px 50px 0px;

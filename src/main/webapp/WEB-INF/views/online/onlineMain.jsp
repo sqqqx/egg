@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="/resources/css/onlineMain.css"> 
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container caroBox">
         <!--캐러샐-->
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
@@ -43,13 +43,16 @@
 
         <div class="row main">
          <!-- 인기 강의 -->
-            <div class="col-12 mt-5 class">
+            <div class="col-12 mt-5 class" id="likePart">
             	<div class="row titleBox">
             		<div class="col-2 mt-2 mainTitle">
-            			<label><h4>★인기 강의★</h4></label>
+            			<label><h4>인기 강의</h4></label>
+            		</div>
+            		<div class="col-9">
+            			<div class="plus" id="hot">HOT</div>
             		</div>
             		<div class="col-1 mt-2 mainbutton">
-            			<button type="button" class="btn btn-primary" id="tolistLike">더보기</button>
+            			<span id="tolistLike">클래스 더보기</span>
             		</div>		
             	</div>
                 <div class="row mediaBox">
@@ -74,11 +77,16 @@
             <div class="col-12 mt-5 class">
             	<div class="row titleBox">
             		<div class="col-2 mt-2 mainTitle">
-            			<label><h4>★최신 강의★</h4></label>
+            			<label>
+	            			<h4>최신 강의</h4>
+            			</label>	
+            		</div>
+            		<div class="col-9">
+            			<div class="plus" id="new">NEW</div>
             		</div>
             		<div class="col-1 mt-2 mainbutton">
-            			<button type="button" class="btn btn-primary" id="tolistRecent">더보기</button>
-            		</div>		
+            			<span id="tolistRecent">클래스 더보기</span>
+            		</div>	
             	</div>
                 <div class="row mediaBox">
                 	<c:forEach items="${listRecent }" var="recent">
@@ -99,10 +107,10 @@
     
             
             <!-- 관리자 추천 강의 -->
-            <div class="col-12 mt-5 class">
+            <div class="col-12 mt-5 class" id="adminPart">
             	<div class="row titleBox">
             		<div class="col-2 mt-2 mainTitle">
-            			<label><h4>★관리자 추천 강의★</h4></label>
+            			<label><h4>관리자 추천 강의</h4></label>
             		</div>	
             	</div>
                 <div class="row mediaBox">
