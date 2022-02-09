@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-*{margin:0;}
+
 body{
     width:1800px;
     height: 1000px;
@@ -8,7 +8,7 @@ body{
 }
 .header{
 	height:100px;
-	border-bottom:1px solid black;
+
 }
 .header>div{
     line-height: 100px;
@@ -23,31 +23,38 @@ body{
 }
 .searchBox>input{
 	width:200px;
-	height:60px;
+	height:40px;
 }
 .searchBox>*{
 	float:left;
 }
 #searchInput{
-	height:60px;
+	position:relative;
+	margin-top:10px;
+	height:40px;
+	right:90px;
 }
 #searchBtn{
-	height:60px;
+	position:relative;
+	right:90px;
+	height:40px;
 	width:70px;
 	margin-bottom:45px;
 }
 .header>div>svg{
-    margin-left: 35px;
     cursor: pointer;
+    text-align:right;
+    color:gray;
 }
 .accountBox{
    position: relative;
+	left:0px;
 }
 #accountInfoBox{
    background-color: white;
    position: absolute;
    width:200px;
-   right: 0;
+   right: 0px;
    top:100px;
    z-index: 2;
    padding-left:0;
@@ -59,6 +66,30 @@ margin:0;
    height: 60px;
    border: 1px solid gray;
    cursor:pointer;
+}
+#toMessage{
+	position:relative;
+	left:90px;
+}
+#alarm{
+	position:relative;
+	left:180px;
+}
+#toCart{
+	position:relative;
+	left:270px;
+}
+#toOffline{
+	position:relative;
+	left:300px;
+}
+#toOnline{
+	position:relative;
+	left:330px;
+}
+#toLogin{
+	position:relative;
+	right:110px;
 }
 .textList1{
 	padding-left:60px;
@@ -73,24 +104,29 @@ margin:0;
 }
 .categoryBox{
    height: 50px;
-   background-color: gray; 
+   border-top: 1px solid black;
+   font-weight: 600;
+   
 }
 .category_big>div{
    height: 50px;
    width:100%;
    text-align: center;
    padding-top: 13px;
-   color:white;
-   border: 1px solid white;
+   cursor:pointer;
+  
+
 }
 .category_small{
-   background-color: lightgray;
+   background-color: white;
    position: absolute;
    width:1777px;
+   font-weight:300;
    height:auto;
    z-index:1;
    text-align: center;
    top:150px;
+   border-top:double;
 
 }
 .category_small>div>ul>li{
@@ -98,11 +134,35 @@ margin:0;
    padding-top:5px;
    list-style: none;
    padding-right: 30px;
+   cursor: pointer;
+   transition:all .3s ease
 }
 .category_small>div>ul>li:hover{
-   color: white;
+  color:#39d9c8; transition:all .3s ease 
 }
-
+li > span { position:relative }
+li > span::after {
+  content: '';
+  width: 0%;
+  left: 50%;
+  height: 1px;
+  display: block;
+  position: absolute;
+  margin-top: 3px;
+  border-bottom: 2px solid #39d9c8;
+  transition:all .3s ease;
+}
+li:hover > span::after {
+  content: '';
+  width: 100%;
+  left: 0px;
+  height: 1px;
+  display: block;
+  position: absolute;
+  margin-top: 3px;
+  border-bottom: 2px solid #39d9c8;
+  transition:all .3s ease;
+}
 .adminBox{
     padding-top: 40px;
     text-align:center;
