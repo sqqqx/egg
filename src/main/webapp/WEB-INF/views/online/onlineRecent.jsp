@@ -9,17 +9,19 @@
 <meta charset="UTF-8">
 <title>Online</title>
 <style>
-*{margin:0;}
-body{
-    width:1800px;
-    height: auto;
-    margin:0 auto;
-}
-	h2{text-align:center; padding-top:20px;}
-	
-	.class{
+
+
+h2{text-align:center;}
+
+.main{
+   width: 1800px;
    height: auto;
+   margin:auto;
+}
+
+.class{
    width:1800px;
+   height:500px;
 }
 
 .mediaBox{
@@ -30,10 +32,8 @@ body{
 	 background-color:#f0f2ed;
 }
 .content{
-	height:500px;
+	height:400px;
 	width:420px;
-	border:1px solid black;
-	border-radius:10px;
 	margin:10px;
 	background-color:white;
 	padding-right:0;
@@ -43,21 +43,21 @@ body{
 .mediaPhoto{
    height: 75%;
    width:100%;
-   border-radius:10px;
    margin-right:0;
    margin-left:0;
+   overflow: hidden;
 }
 .photo{
 	width:100%;
 	height:100%;
 	padding-left:0;
 	padding-right:0;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-	filter: brightness(70%);
+	transform:scale(1.0);    
+    transition: transform .5s;
 }
 .photo:hover{
-  filter: brightness(100%);
+   transform:scale(1.1);            /* 이미지 확대 */
+   transition: transform .5s; 	/*  시간 설정  */
 }
 .mediaText{
 	display:table;
@@ -65,12 +65,12 @@ body{
    width:100%;
    padding-left:10px;
    text-decoration-line: none;
-   text-align:center;
+   text-align:left;
    vertical-align: middle;
 }
 .mediaText>span{
 	display:table-cell;
-	font-size: x-large;
+	font-size: large;
 	vertical-align: middle;
 }
 a{
@@ -80,7 +80,9 @@ a{
 </style>
 </head>
 <body>
-        <h2>★ 최신 강의 ★</h2>
+		<div class="row mt-3 littleTitle">
+			<h2> 최신 강의 </h2>
+		</div>       
         <div class="row main">
          <!-- 최신 강의 -->
             <div class="col-12 mt-5 class">

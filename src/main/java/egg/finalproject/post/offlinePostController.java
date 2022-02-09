@@ -29,12 +29,13 @@ public class offlinePostController {
 	@Autowired
 	private HttpSession session;
 	
+	//게시글 리스트 페이지로 이동
 	@RequestMapping("/toList.do")
 	public String toList(String parent_group,String expert_id, Model model) throws Exception{
 		System.out.println(parent_group);
 		List<PostDTO> list = service.selectByCg(parent_group);
 		List<Object> Exlist = exService.ExpertCategory(expert_id);
-		model.addAttribute("ExpertCategory",list);
+		model.addAttribute("ExpertCategory",Exlist);
 		model.addAttribute("list", list);
 		model.addAttribute("parent_group", parent_group);
 		return "offline/offlineList";

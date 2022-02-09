@@ -20,6 +20,7 @@ public class OnlineController {
 		System.out.println("온라인컨트롤러 접속완료");
 	}
 	
+	//온라인 메인페이지로 이동
 	@RequestMapping("/toMain.do")
 	public String toMain(Model model) throws Exception{
 		List<Object> listRecent = service.selectRecent4();
@@ -31,6 +32,7 @@ public class OnlineController {
 		return "online/onlineMain";
 	}
 	
+	//추천수 순 게시글 조회 페이지로 이동
 	@RequestMapping("/toLike.do")
 	public String toLike(Model model) throws Exception{
 		List<Object> listLike = service.selectLike();
@@ -38,6 +40,7 @@ public class OnlineController {
 		return "online/onlineLike";
 	}
 	
+	//최신순 게시글 조회 페이지로 이동
 	@RequestMapping("/toRecent.do")
 	public String toRecent(Model model) throws Exception{
 		List<Object> listRecent = service.selectRecent();
@@ -45,6 +48,7 @@ public class OnlineController {
 		return "online/onlineRecent";
 	}
 	
+	//게시글 검색 별 조회 페이지로 이동
 	@RequestMapping("/search.do")
 	public String mainSearch(Model model, String search) throws Exception{
 		System.out.println("search확인 == " + search);
