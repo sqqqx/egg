@@ -8,4 +8,8 @@
 	<select id="selectByCg" resultType="map" parameterType="PostDTO">
          select * from tbl_post p inner join tbl_category c using(category_no) where type=2 and c.parent_group = #{parent_group}
     </select>
+    
+    <insert id="insertPost" parameterType="PostDTO">
+         INSERT INTO TBL_POST VALUES(POST_NO.NEXTVAL,#{type},#{user_id},#{user_nickname},#{category_no},#{title},#{content},#{product_no},0,SYSDATE,#{reservation_time})
+    </insert>
 </mapper>

@@ -19,5 +19,7 @@ public class offlinePostDAO {
 		return session.selectList("offlinePostMapper.selectByCg", parent_group);
 	}
 	
-	
+	public int insertPost(PostDTO dto) throws Exception{
+		return session.insert("offlinePostMapper.insertPost",dto);
+	}
 }

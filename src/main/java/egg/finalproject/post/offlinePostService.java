@@ -16,4 +16,7 @@ public class offlinePostService {
 		return dao.selectByCg(parent_group);
 	}
 	
+	public int insertPost(PostDTO dto) throws Exception{
+		return dao.insertPost(dto);
+	}
 }
