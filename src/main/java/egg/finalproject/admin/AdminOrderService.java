@@ -84,82 +84,82 @@ public class AdminOrderService extends Paging {
 	}
 	
 	// 토큰 가져오기
-	public String getToken() throws Exception {
-		HttpURLConnection conn = null;
-		URL url = new URL("https://api.iamport.kr/users/getToken");
-		conn = (HttpURLConnection) url.openConnection();
-
-		conn.setRequestMethod("POST");
-		conn.setRequestProperty("Content-type", "application/json");
-		conn.setRequestProperty("Accept", "application/json");
-		conn.setDoOutput(true);
-		
-		JsonObject json = new JsonObject();
-		json.addProperty("imp_key", "2315446049599296");
-		json.addProperty("imp_secret", "a772a7847416496c3e0f5c3b64ce8663199821721ebe345a615c97810528d60446233a25d10f21a1");
-
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-		bw.write(json.toString());
-		bw.flush();
-		bw.close();
-
-		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
-		Gson gson = new Gson();
-		String response = gson.fromJson(br.readLine(), Map.class).get("response").toString();
-		System.out.println(response);
-		String token = gson.fromJson(response, Map.class).get("access_token").toString();
-		
-		br.close();
-		conn.disconnect();
-
-		return token;
-	}
+//	public String getToken() throws Exception {
+//		HttpURLConnection conn = null;
+//		URL url = new URL("https://api.iamport.kr/users/getToken");
+//		conn = (HttpURLConnection) url.openConnection();
+//
+//		conn.setRequestMethod("POST");
+//		conn.setRequestProperty("Content-type", "application/json");
+//		conn.setRequestProperty("Accept", "application/json");
+//		conn.setDoOutput(true);
+//		
+//		JsonObject json = new JsonObject();
+//		json.addProperty("imp_key", "2315446049599296");
+//		json.addProperty("imp_secret", "a772a7847416496c3e0f5c3b64ce8663199821721ebe345a615c97810528d60446233a25d10f21a1");
+//
+//		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+//		bw.write(json.toString());
+//		bw.flush();
+//		bw.close();
+//
+//		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+//		Gson gson = new Gson();
+//		String response = gson.fromJson(br.readLine(), Map.class).get("response").toString();
+//		System.out.println(response);
+//		String token = gson.fromJson(response, Map.class).get("access_token").toString();
+//		
+//		br.close();
+//		conn.disconnect();
+//
+//		return token;
+//	}
 	
 	// 결제 취소
-	public String canclePay(String access_token, String payment_no) throws Exception {
-		String rs = "success";
-		System.out.println("결제 취소 service");
-		System.out.println("access_token : " + access_token + " : imp_uid : " + payment_no);
-
-		HttpURLConnection conn = null;
-		URL url = new URL("https://api.iamport.kr/payments/cancel");
-		conn = (HttpURLConnection) url.openConnection();
-
-		conn.setRequestMethod("POST");
-		conn.setRequestProperty("Content-type", "application/json");
-		conn.setRequestProperty("Accept", "application/json");
-		conn.setRequestProperty("Authorization", access_token);
-		conn.setDoOutput(true);
-
-		JsonObject json = new JsonObject();
-//		json.addProperty("reason", reason); // 필요할 때 추가할 것 결제 쪽 상황보고 수정
-		json.addProperty("imp_uid", payment_no);
-//		json.addProperty("amount", amount);
-//		json.addProperty("checksum", amount);
-
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-		bw.write(json.toString());
-		bw.flush();
-		bw.close();
-
-		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
-//		Gson gson = new Gson();
-//		System.out.println(gson.fromJson(br.readLine(), Map.class).get("response").toString())); 
-		// 왜 null일까
-		
-		StringBuilder sb = new StringBuilder();
-		String line = "";
-		while ((line = br.readLine()) != null) {
-			sb.append(line);
-		}
-		int rspCode = Integer.parseInt(String.valueOf(sb.charAt(8)));
-		if(rspCode == 1) {
-			rs = "fail";
-		}
-		
-		br.close();
-		conn.disconnect();
-		System.out.println("rs : " + rs);
-		return rs;
-	}
+//	public String canclePay(String access_token, String payment_no) throws Exception {
+//		String rs = "success";
+//		System.out.println("결제 취소 service");
+//		System.out.println("access_token : " + access_token + " : imp_uid : " + payment_no);
+//
+//		HttpURLConnection conn = null;
+//		URL url = new URL("https://api.iamport.kr/payments/cancel");
+//		conn = (HttpURLConnection) url.openConnection();
+//
+//		conn.setRequestMethod("POST");
+//		conn.setRequestProperty("Content-type", "application/json");
+//		conn.setRequestProperty("Accept", "application/json");
+//		conn.setRequestProperty("Authorization", access_token);
+//		conn.setDoOutput(true);
+//
+//		JsonObject json = new JsonObject();
+////		json.addProperty("reason", reason); // 필요할 때 추가할 것 결제 쪽 상황보고 수정
+//		json.addProperty("imp_uid", payment_no);
+////		json.addProperty("amount", amount);
+////		json.addProperty("checksum", amount);
+//
+//		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+//		bw.write(json.toString());
+//		bw.flush();
+//		bw.close();
+//
+//		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+////		Gson gson = new Gson();
+////		System.out.println(gson.fromJson(br.readLine(), Map.class).get("response").toString())); 
+//		// 왜 null일까
+//		
+//		StringBuilder sb = new StringBuilder();
+//		String line = "";
+//		while ((line = br.readLine()) != null) {
+//			sb.append(line);
+//		}
+//		int rspCode = Integer.parseInt(String.valueOf(sb.charAt(8)));
+//		if(rspCode == 1) {
+//			rs = "fail";
+//		}
+//		
+//		br.close();
+//		conn.disconnect();
+//		System.out.println("rs : " + rs);
+//		return rs;
+//	}
 }

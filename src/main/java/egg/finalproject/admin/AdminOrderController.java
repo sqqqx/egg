@@ -47,17 +47,16 @@ public class AdminOrderController {
 	}
 	
 	// 결제 취소
-	@RequestMapping(value = "/canclePay.do")
-	@ResponseBody
-	public String canclePay(String payment_no, String cost, String order_no) throws Exception {
-		System.out.println("uid : " + payment_no + " : cost : " + cost + " : " + order_no);
-		String rs = service.canclePay(service.getToken(), payment_no); // 추가 정보 필요하면 같이 넘길 것
-		if(rs.equals("success")) {
-			service.updateStatus(order_no);
-			return "success";
-		}
-		return "fail";
-	}
+	/*
+	 * @RequestMapping(value = "/canclePay.do")
+	 * 
+	 * @ResponseBody public String canclePay(String payment_no, String cost, String
+	 * order_no) throws Exception { System.out.println("uid : " + payment_no +
+	 * " : cost : " + cost + " : " + order_no); String rs =
+	 * service.canclePay(service.getToken(), payment_no); // 추가 정보 필요하면 같이 넘길 것
+	 * if(rs.equals("success")) { service.updateStatus(order_no); return "success";
+	 * } return "fail"; }
+	 */
 	
 	// 주문 상세 정보
 	@RequestMapping("/orderDetailView")

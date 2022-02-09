@@ -45,31 +45,56 @@
 		<tbody>
 			<c:forEach items="${list }" var="list">
 			<tr>
-				<td>${list.POST_NO }</td>
-				<td>${list.TITLE }</td>
-				<td>${list.USER_NICKNAME }</td>
-				<td>${list.WRITTEN_DATE }</td>
-				<td>${list.VIEW_COUNT }</td>
+				<td>${list.post_no }</td>
+				<td>${list.title }</td>
+				<td>${list.user_nickname }</td>
+				<td>${list.written_date }</td>
+				<td>${list.view_count }</td>
 			</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 	
 	<div class="container">
-		<div class="row search">
-			<div class="col-3" id="textBox">
-				<input type="text" class="form-control" aria-label="Text input with dropdown button">			
+		<form action="${pageContext.request.contextPath}/offlinePost/test?currentIdx=1&parent_group=${parent_group}&expert_id=${expert_id}" method="post" id="searchForm">
+			<div class="row search">
+				<div class="col-3" id="textBox">
+					<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" aria-label="Text input with dropdown button">			
+				</div>
+				<div class="col-1" id="selectBox">
+					<select class="form-select" id="searchOption" name="searchOption">
+					    <option>제목</option>
+						<option>내용</option>
+						<option>작성자</option>		
+					 </select>
+				</div>
 			</div>
-			<div class="col-1" id="selectBox">
-				<select class="form-select">
-				    <option>제목</option>
-					<option>내용</option>
-					<option>작성자</option>		
-				 </select>
-			</div>
-		</div>
+		</form>
 		<div class="row">
-			페이징부분
+			<div class="col-12">
+				<nav aria-label="Page navigation example">
+					<ul class="pagination">
+						<c:if test="${navi.needPrev eq true}">
+							<li class="page-item"><a class="page-link"
+								href="${pageContext.request.contextPath}/offlinePost/toList.do?currentPage=${navi.firstIdx-1}
+									&parent_group=${parent_group}&expert_id=${expert_id}">Previous</a>
+							</li>
+						</c:if>
+						<c:forEach var="i" begin="${navi.firstIdx}" end="${navi.lastIdx}">
+							<li class="page-item"><a class="page-link"
+										href="${pageContext.request.contextPath}/offlinePost/toList.do?currentPage=${i}
+											&parent_group=${parent_group}&expert_id=${expert_id}">${i}</a>
+							</li>
+						</c:forEach>
+						<c:if test="${navi.needNext eq true}">
+							<li class="page-item"><a class="page-link"
+								href="${pageContext.request.contextPath}/offlinePost/toList.do?currentPage=${navi.firstIdx-1}
+									&parent_group=${parent_group}&expert_id=${expert_id}">Next</a>
+							</li>
+						</c:if>
+					</ul>
+				</nav>
+			</div>
 		</div>
 	</div>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -79,6 +104,13 @@
 		let id = '${loginSession.user_id}'
 		console.log(text)
 		location.href="${pageContext.request.contextPath}/offlinePost/toList.do?parent_group="+text+"&expert_id="+id;
+	})
+	// 검색
+	$("#searchKeyword").on("keydown", function(key) {
+		if(key.keyCode == 13) {
+			console.log("1212");
+			$("#searchForm").submit();
+		}
 	})
 </script>
 </body>

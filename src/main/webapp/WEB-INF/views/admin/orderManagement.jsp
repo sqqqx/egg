@@ -243,11 +243,25 @@
 		$(".changeAddress").on("click", function(e) {
 			$(".address_input").val("");
 			const address = $(e.target).attr("addr");
-			const postRegex = /[0-9]{5}/i;
-			console.log(address);
-			console.log(address.match(postRegex));
+			const post = address.match(/[0-9]{5}/)[0];
+			const roadAddr = address.match(/[ㄱ-힣](.*?)(로|길).[1-9]{1,2}/)[0];
+			let jibunAddr = address.match(/[0-9]{5}.[ㄱ-힣](.*?)(로|길).[1-9]{1,2}\s/)[0];
+			jibunAddr = address.replace(jibunAddr, "");
+			jibunAddr = jibunAddr.match(/[ㄱ-힣](.*?)[1-9]+(.+)[1-9]/)[0];
+			const extraAddr = address.match(/\(([^)]+).\)/)[0];
+			let detailAddr = address.replace(post, "");
+			detailAddr = detailAddr.replace(roadAddr, "");
+			detailAddr = detailAddr.replace(jibunAddr, "");
+			detailAddr = detailAddr.replace(extraAddr, "");
+			detailAddr = detailAddr.trim();
+			
+			$("#sample4_postcode").val(post);
+			$("#sample4_roadAddress").val(roadAddr);
+			$("#sample4_jibunAddress").val(jibunAddr);
+			$("#sample4_extraAddress").val(extraAddr);
+			$("#sample4_detailAddress").val(detailAddr);
+			
 			order_no = e.target.id;
-			console.log(order_no);
 			$('#exampleModalCenteredScrollable').modal('toggle');
 		});
 		// 배송지 변경 확인 & 제출

@@ -15,4 +15,5 @@ public class Expert_categoryDAO {
 	public List<Object> ExpertCategory(String expert_id) throws Exception{
 		return session.selectList("expertcategoryMapper.ExpertCategory", expert_id);
 	}
+	
 }
