@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
+*{margin:0;}
+body{
+    width:1800px;
+    height: 1000px;
+    margin:0 auto;
+}
+
 /* 회원 정보 */
 #userBox {
     border: 1px solid black;
@@ -11,7 +18,9 @@
     margin-bottom: 30px;
     border: 1px solid yellowgreen;
 }
-
+#modifyProfilePhotoForm{
+	text-align:center;
+}
 #profileSection01 {
     margin-bottom: 30px;
 }
