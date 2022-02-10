@@ -86,8 +86,7 @@
 	
 	<!-- 신고 처리 상태 변경 -->
 	<update id="changeReportStatus">
-		UPDATE tbl_report SET yn = 1 
-		WHERE report_no IN
+		UPDATE tbl_report SET yn = 1 WHERE report_no IN
 		<foreach collection="array" item="report_no" open="(" close=")" separator=",">
 			#{report_no}
 		</foreach>
@@ -95,8 +94,7 @@
 	
 	<!-- 누적 신고 수 -->
 	<select id="getStackCount">
-		SELECT COUNT(*) FROM tbl_report 
-		WHERE type = #{type} AND target_no = #{target_no}
+		SELECT COUNT(*) FROM tbl_report WHERE type = #{type} AND target_no = #{target_no}
 	</select>
 
 </mapper>

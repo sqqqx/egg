@@ -19,7 +19,7 @@ public class offlinePostService extends Paging {
 	public List<PostDTO> selectByCg(String parent_group, Map<String, Object> range) throws Exception{
 		System.out.println("offlinePostService : " + parent_group + " : " + range.get("startRange") + " : " + range.get("endRange"));
 		Map<String, Object> map = new HashMap<>();
-		parent_group = "운동"; // exam
+		parent_group = "요리, 베이킹"; // exam
 		map.put("parent_group", parent_group);
 		map.put("startRange", range.get("startRange"));
 		map.put("endRange", range.get("endRange"));
@@ -33,7 +33,7 @@ public class offlinePostService extends Paging {
 	
 	// 전체 글 COUNT
 	public void getPostCountAll(String parent_group) throws Exception {
-		parent_group = "운동"; // exam
+		parent_group = "요리, 베이킹"; // exam
 		int rs =  dao.getPostCountAll(parent_group);
 //		System.out.println("rs : " + rs);
 		this.totalCount = rs;
@@ -43,7 +43,7 @@ public class offlinePostService extends Paging {
 	public List<PostDTO> getPostbySearch(String parent_group, Map<String, Object> range, String searchOption, String searchKeyword) throws Exception{
 		System.out.println("offlinePostService : " + parent_group + " : " + range.get("startRange") + " : " + range.get("endRange"));
 		Map<String, Object> map = new HashMap<>();
-		parent_group = "운동"; // exam
+		parent_group = "요리, 베이킹"; // exam
 		map.put("parent_group", parent_group);
 		map.put("startRange", range.get("startRange"));
 		map.put("endRange", range.get("endRange"));
@@ -56,7 +56,7 @@ public class offlinePostService extends Paging {
 	
 	// 검색 결과 COUNT
 	public void getPostCountSearch(String parent_group, String searchOption, String searchKeyword) throws Exception {
-		parent_group = "운동"; // exam
+		parent_group = "요리, 베이킹"; // exam
 		Map<String, Object> map = new HashMap<>();
 		map.put("searchOption", searchOption);
 		map.put("searchKeyword", searchKeyword);

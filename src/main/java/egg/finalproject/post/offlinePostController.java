@@ -42,7 +42,7 @@ public class offlinePostController {
 //		return "offline/offlineList";
 //	}
 	
-	// 전체 목록 가져오기
+	// 전체 목록 가져오기(게시글 리스트 페이지로 이동)
 	@RequestMapping("/toList.do")
 	public String toList(String parent_group, String expert_id, String currentPage, Model model) throws Exception{
 		int currentIdx = service.currentPageReform(currentPage);
@@ -63,7 +63,7 @@ public class offlinePostController {
 	}
 	
 	// 검색 목록 가져오기
-	@RequestMapping("/getPostbySearch")
+	@RequestMapping("/getPostbySearch.do")
 	public String getPostbySearch(String searchKeyword, String searchOption, String parent_group, String expert_id, int currentIdx, Model model) throws Exception {
 		service.getPostCountSearch(parent_group, searchOption, searchKeyword); 
 		Map<String, Object> navi = service.getNavi(currentIdx);

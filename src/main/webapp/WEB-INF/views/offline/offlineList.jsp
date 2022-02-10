@@ -58,7 +58,7 @@
 	</table>
 	
 	<div class="container">
-		<form action="${pageContext.request.contextPath}/offlinePost/getPostbySearch?currentIdx=1&parent_group=${parent_group}&expert_id=${expert_id}" method="post" id="searchForm">
+		<form action="${pageContext.request.contextPath}/offlinePost/getPostbySearch.do?currentIdx=1&parent_group=${parent_group}&expert_id=${expert_id}" method="post" id="searchForm">
 			<div class="row search">
 				<div class="col-3" id="textBox">
 					<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" value="${searchKeyword }" aria-label="Text input with dropdown button">			
@@ -83,10 +83,19 @@
 							</li>
 						</c:if>
 						<c:forEach var="i" begin="${navi.firstIdx}" end="${navi.lastIdx}">
-							<li class="page-item"><a class="page-link"
-										href="${pageContext.request.contextPath}/offlinePost/toList.do?currentPage=${i}
-											&parent_group=${parent_group}&expert_id=${expert_id}">${i}</a>
-							</li>
+							<c:choose>
+								<c:when test="${empty searchOption}">
+									<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/offlinePost/toList.do?currentPage=${i}
+												&parent_group=${parent_group}&expert_id=${expert_id}">${i}</a>
+									</li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item">
+										<a class="page-link" href="${pageContext.request.contextPath}/offlinePost/getPostbySearch.do?currentIdx=${i}
+												&parent_group=${parent_group}&expert_id=${expert_id}&searchOption=${searchOption}&searchKeyword=${searchKeyword}">${i}</a>
+									</li>
+								</c:otherwise>
+							</c:choose>
 						</c:forEach>
 						<c:if test="${navi.needNext eq true}">
 							<li class="page-item"><a class="page-link"
