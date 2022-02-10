@@ -1,6 +1,7 @@
 package egg.finalproject.post;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,14 +31,54 @@ public class offlinePostController {
 	private HttpSession session;
 	
 	//게시글 리스트 페이지로 이동
+//	@RequestMapping("/toList.do")
+//	public String toList(String parent_group,String expert_id, Model model) throws Exception{
+//		System.out.println(parent_group);
+//		List<PostDTO> list = service.selectByCg(parent_group);
+//		List<Object> Exlist = exService.ExpertCategory(expert_id);
+//		model.addAttribute("ExpertCategory",list);
+//		model.addAttribute("list", list);
+//		model.addAttribute("parent_group", parent_group);
+//		return "offline/offlineList";
+//	}
+	
+	// 전체 목록 가져오기(게시글 리스트 페이지로 이동)
 	@RequestMapping("/toList.do")
-	public String toList(String parent_group,String expert_id, Model model) throws Exception{
-		System.out.println(parent_group);
-		List<PostDTO> list = service.selectByCg(parent_group);
+	public String toList(String parent_group, String expert_id, String currentPage, Model model) throws Exception{
+		int currentIdx = service.currentPageReform(currentPage);
+		service.getPostCountAll(parent_group); 
+		Map<String, Object> navi = service.getNavi(currentIdx);
+		Map<String, Object> range = service.getRange(currentIdx);
+		
+		List<PostDTO> list = service.selectByCg(parent_group, range);
 		List<Object> Exlist = exService.ExpertCategory(expert_id);
+		
+		model.addAttribute("navi", navi);
+		model.addAttribute("ExpertCategory", Exlist);
 		model.addAttribute("ExpertCategory",Exlist);
 		model.addAttribute("list", list);
+		model.addAttribute("expert_id", expert_id);
 		model.addAttribute("parent_group", parent_group);
+		return "offline/offlineList";
+	}
+	
+	// 검색 목록 가져오기
+	@RequestMapping("/getPostbySearch.do")
+	public String getPostbySearch(String searchKeyword, String searchOption, String parent_group, String expert_id, int currentIdx, Model model) throws Exception {
+		service.getPostCountSearch(parent_group, searchOption, searchKeyword); 
+		Map<String, Object> navi = service.getNavi(currentIdx);
+		Map<String, Object> range = service.getRange(currentIdx);
+		
+		List<PostDTO> list = service.getPostbySearch(parent_group, range, searchOption, searchKeyword);
+		List<Object> Exlist = exService.ExpertCategory(expert_id);
+		
+		model.addAttribute("navi", navi);
+		model.addAttribute("ExpertCategory", Exlist);
+		model.addAttribute("list", list);
+		model.addAttribute("expert_id", expert_id);
+		model.addAttribute("parent_group", parent_group);
+		model.addAttribute("searchOption", searchOption);
+		model.addAttribute("searchKeyword", searchKeyword);
 		return "offline/offlineList";
 	}
 	

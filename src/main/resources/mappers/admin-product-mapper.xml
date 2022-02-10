@@ -12,8 +12,11 @@
 	
 	<!-- 상품 목록 가져오기 -->
 	<select id="getProductsList" parameterType="map" resultType="map">
-		SELECT product_no, name, to_char(price, '999,999,999') "PRICE", stock, content, image_path 
-		FROM (SELECT row_number() OVER (ORDER BY product_no DESC) AS idx, tbl_product.* FROM tbl_product)  
+		SELECT 
+			product_no, name, to_char(price, '999,999,999') "PRICE", 
+			stock, content, image_path 
+		FROM (SELECT row_number() OVER (ORDER BY product_no DESC) AS idx, tbl_product.* 
+			  FROM tbl_product)  
 		WHERE idx BETWEEN #{startRange} AND #{endRange}
 		<if test="searchKeyword != null and searchKeyword != ''">
 			AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
@@ -23,8 +26,7 @@
 	
 	<!-- 상품 삭제 -->
 	<update id="deleteProduct">
-		DELETE FROM tbl_product
-		WHERE product_no IN
+		DELETE FROM tbl_product WHERE product_no IN
 		<foreach collection="array" item="product_no" open="(" close=")" separator=",">
 			#{product_no}
 		</foreach>

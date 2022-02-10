@@ -19,11 +19,14 @@ public class AdminReportService extends Paging {
 	}
 	
 	// 검색 한 신고 수 가져오기
-	public int getReportCount(String searchOption, String searchKeyword) {
+	public int getReportCount(String searchOption, String searchKeyword, String type) {
 		Map<String, String> map = new HashMap<>();
 		if(searchOption != null && searchKeyword != null) {
 			map.put("searchOption", searchOption);
 			map.put("searchKeyword", searchKeyword);
+		}
+		if(type != null && !type.equals("9")) {
+			map.put("type", type);
 		}
 		int rs = dao.getReportCount(map);
 		System.out.println("신고 count : " + rs);
@@ -33,6 +36,9 @@ public class AdminReportService extends Paging {
 	// 신고 목록 가져오기
 	public List<Map<String, Object>> getReportList(String searchOption, String searchKeyword, int currentIdx, String type) throws Exception {
 		System.out.println("searchOption : " + searchOption + " : " + "searchKeyword : " + searchKeyword + " : " + "currentIdx : " + currentIdx);
+		if(type == null) {
+			type = "9";
+		}
 		Map<String, Object> map = this.getRange(currentIdx);
 		if(searchOption != null && searchKeyword != null) {
 			map.put("searchOption", searchOption);
@@ -41,7 +47,7 @@ public class AdminReportService extends Paging {
 		if(type != null && !type.equals("9")) {
 			map.put("type", type);
 		}
-		totalCount = this.getReportCount(searchOption, searchKeyword);
+		totalCount = this.getReportCount(searchOption, searchKeyword, type);
 		List<Map<String, Object>> list = dao.getReportList(map);
 		System.out.println("getReportList_list size : " + list.size());
 		return list;

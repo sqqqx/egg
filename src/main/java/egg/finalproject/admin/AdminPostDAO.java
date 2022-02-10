@@ -14,7 +14,7 @@ public class AdminPostDAO {
 	private SqlSession session;
 	
 	// 게시글 수 가져오기
-	public int getPostCount(Map<String, String> map) throws Exception {
+	public int getPostCount(Map<String, Object> map) throws Exception {
 		return session.selectOne("adminPostMapper.getPostCount", map);
 	}
 	

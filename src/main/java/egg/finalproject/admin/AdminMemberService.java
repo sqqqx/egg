@@ -20,17 +20,27 @@ public class AdminMemberService extends Paging {
 	private AdminMemberDAO dao;
 	
 	// 전체 회원 수 가져오기
-	public int getMemberCountAll() throws Exception {
-		return dao.getMemberCountAll();
+	public int getMemberCount(String searchOption, String searchKeyword, int userType) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		if(searchOption != null & searchKeyword != null) {
+			map.put("searchOption", searchOption);
+			map.put("searchKeyword", searchKeyword);
+		}
+		if(userType != 9) {
+			map.put("userType", userType);
+		}
+		int rs = dao.getMemberCount(map);
+		System.out.println("count : " + rs);
+		return rs;
 	}
 	
 	// 검색 한 회원 수 가져오기
-	public int getSearchCount(String searchOption, String searchKeyword) throws Exception {
-		Map<String, String> map = new HashMap<>();
-		map.put("searchOption", searchOption);
-		map.put("searchKeyword", searchKeyword);
-		return dao.getSearchCount(map);
-	}
+	/*
+	 * public int getSearchCount(String searchOption, String searchKeyword) throws
+	 * Exception { Map<String, String> map = new HashMap<>();
+	 * map.put("searchOption", searchOption); map.put("searchKeyword",
+	 * searchKeyword); return dao.getSearchCount(map); }
+	 */
 	
 	// 회원 목록 가져오기 
 	public List<MemberDTO> getMemberList(String searchOption, String searchKeyword, int currentIdx, int userType) throws Exception {
@@ -40,9 +50,9 @@ public class AdminMemberService extends Paging {
 		if(searchOption != null && searchKeyword != null) {
 			map.put("searchOption", searchOption);
 			map.put("searchKeyword", searchKeyword);
-			totalCount = this.getSearchCount(searchOption, searchKeyword);
+			// totalCount = this.getSearchCount(searchOption, searchKeyword);
 		}
-		totalCount = this.getMemberCountAll();
+		totalCount = this.getMemberCount(searchOption, searchKeyword, userType);
 		return dao.getMemberList(map);
 	}
 	

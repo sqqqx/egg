@@ -8,12 +8,14 @@
 	<!-- 신고 목록 가져오기 -->
 	<select id="getReportList" parameterType="map" resultType="map">
 		SELECT * 
-		FROM (SELECT row_number() OVER (ORDER BY r.report_date DESC) AS idx
-				    ,r.report_no ,m.user_nickname ,i.report_content 
-				    ,r.type ,r.yn ,r.report_date
-			  FROM tbl_report r
-		      INNER JOIN tbl_reportinfo i USING(report_title)
-		      INNER JOIN tbl_member m USING(user_id)
+		FROM (SELECT 
+		        row_number() OVER (ORDER BY r.report_date DESC) AS idx
+		        ,r.report_no ,m.user_nickname ,i.report_content 
+		        ,r.type ,r.yn ,r.report_date, 
+		        COUNT(*) OVER(PARTITION BY r.type, r.target_no) "COUNT"
+		      FROM tbl_report r
+		        INNER JOIN tbl_reportinfo i USING(report_title)
+		        INNER JOIN tbl_member m USING(user_id)
    		<trim prefix="INNER JOIN" suffix="LIKE '%'||#{searchKeyword}||'%'">
    			<if test="searchOption != null and searchOption == 1">
     			tbl_post p ON(target_no = post_no) WHERE p.title
@@ -33,7 +35,7 @@
 	
 	<!-- 신고 수 가져오기 -->
 	<select id="getReportCount" parameterType="map" resultType="int">
-		SELECT COUNT(*) FROM tbl_report
+		SELECT COUNT(*) FROM tbl_report r
    		<trim prefix="INNER JOIN" suffix="LIKE '%'||#{searchKeyword}||'%'">
    			<if test="searchOption != null and searchOption != '' and searchOption == 1">
    				tbl_post p ON(target_no = post_no) WHERE p.title
@@ -45,6 +47,12 @@
    				tbl_message ON(target_no = message_no) WHERE tbl_message.content
    			</if>
    		</trim>
+   			<if test="type != null and searchOption == null">
+	   			WHERE r.type = ${type}
+	   		</if>
+	   		<if test="type != null and searchOption != null">
+	   			AND r.type = ${type}
+	   		</if>
 	</select>
 	
 	<!-- 신고 상세 페이지 관련 -->
@@ -78,11 +86,15 @@
 	
 	<!-- 신고 처리 상태 변경 -->
 	<update id="changeReportStatus">
-		UPDATE tbl_report SET yn = 1 
-		WHERE report_no IN
+		UPDATE tbl_report SET yn = 1 WHERE report_no IN
 		<foreach collection="array" item="report_no" open="(" close=")" separator=",">
 			#{report_no}
 		</foreach>
 	</update>
+	
+	<!-- 누적 신고 수 -->
+	<select id="getStackCount">
+		SELECT COUNT(*) FROM tbl_report WHERE type = #{type} AND target_no = #{target_no}
+	</select>
 
 </mapper>
