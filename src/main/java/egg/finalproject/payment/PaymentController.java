@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import egg.finalproject.cart.CartService;
+import egg.finalproject.expert.ExpertService;
 import egg.finalproject.member.MemberDTO;
 import egg.finalproject.order.OrderDTO;
 import egg.finalproject.order.OrderService;
+import egg.finalproject.pointlog.PointlogService;
 import egg.finalproject.product.ProductService;
 
 @Controller
@@ -29,6 +31,10 @@ public class PaymentController {
 	@Autowired
 	private CartService cartService;
 	@Autowired
+	private PointlogService pointlogService;
+	@Autowired
+	private ExpertService expertService;
+	@Autowired
 	private HttpSession session;
 	
 	// (마이페이지) 결제 페이지로 이동
@@ -41,22 +47,29 @@ public class PaymentController {
 		// 상품이 여러개 인 경우
 		// 상품 번호
 		int i = 0;
-		for(String n : productNos) {
-			System.out.println(++i + "상품 번호: " + n);
+		if(productNos != null) {
+			for(String n : productNos) {
+				System.out.println(++i + "상품 번호: " + n);
+			}
 		}
 		
 		// 이름
 		String productName = "";
-		System.out.println("productName 개수: " + productNames.length);
-		i = 0;
-		for(String p : productNames) {
-			System.out.println(++i + "상품명: " + p);
+		if(productNames != null) {
+			System.out.println("productName 개수: " + productNames.length);
+			i = 0;
+			for(String p : productNames) {
+				System.out.println(++i + "상품명: " + p);
+			}
 		}
+		
 		// 개수
-		System.out.println("productQuntaties 개수: " + productQuantities.length);
-		i = 0;
-		for(String q : productQuantities) {
-			System.out.println(++i + "상품개수: " + q);
+		if(productQuantities != null) {
+			System.out.println("productQuntaties 개수: " + productQuantities.length);
+			i = 0;
+			for(String q : productQuantities) {
+				System.out.println(++i + "상품개수: " + q);
+			}
 		}
 		
 		System.out.println("IamportPaymentDTO - buyer_info:" + buyer_info.toString());
@@ -66,52 +79,67 @@ public class PaymentController {
 			System.out.println("주문테이블 저장 성공");
 			// 방금 저장한 마지막 주문번호
 			String merchant_uid = orderService.getLastOrder_no(dto.getUser_id());
+			System.out.println("방금 저장한 마지막 주문번호: " + merchant_uid);
 
-			// 주문상품 테이블에 저장
-			if(productNames.length > 1) {	// 상품이 여러개일 경우
-				// payment.jsp에 넘길 상품명 지정
-				productName = productNames[0] + "외 " + (productNames.length-1) + "개";
-				
-				for(i = 0; i < productNos.length; i++) {
+			// 주문상품 테이블에 저장(상품일 경우에만, 포인트인 경우에 거치지 않음)
+			if(productNames != null) {
+				if(productNames.length > 1) {	// 상품이 여러개일 경우
+					// payment.jsp에 넘길 상품명 지정
+					productName = productNames[0] + "외 " + (productNames.length-1) + "개";
+					
+					for(i = 0; i < productNos.length; i++) {
+						Map<String, Object> map = new HashMap<>();
+						
+						// 주문번호
+						map.put("order_no", merchant_uid);
+						// 상품번호
+						map.put("product_no", Integer.parseInt(productNos[i]));
+						// 수량
+						map.put("quantity", Integer.parseInt(productQuantities[i]));
+						
+						System.out.println(i + "번째 상품추가 / 주문번호" + merchant_uid + ", 상품번호: " + productNos[i] + ", 수량: " + productQuantities[i]);
+						orderService.insertOrderProduct(map);
+					}
+					
+				} else {	// 상품이 하나일 경우
+					// payment.jsp에 넘길 상품명 지정
+					productName = productNames[0];
+					
 					Map<String, Object> map = new HashMap<>();
 					
 					// 주문번호
 					map.put("order_no", merchant_uid);
 					// 상품번호
-					map.put("product_no", Integer.parseInt(productNos[i]));
+					map.put("product_no", Integer.parseInt(productNos[0]));
 					// 수량
-					map.put("quantity", Integer.parseInt(productQuantities[i]));
+					map.put("quantity", Integer.parseInt(productQuantities[0]));
 					
-					System.out.println(i + "번째 상품추가 / 주문번호" + merchant_uid + ", 상품번호: " + productNos[i] + ", 수량: " + productQuantities[i]);
+					System.out.println(i + "번째 상품추가 / 주문번호" + merchant_uid + ", 상품번호: " + productNos[0] + ", 수량: " + productQuantities[0]);
 					orderService.insertOrderProduct(map);
 				}
-				
-			} else {
-				// payment.jsp에 넘길 상품명 지정
-				productName = productNames[0];
-				
-				Map<String, Object> map = new HashMap<>();
-				
-				// 주문번호
-				map.put("order_no", merchant_uid);
-				// 상품번호
-				map.put("product_no", Integer.parseInt(productNos[0]));
-				// 수량
-				map.put("quantity", Integer.parseInt(productQuantities[0]));
-				
-				System.out.println(i + "번째 상품추가 / 주문번호" + merchant_uid + ", 상품번호: " + productNos[0] + ", 수량: " + productQuantities[0]);
-				orderService.insertOrderProduct(map);
 			}
+			
 			
 			// payment.jsp로 넘겨줘야 할 것
 			// merchant_uid (주문고유번호)
 			buyer_info.setMerchant_uid(merchant_uid);
 //			 name (상품명)
 			buyer_info.setName(productName);
+			
 //			 amount (결제 총금액)
 			buyer_info.setAmount(dto.getCost());
+			
+			// 포인트인 경우 IamportPayment 인스턴스에 값 세팅
+			if(dto.getTracking_no().equals("point")) {
+				buyer_info.setName("포인트충전");
+				buyer_info.setBuyer_email(dto.getEmail());
+				buyer_info.setBuyer_name(dto.getName());
+				buyer_info.setBuyer_tel(dto.getPhone());
+				buyer_info.setBuyer_addr(dto.getAddress());
+				buyer_info.setBuyer_postcode(dto.getAddress().substring(0,5));
+				buyer_info.setRoute("point");
+			}
 			System.out.println(buyer_info.toString());
-			// sortCnt(상품 종류 수)
 			model.addAttribute("iamdto", buyer_info);
 			return "/payment/payment";
 		} else {
@@ -130,14 +158,27 @@ public class PaymentController {
 		
 		if(service.completePaid(dto) > 0) {	// 결제 성공 시
 			System.out.println("결제 성공");
-			// 재고 수량 수정
-			productService.modifyStock(dto.getPayment_no(), 0);	// 매개변수1: 주문번호, 매개변수2: 0(감소) / 1(증가)
-			System.out.println("재고 수량 조정 마침");
-			// 장바구니 비우기(장바구니 구매일 경우)
-			if(route.equals("cart")) {
-				cartService.clearCart(((MemberDTO)session.getAttribute("loginSession")).getUser_id());
-				System.out.println("장바구니 비우기 마침");
+			if(route.equals("point")) {	// 포인트인 경우
+				String user_id = ((MemberDTO)session.getAttribute("loginSession")).getUser_id();
+				// tbl_pointlog에 저장
+				pointlogService.insertLog(user_id, dto.getCost());
+				System.out.println("포인트 내역 조정 마침");
+				// tbl_expert에서 포인트 수정
+				int balance = pointlogService.balance(user_id);
+				expertService.modifyPoint(user_id, balance);
+				System.out.println("능력자 포인트 잔액 조정 마침");
+				return "pointCharged";
+			} else { // 상품인 경우
+				// 재고 수량 수정
+				productService.modifyStock(dto.getPayment_no(), 0);	// 매개변수1: 주문번호, 매개변수2: 0(감소) / 1(증가)
+				System.out.println("재고 수량 조정 마침");
+				// 장바구니 비우기(장바구니 구매일 경우)
+				if(route.equals("cart")) {
+					cartService.clearCart(((MemberDTO)session.getAttribute("loginSession")).getUser_id());
+					System.out.println("장바구니 비우기 마침");
+				}
 			}
+			
 			return "success";
 		} else {
 			System.out.println("결제 실패");
@@ -167,7 +208,7 @@ public class PaymentController {
 		String access_token = service.getToken();
 		
 		// 환불 처리
-		merchant_uid = "ORD20180131-0000024";	// 작동확인을 위해 명시적으로 임시값 지정
+//		merchant_uid = "ORD20180131-0000024";	// 작동확인을 위해 명시적으로 임시값 지정
 		if(service.refund(access_token, merchant_uid).equals("success")){
 			System.out.println(merchant_uid);
 			System.out.println("아임포트 환불처리 완료");

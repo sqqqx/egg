@@ -1,7 +1,9 @@
 package egg.finalproject.member;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -19,10 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import egg.finalproject.career.CareerDTO;
 import egg.finalproject.career.CareerService;
 import egg.finalproject.expert.ExpertDTO;
 import egg.finalproject.expert.ExpertService;
 import egg.finalproject.expert_category.Expert_categoryService;
+import egg.finalproject.order.OrderService;
 import egg.finalproject.utils.EncryptionUtils;
 @Controller
 @RequestMapping("/member")
@@ -39,6 +43,8 @@ public class MemberController {
 	private CareerService careerService;
 	@Autowired
 	private Expert_categoryService expert_categoryService;
+	@Autowired
+	private OrderService orderService;
 	
 	// 아이디 중복검사
 	@RequestMapping(value="toIdCheck.do")
@@ -266,8 +272,17 @@ public class MemberController {
 
 	// (마이페이지) 마이페이지 요청
 	@RequestMapping("/toMyPage")
-	public String toMyPage() {
-		return "/member/mypage";
+	public String toMyPage(Model model) throws Exception {
+		System.out.println("MemberController / 마이페이지 요청");
+		MemberDTO dto = service.getDTOById(((MemberDTO)session.getAttribute("loginSession")).getUser_id());
+		System.out.println(dto);
+		model.addAttribute("dto", dto);
+		ExpertDTO eDTO = expertService.getExpertDTO(((MemberDTO)session.getAttribute("loginSession")).getUser_id());
+		long l = eDTO.getPoint();	// int 범위 초과 방지
+		String point = NumberFormat.getNumberInstance(Locale.US).format(l);
+		System.out.println(point);
+		model.addAttribute("point", point);
+		return "member/mypage";
 	}
 
 	// (마이페이지) 내 정보 페이지 요청
@@ -277,7 +292,7 @@ public class MemberController {
 		MemberDTO dto = service.getDTOById(user_id);
 		System.out.println(dto);
 		model.addAttribute("dto", dto);
-		return "/member/myInfo";
+		return "member/myInfo";
 	}
 
 	// (마이페이지) 회원정보조회 페이지 요청
@@ -287,7 +302,7 @@ public class MemberController {
 		MemberDTO dto = service.getDTOById(user_id);
 		System.out.println(dto);
 		model.addAttribute("dto", dto);
-		return "/member/userInformation";
+		return "member/userInformation";
 	}
 
 	// (마이페이지) 회원탈퇴 요청
@@ -295,7 +310,7 @@ public class MemberController {
 	public String widthdrawal(String user_id) throws Exception {
 		System.out.println("MemberController / 회원탈퇴 user_id - " + user_id);
 		service.withdrawal(user_id);
-		return "/home";
+		return "home";
 	}
 	
 	// (마이페이지) 회원정보 수정요청
@@ -314,7 +329,7 @@ public class MemberController {
 		// (마이페이지) 비밀번호변경 페이지 요청
 		@RequestMapping("/toModifyPw")
 		public String toModifyPw() {
-			return "/member/modifyPassword";
+			return "member/modifyPassword";
 		}
 		
 		// (마이페이지) 비밀번호 수정 요청
@@ -350,7 +365,7 @@ public class MemberController {
 			MemberDTO dto = service.getDTOById(user_id);
 			System.out.println(dto);
 			model.addAttribute("dto", dto);
-			return "/member/userInformation";
+			return "member/userInformation";
 		}
 		
 		// (마이페이지) 기본 프로필 사진 설정
@@ -360,7 +375,7 @@ public class MemberController {
 			// 기본 프로필 사진명이 myInfo.png라고 할 때
 			service.defaultPP(user_id);
 			model.addAttribute("dto", service.getDTOById(user_id));
-			return "/member/userInformation";
+			return "member/userInformation";
 		}
 		
 		// (마이페이지) 능력자 페이지 요청
@@ -442,7 +457,7 @@ public class MemberController {
 			model.addAttribute("eDTO", eDTO);
 			System.out.println("능력자 정보: " + eDTO);
 			// tbl_career 정보 가져오기
-			List<String> careerList = careerService.getCareerList(expert_id);
+			List<CareerDTO> careerList = careerService.getCareerList(expert_id);
 			model.addAttribute("careerList", careerList);
 			System.out.println("능력자 증명: " + careerList.toString());
 			// tbl_expert_category 정보 가져오기
@@ -450,6 +465,6 @@ public class MemberController {
 			model.addAttribute("categoryList", categoryList);
 			System.out.println("능력자 카테고리: " + categoryList);
 			
-			return "/member/viewExpertInfo";
+			return "member/viewExpertInfo";
 		}
 }

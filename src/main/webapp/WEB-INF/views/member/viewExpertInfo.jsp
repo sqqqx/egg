@@ -85,7 +85,9 @@
                 	</div>
                 	<div class="col-4">
                 		<c:forEach items="${careerList}" var="career">
-                			<li>${career}</li>
+                			<li>
+                				<a href="${pagecontext.request.contextPath}/career/download.do?original_name=${career.original_name}&system_name=${career.system_name}">${career.original_name}</a>
+                			</li>
                 		</c:forEach>
                 	</div>
                 </div>
