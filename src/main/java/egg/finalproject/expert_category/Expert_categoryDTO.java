@@ -28,6 +28,11 @@ public class Expert_categoryDTO {
 	public void setCategory_no(int category_no) {
 		this.category_no = category_no;
 	}
+
+	@Override
+	public String toString() {
+		return "Expert_categoryDTO [expert_id=" + expert_id + ", category_no=" + category_no + "]";
+	}
 	
 	
 }

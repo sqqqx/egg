@@ -122,4 +122,9 @@
 	<update id="defaultPP">
 		update tbl_member set profile_path = 'myInfo.png' where user_id = #{user_id}
 	</update>	
+	
+	<!-- (마이페이지) 회원 타입 수정 -->
+	<update id="modifyType">
+		update tbl_member set type = 3 where user_id = #{user_id}
+	</update>
 </mapper>
