@@ -48,6 +48,10 @@ public class CareerDTO {
 	public void setExpert_id(String expert_id) {
 		this.expert_id = expert_id;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "CareerDTO [career_no=" + career_no + ", original_name=" + original_name + ", system_name=" + system_name
+				+ ", expert_id=" + expert_id + "]";
+	}
 }

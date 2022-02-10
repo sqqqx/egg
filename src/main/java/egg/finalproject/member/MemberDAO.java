@@ -154,4 +154,10 @@ public class MemberDAO {
 		System.out.println("MemberDAO / 기본 프로필 사진 설정 - user_id: " + user_id);
 		return session.update("memberMapper.defaultPP", user_id);
 	}	
+	
+	// (마이페이지) 회원 타입 수정
+	public int modifyType(String user_id) throws Exception {
+		System.out.println("MemberDAO / 회원 타입 수정 - 아이디: " + user_id);
+		return session.update("memberMapper.modifyType", user_id);
+	}
 }

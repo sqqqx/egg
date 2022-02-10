@@ -72,7 +72,7 @@
                                                 능력자
                                             </c:when>
                                             <c:otherwise>
-                                                외계인
+                                                능력자(진)
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
@@ -146,7 +146,15 @@
                     	</form>
                     
                     <div class="col" id="btnBox">
-                        <button type="button" id="usertypeConvertBtn" class="btn btn-success">능력자로 전환하기</button>
+                    	<c:choose>
+                            <c:when test="${dto.type eq 1}">
+                                <button type="button" id="usertypeConvertBtn" class="btn btn-success">능력자로 전환하기</button>
+                            </c:when>
+                            <c:otherwise>
+                                <button type="button" id="viewExpertBtn" class="btn btn-primary">능력자 정보 확인</button>
+                            </c:otherwise>
+                        </c:choose>
+                        
                         <button type="button" id="editProfileBtn" class="btn btn-warning">회원 정보 수정</button>
                     </div>
                     <div class="col" id="editBtnBox">
@@ -159,7 +167,20 @@
     </div>
     
     <script>
-    	console.log('${pagecontext.request.contextPath}/profilePhotos/${profile_path}');
+    	/* 능력자 관련 */
+    	// 능력자 전환 버튼
+    	$("#usertypeConvertBtn").on("click", function(){
+    		$(location).attr("href", "${pagecontext.request.contextPath}/member/toConvertExpert");
+    	})
+    	
+    	// 능력자 정보 확인
+    	$("#viewExpertBtn").on("click", function(){
+    		$(location).attr("href", "${pagecontext.request.contextPath}/member/toViewExpertInfo?expert_id=${loginSession.user_id}");
+    	})
+    	
+    	
+    
+    
     	/* 프로필사진 변경*/
     	// 프로필사진 변경 버튼
     	$("#showPhotoBtnBox").on("click", function(){
