@@ -29,7 +29,8 @@
                   <ul><span id="toViewMessage" class="userTab">쪽지함</span></ul>
                   <ul>찜한 게시글</ul>
                   <ul>내가 쓴 글</ul>
-                  <ul>주문 결제 조회</ul>
+                  <ul>
+                  	<a href="${pagecontext.request.contextPath}/order/toMyOrder?currentPage=1">주문 결제 조회</a></ul>
                   <ul>배송 조회</ul>
                   <ul><span id="withdrawal" class="userTab">회원탈퇴</span></ul>
               </li>

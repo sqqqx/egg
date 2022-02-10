@@ -42,7 +42,7 @@
 	<!-- 주문 상세 정보 -->
 	<select id="getOrderDetail" resultType="map">
 		SELECT 
-		    o.name, o.phone, o.email, o.message, o.address,
+		    o.name, o.phone, o.email, o.message, o.address
 		    pay.payment_no, to_char(pay.cost, '999,999,999') "COST", pay.payment_time, pay.method, pay.card_name,
 		    op.quantity,
 		    p.name "PRODUCT_NAME", to_char(p.price, '999,999,999') "PRICE", p.content, p.image_path

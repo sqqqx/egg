@@ -1,6 +1,7 @@
 package egg.finalproject.order;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,5 +65,17 @@ public class OrderDAO {
 		public List<OrderProduct> getOrderProduct(String order_no) throws Exception {
 			System.out.println("OrderDAO / 주문상품 불러오기 - order_no: " + order_no);
 			return session.selectList("orderMapper.getOrderProduct", order_no);
+		}
+		
+		////////////////////마이페이지 주문 결제 조회 영역 ///////////////////
+		
+		// 이용자 별 주문정보 가져오기
+		public List<Map<String, Object>> getOrderList(Map<String, Object> map) throws Exception {
+			return session.selectList("orderMapper.getOrderList", map);
+		}
+		
+		// 주문정보 COUNT
+		public int getOrderCount(Map<String, Object> map) throws Exception {
+			return session.selectOne("orderMapper.getOrderCount", map);
 		}
 }

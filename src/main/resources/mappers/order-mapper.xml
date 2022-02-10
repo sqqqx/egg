@@ -46,4 +46,34 @@
     <select id="getOrderProduct" resultType="OrderProduct">
     	select * from tbl_orderproduct where order_no = #{order_no}
     </select>
+    
+    <!--////////////// 마이페이지 주문 결제 조회 영역 //////////////-->
+    
+    <!-- 이용자 별 주문정보 가져오기 -->
+    <select id="getOrderList" parameterType="map" resultType="map">
+    	SELECT 
+    		o.order_no, o.order_time, to_char(o.cost, '999,999,999') "COST", o.status,
+		    op.quantity,
+		    p.name, p.price, p.image_path
+		FROM (SELECT row_number() OVER (ORDER BY order_time DESC) AS idx, tbl_order.* FROM tbl_order) o
+		    INNER JOIN tbl_payment pay ON(o.order_no = pay.payment_no)
+		    INNER JOIN tbl_orderproduct op ON(o.order_no = op.order_no)
+		    INNER JOIN tbl_product p ON(op.product_no = p.product_no)
+		WHERE idx BETWEEN ${startRange} AND ${endRange}
+		    AND user_id = #{user_id}
+		   	<if test="searchKeyword != null and searchKeyword != ''">
+				AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+			</if>
+    </select>
+    
+    <!-- 주문정보 COUNT -->
+    <select id="getOrderCount" parameterType="map" resultType="int">
+    	SELECT COUNT(*) FROM tbl_order o
+		    INNER JOIN tbl_orderproduct op ON(o.order_no = op.order_no)
+		    INNER JOIN tbl_product p ON(op.product_no = p.product_no)
+		WHERE user_id = #{user_id}
+		<if test="searchKeyword != null and searchKeyword != ''">
+			AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+		</if>
+    </select>
 </mapper>

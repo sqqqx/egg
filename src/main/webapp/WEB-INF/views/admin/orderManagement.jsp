@@ -400,7 +400,7 @@
 			return bl;
 		}
 		// 결제 취소 process
-		function cancelPay(payment_no, cost, order_no) {
+		/* function cancelPay(payment_no, cost, order_no) {
 			console.log(payment_no + " : " + cost + " : " + order_no);
 			$.ajax({
 				url: "/admin/canclePay.do",
@@ -422,7 +422,7 @@
 			}).fail(function(e) {
 				console.log(e);
 			});
-		}
+		} */
     </script>
     
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
