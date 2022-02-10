@@ -26,4 +26,10 @@ public class CategoryDAO {
 	public CategoryDTO getCategory(int category_no) throws Exception{
 		return session.selectOne("categoryMapper.getCategory",category_no);
 	}
+	
+	// (마이페이지) 카테고리명 가져오기
+	public String cateName(int category_no) throws Exception {
+		System.out.println("CategoryDAO / 카테고리명 가져오기 - category_no: " + category_no);
+		return session.selectOne("categoryMapper.cateName", category_no);
+	}
 }
