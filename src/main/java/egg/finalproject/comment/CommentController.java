@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -128,5 +129,14 @@ public class CommentController {
 		}return null;
 	}
 	
+	//(실시간알림)알림받는사람 닉네임 추출
+	@RequestMapping(value="/getReceiver.do", produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String getReceiver(int comment_no) throws Exception{
+		
+		String NN = service.getReceiver(comment_no);
+		System.out.println(NN);
+		return NN;					
+	}
 	
 }

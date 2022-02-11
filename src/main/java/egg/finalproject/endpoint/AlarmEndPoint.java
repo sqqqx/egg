@@ -76,10 +76,11 @@ public class AlarmEndPoint {
 	public void onReceive(String message, Session session) {
 		// 지금 접속한 클라이언트의 IP주소
 		// String userID = (String)this.session.getAttribute("loginID");
+		System.out.println("전송완료");
 		String[] mg = message.split(",");
 		
 		// 알림 전송
-		if(mg[0].equals("1")) {
+		if(mg[0].equals("1")||mg[0].equals("2")||mg[0].equals("3")||mg[0].equals("4")) {
 			int type = Integer.parseInt(mg[0]);
 			int post_no = Integer.parseInt(mg[1]);
 			String content = mg[2];
@@ -113,6 +114,7 @@ public class AlarmEndPoint {
 			// 클라이언트로부터 받은 메세지를 데이터베이스에 저장하는 작업 -> NoticeService
 			try {
 				service.insert(new NoticeDTO(0, type, post_no, content, null, from_id, to_id));
+				System.out.println("데이터 저장 완료");
 			} catch (Exception e) {
 				e.printStackTrace();
 				return;

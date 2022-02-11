@@ -2,6 +2,7 @@ package egg.finalproject.comment;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,9 @@ public class CommentDAO {
 	
 	public int insertReply_reply(ReplyDTO dto) throws Exception{
 		return session.insert("commentMapper.insertReply_reply",dto);
+	}
+	
+	public String getReceiver(int comment_no) throws Exception{
+		return session.selectOne("commentMapper.getReceiver",comment_no);
 	}
 }

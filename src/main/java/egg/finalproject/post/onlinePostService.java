@@ -60,6 +60,9 @@ public class onlinePostService {
 	public List<Object> selectLike() throws Exception{
 		return dao.selectLike();
 	}
+	public List<Object> selectCat(int category_no) throws Exception{
+		return dao.selectCat(category_no);
+	}
 	//============================================================================
 	public List<Object> mainSearch(String search) throws Exception{
 		return dao.mainSearch(search);

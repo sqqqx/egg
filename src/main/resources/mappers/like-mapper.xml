@@ -29,4 +29,11 @@
 	select count(*) from tbl_like where user_id=#{user_id} and type=#{type} and post_no = #{post_no}
 </select>
 
+<select id="getNN" parameterType="map" resultType="String">
+	select a.user_nickname 
+	from tbl_comment a inner join tbl_like b 
+	on a.comment_no = b.post_no 
+	where b.type=#{type} and b.post_no=#{post_no}
+	group by a.user_nickname
+</select>
 </mapper>

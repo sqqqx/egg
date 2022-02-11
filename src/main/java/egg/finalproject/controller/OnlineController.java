@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import egg.finalproject.post.PostDTO;
 import egg.finalproject.post.onlinePostService;
 
 @Controller
@@ -57,4 +58,14 @@ public class OnlineController {
 		model.addAttribute("search", search);
 		return "online/onlineSelect";
 	}
+	//카테고리 별 조회 페이지로 이동
+		@RequestMapping("/toCat.do")
+		public String toCat(Model model, int category_no, String child_group) throws Exception{
+			List<Object> listCat = service.selectCat(category_no);
+			model.addAttribute("listCat", listCat);
+			model.addAttribute("category", child_group);
+			return "online/onlineCat";
+		}
+	
+	
 }

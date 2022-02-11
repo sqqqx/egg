@@ -71,9 +71,46 @@ margin:0;
 	position:relative;
 	left:90px;
 }
-#alarm{
+.alarm{
 	position:relative;
-	left:180px;
+	left:170px;
+	width:50px;
+}
+#noAlarmBtn{
+	margin-top:0px;
+}
+#alarmBtn{
+	position:relateive;
+	display:none;
+	top:32px;
+}
+#alarmBtn:after{
+	position:relateive;
+	top:32px;
+}
+
+#alarmContentBox{
+	position:absolute;
+	display:none;
+	width:500px;
+	height:200px;
+	background-color: white;
+	z-index: 2;
+	top:100px;
+	left:1050px;
+	border:1px solid black;
+	overflow: scroll;
+	}
+#alarmContent{
+	width:100%;
+	height:100%;
+}
+.deleteAll{
+	width:100px;
+	height:50px;
+}
+.bell{
+	color:gray;
 }
 #cart{
 	position:relative;
@@ -166,4 +203,17 @@ li:hover > span::after {
 .adminBox{
     padding-top: 40px;
     text-align:center;
+}
+
+#replyNew{
+	position:relative;
+	background-color: red;
+	text-align: center;
+	width:42px;
+	height:20px;
+	top:20px;
+}
+
+#alarmContent{
+	border-top: 1px solid black;
 }

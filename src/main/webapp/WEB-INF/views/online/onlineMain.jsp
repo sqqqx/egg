@@ -46,7 +46,7 @@
             <div class="col-12 mt-5 class" id="likePart">
             	<div class="row titleBox">
             		<div class="col-2 mt-2 mainTitle">
-            			<label><h4>인기 강의</h4></label>
+            			<label><h4><b>인기 강의</b></h4></label>
             		</div>
             		<div class="col-9">
             			<div class="plus" id="hot">HOT</div>
@@ -78,7 +78,7 @@
             	<div class="row titleBox">
             		<div class="col-2 mt-2 mainTitle">
             			<label>
-	            			<h4>최신 강의</h4>
+	            			<h4><b>최신 강의</b></h4>
             			</label>	
             		</div>
             		<div class="col-9">
@@ -110,7 +110,7 @@
             <div class="col-12 mt-5 class" id="adminPart">
             	<div class="row titleBox">
             		<div class="col-2 mt-2 mainTitle">
-            			<label><h4>관리자 추천 강의</h4></label>
+            			<label><h4><b>관리자 추천 강의</b></h4></label>
             		</div>	
             	</div>
                 <div class="row mediaBox">

@@ -1137,6 +1137,13 @@
             console.log(content);
             let post_no = ${ PostDTO.post_no }
             let type = 1;
+            
+            //실시간 알림
+           let typed = 3;
+           let btitle = '좋아요'
+           let from_NN = '${loginSession.user_nickname}';
+
+                
             if (content == "") { //입력창에 내용이 없다면
                 alert("답글을 입력해 주세요.");
                 return;
@@ -1146,6 +1153,19 @@
                     , type: "post"
                     , data: { comment_no, comment_no, post_no: post_no, content: content, type: type }
                 }).done(function (data) {
+                	
+                	$.ajax({
+                		url:"/comment/getReceiver.do?comment_no="+comment_no
+                		, type:"get"
+                	}).done(function(result){
+                		console.log("닉넴뽑아오기 성공")
+                		let receiver = result
+                        //실시간 알림
+          				let msg = typed+","+post_no+","+btitle+","+from_NN+","+receiver;
+                        ws.send(msg);
+                	}).fail(function(e){
+                		console.log(e);
+                	});
                     console.log(data);
                     $("input[name='" + comment_no + "']").val("");
                     getReplies(data, comment_no);
@@ -1237,6 +1257,7 @@
     		               </div>")
             }
             selectLike_comment(dto.comment_no);
+            
         })
         }
         //대댓글(답글의 답글)쓰기를 누른 경우
@@ -1255,6 +1276,12 @@
             content = replyInput.value;
             console.log(content);
             let post_no = ${ PostDTO.post_no }
+            
+            //실시간 알림
+            let typed = 3;
+            let btitle = '좋아요'
+            let from_NN = '${loginSession.user_nickname}';
+            
             if (content == "") { //대댓글 입력창이 비어있는 경우
                 alert("답글을 입력해 주세요.");
             } else {
@@ -1263,6 +1290,18 @@
                     , type: "post"
                     , data: { comment_no: comment_no, parent_no: parent_no, content: content, post_no: post_no }
                 }).done(function (data) {
+                	$.ajax({
+                		url:"/comment/getReceiver.do?comment_no="+comment_no
+                		, type:"get"
+                	}).done(function(result){
+                		console.log("닉넴뽑아오기 성공")
+                		let receiver = result
+                        //실시간 알림
+          				let msg = typed+","+post_no+","+btitle+","+from_NN+","+receiver;
+                        ws.send(msg);
+                	}).fail(function(e){
+                		console.log(e);
+                	});
                     console.log(data);
                     getReplies(data, parent_no);
                 }).fail(function (rs) {
@@ -1409,17 +1448,29 @@
         	let bid = '${loginSession.user_id}';
         	let post_no = comment_no;
         	let value = $("#likeArea"+comment_no).attr("value");
+        	
+        	//실시간 알림 요소 
+        	let from_NN = '${loginSession.user_nickname}';
+        	let receiver;
+        	let type=4
+        	let btitle='좋아요'
+        	
         	if(value=="0"){ //좋아요가 눌려있지 않는 경우
         		$("#likeBtn"+comment_no).css("color", "#e05885"); 
                 $("#likeArea"+comment_no).attr("value","1");
                 console.log($("#likeArea"+comment_no).attr("value"));
             	$.ajax({
-                    url: "${pageContext.request.contextPath}/like/plus.do?post_no=" + post_no + "&user_id=" + bid + "&type=4",
+                    url: "${pageContext.request.contextPath}/like/plusReply.do?post_no=" + post_no + "&user_id=" + bid + "&type=4",
                     type: "get"
                 }).done(function (data) {
-                    if (data == "available") {
+                    if (data != "unavailable") {
                         console.log("좋아요 성공")
-                    } else if (data == "unavailable") {
+						receiver= data
+                        
+						//실시간 알림
+						let msg = type+","+post_no+","+btitle+","+from_NN+","+receiver;
+                        ws.send(msg);
+                    } else {
                         alert("좋아요 요청 실패");
                     }
                     return;
@@ -1446,6 +1497,8 @@
         	
         	
         }
+        
+        
         
         
     </script>

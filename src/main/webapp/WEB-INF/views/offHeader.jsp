@@ -6,10 +6,18 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/resources/css/header.css"> 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src =" https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js " > </script>
 <style>
 .imgBox>a>img{margin-top:0px;}
 .header{height:100px;}
 .header>div{height:100px;}
+#toCart{
+	position:relative;
+	left:270px;
+}
+#alarmContentBox{
+	left:1300px;
+}
 </style>
 </head>
 <body>
@@ -49,9 +57,24 @@
             <!--알림(비로그인시 svg 안보여야함) // 로그인세션활용하여 c:if처리 할것-->
             <div class="col-1">
             	<c:if test = "${not empty loginSession }">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25%" height="25%" fill="currentColor" id="alarm" class="bi bi-bell" viewBox="0 0 16 16">
-                    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
-                  </svg>
+                    <button type="button" class="btn btn-white position-relative alarm" id="alarmBtn">
+					  <svg xmlns="http://www.w3.org/2000/svg" width="110%" height="110%" fill="currentColor" class="bi bi-bell bell" viewBox="0 0 16 16">
+						  <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+						</svg>
+					  <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+					    <span class="visually-hidden">New alerts</span>
+					  </span>
+					</button>
+					<button type="button" class="btn btn-white position-relative alarm" id="noAlarmBtn">
+					  <svg xmlns="http://www.w3.org/2000/svg" width="110%" height="110%" fill="currentColor" class="bi bi-bell bell" viewBox="0 0 16 16">
+						  <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+						</svg>
+					</button>
+					<div id="alarmContentBox">
+						<button type="button" class="btn btn-dark deleteAll" id="deleteAll">전체삭제</button>
+						<div id="newAlarm"></div>
+						<div id="alarmContent"></div>
+					</div>
                 </c:if>
             </div>
             <!--쪽지함(비로그인시 svg 안보여야함) // 로그인세션활용하여 c:if처리 할것-->
@@ -139,8 +162,165 @@
          
         
          
-         //websocket 주소->endpoint로 이동[본인의 포트번호로 바꿀것]
+          //========================================== 알람 영역 ===============================================
+         //websocket 주소->endpoint로 이동
          ws = new WebSocket("ws://localhost/alarm");
+         
+       //처음 시작할때 저장돼있는 알람 불러옴
+ 		$(document).ready(function(){
+ 			selectAlarm();
+ 		})
+ 		
+       //알람 클릭시 알림창 뜨게함
+ 		$(".alarm").click(function(){
+ 			 let category = $("#alarmContentBox")
+ 	            if(category.is(":visible")){
+ 	            	category.fadeOut();
+ 				}else{
+ 					category.fadeIn();	    
+ 				}
+ 		})	
+ 		//빨간점 알람 클릭시 빨간점 없는 알람버튼으로 바꿔줌 
+		$("#alarmBtn").click(function(){
+			$("#alarmBtn").css("display","none")
+			$("#noAlarmBtn").css("display","flex")
+			$("#noAlarmBtn").css("top","32px")
+		})
+		
+		//메세지 수신
+		ws.onmessage = function(e){
+			console.log(e.data);
+			let msgObj = JSON.parse(e.data);
+			console.log(msgObj);
+			let newMsg= $("<div>")
+			if("${loginSession.user_nickname}" == msgObj.to_id){//본인 아이디일때만 알람이 감
+				//알림버튼 바꿈(빨간점 표시)
+				$("#alarmBtn").css("display","flex")
+				$("#noAlarmBtn").css("display","none")
+				//-----------------------------------
+				//메세지 삽입
+				let msg = "<div id='replyNew'>NEW</div>"
+				msg+= msgObj.from_id
+				msg+= "님이 "
+				if(msgObj.type==1){ //좋아요의 경우
+					msg +="게시글에 좋아요를 눌렀습니다."
+				}else if(msgObj.type==2){ //댓글의 경우
+					msg +="게시글에 댓글을 달았습니다."
+				}else if(msgObj.type==3){
+					msg +="댓글에 답글을 달았습니다."
+				}else if(msgObj.type==4){
+					msg +="댓글에 좋아요를 눌렀습니다."
+				}
+				msg+="<button type='button' class='btn btn-dark deleteNew' value='"+msgObj.type+"," +msgObj.post_no + "," +msgObj.to_id + "," +msgObj.from_id + "'>"
+				msg+="<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash-fill' viewBox='0 0 16 16'>"
+				msg+="<path d='M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z'/>"
+				msg+="</svg>"
+				msg+="</button>"
+			newMsg.append(msg);
+			$("#newAlarm").append(newMsg); 
+			}
+		}
+ 		//전체삭제처리
+		$("#deleteAll").click(function(){
+			let to_id = '${loginSession.user_nickname}'
+			
+			$.ajax({
+				url:"${pageContext.request.contextPath}/notice/deleteAll.do?to_id="+to_id,
+				type : "get"
+			}).done(function(rs){
+				if(rs == "available"){
+					$("#noAlarm").empty();
+					$("#alarmContent").empty();
+				}else if(rs=="unavailable"){
+					alert("전체삭제 실패");
+				}
+			}).fail(function(e){
+				console.log(e);
+			})
+		})
+		
+		//개별삭제처리
+		$(document).on('click', '.delete', function(e){
+			let notice_no = $(this).val();
+			console.log(notice_no)
+			$.ajax({
+				// aJax 알림창 삭제
+				url : "${pageContext.request.contextPath}/notice/deleteByNo.do?notice_no="+notice_no
+				, type : "get"				
+			}).done(function(rs){
+				if(rs == "available"){
+					$("#alarmContent").empty();
+					selectAlarm();
+				}else if(rs == "unavailable"){
+					alert("알림 삭제에 실패했습니다."); // 알림 삭제에 실패하면 alert 
+				}				
+			}).fail(function(e){
+				console.log(e);
+			});
+		})
+		
+		//개별삭제처리(새로받은 알림)
+		$(document).on('click', '.deleteNew', function(e){
+			let str = e.target.value;
+			let mg = str.split(",");
+			
+			let type = mg[0];
+			let post_no = mg[1];
+			let to_id = mg[2];
+			let from_id = mg[3];
+			
+			
+			$.ajax({
+				//aJax 알림창 삭제
+				url : "${pageContext.request.contextPath}/notice/delete.do?type="+type+"&post_no="+post_no+"&to_id="+to_id+"&from_id="+from_id
+				, type : "get"				
+			}).done(function(rs){
+				if(rs == "available"){
+					$("#newAlarm").empty();
+					$("#alarmContent").empty();
+					selectAlarm();
+				}else if(rs == "unavailable"){
+					alert("알림 삭제에 실패했습니다."); // 알림 삭제에 실패하면 alert 
+				}				
+			}).fail(function(e){
+				console.log(e);
+			});
+		})
+		
+		function selectAlarm(){
+ 			console.log("알람시동")
+			let to_id = '${loginSession.user_nickname}'
+				
+				$.ajax({
+					url: "${pageContext.request.contextPath}/notice/selectById.do?to_id="+to_id,
+					type: "get"
+				}).done(function(rs){
+					for(let notice of rs){
+						let newMsg=$("<div>")
+						let msg = notice.from_id
+						msg+= "님이 "
+						if(notice.type==1){
+							msg +="게시글에 좋아요를 눌렀습니다."
+						}else if(notice.type==2){
+							msg +="게시글에 댓글을 달았습니다."
+						}else if(notice.type==3){
+							msg +="댓글에 답글을 달았습니다."
+						}else if(notice.type==4){
+							msg +="댓글에 좋아요를 눌렀습니다."
+						}
+						msg+="<button type='button' class='btn btn-dark delete' value='"+notice.notice_no+"'>"
+						msg+="<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash-fill' viewBox='0 0 16 16'>"
+						msg+="<path d='M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z'/>"
+						msg+="</svg>"
+						msg+="</button>"
+						newMsg.append(msg);
+						$("#alarmContent").append(newMsg); 
+					}
+					
+				}).fail(function(e){
+					console.log(e);
+				})
+		}
     </script>
 </body>
 </html>
