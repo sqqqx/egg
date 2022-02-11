@@ -14,16 +14,20 @@
     padding: 0;
 }
 .searchArea select {
-	height: 55% !important;
+	height: 100% !important;
 }
 .searchArea input {
-	height: 55% !important;
+	height: 100% !important;
 }
 .searchArea button {
 	width: 100% !important;
 }
 .searchArea button {
     width: 100%;
+}
+#searchBtn {
+	position: static !important;
+	height: 55px !important;
 }
 
 /*** 글 유형 ***/

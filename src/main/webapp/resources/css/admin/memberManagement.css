@@ -13,17 +13,24 @@
 .searchArea>div {
     padding: 0;
 }
-.searchArea select {
-	height: 55% !important;
+/* .searchArea select {
+	//height: 55% !important;
 }
 .searchArea input {
 	height: 55% !important;
-}
+} */
 .searchArea button {
 	width: 100% !important;
 }
 .searchArea button {
     width: 100%;
+}
+.searchArea select, input {
+	height: 100% !important;
+}
+#searchBtn {
+	position: static !important;
+	height: 55px !important;
 }
 
 /*** 테이블 영역 ***/

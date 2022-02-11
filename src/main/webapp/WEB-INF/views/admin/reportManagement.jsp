@@ -55,13 +55,13 @@
 							placeholder="" value="${searchKeyword}">
 					</div>
 					<div class="col-3 d-flex justify-content-start">
-						<button type="submit" class="btn btn-outline-dark" id="searchBtn">검색</button>
+						<button type="submit" class="btn btn-outline-dark" id="adminSearchBtn">검색</button>
 					</div>
 				</div>
 			</form>
 
 			<!-- 신고 유형 -->
-			<div class="row cls-reportType">
+			<div class="row cls-reportType py-3">
 				<div class="col-4 d-flex">
 					<button type="button" class="btn btn-outline-dark cls-type"
 						id="typeAll" value="9">전체</button>
