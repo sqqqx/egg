@@ -41,7 +41,7 @@
 							placeholder="" value="${searchKeyword}">
 					</div>
 					<div class="col-3 d-flex justify-content-start">
-						<button type="submit" class="btn btn-outline-dark" id="searchBtn">검색</button>
+						<button type="submit" class="btn btn-outline-dark" id="adminSearchBtn">검색</button>
 					</div>
 				</div>
 			</form>
@@ -49,7 +49,7 @@
 			<!-- 상품 출력 -->
 			<form id="selectCheckbox" method="post"
 				class="d-flex justify-content-center">
-				<div class="row tableWrapper">
+				<div class="row tableWrapper py-3">
 					<div class="col-12 px-0">
 						<table class="table table-striped table-hover">
 							<thead>
