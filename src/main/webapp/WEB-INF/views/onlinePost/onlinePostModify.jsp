@@ -330,16 +330,17 @@
                 $("#product_no").focus();
             } else {
             	console.log("다 오케이")
-            	 if(($("#category2 option:selected").val())==${PostDTO.category_no} &&
+            	$("#modifyForm").submit();
+            	 /* if(($("#category2 option:selected").val())==${PostDTO.category_no} &&
             		 ($("#title").val()) == "${PostDTO.title}" && 
                   	 ($("#thumbNail").val())=="" && 
-                  	 ($("#summernote").val())=='${PostDTO.content}' && 
+                  	 ($("#summernote").val())=="${PostDTO.content}" && 
                   	 ($("#product_no").val()) ==${PostDTO.product_no}){//수정사항이 없는 경우
             		console.log("똑같아요");
             		location.href="onlinePost/toWrite.do";
             	 }else{
             		 $("#modifyForm").submit();
-            	 }           	
+            	 }        */    	
             }return;
         });
         

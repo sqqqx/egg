@@ -246,7 +246,7 @@
 								<button type="button" class="btn btn-success" id="insert">등록</button>
 								<button type="button" class="btn btn-warning" id="reset">새로
 									작성</button>
-								<button type="button" class="btn btn-primary">취소</button>
+								<button type="button" class="btn btn-primary" id="cancel">취소</button>
 							</td>
 						</tr>
 
@@ -258,7 +258,15 @@
 	<a href="/onlinePost/toDetail.do?post_no=22">여기로 가자</a>
 
 	<script>
-
+	//취소버튼 누르면 이전 페이지로 넘어가기
+    $("#cancel").on("click",function(){
+    	goBackPage();
+    })
+    
+    //이전 페이지로 돌아가는 함수
+    function goBackPage(){
+    	window.history.back();
+    }
 
 	    //reset버튼 눌렀을 경우 데이터 처리
 		console.log($("#category2 option:selected").val());
