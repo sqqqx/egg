@@ -11,9 +11,9 @@
 		#expertBox {
 			display: none;
 		}
-		.eTitle {
+		.eTitle p{
 			text-align: center;
-			font-size: 50pt;
+			font-size: 40pt;
 		}
         #photoBtnBox {
             display: none;
@@ -65,7 +65,7 @@
             
             <!-- 우측 능력자 전환 부분 -->
             <div class="col-8" id="expertViewBox">
-            	<div class="row" class="eTitle"><p>능력자 정보 확인</p></div>
+            	<div class="row eTitle"><p>능력자 정보 확인</p></div>
             	<div class="row">
             		<div class="col-2">활동지역</div>
             		<div class="col-2">${eDTO.active_area}</div>
@@ -92,15 +92,13 @@
                 	</div>
                 </div>
                 <div class="row justify-content-center">
-                	<button type="button" id="backBtn" class="btn btn-secondary eBtn">돌아가기</but>
-                	<button type="button" id="modifyBtn" class="btn btn-secondary eBtn">수정하기</but>
-                    <button type="button" id="cancelBtn" class="btn btn-secondary eBtn" hidden>취소</but>
-                    <button type="button" id="confirmBtn" class="btn btn-primary eBtn" hidden>확인</but>
+                	<button type="button" id="backBtn" class="btn btn-secondary eBtn">마이페이지로</but>
+                	<button type="button" id="modifyBtn" class="btn btn-warning eBtn">수정하기</but>
                 </div>
             </div>
             <div class="col-8" id="expertBox">
            		<form action="${pagecontext.request.contextPath}/member/convertExpert.do" enctype="multipart/form-data" method="post" id="ceForm">
-            		<div class="row" class="eTitle"><p>능력자 전환</p></div>
+            		<div class="row eTitle"><p>능력자 정보 수정</p></div>
 	                <div class="row">
 	                    <div class="col-2">
 	                        활동지역
@@ -428,8 +426,100 @@
 		        + "</div>"));
 		    }
    
+		
 	    
+		    /* 초기 수정내용 설정 */
+	   		$(function(){
+	   			// 활동지역
+	   			let addr = "${eDTO.active_area}";
+	            let addr1 = addr.substring(0, addr.indexOf(' '));
+	            let addr2 = addr.substring(addr.indexOf(' ')+1);
+	            console.log("addr1: " + addr1);
+	            console.log("addr2: " + addr2);
+	   			
+	   			if(addr1 === '서울특별시') {
+	                $("#location1").children("[value=seoul]").prop("selected", true);
+	                $(".seoul").children("[value=" + addr2 +"]").prop("selected", true);
+	                $(".seoul").css("display", "inline");
+	            } else if(addr1 === '부산광역시') {
+	            	$("#location1").children("[value=busan]").prop("selected", true);
+	            	$(".busan").children("[value=" + addr2 +"]").prop("selected", true);
+	            	$(".busan").css("display", "inline");
+	            } else if(addr1 === '대구광역시') {
+	            	$("#location1").children("[value=daegu]").prop("selected", true);
+	            	$(".daegu").children("[value=" + addr2 +"]").prop("selected", true);
+	    	        $(".daegu").css("display", "inline");
+	            } else if(addr1 === '인천광역시') {
+	            	$("#location1").children("[value=incheon]").prop("selected", true);
+	            	$(".incheon").children("[value=" + addr2 +"]").prop("selected", true);
+	            	$(".incheon").css("display", "inline");
+	            } else if(addr1 === '광주광역시') {
+	            	$("#location1").children("[value=gwangju]").prop("selected", true);
+	            	$(".gwangju").children("[value=" + addr2 +"]").prop("selected", true);
+	            	$(".gwangju").css("display", "inline");
+	            } else if(addr1 === '대전광역시') {
+	            	$("#location1").children("[value=daejeon]").prop("selected", true);
+	            	$(".daejeon").children("[value=" + addr2 +"]").prop("selected", true);
+	            	$(".daejeon").css("display", "inline");
+	            } else if(addr1 === '울산광역시') {
+	            	$("#location1").children("[value=ulsan]").prop("selected", true);
+	            	$(".ulsan").children("[value=" + addr2 +"]").prop("selected", true);
+	            	$(".ulsan").css("display", "inline");
+	            } else if(addr1 === '세종특별자치시') {
+	            	$("#location1").children("[value=sejong]").prop("selected", true);
+	            	$(".sejong").children("[value=" + addr2 +"]").prop("selected", true);
+	            	$(".sejong").css("display", "inline");
+	            } else if(addr1 === '경기도') {
+	            	$("#location1").children("[value=gyeonggi]").prop("selected", true);
+	            	$(".gyeonggi").children("[value=" + addr2 +"]").prop("selected", true);
+	            	$(".gyeonggi").css("display", "inline");
+	            } else if(addr1 === '강원도') {
+	            	$("#location1").children("[value=gangwon]").prop("selected", true);
+	            	$(".gangwon").children("[value=" + addr2 +"]").prop("selected", true);
+	            	$(".gangwon").css("display", "inline");
+	            } else if(addr1 === '충청북도') {
+	            	$("#location1").children("[value=chungbuk]").prop("selected", true);
+	            	$(".chungbuk").children("[value=" + addr2 +"]").prop("selected", true);
+	            	$(".chungbuk").css("display", "inline");
+	            } else if(addr1 === '충청남도') {
+	            	$("#location1").children("[value=chungnam]").prop("selected", true);
+	            	$(".chungnam").children("[value=" + addr2 +"]").prop("selected", true);
+	            	$(".chungnam").css("display", "inline");
+	            } else if(addr1 === '전라북도') {
+	            	$("#location1").children("[value=jeonbuk]").prop("selected", true);
+	            	$(".jeonbuk").children("[value=" + addr2 +"]").prop("selected", true);
+	            	$(".jeonbuk").css("display", "inline");
+	            } else if(addr1 === '전라남도') {
+	            	$("#location1").children("[value=jeonnam]").prop("selected", true);
+	            	$(".jeonnam").children("[value=" + addr2 +"]").prop("selected", true);
+	            	$(".jeonnam").css("display", "inline");
+	            } else if(addr1 === '경상북도') {
+	            	$("#location1").children("[value=gyeongbuk]").prop("selected", true);
+	            	$(".gyeongbuk").children("[value=" + addr2 +"]").prop("selected", true);
+	            	$(".gyeongbuk").css("display", "inline");
+	            } else if(addr1 === '경상남도') {
+	            	$("#location1").children("[value=gyeongnam]").prop("selected", true);
+	            	$(".gyeongnam").children("[value=" + addr2 +"]").prop("selected", true);
+	            	$(".gyeongnam").css("display", "inline");
+	            } else if(addr1 === 'jeju') {
+	            	$("#location1").children("[value=jeju]").prop("selected", true);
+	            	$(".jeju").children("[value=" + addr2 +"]").prop("selected", true);
+	            	$(".jeju").css("display", "inline");
+	            }
+	   			//$(".sub_location").children("[value=" + addr2 +"]").prop("selected", true);
+	   			
+	   			// 자기소개
+	   			$("#introduction").html("${eDTO.introduction}");
+	   			
+	   			// 카테고리 선택
+	   			// for문으로 List양만큼 append처리
+	   			
+	   			
+	   		})
+		
+		    
 	   // 도/시 선택
+	   
 	    let sl = "";
 	    $(".main_location").on("click", function(){
 	        let sl = $(".main_location").val();
@@ -437,18 +527,33 @@
 	        $(".sub_location").css("display", "none");
 	        $("." + sl).css("display", "inline");
 	    });
-
-    
-        //console.log("버튼" + sl);
-        //console.log($("#location1").val());
-        //console.log($("."+sl).val());
-		
-        
-        
-        // 돌아가기 버튼
-        $("#cancelBtn").on("click", function(){
+	    
+	    
+        // 마이페이지로 버튼
+        $("#backBtn").on("click", function(){
         	$(location).attr("href", "${pagecontext.request.contextPath}/member/toUserInformation?user_id=${loginSession.user_id}");
         })
+        
+        // 수정하기 버튼
+        $("#modifyBtn").on("click", function(){
+        	
+			$("#expertViewBox").css("display", "none");
+			$("#expertBox").css("display", "block");
+        	// 버튼 교체
+        	
+        	// 활동지역 선택 창
+        	
+        	// 자기소개 textarea
+        	
+        	// 카테고리 선택 및 버튼
+        	
+        })
+        
+		// 취소하기 버튼
+		$("#cancelBtn").on("click", function(){
+			$("#expertBox").css("display", "none");
+			$("#expertViewBox").css("display", "block");
+		})
         
         // 전환신청 버튼
         $("#confirmBtn").on("click", function(){
