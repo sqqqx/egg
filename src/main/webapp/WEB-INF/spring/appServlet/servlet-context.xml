@@ -57,6 +57,8 @@
 			<exclude-mapping path="/member/toinfo.do"/>
 			<exclude-mapping path="/member/pwPhoneCheck"/>
 			<exclude-mapping path="/member/pwMailCheck"/>
+			<exclude-mapping path="/member/idMailCheck"/>
+			<exclude-mapping path="/member/idPhoneCheck"/>
 			<exclude-mapping path="/online/search.do"/>
 			<beans:bean class="egg.finalproject.utils.LoginInterceptor"/>
 		</interceptor>

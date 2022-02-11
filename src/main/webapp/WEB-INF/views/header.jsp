@@ -94,14 +94,14 @@
 				           <div class="row align-content-center textList2" id="toLogout">
 				           			로그 아웃
 				           </div>
-		       			 </div>
+		       			</div>
 		            </div>
             	</c:otherwise>
             </c:choose>
              <!-- 검색창 -->
             <div class="col-2 searchBox">
             	<div class="col-10">
-            	<input type="text" class="form-control" id="searchInput" placeholder="검색할 내용을 입력해주세요." aria-describedby="searchText">
+            	<input type="text" class="form-control" id="searchInput" placeholder="카테고리, 제목으로 검색해주세요." aria-describedby="searchText">
             	</div>
             	<div class="col-2">
             	<button class="btn btn-outline-secondary" type="button" id="searchBtn">검색</button>       

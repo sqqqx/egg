@@ -11,6 +11,7 @@
 	.btnBox > div {
 		text-align: center;
 	}
+	
 </style>
 </head>
 <body>
@@ -43,7 +44,7 @@
             </div>
         </div>
         
-        <div class="row mb-3">
+        <div class="row mb-3" id="phoneCkBox" style="display:none;">
             <div class="col-10">
                 <input id="phoneCheck" class="form-control" type="text" >
             </div>
@@ -70,7 +71,7 @@
             </div>
         </div>
         
-        <div class="row mb-3">
+        <div class="row mb-3" id="emailCkBox" style="display:none;">
         	<div class="col-10">
                 <input id="emailCheck" class="form-control" type="text" >
             </div>
@@ -80,12 +81,28 @@
             </div>
         </div>
         
-        <label>아이디</label>
-        <h2><div id="idView"></div></h2>
+        <div class="row">
+        	<div class="col-3">
+        		<input type="checkbox" class="form-check-input" name="phoneCheckBox2" id="phoneCheckBox2">휴대전화 인증
+        	</div>
+        	<div class="col-3">
+        		<input type="checkbox" class="form-check-input" name="emailCheckBox2" id="emailCheckBox2">이메일 인증
+        	</div>
+        </div>
+        <br>
+        <div class="row">
+        <div class="col" id="idViewBox">
+        	<label>아이디</label>
+        <h3><div id="idView"></div></h3>
+        <br><br>
+        </div>
+        
+        </div>
+       
         
         <div class="row my-5 btnBox">
         <div class="col">
-            <button class="btn btn-secondary btn-lg clsBtn" type="button" id="backBtn">뒤로 가기</button>
+            <button class="btn btn-secondary btn-lg clsBtn" type="button" id="backBtn">닫기</button>
         </div>
     	</div>
     	
@@ -93,6 +110,25 @@
     </div>
     
     <script>
+    $(document).ready(function(){
+        $("#emailCheckBox2").change(function(){
+            if($("#emailCheckBox2").is(":checked")){
+                $("#emailCkBox").css("display", "flex");
+            }else{
+            	 $("#emailCkBox").css("display", "none");
+            }
+        });
+        
+        $("#phoneCheckBox2").change(function(){
+            if($("#phoneCheckBox2").is(":checked")){
+                $("#phoneCkBox").css("display", "flex");
+            }else{
+            	 $("#phoneCkBox").css("display", "none");
+            }
+        });
+        
+    });
+    
  	// 이메일 인증
     let code = "";
     
@@ -101,12 +137,18 @@
     	if($("#em").val() != "") {
     		if(regExp.test($("#em").val())) {
     			let email = $("#em").val();
-            	
+            	var data = {"email" : email}
             	$.ajax({
-                    type:"GET",
-                    url:"${pageContext.request.contextPath}/member/mailCheck?email=" + email,
-                    success:function(data){
-                    	code = data;
+                    type:"post",
+                    url:"${pageContext.request.contextPath}/member/idMailCheck",
+                    data: data,
+                    success:function(rs){
+                    	if(rs == "error"){
+            				alert("가입시 입력한 이메일과 일치하는 아이디가 없습니다.");
+            			}else{
+                    		alert("이메일을 확인후 인증번호를 입력해주세요.");
+                    		code = rs;
+            			}
                     }
                 })
     		}else {
@@ -146,14 +188,14 @@
             let phone = $("#phone").val();
             $.ajax({
             	type:"GET",
-            	url:"${pageContext.request.contextPath}/member/phoneCheck?phone=" + phone, 
+            	url:"${pageContext.request.contextPath}/member/idPhoneCheck?phone=" + phone, 
             	cache : false,
             	success:function(data){
             			if(data == "error"){
-               				alert("휴대폰 번호가 올바르지 않습니다.")
+               				alert("가입시 입력한 휴대전화와 일치하는 아이디가 없습니다.");
                			}else{
                				$("#phoneCheck").attr("disabled",false);
-               				alert("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
+               				alert("인증번호를 입력한 뒤 인증확인을 눌러주십시오.");
                				code2 = data;
                			}
             		}
@@ -189,9 +231,9 @@
       	
       		
       	
-      	// 뒤로가기 버튼
+      	// 닫기 버튼
 	    $("#backBtn").click(function(){
-	    	location.href="${pageContext.request.contextPath}/toLogin.do"
+	    	window.close();
 	    })
         </script>
 </body>
