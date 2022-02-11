@@ -600,7 +600,6 @@
 </head>
 
 <body>
-    <!-- 종아요 버튼 -->
     <div class="likeClass">
         <i class="far fa-heart fa-2x" id="likeEmpty"></i>
         <span id="likeBtnTitle">찜하기</span>

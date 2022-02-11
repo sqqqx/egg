@@ -71,7 +71,9 @@
             </div>
             <div class="col-4 menu_mp orderNPayment">
                 <div>
-                    <img src="/resources/img/payment.png">
+                	<a href="${pagecontext.request.contextPath}/order/toMyOrder?currentPage=1">
+                		<img src="/resources/img/payment.png">
+                	</a>
                 </div>
                 <div>
                     <span>주문 결제 조회</span>
