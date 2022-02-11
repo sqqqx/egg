@@ -252,17 +252,19 @@
             } else {
             	let price = $("#price").val()
             	price = cf_getNumberOnly (price);
-            	if($("#product_name").val()=="${ProductDTO.name}" &&
+            	$("input[name='price']")[0].value = price;
+        		$("#modifyForm").submit(); 
+            	/* if($("#product_name").val()=="${ProductDTO.name}" &&
             	   price==${ProductDTO.price}&&
             	   $("#stock").val()==${ProductDTO.stock}&&
             	   $("#thumbNail").val()==""){
             		alert("변경 사항이 없습니다. 상품 목록으로 이동합니다.");
-            		location.href="/product/toWrite.do"
+            		location.href="/admin/toProductManagement"
             	}else{
             		console.log("변경사항 있음")
             		$("input[name='price']")[0].value = price;
             		$("#modifyForm").submit(); 
-            	} 
+            	}  */
             }
             return;
         })

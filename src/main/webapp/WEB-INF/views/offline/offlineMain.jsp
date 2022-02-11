@@ -49,26 +49,26 @@
 			</tr>
 			<tr class="category">
 				<td>	
-					<a href="${pageContext.request.contextPath}/offlinePost/toList.do?category_no=1">
+					<a href="${pageContext.request.contextPath}/offlinePost/toWrite.do?parent_group=운동">
 						<img src="/resources/img/health.png">
 						<h4><b>운동</b></h4>
 					</a>
 				</td>
 				
 				<td>
-					<a href="${pageContext.request.contextPath}/offlinePost/toList.do?category_no=2">	
+					<a href="${pageContext.request.contextPath}/offlinePost/toWrite.do?parent_group=요리">	
 						<img src="/resources/img/cook.png">
 						<h4><b>요리</b></h4>
 					</a>
 				</td>
 				<td>
-					<a href="${pageContext.request.contextPath}/offlinePost/toList.do?category_no=3">	
+					<a href="${pageContext.request.contextPath}/offlinePost/toWrite.do?parent_group=외국어">
 						<img src="/resources/img/speaking.png">
 						<h4><b>외국어</b></h4>
 					</a>
 				</td>
 				<td>
-					<a href="${pageContext.request.contextPath}/offlinePost/toList.do?category_no=4">	
+					<a href="${pageContext.request.contextPath}/offlinePost/toWrite.do?parent_group=IT">	
 						<img src="/resources/img/IT.png">
 						<h4><b>IT</b></h4>
 					</a>
@@ -76,25 +76,25 @@
 			</tr>
 			<tr class="category">
 				<td>
-					<a href="${pageContext.request.contextPath}/offlinePost/toList.do?category_no=5">	
+					<a href="${pageContext.request.contextPath}/offlinePost/toWrite.do?parent_group=라이프">
 						<img src="/resources/img/life.png">
 						<h4><b>라이프</b></h4>
 					</a>
 				</td>
 				<td>
-					<a href="${pageContext.request.contextPath}/offlinePost/toList.do?category_no=6">	
+					<a href="${pageContext.request.contextPath}/offlinePost/toWrite.do?parent_group=드로잉">
 						<img src="/resources/img/drawing.png">
 						<h4><b>드로잉</b></h4>
 					</a>
 				</td>
 				<td>
-					<a href="${pageContext.request.contextPath}/offlinePost/toList.do?category_no=7">	
+					<a href="${pageContext.request.contextPath}/offlinePost/toWrite.do?parent_group=공예">
 						<img src="/resources/img/crafts.png">
 						<h4><b>공예</b></h4>
 					</a>
 				</td>
 				<td>
-					<a href="${pageContext.request.contextPath}/offlinePost/toList.do?category_no=8">	
+					<a href="${pageContext.request.contextPath}/offlinePost/toWrite.do?parent_group=아동교육">	
 						<img src="/resources/img/baby.png">
 						<h4><b>아동교육</b></h4>
 					</a>

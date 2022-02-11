@@ -29,6 +29,10 @@ public class CommentService {
 		return dao.getAllReplies(comment_no);
 	}
 	
+	public void deleteAllReferences(int comment_no) throws Exception{
+		dao.deleteAllReferences(comment_no);
+	}
+	
 	public boolean insertReply(ReplyDTO dto) throws Exception{
 		return dao.insertReply(dto)>0;
 	}

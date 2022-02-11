@@ -36,13 +36,11 @@ public class ProductDAO {
 	}
 	
 	public int modifyProduct(ProductDTO dto) throws Exception{
-		System.out.println("dao들어옴");
-		System.out.println(dto.getName());
-		System.out.println(dto.getContent());
-		int rs = session.update("productMapper.modifyProduct",dto);
-		System.out.println("dao rs : "+rs);
-//		return session.update("productMapper.modifyProduct",dto);
-		return rs;
+		if(dto.getImage_path()==null) {
+			return session.update("productMapper.modifyProductWithoutThumbnail",dto);
+		}else {
+			return session.update("productMapper.modifyProduct",dto);
+		}
 	}
 	
 	// (마이페이지) 주문 후 재고수량 수정

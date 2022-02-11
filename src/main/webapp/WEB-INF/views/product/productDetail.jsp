@@ -1066,7 +1066,7 @@
                                 </div>\
                                 <div class='title' id='replyTitle'>답글</div>\
                             </div>\
-                            <div class='reaction' id='likeArea"+dto.comment_no+"' value='0' onclick='lickComment("+dto.comment_no+")'>\
+                            <div class='reaction' id='likeArea"+dto.comment_no+"' value='0' onclick='likeComment("+dto.comment_no+")'>\
                                 <div class='icon' id='likeIcon'> <i class='fas fa-heart fa-2x' id='likeBtn"+dto.comment_no+"'></i>\
                                 </div>\
                                 <div class='title' id='likeTitle'>도움돼요</div>\
