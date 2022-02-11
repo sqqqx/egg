@@ -13,4 +13,9 @@
 	<select id="getExpertDTO" resultType="expertDTO">
 		select * from tbl_expert where expert_id = #{expert_id}
 	</select>
+	
+	<!-- (마이페이지) 포인트 수정 -->
+	<update id="modifyPoint" parameterType="map">
+		update tbl_expert set point = #{balance} where expert_id = #{expert_id}
+	</update>
 </mapper>
