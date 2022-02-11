@@ -110,6 +110,7 @@ public class CommentController {
 		System.out.println("comment_no : "+comment_no);
 		System.out.println("parent_no : "+ parent_no);
 		if(service.deleteReply(comment_no)) {
+			service.deleteAllReferences(comment_no);
 			return getAllReplies(parent_no);
 		}return null;
 	}

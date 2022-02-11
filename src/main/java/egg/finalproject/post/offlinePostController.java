@@ -23,6 +23,9 @@ public class offlinePostController {
 	private offlinePostService service;
 	
 	@Autowired
+	private onlinePostService onlineService;
+	
+	@Autowired
 	private CategoryService cService;
 	
 	@Autowired
@@ -56,7 +59,7 @@ public class offlinePostController {
 		}
 		model.addAttribute("categoryList",categoryList);
 		model.addAttribute("parent_group",parent_group);
-		return "/offlinePost/offlinePost_write";
+		return "offlinePost/offlinePost_write";
 	}
 	
 	//게시글 작성 : written by 경민
@@ -75,4 +78,21 @@ public class offlinePostController {
 		}
 		
 	}
+	
+	//게시글 상세 조회 페이지로 이동 : written by 경민
+	@RequestMapping("/toPostDetail.do")
+	public String toPostDetail(int post_no, Model model) throws Exception{
+		PostDTO postDto = onlineService.getPostInfo(post_no);
+		CategoryDTO categoryDto = cService.getCategory(postDto.getCategory_no());
+		model.addAttribute("PostDTO", postDto);
+		model.addAttribute("CategoryDTO",categoryDto);
+		return "offlinePost/offlinePost_detail_expert";
+	}
+	
+	
+	/*
+	 * //게시글 삭제 처리 : written by 경민
+	 * 
+	 * @RequestMapping("/deletePost.do") public String
+	 */
 }

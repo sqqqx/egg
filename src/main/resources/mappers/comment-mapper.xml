@@ -36,6 +36,10 @@
            DELETE FROM TBL_COMMENT WHERE COMMENT_NO = #{comment_no}
      </delete>
      
+     <update id="deleteAllReferences">
+           UPDATE TBL_COMMENT SET REFERENCE_NO=-1 WHERE REFERENCE_NO = #{comment_no}
+     </update>
+     
      <insert id="insertReply_reply" parameterType="ReplyDTO">
            INSERT INTO TBL_COMMENT VALUES (COMMENT_NO.NEXTVAL,#{type},#{parent_no},#{comment_no},#{user_nickname},#{content},SYSDATE,#{post_no},#{user_id})
      </insert>

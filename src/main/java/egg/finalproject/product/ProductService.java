@@ -92,6 +92,10 @@ public class ProductService {
 		return result>0;
 	}
 	
+	public boolean modifyProductWithoutThumbnail(ProductDTO dto) throws Exception{
+		return dao.modifyProduct(dto)>0;
+	}
+	
 	// (마이페이지) 주문 후 재고 수량 조정
 	public int modifyStock(String order_no, int opt) throws Exception {
 		System.out.println("ProductService / modifyStock - order_no: " + order_no + ", opt: " + opt);
@@ -131,4 +135,6 @@ public class ProductService {
 		}
 		return -1;
 	}
+	
+	
 }

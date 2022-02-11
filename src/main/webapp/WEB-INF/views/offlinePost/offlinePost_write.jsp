@@ -126,7 +126,7 @@
                             곳으로 가겠습니다.<br>
                             <input type="radio" name="method" class="inputRadio" value="온라인/화상 수업을 원합니다."> 온라인/화상 수업을
                             원합니다.<br>
-                            <input type="radio" name="method" class="inputRadio" value="다 괜찮습니다."> 다 괜찮습니다.<br>
+                            <input type="radio" name="method" class="inputRadio" value="능력자 분과 협의하겠습니다."> 능력자 분과 협의하겠습니다..<br>
 
                         </div>
                     </div>
@@ -210,7 +210,7 @@
                 <input class="titleInput" id="title" name="title" hidden>
                 <div class="buttons">
                     <button type="button" class="btn btn-warning" id="submitBtn">1:1 고수 찾기</button>
-                    <button type="button" class="btn btn-secondary" id="cancelBtn">취소</button>
+                    <button type="button" class="btn btn-secondary" id="cancel">취소</button>
                 </div>
         </form>
     </div>
@@ -220,7 +220,17 @@
         //     $("#collapseSix").collapse('show');
         //     console.log($("input:radio:checked").length);
         // }
-
+        
+        //취소 버튼 누르면 이전 페이지로 돌아가기
+    $("#cancel").on("click",function(){
+    	goBackPage();
+    })
+    
+    //이전 페이지로 돌아가는 함수
+    function goBackPage(){
+    	window.history.back();
+    }
+        
         $(document).ready(function () {
             var today = new Date();
             var dd = today.getDate();
@@ -328,15 +338,19 @@
             var gender = $('input[name="gender"]:checked').val();
             var class_time = $('input[name="class_time"]:checked').val();
             var wish = $("#wish").val();
-
+            var reservation_time = $("#datePicker").val();
+           /*  if(reservation_time=="undefined"){
+            	reservation_time="";
+            } */
+            console.log(reservation_time);
             //content값 포맷팅
             var content = "<h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'><span style='font-weight: 700;'>1. 어떤 분야의 도움이 필요하신가요?</span></h4><h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'>:&nbsp; " + category_text + "</h4><p style='text-align: left;'><br></p>\
                  <h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'><span style='font-weight: 700;'>2. 어떤 방식으로 진행되길 원하시나요?</span></h4><h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'>:&nbsp; "+ method + "</h4><p style='text-align: left;'><br></p>\
-                 <h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'><span style='font-weight: 700;'>3. 과외생의 연령대가 어떻게 되나요? (본인이 아닌 경우 수강 받는 분의 정보를 적어주세요.)</span></h4><h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'>:&nbsp; "+ age + "</h4><p style='text-align: left;'><br></p>\
+                 <h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'><span style='font-weight: 700;'>3. 과외생의 연령대가 어떻게 되나요?</span></h4><h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'>:&nbsp; "+ age + "</h4><p style='text-align: left;'><br></p>\
                  <h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'><span style='font-weight: 700;'>4. 과외생의 성별은 무엇인가요?</span></h4><h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'>:&nbsp; "+ gender + "</h4><p style='text-align: left;'><br></p>\
-                 <h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'><span style='font-weight: 700;'>6. 원하는 날짜가 있나요?</span></h4><h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'>:&nbsp;"+ class_time + "</h4><p style='text-align: left;'><br></p>\
-                 <h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'><span style='font-weight: 700;'>7. 수업 관련 문의사항이 있나요?</span></h4><h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'>:&nbsp; "+ wish + "</h4>";
-
+                 <h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'><span style='font-weight: 700;'>6. 원하는 날짜가 있나요?</span></h4><h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'>:&nbsp;"+ class_time +"<br>"+ reservation_time +"</h4><p style='text-align: left;'><br></p>\
+                 <h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'><span style='font-weight: 700;'>7. 수업 관련 희망사항이 있나요?</span></h4><h4 style='font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(33, 37, 41); text-align: left;'>:&nbsp; "+ wish + "</h4>";
+ 
             $("#content").attr("value", content);
             let write_form = $("#writeForm").serialize();
             $.ajax({
@@ -353,7 +367,7 @@
                 }
             }).fail(function (rs) {
                 alert("알 수 없는 오류가 발생하였습니다. 관리자에게 문의 부탁 드립니다.");
-            })
+            }) 
         }
 
     </script>

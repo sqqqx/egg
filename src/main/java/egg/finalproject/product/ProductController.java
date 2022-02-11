@@ -42,6 +42,7 @@ public class ProductController {
 	//RETURN : 상세페이지 주소값
 	@RequestMapping("/toProductDetail.do")
 	public String toProductDetail(int product_no,Model model) throws Exception{
+		System.out.println(product_no + "product_no");
 		ProductDTO dto = service.getProduct(product_no);
 		List<CommentDTO> commentList = commentService.getAllComments(product_no, 0);
 		model.addAttribute("ProductDTO",dto);
@@ -94,8 +95,13 @@ public class ProductController {
 		System.out.println(dto.getName());
 		dto.setProduct_no(product_no);
 		String realPath = session.getServletContext().getRealPath("productThumbnail");
-		if(service.modifyProduct(dto,thumbNail, realPath)){
-			System.out.println("true");
+		boolean rs = false;
+		if(thumbNail==null) {
+			rs = service.modifyProductWithoutThumbnail(dto);
+		}else {
+			rs = service.modifyProduct(dto, thumbNail, realPath);
+		}
+		if(rs){
 			return "redirect:/admin/toProductManagement";
 		}
 		System.out.println("false");
