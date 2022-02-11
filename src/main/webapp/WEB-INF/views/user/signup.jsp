@@ -123,15 +123,15 @@
             </div>
         </div>
         
-        <div class="row mb-3">
-        	<div class="col-10">
+        <div class="row mb-3" id="emailCkBox" style="display:none;">
+        	<div class="col-10" id="emailCheckInput">
                 <input id="emailCheck" class="form-control" type="text" >
             </div>
             <div class="col-2" id="emailSendBox">
                 <button type="button" class="btn btn-dark" id="mail_check_button">인증전송</button>
             </div>
-            <div class="col-2" style="display:none;" id="emailCheckBox">
-                <button type="button" class="btn btn-dark" id="btn_emailCk">인증확인</button>
+            <div class="col-2" id="emailCheckBox" style="display:none;">
+                <button type="button" class="btn btn-dark" id="btn_emailCk" >인증확인</button>
             </div>
         </div>
         <input type="hidden" id="emailDoubleChk">
@@ -163,7 +163,7 @@
             </div>
         </div>
         
-        <div class="row mb-3">
+        <div class="row mb-3" style="display:none;" id="phoneCkBox">
             <div class="col-10">
                 <input id="phoneCheck" class="form-control" type="text" >
             </div>
@@ -171,13 +171,22 @@
                 <button type="button" class="btn btn-dark" id="btn_phone">인증전송</button>
             </div>
             <div class="col-2" style="display:none;" id="btn_phoneCkBox">
-                <button type="button" id="btn_phoneCk" class="btn btn-dark ">인증확인</button>
+                <button type="button" id="btn_phoneCk" class="btn btn-dark">인증확인</button>
             </div>
         </div>
         <input type="hidden" id="phoneDoubleChk">
         <!--휴대전화번호 병합하여 저장할 곳( 회원가입 버튼 클릭시 이곳으로 phone1+phone2+phon3 value값 더해서 입력할것)-->
         <div class="d-none">
             <input type="text" id="phone" name="phone">
+        </div>
+        
+        <div class="row">
+        	<div class="col-2">
+        		<input type="checkbox" class="form-check-input" name="emailCheckBox2" id="emailCheckBox2">이메일 인증
+        	</div>
+        	<div class="col-3">
+        		<input type="checkbox" class="form-check-input" name="phoneCheckBox2" id="phoneCheckBox2">휴대전화 인증
+        	</div>
         </div>
 		
 
@@ -261,6 +270,36 @@
     	}
     });
     
+    // 인증 체크박스    
+//     $(document).ready(function(){
+//     	$(document).on('change', 'input[name=emailCheckBox2]', function(){
+//             if($("#emailCheckBox2")) {
+            	
+//             }
+//         });
+//     });
+    
+    $(document).ready(function(){
+    $("#emailCheckBox2").change(function(){
+        if($("#emailCheckBox2").is(":checked")){
+            $("#emailCkBox").css("display", "flex");
+        }else{
+        	$("#emailCkBox").css("display", "none");
+        }
+    });
+    
+    $("#phoneCheckBox2").change(function(){
+        if($("#phoneCheckBox2").is(":checked")){
+            $("#phoneCkBox").css("display", "flex");
+        }else{
+        	$("#phoneCkBox").css("display", "none");
+        }
+    });
+    
+	});
+    
+    
+    
     // 이메일 인증
     let code = "";
     
@@ -268,18 +307,22 @@
     	let regExp = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     	if($("#em").val() != "") {
     		if(regExp.test($("#em").val())) {
-    			let email = $("#em").val();
-            	
-            	$.ajax({
-                    type:"GET",
-                    url:"${pageContext.request.contextPath}/member/mailCheck?email=" + email,
-                    success:function(data){
-                    	alert("인증번호를 전송했습니다. \n이메일을 확인해주세요.");
-                    	$("#emailSendBox").hide();
-                    	$("#emailCheckBox").css("display", "block");
-                    	code = data;
-                    }
-                })
+    			if($("#email").val() != "") {
+    				let email = $("#email").val();
+                	
+                	$.ajax({
+                        type:"GET",
+                        url:"${pageContext.request.contextPath}/member/mailCheck?email=" + email,
+                        success:function(data){
+                        	alert("인증번호를 전송했습니다. \n이메일을 확인해주세요.");
+                        	$("#emailSendBox").hide();
+                        	$("#emailCheckBox").css("display", "block");
+                        	code = data;
+                        }
+                    })
+    			} else {
+    				alert("이메일 중복검사후 인증을 진행해주세요.");	
+    			}
     		}else {
     			alert("이메일을 양식에 맞게 입력해주세요.");
     		}
@@ -617,6 +660,7 @@
 		
 		
 		$("#formSignup").submit();
+		alert("회원가입이 완료되었습니다. \n 앞으로 많은 이용 부탁드립니다. \n 감사합니다.");
 	})
 	
 	// 뒤로가기 버튼

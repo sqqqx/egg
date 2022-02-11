@@ -23,9 +23,31 @@
 			where user_id = #{user_id}
 	</select>
 	
+	<select id="getIdMailcheck" resultType="int">
+		select count(*)
+			from tbl_member
+				where email = #{email}
+	</select>
+	
+	<select id="insendSMS" resultType="int">
+		select count(*)
+			from tbl_member
+				where phone = #{userPhoneNumber}
+	</select>
+	
 	<select id="isLoginOk" parameterType="map" resultType="int">
 		select count(*) from tbl_member where user_id=#{id} and password=#{pw}
 	</select>
+	
+	<select id="isEmailLoginOk" parameterType="map" resultType="int">
+		select count(*) from tbl_member where email=#{id} and password=#{pw}
+	</select>
+	
+	<select id="getEmailMember" resultType="MemberDTO">
+		select * from tbl_member
+			where email = #{user_id}
+	</select>
+	
 	
 	<select id="nicknameCheck" resultType="int">
 		select count(*)

@@ -40,6 +40,21 @@ public class MemberService {
 		}
 	}
 	
+	// Email 로그인
+	public boolean isEmailLoginOk(String user_id, String password) throws Exception {
+		if(dao.isEmailLoginOk(user_id, password) == 1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	// Email로그인 세션에 담기
+	public MemberDTO getEmailMember(String user_id) throws Exception{
+		return dao.getEmailMember(user_id);
+	}
+	
+	
 	// 로그인시 세션에 아이디 값 담기위해
 	public MemberDTO getMember(String user_id) throws Exception{
 		return dao.getMember(user_id);
@@ -57,20 +72,38 @@ public class MemberService {
 	// 이메일 중복검사
 	public boolean emailCheck(String email) throws Exception{
 		if(dao.emailCheck(email) == 1) { 
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	// 휴대전화 중복검사
+	public boolean phoneCheckSignup(String phone) throws Exception{
+		if(dao.phoneCheckSignup(phone) == 1) { 
 			return false;
 		}else {
 			return true;
 		}
 	}
 	
-	// 휴대전화 중복검사
-		public boolean phoneCheckSignup(String phone) throws Exception{
-			if(dao.phoneCheckSignup(phone) == 1) { 
-				return false;
-			}else {
-				return true;
-			}
+	// 아이디찾기 이메일 아이디 여부 체크
+	public boolean getIdMailcheck(String email) throws Exception{
+		if(dao.getIdMailcheck(email) == 1) {
+			return true;
+		}else {
+			return false;
 		}
+	}
+	
+	// 아이디찾기 휴대전화 아이디 여부 체크
+	public boolean insendSMS(String userPhoneNumber) throws Exception{
+		if(dao.insendSMS(userPhoneNumber) == 1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 	
 	// 아이디 찾기
 	public String toIdFind(String phone) throws Exception {

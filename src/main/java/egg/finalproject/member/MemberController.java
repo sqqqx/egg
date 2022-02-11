@@ -47,146 +47,160 @@ public class MemberController {
 	private OrderService orderService;
 	
 	// 아이디 중복검사
-	@RequestMapping(value="toIdCheck.do")
-	@ResponseBody
-	public String toIdcheck(String id) throws Exception {
-		System.out.println("id : " + id);
-		if(service.idCheck(id)) {
-			return "available";
-		}else {
-			return "unavailable";
-		}
-	}
-	
-	// 가입완료
-	@RequestMapping(value="signup.do")
-	public String signup(String user_id, String password, String user_nickname, String email, String phone, String address) throws Exception {
-		password = EncryptionUtils.getSHA512(password);
-		String profile_path = "/resources/img/myInfo.png";
-		service.insertMember(user_id, password, user_nickname, email, phone, address, profile_path);
-		return "user/login";
-	}
-	
-	// 로그인
-	@RequestMapping(value="/login.do", produces="text/html;charset=UTF-8")
-	@ResponseBody
-	public String login(String user_id, String password) throws Exception{
-		password = EncryptionUtils.getSHA512(password);
-		if(service.isLoginOk(user_id, password)) {
-			MemberDTO dto = service.getMember(user_id);
-			session.setAttribute("loginSession", dto);
-			System.out.println(dto.getType());
-			if(dto.getBlacklist() == 0) {
-				if(dto.getType() == 1 || dto.getType() == 2) {
-					return "성공";
-				}else if(dto.getType() == 0) {
-					return "관리자";
-				}
+		@RequestMapping(value="toIdCheck.do")
+		@ResponseBody
+		public String toIdcheck(String id) throws Exception {
+			System.out.println("id : " + id);
+			if(service.idCheck(id)) {
+				return "available";
 			}else {
-				return "Y";
+				return "unavailable";
 			}
 		}
-		return "실패";
-	}
-	
-	// 로그아웃
-	@RequestMapping("/logout")
-    public ModelAndView logout() {
-        session.removeAttribute("loginSession");
-        ModelAndView mv = new ModelAndView("redirect:/");
-        return mv;
-    }
-	
-	// 닉네임 중복검사
-	@RequestMapping(value="toNicknameCheck.do")
-	@ResponseBody
-	public String toNicknamecheck(String nickname) throws Exception {
-		if(service.nicknameCheck(nickname)) {
-			return "available";
-		}else {
-			return "unavailable";
+		
+		// 가입완료
+		@RequestMapping(value="signup.do")
+		public String signup(String user_id, String password, String user_nickname, String email, String phone, String address) throws Exception {
+			password = EncryptionUtils.getSHA512(password);
+			String profile_path = "myInfo.png";
+			service.insertMember(user_id, password, user_nickname, email, phone, address, profile_path);
+			return "user/login";
 		}
-	}
-	
-	// 이메일 중복검사
-	@RequestMapping(value="toEmailCheck.do")
-	@ResponseBody
-	public String toEmailcheck(String email) throws Exception {
-		if(service.emailCheck(email)) {
-			return "available";
-		}else {
-			return "unavailable";
+		
+		// 로그인
+		@RequestMapping(value="/login.do", produces="text/html;charset=UTF-8")
+		@ResponseBody
+		public String login(String user_id, String password) throws Exception{
+			password = EncryptionUtils.getSHA512(password);
+			if(service.isLoginOk(user_id, password)) {
+				MemberDTO dto = service.getMember(user_id);
+				session.setAttribute("loginSession", dto);
+				System.out.println(dto.getType());
+				if(dto.getBlacklist() == 0) {
+					if(dto.getType() == 1 || dto.getType() == 2 || dto.getType() ==3) {
+						return "성공";
+					}else if(dto.getType() == 0) {
+						return "관리자";
+					}
+				}else {
+					return "Y";
+				}
+			}else if(service.isEmailLoginOk(user_id, password)) {
+				System.out.println(user_id);
+				MemberDTO dto = service.getEmailMember(user_id);
+				session.setAttribute("loginSession", dto);
+				if(dto.getBlacklist() == 0) {
+					if(dto.getType() == 1 || dto.getType() == 2 || dto.getType() ==3) {
+						return "성공";
+					}else if(dto.getType() == 0) {
+						return "관리자";
+					}
+				}else {
+					return "Y";
+				}
+			}
+			return "실패";
 		}
-	}
-	
-	// 휴대전화 중복검사
-	@RequestMapping(value="toPhoneCheck.do")
-	@ResponseBody
-	public String toPhonecheck(String phone) throws Exception {
-		if(service.phoneCheckSignup(phone)) {
-			return "available";
-		}else {
-			return "unavailable";
+		
+		// 로그아웃
+		@RequestMapping("/logout")
+	    public ModelAndView logout() {
+	        session.removeAttribute("loginSession");
+	        ModelAndView mv = new ModelAndView("redirect:/");
+	        return mv;
+	    }
+		
+		// 닉네임 중복검사
+		@RequestMapping(value="toNicknameCheck.do")
+		@ResponseBody
+		public String toNicknamecheck(String nickname) throws Exception {
+			if(service.nicknameCheck(nickname)) {
+				return "available";
+			}else {
+				return "unavailable";
+			}
 		}
-	}
-	
-	// 아이디 찾기 페이지로 이동
-	@RequestMapping(value="idFind.do")
-	public String idFind() throws Exception {
-		return "user/idFind";
-	}
-	
-	// 아이디 찾기 -> 핸드폰 인증 후 -> 아이디 띄워주기
-	@RequestMapping(value="toIdFind.do")
-	@ResponseBody
-	public String toIdFind(String phone) throws Exception {
-		return service.toIdFind(phone);
-	}
-	
-	// 아이디 찾기 -> 이메일 인증 후 -> 아이디 띄워주기
-	@RequestMapping(value="toEmailIdFind.do")
-	@ResponseBody
-	public String toEmailIdFind(String email) throws Exception {
-		return service.toEmailIdFind(email);
-	}
-	
-	// 비밀번호 찾기 페이지로 이동
-	@RequestMapping(value="pwFind.do")
-	public String pwFind() throws Exception {
-		return "user/passwordFind";
-	}
-	
-	// 비밀번호 찾기 완료버튼 클릭
-	@RequestMapping(value="toPwfind.do")
-	public String toPwFind(String password, String user_id) throws Exception {
-		password = EncryptionUtils.getSHA512(password);
-		service.toPwFind(password, user_id);
-		return "user/login";
-	}
-	
-	// 비밀번호찾기 문자인증
-	@RequestMapping(value = "/pwPhoneCheck")
-	@ResponseBody
-	public String sendPwSMS(String phone, String id) throws Exception { // 휴대폰 문자보내기
-		String userPhoneNumber = phone;
-		if(service.getPwId(id, phone)) {
-			int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000); //난수 생성
-			service.certifiedPhoneNumber(userPhoneNumber,randomNumber);
-			return Integer.toString(randomNumber);
+		
+		// 이메일 중복검사
+		@RequestMapping(value="toEmailCheck.do")
+		@ResponseBody
+		public String toEmailcheck(String email) throws Exception {
+			if(service.emailCheck(email)) {
+				return "available";
+			}else {
+				return "unavailable";
+			}
 		}
-		return "error";
-	}
-	
-	// 비밀번호 찾기 이메일 인증
-		@RequestMapping(value = "/pwMailCheck")
+		
+		// 휴대전화 중복검사
+		@RequestMapping(value="toPhoneCheck.do")
+		@ResponseBody
+		public String toPhonecheck(String phone) throws Exception {
+			if(service.phoneCheckSignup(phone)) {
+				return "available";
+			}else {
+				return "unavailable";
+			}
+		}
+		
+		// 아이디 찾기 페이지로 이동
+		@RequestMapping(value="idFind.do")
+		public String idFind() throws Exception {
+			return "user/idFind";
+		}
+		
+		// 아이디 찾기 -> 핸드폰 인증 후 -> 아이디 띄워주기
+		@RequestMapping(value="toIdFind.do")
+		@ResponseBody
+		public String toIdFind(String phone) throws Exception {
+			return service.toIdFind(phone);
+		}
+		
+		// 아이디 찾기 -> 이메일 인증 후 -> 아이디 띄워주기
+		@RequestMapping(value="toEmailIdFind.do")
+		@ResponseBody
+		public String toEmailIdFind(String email) throws Exception {
+			return service.toEmailIdFind(email);
+		}
+		
+		// 비밀번호 찾기 페이지로 이동
+		@RequestMapping(value="pwFind.do")
+		public String pwFind() throws Exception {
+			return "user/passwordFind";
+		}
+		
+		// 비밀번호 찾기 완료버튼 클릭
+		@RequestMapping(value="toPwfind.do")
+		public String toPwFind(String password, String user_id) throws Exception {
+			password = EncryptionUtils.getSHA512(password);
+			service.toPwFind(password, user_id);
+			return "user/login";
+		}
+		
+		// 비밀번호찾기 문자인증
+		@RequestMapping(value = "/pwPhoneCheck")
+		@ResponseBody
+		public String sendPwSMS(String phone, String id) throws Exception { // 휴대폰 문자보내기
+			String userPhoneNumber = phone;
+			if(service.getPwId(id, phone)) {
+				int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000); //난수 생성
+				service.certifiedPhoneNumber(userPhoneNumber,randomNumber);
+				return Integer.toString(randomNumber);
+			}
+			return "error";
+		}
+		
+		// 아이디 찾기 이메일 인증
+		@RequestMapping(value = "/idMailCheck")
 	    @ResponseBody
-	    public String pwmailCheckGET(String email, String id) throws Exception{
-	        if(service.getPwMailId(id, email)) {
+	    public String idMailCheck(String email) throws Exception{
+	        if(service.getIdMailcheck(email)) {
 	        	System.out.println("이메일 데이터 전송 확인");
 		        System.out.println("인증번호 : " + email);
 		        
 		        Random random = new Random();
-		        int checkNum = random.nextInt(888888) + 111111;
+		        int checkNum1 = random.nextInt(8888) + 1111;
+		        String checkNum = Integer.toString(checkNum1);
 		        System.out.println("인증번호" + checkNum);
 		        
 		        /* 이메일 보내기 */
@@ -194,11 +208,38 @@ public class MemberController {
 		        String toMail = email;
 		        String title = "능력자들 인증 이메일 입니다.";
 		        String content = 
-		                "능력자들을 방문해주셔서 감사합니다." +
-		                "<br><br>" + 
-		                "인증 번호는 " + checkNum + "입니다." + 
-		                "<br>" + 
-		                "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+		        		"<div class=\"row\" style=\"height : 70px; width: 700px; background-color: #5194e4; text-align: center; border-bottom: 3px solid black;\">" +
+		        			
+		        			"<div class=\"col\" style=\"height: 70px; width: 150px;\">" +
+		            
+		        			"</div>" +
+
+					    "</div>" +
+					    "<div style=\"height : 300px; width: 700px; text-align: center; background-image: url(https://ak.picdn.net/shutterstock/videos/24047485/thumb/1.jpg);\">" +
+					        "<span style=\"font-size: 30px; color: white;\">능력자들 인증 번호입니다.</span>" +
+					        
+					        "<br><br>" +
+					        "<span style=\"color: white;\">인증 번호는 </span>" + "<span style=\"font-size: 15px; color: red;\">" + checkNum.substring(0,1) + " " +"</span>" +
+					        "<span style=\"font-size: 15px; color: black;\">" + " " + checkNum.substring(1,2) + " " + "</span>" +
+					        "<span style=\"font-size: 15px; color: red;\">" + " " + checkNum.substring(2,3) + " " + "</span>" +
+					        "<span style=\"font-size: 15px; color: black;\">" + " " + checkNum.substring(3) + "</span>" + "<span style=\"color: white;\"> 입니다.</span>" +
+					        "<br><br>" +
+					        "<span style=\"color: white;\">해당 인증번호를 인증번호 확인란에 기입하여 주세요.</span>" +
+					        "<br><br>" +
+					        "<span style=\"color: white;\">저희 능력자들을 이용해 주셔서 감사합니다.</span>" +
+					        "<br><br>" +
+					        "<span style=\"color: white;\">화이팅!!</span>" +
+					    "</div>" +
+					    "<div style=\"height : 100px; width: 700px; background-color: #5194e4; border-top: 3px solid black;\">" +
+					    "<footer>" +
+					        "<div>" +
+					                "<span style=\"color: white;\">(주)능력자들</span> <span style=\"color: white;\">  |  </span>" +
+					                "<span style=\"color: white;\">대표 : 류호진</span> <span style=\"color: white;\">  |  </span>" +
+					                "<span style=\"color: white;\">사업자등록번호 : 421-22-00218</span>" +
+					                "<p style=\"color: white;\">주소 : 올림픽로 92길 40-3 3층 (주)능력자들</p>" +
+					            "</divlass=>" +
+					        "</footer>" +
+					    "</div>";
 		        try {
 		            
 		            MimeMessage message = mailSender.createMimeMessage();
@@ -207,64 +248,175 @@ public class MemberController {
 		            helper.setTo(toMail);
 		            helper.setSubject(title);
 		            helper.setText(content,true);
+		            
 		            mailSender.send(message);
 		            
 		        }catch(Exception e) {
 		            e.printStackTrace();
 		        }
-		        String num = Integer.toString(checkNum);
+		        String num = checkNum;
 		        return num;
 	        }
 	        return "error";
 	    }
-	
-	// 문자인증
-	@RequestMapping(value = "/phoneCheck", method = RequestMethod.GET)
-	@ResponseBody
-	public String sendSMS(@RequestParam("phone") String userPhoneNumber) { // 휴대폰 문자보내기
-		int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000); //난수 생성
-		service.certifiedPhoneNumber(userPhoneNumber,randomNumber);
-		return Integer.toString(randomNumber);
-	}
+		
+		// 비밀번호 찾기 이메일 인증
+			@RequestMapping(value = "/pwMailCheck")
+		    @ResponseBody
+		    public String pwmailCheckGET(String email, String id) throws Exception{
+		        if(service.getPwMailId(id, email)) {
+		        	System.out.println("이메일 데이터 전송 확인");
+			        System.out.println("인증번호 : " + email);
+			        
+			        Random random = new Random();
+			        int checkNum1 = random.nextInt(8888) + 1111;
+			        String checkNum = Integer.toString(checkNum1);
+			        System.out.println("인증번호" + checkNum);
+			        
+			        /* 이메일 보내기 */
+			        String setFrom = "jak3995@naver.com";
+			        String toMail = email;
+			        String title = "능력자들 인증 이메일 입니다.";
+			        String content = 
+			        		"<div class=\"row\" style=\"height : 70px; width: 700px; background-color: #5194e4; text-align: center; border-bottom: 3px solid black;\">" +
+			        			
+			        			"<div class=\"col\" style=\"height: 70px; width: 150px;\">" +
+			            
+			        			"</div>" +
 
-	// 이메일 인증
-	@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
-    @ResponseBody
-    public String mailCheckGET(String email) throws Exception{
-        
-        System.out.println("이메일 데이터 전송 확인");
-        System.out.println("인증번호 : " + email);
-        
-        Random random = new Random();
-        int checkNum = random.nextInt(888888) + 111111;
-        System.out.println("인증번호" + checkNum);
-        
-        /* 이메일 보내기 */
-        String setFrom = "jak3995@naver.com";
-        String toMail = email;
-        String title = "능력자들 인증 이메일 입니다.";
-        String content = 
-                "능력자들을 방문해주셔서 감사합니다." +
-                "<br><br>" + 
-                "인증 번호는 " + checkNum + "입니다." + 
-                "<br>" + 
-                "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
-        try {
-            
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-            helper.setFrom(setFrom);
-            helper.setTo(toMail);
-            helper.setSubject(title);
-            helper.setText(content,true);
-            mailSender.send(message);
-            
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
-        String num = Integer.toString(checkNum);
-        return num;
-    }
+						    "</div>" +
+						    "<div style=\"height : 300px; width: 700px; text-align: center; background-image: url(https://ak.picdn.net/shutterstock/videos/24047485/thumb/1.jpg);\">" +
+						        "<span style=\"font-size: 30px; color: white;\">능력자들 인증 번호입니다.</span>" +
+						        
+						        "<br><br>" +
+						        "<span style=\"color: white;\">인증 번호는 </span>" + "<span style=\"font-size: 15px; color: red;\">" + checkNum.substring(0,1) + " " +"</span>" +
+						        "<span style=\"font-size: 15px; color: black;\">" + " " + checkNum.substring(1,2) + " " + "</span>" +
+						        "<span style=\"font-size: 15px; color: red;\">" + " " + checkNum.substring(2,3) + " " + "</span>" +
+						        "<span style=\"font-size: 15px; color: black;\">" + " " + checkNum.substring(3) + "</span>" + "<span style=\"color: white;\"> 입니다.</span>" +
+						        "<br><br>" +
+						        "<span style=\"color: white;\">해당 인증번호를 인증번호 확인란에 기입하여 주세요.</span>" +
+						        "<br><br>" +
+						        "<span style=\"color: white;\">저희 능력자들을 이용해 주셔서 감사합니다.</span>" +
+						        "<br><br>" +
+						        "<span style=\"color: white;\">화이팅!!</span>" +
+						    "</div>" +
+						    "<div style=\"height : 100px; width: 700px; background-color: #5194e4; border-top: 3px solid black;\">" +
+						    "<footer>" +
+						        "<div>" +
+						                "<span style=\"color: white;\">(주)능력자들</span> <span style=\"color: white;\">  |  </span>" +
+						                "<span style=\"color: white;\">대표 : 류호진</span> <span style=\"color: white;\">  |  </span>" +
+						                "<span style=\"color: white;\">사업자등록번호 : 421-22-00218</span>" +
+						                "<p style=\"color: white;\">주소 : 올림픽로 92길 40-3 3층 (주)능력자들</p>" +
+						            "</divlass=>" +
+						        "</footer>" +
+						    "</div>";
+			        try {
+			            
+			            MimeMessage message = mailSender.createMimeMessage();
+			            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+			            helper.setFrom(setFrom);
+			            helper.setTo(toMail);
+			            helper.setSubject(title);
+			            helper.setText(content,true);
+			            
+			            mailSender.send(message);
+			            
+			        }catch(Exception e) {
+			            e.printStackTrace();
+			        }
+			        String num = checkNum;
+			        return num;
+		        }
+		        return "error";
+		    }
+		
+		// 문자인증
+		@RequestMapping(value = "/phoneCheck", method = RequestMethod.GET)
+		@ResponseBody
+		public String sendSMS(@RequestParam("phone") String userPhoneNumber) { // 휴대폰 문자보내기
+			int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000); //난수 생성
+			service.certifiedPhoneNumber(userPhoneNumber,randomNumber);
+			return Integer.toString(randomNumber);
+		}
+		
+		// 문자인증
+		@RequestMapping(value = "/idPhoneCheck", method = RequestMethod.GET)
+		@ResponseBody
+		public String idsendSMS(@RequestParam("phone") String userPhoneNumber) throws Exception { // 휴대폰 문자보내기
+			if(service.insendSMS(userPhoneNumber)) {
+				int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000); //난수 생성
+				service.certifiedPhoneNumber(userPhoneNumber,randomNumber);
+				return Integer.toString(randomNumber);
+			}
+			return "error";
+		}
+
+		// 회원가입 이메일 인증
+		@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
+	    @ResponseBody
+	    public String mailCheckGET(String email) throws Exception{
+	        
+	        System.out.println("이메일 데이터 전송 확인");
+	        System.out.println("인증번호 : " + email);
+	        
+	        Random random = new Random();
+	        int checkNum1 = random.nextInt(8888) + 1111;
+	        String checkNum = Integer.toString(checkNum1);
+	        System.out.println("인증번호" + checkNum);
+	        
+	        /* 이메일 보내기 */
+	        String setFrom = "jak3995@naver.com";
+	        String toMail = email;
+	        String title = "능력자들 인증 이메일 입니다.";
+	        String content = 
+	        		"<div class=\"row\" style=\"height : 70px; width: 700px; background-color: #5194e4; text-align: center; border-bottom: 3px solid black;\">" +
+	        			
+	        			"<div class=\"col\" style=\"height: 70px; width: 150px;\">" +
+	            
+	        			"</div>" +
+
+				    "</div>" +
+				    "<div style=\"height : 300px; width: 700px; text-align: center; background-image: url(https://ak.picdn.net/shutterstock/videos/24047485/thumb/1.jpg);\">" +
+				        "<span style=\"font-size: 30px; color: white;\">능력자들 인증 번호입니다.</span>" +
+				        
+				        "<br><br>" +
+				        "<span style=\"color: white;\">인증 번호는 </span>" + "<span style=\"font-size: 15px; color: red;\">" + checkNum.substring(0,1) + " " +"</span>" +
+				        "<span style=\"font-size: 15px; color: black;\">" + " " + checkNum.substring(1,2) + " " + "</span>" +
+				        "<span style=\"font-size: 15px; color: red;\">" + " " + checkNum.substring(2,3) + " " + "</span>" +
+				        "<span style=\"font-size: 15px; color: black;\">" + " " + checkNum.substring(3) + "</span>" + "<span style=\"color: white;\"> 입니다.</span>" +
+				        "<br><br>" +
+				        "<span style=\"color: white;\">해당 인증번호를 인증번호 확인란에 기입하여 주세요.</span>" +
+				        "<br><br>" +
+				        "<span style=\"color: white;\">저희 능력자들을 이용해 주셔서 감사합니다.</span>" +
+				        "<br><br>" +
+				        "<span style=\"color: white;\">화이팅!!</span>" +
+				    "</div>" +
+				    "<div style=\"height : 100px; width: 700px; background-color: #5194e4; border-top: 3px solid black;\">" +
+				    "<footer>" +
+				        "<div>" +
+				                "<span style=\"color: white;\">(주)능력자들</span> <span style=\"color: white;\">  |  </span>" +
+				                "<span style=\"color: white;\">대표 : 류호진</span> <span style=\"color: white;\">  |  </span>" +
+				                "<span style=\"color: white;\">사업자등록번호 : 421-22-00218</span>" +
+				                "<p style=\"color: white;\">주소 : 올림픽로 92길 40-3 3층 (주)능력자들</p>" +
+				            "</divlass=>" +
+				        "</footer>" +
+				    "</div>";
+	        try {
+	            
+	            MimeMessage message = mailSender.createMimeMessage();
+	            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+	            helper.setFrom(setFrom);
+	            helper.setTo(toMail);
+	            helper.setSubject(title);
+	            helper.setText(content,true);
+	            mailSender.send(message);
+	            
+	        }catch(Exception e) {
+	            e.printStackTrace();
+	        }
+	        String num = checkNum;
+	        return num;
+	    }
 	
 	
 	

@@ -66,7 +66,7 @@
         <div class="row mt-3">
             <div class="col">
                 <a href="${pageContext.request.contextPath}/toSignup.do">회원가입</a> // 
-                <a href="${pageContext.request.contextPath}/member/idFind.do">아이디</a> * <a href="${pageContext.request.contextPath}/member/pwFind.do">비밀번호</a>찾기
+                <a href="${pageContext.request.contextPath}/member/idFind.do" onclick="window.open(this.href,'_black', 'width=800, height=600'); return false;">아이디</a> * <a href="${pageContext.request.contextPath}/member/pwFind.do" onclick="window.open(this.href,'_black', 'width=800, height=600'); return false;">비밀번호</a>찾기
             </div>
         </div>
         </form>
@@ -88,7 +88,7 @@
         
      	// 쿠키 선생님이랑 같이 했던 코드
     	// 쿠키 값 가져와 id 인풋창에 세팅
-    	console.log(document.cookie);
+//     	console.log(document.cookie);
     	let regex = /rememberId=(.*)/;
     	if (regex.test(document.cookie)) {
     		let id = RegExp.$1;
@@ -111,7 +111,7 @@
     		}	
     		
     		let data = $("#loginForm").serialize();
-    		console.log(data);
+//     		console.log(data);
     		$.ajax({
     			url : "${pageContext.request.contextPath}/member/login.do"
     			, type : "post"
@@ -148,9 +148,9 @@
 	// 로그인 쿠키 생성
 	function rememberId() {
 		let expiryDate = new Date();
-		console.log("오늘 날짜 ", expiryDate);
+// 		console.log("오늘 날짜 ", expiryDate);
 		expiryDate.setDate(expiryDate.getDate() + 30);
-		console.log("30일 뒤", expiryDate);
+// 		console.log("30일 뒤", expiryDate);
 			
 		let key = "rememberId";
 		let value = $("#user_id").val();
