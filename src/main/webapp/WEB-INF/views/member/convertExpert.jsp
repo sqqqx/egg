@@ -386,9 +386,33 @@
 		        + $(".category1 option:selected").html() + " > " 
 		        + $("." + parentCn + " option:selected").html() + "'/>"
 		        + "<input type='checkbox' class='col-3' name='categoryNumbers' id='childCn" + i + "' value='" + childCn + "' checked hidden/>"
-		        + "<input type='file' class='col-3 form-control' name='careerFiles" + "'/>"
+		        + "<input type='file' class='col-3 form-control searchFile' name='careerFiles" + "' id='searchFile" + i +"'/>"
 		        + "</div>"));
 		    }
+		    
+		    $(document).on("click", function(e){
+		    	console.log($(e.target).parents());
+		    	console.log($(e.target));
+		    })
+		    
+		    
+		 // 파일 선택
+	        $("#cgListBox #cate1 #searchFile1").change(function(e) {
+	        	console.log("증명파일 선택");
+	            //Get count of selected files
+	            var countFiles = $(this)[0].files.length;
+
+	            var filePath = $(this).val();
+	            console.log("파일경로: " + filePath);
+	            var extn = filePath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+
+	            // 확장자 유효성 검사
+	            if (extn !== "gif" || extn !== "png" || extn !== "jpg" || extn !== "jpeg" || extn !== "pdf") {
+	            	alert("gif, png, jpg, jpeg, pdf 파일만 선택가능합니다.");
+	            	$(this).val("");
+	            }
+	            
+	        });     
    
 	    
 	   // 도/시 선택
@@ -399,14 +423,7 @@
 	        $(".sub_location").css("display", "none");
 	        $("." + sl).css("display", "inline");
 	    });
-
-    
-        //console.log("버튼" + sl);
-        //console.log($("#location1").val());
-        //console.log($("."+sl).val());
-		
-        
-        
+	    
         // 돌아가기 버튼
         $("#cancelBtn").on("click", function(){
         	$(location).attr("href", "${pagecontext.request.contextPath}/member/toUserInformation?user_id=${loginSession.user_id}");
@@ -416,9 +433,6 @@
         $("#confirmBtn").on("click", function(){
         	console.log("전환신청버튼 클릭");
         	sl = $(".main_location").val();
-        	console.log("select Location: " + sl);
-        	console.log("대도시: " + $("#location1").val());
-        	console.log("소도시: " + $("."+sl).val());
         	
         	// 주소 input태그에 입력
             if($("#location1").val() === 'seoul'){
@@ -456,6 +470,85 @@
             } else if($("#location1").val() === 'jeju'){
                 $("#active_area").val("제주특별자치도 " + $("."+sl).val());
             }
+        	
+         // 유효성 검사
+        	// 지역
+        	/* if($("#location1").val() === "") {
+        		alert("도/시를 선택해주세요");
+        		return ;
+        	} else if($(".sub_location").val() === "") {
+        		alert("구/동/읍/면을 선택해주세요");
+        		return ;
+        	} */
+        	if($("#active_area").val() === "") {
+        		alert("지역을 입력해주세요");
+        		return ;
+        	}
+        	
+        	
+        	// 자기소개
+        	if($("#introduction").val() === ""){
+        		alert("자기소개를 입력해주세요");
+        		return ;
+        	}
+        	
+        	// 카테고리
+        	if(!$("#cgListBox div").is("#cate1")) {
+        		alert("카테고리를 선택해주세요");
+        		return ;
+        	}
+        	
+        	// 증명파일
+        	let filePath = "";
+        	if($("#cgListBox div").is("#cate3")){
+        		filePath = $("#cgListBox #cate3 #searchFile3").val(); 
+        		if(filePath === ""){
+        			alert("3번째 카테고리 증명파일을 선택해주세요");
+    	            return ;	
+        		}
+	        } else if($("#cgListBox div").is("#cate2")){
+	        	filePath = $("#cgListBox #cate2 #searchFile2").val(); 
+        		if(filePath === ""){
+        			alert("2번째 카테고리 증명파일을 선택해주세요");
+    	            return ;	
+        		}
+	        } else if($("#cgListBox div").is("#cate1")){
+	        	filePath = $("#cgListBox #cate1 #searchFile1").val(); 
+        		if(filePath === ""){
+        			alert("1번째 카테고리 증명파일을 선택해주세요");
+    	            return ;	
+        		} 
+	        }
+        	
+        	
+        	filePath = $("#cgListBox #cate1 #searchFile1").val();
+        	console.log("첫번째 경로: " + filePath);
+        	let extn = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
+        	console.log("첫번째 확장자: " + extn);
+        	if (extn !== "gif" && extn !== "png" && extn !== "jpg" && extn !== "jpeg" && extn !== "pdf") {
+            	alert("gif, png, jpg, jpeg, pdf 파일만 선택가능합니다.");
+            	$("#cgListBox #cate1 #searchFile1").val("");
+            	return ;
+            }
+        	filePath = $("#cgListBox #cate2 #searchFile2").val();
+        	console.log("두번째 경로: " + filePath);
+        	extn = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
+        	console.log("두번째 확장자: " + extn);
+        	if (extn !== "gif" && extn !== "png" && extn !== "jpg" && extn !== "jpeg" && extn !== "pdf") {
+            	alert("gif, png, jpg, jpeg, pdf 파일만 선택가능합니다.");
+            	$("#cgListBox #cate2 #searchFile2").val("");
+            	return ;
+            }
+        	filePath = $("#cgListBox #cate3 #searchFile3").val();
+        	console.log("세번째 경로: " + filePath);
+        	extn = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
+        	console.log("세번째 확장자: " + extn);
+        	if (extn !== "gif" && extn !== "png" && extn !== "jpg" && extn !== "jpeg" && extn !== "pdf") {
+            	alert("gif, png, jpg, jpeg, pdf 파일만 선택가능합니다.");
+            	$("#cgListBox #cate3 #searchFile3").val("");
+            	return ;
+            }
+        	
         	$("#ceForm").submit();
         })
         

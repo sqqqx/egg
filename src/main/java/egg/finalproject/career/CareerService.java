@@ -46,9 +46,9 @@ public class CareerService {
 		}
 	}
 	
-	// (마이페이지) 커리어 파일명 불러오기
-	public List<String> getCareerList(String expert_id) throws Exception {
-		System.out.println("CareerService / 커리어 파일명 불러오기 - expert_id: " + expert_id);
+	// (마이페이지) 커리어DTO 불러오기
+	public List<CareerDTO> getCareerList(String expert_id) throws Exception {
+		System.out.println("CareerService / 커리어DTO 불러오기 - expert_id: " + expert_id);
 		return dao.getCareerList(expert_id);
 	}
 }

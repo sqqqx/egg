@@ -12,8 +12,12 @@
     </select>
     
     <!-- (마이페이지) 당일 주문량 조회 -->
-	<select id="countOrder" resultType="int">
+	<select id="countOrder" parameterType="map" resultType="int">
 		select count(*) from tbl_order where order_time like #{today}
+		
+		<if test="tracking_no == 'POINT'">
+			and order_no like 'POINT%'
+		</if>
 	</select>
     
     <!-- (마이페이지) 환불 처리 -->

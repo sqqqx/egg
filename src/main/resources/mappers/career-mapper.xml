@@ -10,7 +10,7 @@
 	</insert>
 	
 	<!-- (마이페이지) 커리어 파일명 불러오기 -->
-	<select id="getCareerList" resultType="string">
-		select original_name from tbl_career where expert_id = #{expert_id}
+	<select id="getCareerList" resultType="careerDTO">
+		select * from tbl_career where expert_id = #{expert_id}
 	</select>
 </mapper>

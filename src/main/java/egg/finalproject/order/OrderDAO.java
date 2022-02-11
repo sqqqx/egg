@@ -24,12 +24,18 @@ public class OrderDAO {
 	}
 	
 	// (마이페이지) 당일 주문량 조회
-		public int countOrder() throws Exception {
+		public int countOrder(String tracking_no) throws Exception {
 			System.out.println("OrderDAO / 당일 주문량 조회");
+			// 맵을 만들어 조건 추가하기
+			Map<String, String> map = new HashMap<>();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
 			String today = sdf.format(System.currentTimeMillis());
 			today = today.substring(0,2) + "/" + today.substring(2,4) + "/" + today.substring(4);
-			return session.selectOne("orderMapper.countOrder", today);
+			map.put("today", today);
+			map.put("tracking_no", tracking_no);
+			
+			// 맵으로 만들어 포인트인 경우 조건 하나 더 추가하기
+			return session.selectOne("orderMapper.countOrder", map);
 		}
 	
 	// (마이페이지) 환불 처리

@@ -30,5 +30,6 @@
 			<typeAlias type="egg.finalproject.expert_category.Expert_categoryDTO" alias="expert_categoryDTO"/>
 			<typeAlias type="egg.finalproject.report.ReportDTO" alias="reportDTO"/>
 			<typeAlias type="egg.finalproject.order.OrderProduct" alias="OrderProduct"/>
+			<typeAlias type="egg.finalproject.pointlog.PointlogDTO" alias="PointlogDTO"/>
 		</typeAliases>
 	</configuration>

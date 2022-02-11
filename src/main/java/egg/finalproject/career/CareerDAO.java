@@ -17,8 +17,12 @@ public class CareerDAO {
 		return session.insert("careerMapper.insertCareer", dto);
 	}
 	
-	// (마이페이지) 커리어 파일명 불러오기
-	public List<String> getCareerList(String expert_id) throws Exception {
+	// (마이페이지) 커리어 DTO 불러오기
+//	public List<String> getCareerList(String expert_id) throws Exception {
+//		System.out.println("CareerDAO / 커리어 파일명 불러오기 - expert_id: " + expert_id);
+//		return session.selectList("careerMapper.getCareerList", expert_id);
+//	}
+	public List<CareerDTO> getCareerList(String expert_id) throws Exception {
 		System.out.println("CareerDAO / 커리어 파일명 불러오기 - expert_id: " + expert_id);
 		return session.selectList("careerMapper.getCareerList", expert_id);
 	}

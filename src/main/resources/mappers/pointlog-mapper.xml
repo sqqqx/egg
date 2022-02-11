@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="pointlogMapper">
+
+	<!-- (마이페이지) ID로 포인트 내역 불러오기 -->
+	<select id="getLogById" resultType="PointlogDTO">
+		select * from tbl_pointlog where user_id = #{user_id} order by pointlog_no desc
+	</select>
+	
+	<!-- (마이페이지) 포인트 내역 저장(충전 editp+ / 사용 editp-) -->
+	<insert id="insertLog" parameterType="map">
+		insert into tbl_pointlog
+			values (pointlog_no.nextval, sysdate, #{user_id}, #{editp},
+			(select nvl(balance,0)+#{editp} from (select row_number() over (order by pointlog_no desc) rn, tp.* from tbl_pointlog tp where user_id = #{user_id}) where rn=1))
+	</insert>
+	
+	<!-- (마이페이지) 포인트 잔액 불러오기 -->
+	<select id="balance" resultType="int">
+		select balance from (select row_number() over (order by pointlog_no desc) rn, pt.* from tbl_pointlog pt where user_id = #{user_id}) where rn=1
+	</select>
+	
+</mapper>
