@@ -10,6 +10,13 @@
 <style>
 	body{margin:auto;}
 	h1{text-align:center;}
+	#name{
+		border:none;
+		border-right:0px; 
+		border-top:0px; 
+		boder-left:0px; 
+		boder-bottom:0px;
+		width:auto;}
 	.quantityController{width:150px;}
 	#btnBox{text-align:center;}
 </style>
@@ -31,8 +38,9 @@
 			<c:set var="total" value="0"/>
 			<c:forEach items="${list}" var="dto">
 				<tr>
-					<td><input type="text" value="${dto.name}" disabled></td>
+					<td hidden><input type="text" value="${dto.name}" id="name" disabled></td>
 					<td hidden><input type="text" id="stock" value="${dto.stock}"></td>
+					<td>${dto.name}</td>
 					<td>${dto.price}</td>
 					<td><span><input type="number" value="${dto.quantity }" class="form-control quantityController"></span></td>
 					<td><button type="button" class="deleteCart" value="${dto.name}">장바구니삭제</button></td>

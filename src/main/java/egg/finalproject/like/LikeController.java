@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -48,6 +49,19 @@ public class LikeController {
 		
 	}
 	
+	//댓글좋아요 추가
+		@RequestMapping(value="/plusReply.do", produces = "application/text; charset=utf8")
+		@ResponseBody
+		public String plusReply(String user_id, int type, int post_no, Model model) throws Exception{
+			if(service.plus(user_id, type, post_no) ==1) {
+				String NN = service.getNN(type,post_no);
+				return NN;
+			}else {
+				return "unavailable";
+			}
+			
+		}
+		
 	//유저가 게시글에 좋아요 눌렀는지 판별
 	@RequestMapping("/selectLike.do")
 	@ResponseBody

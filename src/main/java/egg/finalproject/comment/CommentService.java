@@ -44,4 +44,7 @@ public class CommentService {
 	public boolean insertReply_reply(ReplyDTO dto) throws Exception{
 		return dao.insertReply_reply(dto)>0;
 	}
+	public String getReceiver(int comment_no) throws Exception{
+		return dao.getReceiver(comment_no);
+	}
 }

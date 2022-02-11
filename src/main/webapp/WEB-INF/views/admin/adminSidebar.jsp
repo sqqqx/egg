@@ -119,7 +119,7 @@
 				</ul>
 			</li>
 			<li class="border-top my-3"></li>
-			<li class="mb-1">
+			<%-- <li class="mb-1">
 				<button class="btn btn-toggle align-items-center rounded collapsed"
 					data-bs-toggle="collapse" data-bs-target="#account-collapse"
 					aria-expanded="false">menu</button>
@@ -131,7 +131,7 @@
 						<li><a href="#" class="link-dark rounded">쓸데가없네</a></li>
 					</ul>
 				</div>
-			</li>
+			</li> --%>
 		</ul>
 	</div>
 </body>

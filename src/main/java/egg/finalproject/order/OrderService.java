@@ -1,13 +1,17 @@
 package egg.finalproject.order;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import egg.finalproject.admin.Paging;
+
 @Service
-public class OrderService {
+public class OrderService extends Paging {
 	@Autowired
 	private OrderDAO dao;
 	
@@ -57,5 +61,36 @@ public class OrderService {
 		public int insertOrderProduct(Map map) throws Exception {
 			System.out.println("OrderService / 주문상품 저장 - map: " + map.toString());
 			return dao.insertOrderProduct(map);
+		}
+		
+		//////////////////// 마이페이지 주문 결제 조회 영역 ///////////////////
+		
+		// 이용자 별 주문정보 가져오기
+		public List<Map<String, Object>> getOrderList(String user_id, String searchOption, String searchKeyword, Map<String, Object> range) throws Exception {
+			System.out.println("user_id : " + user_id + " : searchOption : " + searchOption + " : searchKeyword : " + searchKeyword + " : sRange : " + range.get("startRange") + " : eRange : " + range.get("endRange"));
+			Map<String, Object> map = new HashMap<>();
+			if(searchOption != null && searchKeyword != null) {
+				map.put("searchOption", searchOption);
+				map.put("searchKeyword", searchKeyword);
+			}
+			map.put("user_id", user_id);
+			map.put("startRange", range.get("startRange"));
+			map.put("endRange", range.get("endRange"));
+			List<Map<String, Object>> list = dao.getOrderList(map);
+			return list;
+		}
+		
+		// 주문정보 COUNT
+		public void getOrderCount(String user_id, String searchOption, String searchKeyword) throws Exception {
+			System.out.println("user_id : " + user_id + " : searchOption : " + searchOption + " : searchKeyword : " + searchKeyword);
+			Map<String, Object> map = new HashMap<>();
+			if(searchOption != null && searchKeyword != null) {
+				map.put("searchOption", searchOption);
+				map.put("searchKeyword", searchKeyword);
+			}
+			map.put("user_id", user_id);
+			int rs = dao.getOrderCount(map);
+			System.out.println("주문정보 COUNT : " + rs);
+			this.totalCount = rs;
 		}
 }

@@ -43,9 +43,12 @@
         <div id="phoneBox" style="display:none;">
         	<div class="row mb-2">
 	            <div class="col">
-	                <label>휴대전화 인증을 진행해주세요.</label>
+	                <label>휴대전화 혹은 이메일 인증을 진행해주세요.</label>
 	            </div>
 	        </div>
+	        <div class="col">
+                <label> 휴대전화 인증</label>
+            </div>
 			<div class="row mb-3" >
 	            <div class="col-4">
 	                <select class="form-select" aria-label="Default select example" id="phone1" required>
@@ -67,7 +70,7 @@
 	            </div>
 	        </div>
 	        
-	        <div class="row mb-3">
+	        <div class="row mb-3" style="display:none;" id="phoneCkBox">
 	            <div class="col-10">
 	                <input id="phoneCheck" class="form-control" type="text" > <!--disabled required>  -->
 	            </div>
@@ -83,7 +86,7 @@
 	        
 	        <div class="row mb-2">
             <div class="col">
-                <label> 이메일</label>
+                <label> 이메일 인증</label>
             </div>
         </div>
         <div class="row mb-3">
@@ -95,7 +98,7 @@
             </div>
         </div>
         
-        <div class="row mb-3">
+        <div class="row mb-3" style="display:none;" id="emailCkBox">
         	<div class="col-10">
                 <input id="emailCheck" class="form-control" type="text" >
             </div>
@@ -104,6 +107,15 @@
                 <button type="button" class="btn btn-dark" id="btn_emailCk">인증확인</button>
             </div>
         </div>
+	        <div class="row">
+	        	<div class="col-3">
+	        		<input type="checkbox" class="form-check-input" name="emailCheckBox2" id="emailCheckBox2">이메일 인증
+	        	</div>
+	        	<div class="col-3">
+	        		<input type="checkbox" class="form-check-input" name="phoneCheckBox2" id="phoneCheckBox2">휴대전화 인증
+	        	</div>
+	        </div>
+        
         </div>
         <form id="pwForm" action="${pageContext.request.contextPath}/member/toPwfind.do" method="post">
         <input type="text" class="form-control" id="user_id" name="user_id" hidden>
@@ -132,14 +144,32 @@
 	
 	<div class="row my-5 btnBox">
         <div class="col-6" id="completeBtnBox">
-            <button class="btn btn-dark btn-lg clsBtn" type="button" id="completeBtn" style="display:none;" disabled>변경 완료</button>
+            <button class="btn btn-dark btn-lg clsBtn" type="button" id="completeBtn" style="display:none;" disabled>완료</button>
         </div>
         <div class="col-6">
-            <button class="btn btn-secondary btn-lg clsBtn" type="button" id="backBtn">뒤로 가기</button>
+            <button class="btn btn-secondary btn-lg clsBtn" type="button" id="backBtn">닫기</button>
         </div>
     </div>
 
 	<script>
+	$(document).ready(function(){
+	    $("#emailCheckBox2").change(function(){
+	        if($("#emailCheckBox2").is(":checked")){
+	            $("#emailCkBox").css("display", "flex");
+	        }else{
+	        	$("#emailCkBox").css("display", "none");
+	        }
+	    });
+	    
+	    $("#phoneCheckBox2").change(function(){
+	        if($("#phoneCheckBox2").is(":checked")){
+	            $("#phoneCkBox").css("display", "flex");
+	        }else{
+	        	$("#phoneCkBox").css("display", "none");
+	        }
+	    });
+	    
+	});
 	
 	// 문자인증
     let code2 = "";
@@ -308,9 +338,9 @@
 		}
     })
     
-    // 뒤로가기 버튼
+    // 닫기 버튼
     $("#backBtn").click(function(){
-    	location.href="${pageContext.request.contextPath}/toLogin.do"
+    	window.close();
     })
   	
   	

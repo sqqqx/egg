@@ -19,6 +19,16 @@ public class MemberDAO {
 		return session.selectOne("memberMapper.idCheck", id);
 	}
 	
+	// 아이디찾기 이메일 아이디 여부 체크
+	public int getIdMailcheck(String email) throws Exception{
+		return session.selectOne("memberMapper.getIdMailcheck", email);
+	}
+	
+	// 아이디찾기 휴대전화 아이디 여부 체크
+	public int insendSMS(String userPhoneNumber) throws Exception{
+		return session.selectOne("memberMapper.insendSMS", userPhoneNumber);
+	}
+	
 	// 회원가입
 	public int insertMember(String user_id, String password, String user_nickname, String email, String phone, String address, String profile_path) throws Exception{
 		Map<String, String> map = new HashMap<>();
@@ -38,6 +48,19 @@ public class MemberDAO {
 		map.put("id", user_id);
 		map.put("pw", password);
 		return session.selectOne("memberMapper.isLoginOk", map);
+	}
+	
+	// Email로그인
+	public int isEmailLoginOk(String user_id, String password) throws Exception{
+		Map<String, String> map = new HashMap<>();
+		map.put("id", user_id);
+		map.put("pw", password);
+		return session.selectOne("memberMapper.isEmailLoginOk", map);
+	}
+	
+	// Email로그인 세션에 담기
+	public MemberDTO getEmailMember(String user_id) throws Exception{
+		return session.selectOne("memberMapper.getEmailMember", user_id);
 	}
 	
 	// 로그인시 세션에 아이디 값 담기위해

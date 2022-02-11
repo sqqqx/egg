@@ -54,6 +54,13 @@
    		 where post_no between 8 and 11
     </select>
     
+    <select id="selectCat" resultType="map" parameterType="Object">
+    	select a.post_no, a.title, b.child_group, c.system_name 
+		from tbl_post a inner join tbl_image c on a.post_no=c.post_no 
+		inner join tbl_category b using(category_no)
+		where category_no=#{category_no}
+    </select>
+    
     <!-- ============================================================================================================================================ -->
     
     <select id="mainSearch" resultType="map" parameterType="String">

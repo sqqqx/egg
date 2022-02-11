@@ -55,7 +55,7 @@
 							placeholder="" value="${searchKeyword}">
 					</div>
 					<div class="col-3 d-flex justify-content-start">
-						<button type="submit" class="btn btn-outline-dark" id="searchBtn">검색</button>
+						<button type="submit" class="btn btn-outline-dark" id="adminSearchBtn">검색</button>
 					</div>
 				</div>
 			</form>
@@ -63,7 +63,7 @@
 			<!-- 주문정보 출력 -->
 			<form id="selectCheckbox" method="post"
 				class="d-flex justify-content-center">
-				<div class="row tableWrapper">
+				<div class="row tableWrapper py-3">
 					<table class="table table-condensed table-striped">
 						<thead>
 							<!-- depth 0 -->
@@ -245,7 +245,8 @@
 			const address = $(e.target).attr("addr");
 			const post = address.match(/[0-9]{5}/)[0];
 			const roadAddr = address.match(/[ㄱ-힣](.*?)(로|길).[1-9]{1,2}/)[0];
-			let jibunAddr = address.match(/[0-9]{5}.[ㄱ-힣](.*?)(로|길).[1-9]{1,2}\s/)[0];
+			let jibunAddr = address.match(/[0-9]{5}.*[ㄱ-힣](.*?)(로|길).[1-9]{1,2}\s/)[0];
+			console.log(jibunAddr);
 			jibunAddr = address.replace(jibunAddr, "");
 			jibunAddr = jibunAddr.match(/[ㄱ-힣](.*?)[1-9]+(.+)[1-9]/)[0];
 			const extraAddr = address.match(/\(([^)]+).\)/)[0];
@@ -400,7 +401,7 @@
 			return bl;
 		}
 		// 결제 취소 process
-		function cancelPay(payment_no, cost, order_no) {
+		/* function cancelPay(payment_no, cost, order_no) {
 			console.log(payment_no + " : " + cost + " : " + order_no);
 			$.ajax({
 				url: "/admin/canclePay.do",
@@ -422,7 +423,7 @@
 			}).fail(function(e) {
 				console.log(e);
 			});
-		}
+		} */
     </script>
     
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

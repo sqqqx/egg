@@ -9,4 +9,24 @@
 	insert into tbl_notice values(NOTICE_NO.NEXTVAL,#{type}, #{post_no}, #{content}, sysdate, #{from_id}, #{to_id})
 	</insert>
 
+	<select id="countMessage">
+	select count(*) from tbl_notice where to_id = #{to_id} 
+	</select>
+	
+	<select id="selectById" resultType="NoticeDTO">
+	select * from tbl_notice where to_id = #{to_id} order by 1 DESC
+	</select>
+	
+	<delete id="deleteAll">
+	delete from tbl_notice where to_id = #{to_id}
+	</delete>
+	
+	<delete id="deleteByNo">
+	delete from tbl_notice where notice_no = #{notice_no}
+	</delete>
+	
+	<delete id="delete">
+	delete from tbl_notice where type=#{type} and post_no=#{post_no} 
+	and to_id = #{to_id} and from_id = #{from_id} 
+	</delete>
 </mapper>

@@ -44,4 +44,8 @@
            INSERT INTO TBL_COMMENT VALUES (COMMENT_NO.NEXTVAL,#{type},#{parent_no},#{comment_no},#{user_nickname},#{content},SYSDATE,#{post_no},#{user_id})
      </insert>
      
+     <select id="getReceiver" resultType="String">
+			select user_nickname from tbl_comment where comment_no = #{comment_no}
+	</select>
+     
 </mapper>

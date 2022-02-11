@@ -45,4 +45,10 @@ public class LikeDAO {
 			map.put("post_no", post_no);
 			return session.selectOne("likeMapper.selectLike", map);
 		}
+		public String getNN(int type, int post_no) throws Exception{
+			Map<String, Object> map = new HashMap<>();
+			map.put("type", type);
+			map.put("post_no", post_no);
+			return session.selectOne("likeMapper.getNN",map);
+		}
 }

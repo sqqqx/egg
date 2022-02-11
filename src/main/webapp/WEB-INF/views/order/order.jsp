@@ -30,10 +30,10 @@
 		<h1 mt-2>주문/결제</h1>
 		<thead>
 			<tr>
-				<th width="200">상품명</th>
+				<th>상품명</th>
 				<th>가격</th>
 				<th>수량</th>
-				<th></th>
+				<th>수량 별 가격</th>
 			</tr>
 		</thead>
 		<tbody>
