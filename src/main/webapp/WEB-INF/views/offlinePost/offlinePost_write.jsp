@@ -323,7 +323,7 @@
 
 
         function submitForm() { //제목과 내용 형식 맞추기
-
+        	var id = '${loginSession.user_id}'
             //1.title값 설정 
             //title을 "JAVA(소제목)에 관한 요청입니다" 형식으로 맞출 예정;
             var category_no = $('input[name="category_no"]:checked').val(); //선택된 값의 category_no
@@ -360,7 +360,11 @@
             }).done(function (data) {
                 if (data == "success") {
                     alert("요청 완료되었습니다.");
-                    location.href = "${pageContext.request.contextPath}/offline/toMain.do";
+                    if('${loginSession.type}'==2){
+               		 location.href="${pageContext.request.contextPath}/offline/toMainEx.do?expert_id="+id
+	               	 }else{
+	               		 location.href="${pageContext.request.contextPath}/offline/toMain.do"
+	               	 }
                 } else {
                     console.log("nono");
                     alert("알 수 없는 오류가 발생하였습니다. 관리자에게 문의 부탁 드립니다.");

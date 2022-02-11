@@ -46,12 +46,12 @@
 		</thead>
 		<tbody>
 			<c:forEach items="${list }" var="list">
-			<tr>
-				<td>${list.post_no }</td>
-				<td>${list.title }</td>
-				<td>${list.user_nickname }</td>
-				<td>${list.written_date }</td>
-				<td>${list.view_count }</td>
+			<tr>				
+				<td class="toDetail">${list.post_no }</td>
+				<td class="toDetail">${list.title }</td>
+				<td class="toDetail">${list.user_nickname }</td>
+				<td class="toDetail">${list.written_date }</td>
+				<td class="toDetail">${list.view_count }</td>				
 			</tr>
 			</c:forEach>
 		</tbody>
@@ -122,6 +122,11 @@
 			$("#searchForm").submit();
 		}
 	})
+	//리스트에서 상세페이지로 이동
+	$(".toDetail").on("click", function (e){
+                let post_no = $(e.target).parent().find("*").eq(0).html();
+				location.href = "${pageContext.request.contextPath}/offlinePost/toPostDetail.do?post_no=" + post_no;
+            });
 </script>
 </body>
 </html>
