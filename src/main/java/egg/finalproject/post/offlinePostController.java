@@ -103,22 +103,22 @@ public class offlinePostController {
 		return "offlinePost/offlinePost_write";
 	}
 	
-//	//게시글 작성 : written by 경민
-//	//TODO: return할 주소값 잘 확인하기
-//	@RequestMapping("/insertPost.do")
-//	@ResponseBody
-//	public String insertPost(PostDTO dto) throws Exception{
-//		//type설정 잊지 않기!!
-//		dto.setType(2);
-//		dto.setUser_id(((MemberDTO)session.getAttribute("loginSession")).getUser_id());
-//		dto.setUser_nickname(((MemberDTO)session.getAttribute("loginSession")).getUser_nickname());
-//		if(service.insertPost(dto)>0) {
-//			return "success";
-//		}else {
-//			return "fail";
-//		}
-//		
-//	}
+	//게시글 작성 : written by 경민
+	//TODO: return할 주소값 잘 확인하기
+	@RequestMapping("/insertPost.do")
+	@ResponseBody
+	public String insertPost(PostDTO dto) throws Exception{
+		//type설정 잊지 않기!!
+		dto.setType(2);
+		dto.setUser_id(((MemberDTO)session.getAttribute("loginSession")).getUser_id());
+		dto.setUser_nickname(((MemberDTO)session.getAttribute("loginSession")).getUser_nickname());
+		if(service.insertPost(dto)>0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+		
+	}
 	
 	//게시글 상세 조회 페이지로 이동 : written by 경민
 	@RequestMapping("/toPostDetail.do")

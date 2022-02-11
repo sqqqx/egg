@@ -82,7 +82,11 @@ public class CommentController {
 	@RequestMapping("/getAllReplies.do")
 	@ResponseBody
 	public List<ReplyDTO> getAllReplies(int comment_no) throws Exception{
-		return service.getAllReplies(comment_no);
+		List<ReplyDTO> list = service.getAllReplies(comment_no);
+		for(ReplyDTO dto : list) {
+			System.out.println(dto.getReference_no());
+		}
+		return list;
 	}
 	
 	//답글 등록(등록 후 모든 답글 가져와 업데이트)

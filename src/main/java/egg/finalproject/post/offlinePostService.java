@@ -68,4 +68,8 @@ public class offlinePostService extends Paging {
 	public int currentPageReform(String currentPage) throws Exception {
 		return currentPage == null ? 1 : Integer.parseInt(currentPage);
 	}
+	
+	public int insertPost(PostDTO dto) throws Exception{
+		return dao.insertPost(dto);
+	}
 }
