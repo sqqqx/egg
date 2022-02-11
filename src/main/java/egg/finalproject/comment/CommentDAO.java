@@ -43,6 +43,10 @@ public class CommentDAO {
 		return session.delete("commentMapper.deleteReply",comment_no);
 	}
 	
+	public int deleteAllReferences(int comment_no) throws Exception{
+		return session.update("commentMapper.deleteAllReferences",comment_no);
+	}
+	
 	public int insertReply_reply(ReplyDTO dto) throws Exception{
 		return session.insert("commentMapper.insertReply_reply",dto);
 	}

@@ -220,7 +220,7 @@
                                 <button type="button" class="btn btn-success" id="insert">등록</button>
                                 <button type="button" class="btn btn-warning" id="reset">새로
                                     작성</button>
-                                <button type="button" class="btn btn-primary">취소</button>
+                                <button type="button" class="btn btn-primary" id="cancel">취소</button>
                             </td>
                         </tr>
 
@@ -230,8 +230,15 @@
         </div>
     </div>
     <script>
-
-
+    //취소 버튼 누르면 이전 페이지로 돌아가기
+    $("#cancel").on("click",function(){
+    	goBackPage();
+    })
+    
+    //이전 페이지로 돌아가는 함수
+    function goBackPage(){
+    	window.history.back();
+    }
         //reset버튼 눌렀을 경우 데이터 처리
         $("#reset").on("click", function () {
             if (confirm("입력된 데이터가 모두 삭제됩니다. 정말 새로 쓰시겠습니까?")) {

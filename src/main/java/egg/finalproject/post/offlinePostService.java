@@ -30,6 +30,7 @@ public class offlinePostService extends Paging {
 		return list;
 	}
 	
+
 	// 전체 글 COUNT
 	public void getPostCountAll(String parent_group) throws Exception {
 		int rs =  dao.getPostCountAll(parent_group);
@@ -66,5 +67,9 @@ public class offlinePostService extends Paging {
 	// currentPage 변환
 	public int currentPageReform(String currentPage) throws Exception {
 		return currentPage == null ? 1 : Integer.parseInt(currentPage);
+	}
+	
+	public int insertPost(PostDTO dto) throws Exception{
+		return dao.insertPost(dto);
 	}
 }

@@ -82,7 +82,11 @@ public class CommentController {
 	@RequestMapping("/getAllReplies.do")
 	@ResponseBody
 	public List<ReplyDTO> getAllReplies(int comment_no) throws Exception{
-		return service.getAllReplies(comment_no);
+		List<ReplyDTO> list = service.getAllReplies(comment_no);
+		for(ReplyDTO dto : list) {
+			System.out.println(dto.getReference_no());
+		}
+		return list;
 	}
 	
 	//답글 등록(등록 후 모든 답글 가져와 업데이트)
@@ -110,6 +114,7 @@ public class CommentController {
 		System.out.println("comment_no : "+comment_no);
 		System.out.println("parent_no : "+ parent_no);
 		if(service.deleteReply(comment_no)) {
+			service.deleteAllReferences(comment_no);
 			return getAllReplies(parent_no);
 		}return null;
 	}

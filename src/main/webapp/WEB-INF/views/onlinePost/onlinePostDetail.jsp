@@ -1204,12 +1204,14 @@
           </div/ >"
 
                 $("div[id='commentReplyArea" + comment_no + "']").append(option);
+          
                 if (dto.reference_nickname != " ") {
                     $("div[id='reply_content" + dto.comment_no + "']").append("<span class='reference_nickname'>@" + dto.reference_nickname + " </span>" + dto.content);
                 } else {
                     $("div[id='reply_content" + dto.comment_no + "']").append("<span class='reference_nickname'></span>" + dto.content);
                 }
-
+                var reference_no = dto.reference_no;
+                 
                 if (dto.user_id == '${loginSession.user_id}') { //내가 쓴 댓글인 경우, 삭제 버튼과 좋아요 버튼 넣기
                     $("div[id='reply_nickname" + dto.comment_no + "']").append("<span class='deleteReply' onclick='deleteReply(" + dto.comment_no + "," + dto.parent_no + ")'>삭제</span>")
                     $("div[id='reply_reactions" + dto.comment_no + "']").append("<div class='reply_like' id='likeArea"+dto.comment_no+"' onclick='likeComment("+dto.comment_no+")' value='0'>\
@@ -1224,8 +1226,7 @@
                                 <i class='far fa-heart fa-1x'  id='likeBtn"+dto.comment_no+"'></i>\
                             </div>\
                             ")
-            } 
-                else{ //일반 유저인 경우
+            }else{ //일반 유저인 경우
                 $("div[id='reply_reactions" + dto.comment_no + "']").append("<div class='reply_reply' id='reply_reply" + dto.comment_no + "' onclick=\"reply_reply(" + dto.comment_no + ",'" + dto.user_nickname + "')\">\
                             <i class='far fa-comment-dots fa-1x reply_reply'></i>\
                             </div>\
@@ -1236,6 +1237,10 @@
     	                   <i class='fas fa-times fa-1x'></i>\
     		               </div>")
             }
+                if(reference_no==-1){
+                	$("div[id='reply_content" + dto.comment_no + "']").append("<br><span class='reference_nickname'>[삭제된 댓글의 답글입니다.]</span>");
+                	$("div[id='reply_reactions" + dto.comment_no + "']").empty();
+                }
             selectLike_comment(dto.comment_no);
         })
         }

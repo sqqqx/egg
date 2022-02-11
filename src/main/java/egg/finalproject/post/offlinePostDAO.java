@@ -40,5 +40,7 @@ public class offlinePostDAO {
 		return rs;
 	}
 	
-	
+	public int insertPost(PostDTO dto) throws Exception{
+		return session.insert("offlinePostMapper.insertPost",dto);
+	}
 }
