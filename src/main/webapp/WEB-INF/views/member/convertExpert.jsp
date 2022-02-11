@@ -413,7 +413,6 @@
 	            }
 	            
 	        });     
-   
 	    
 	   // 도/시 선택
 	    let sl = "";
@@ -462,6 +461,7 @@
             } else if($("#location1").val() === 'jeonbuk'){
                 $("#active_area").val("전라북도 " + $("."+sl).val());
             } else if($("#location1").val() === 'jeonnam'){
+            	$("#location1").children("[value*=jeonnam]").prop("selected", true);
                 $("#active_area").val("전라남도 " + $("."+sl).val());
             } else if($("#location1").val() === 'gyeongbuk'){
                 $("#active_area").val("경상북도 " + $("."+sl).val());
@@ -473,18 +473,10 @@
         	
          // 유효성 검사
         	// 지역
-        	/* if($("#location1").val() === "") {
-        		alert("도/시를 선택해주세요");
-        		return ;
-        	} else if($(".sub_location").val() === "") {
-        		alert("구/동/읍/면을 선택해주세요");
-        		return ;
-        	} */
         	if($("#active_area").val() === "") {
         		alert("지역을 입력해주세요");
         		return ;
         	}
-        	
         	
         	// 자기소개
         	if($("#introduction").val() === ""){

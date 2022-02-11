@@ -38,7 +38,7 @@
         <div class="row box_mp">
             <div class="col-4 menu_mp myInfo">
                 <div>
-                	<a href="${pagecontext.request.contextPath}/member/toMyInfo?user_id=${loginSession.user_id}">
+                	<a href="${pagecontext.request.contextPath}/member/toUserInformation?user_id=${loginSession.user_id}">
                 		<img src="/resources/img/myInfo.png">
                 	</a>
                 </div>
@@ -110,7 +110,7 @@
     
     	// 내정보
     	$("#toMyInfo").on("click", function(){
-    		$(location).attr("href", "${pagecontext.request.contextPath}/member/toMyInf?user_id=${loginSession.user_id}");
+    		$(location).attr("href", "${pagecontext.request.contextPath}/member/toUserInformation?user_id=${loginSession.user_id}");
     	})
     
 		// 쪽지함
