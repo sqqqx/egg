@@ -48,6 +48,12 @@ public class ExpertDTO {
 	public void setPoint(int point) {
 		this.point = point;
 	}
+
+	@Override
+	public String toString() {
+		return "ExpertDTO [expert_id=" + expert_id + ", active_area=" + active_area + ", introduction=" + introduction
+				+ ", point=" + point + "]";
+	}
 	
 	
 

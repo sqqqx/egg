@@ -14,11 +14,14 @@ public class AdminPostService extends Paging {
 	private AdminPostDAO dao;
 	
 	// 게시글 수 가져오기
-	public int getPostCount(String searchOption, String searchKeyword) throws Exception {
-		Map<String, String> map = new HashMap<>();
+	public int getPostCount(String searchOption, String searchKeyword, String type) throws Exception {
+		Map<String, Object> map = new HashMap<>();
 		if(searchOption != null & searchKeyword != null) {
 			map.put("searchOption", searchOption);
 			map.put("searchKeyword", searchKeyword);
+		}
+		if(!type.equals("9")) {
+			map.put("userType", type);
 		}
 		int rs = dao.getPostCount(map);
 		System.out.println("count : " + rs);
@@ -37,12 +40,12 @@ public class AdminPostService extends Paging {
 			map.put("type", type);
 		}
 		map.put("currentIdx", currentIdx);
-		totalCount = this.getPostCount(searchOption, searchKeyword);
+		totalCount = this.getPostCount(searchOption, searchKeyword, type);
 		List<Map<String, Object>> list = dao.getPostList(map);
 		System.out.println("list size : " + list.size());
-		for(Map<String, Object> post : list) {
-			System.out.println(post);
-		}
+		/*
+		 * for(Map<String, Object> post : list) { System.out.println(post); }
+		 */
 		return list;
 	}
 	

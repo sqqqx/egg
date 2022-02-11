@@ -14,4 +14,9 @@
     <select id="getCategory" resultType="CategoryDTO">
          SELECT * FROM TBL_CATEGORY WHERE CATEGORY_NO = #{category_no}
     </select>
+    
+    <!-- (마이페이지) 카테고리명 가져오기 -->
+    <select id="cateName" resultType="string">
+    	select parent_group || ' > ' || child_group from tbl_category where category_no = #{category_no}
+    </select>
 </mapper>

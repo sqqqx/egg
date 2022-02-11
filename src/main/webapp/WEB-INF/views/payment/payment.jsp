@@ -74,9 +74,13 @@
     		    		//기타 필요한 데이터가 있으면 추가 전달
     	    		}
     	    	}).done(function(rs) {
-    	    		console.log("결제 완벽하게 성공 후 : " + rs);
-    	    		alert("결제 완벽성공: " + rs);
-    	    		$(location).attr("href", "${pagecontext.request.contextPath}/");
+    	    		alert("결제에 성공했습니다.");
+    	    		if(rs.equals("pointCharged")){
+    	    			window.close();
+    	    		} else {
+    	    			$(location).attr("href", "${pagecontext.request.contextPath}/");	
+    	    		}
+    	    		
     	    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
     	    		/*
     	    		if ( rs.equals("success") ) {

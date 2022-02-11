@@ -48,6 +48,8 @@
 			<div class="row cls-postType">
 				<div class="col-4 d-flex">
 					<button type="button" class="btn btn-outline-dark cls-type"
+						id="typeAll" value="9">전체</button>
+					<button type="button" class="btn btn-outline-dark cls-type"
 						id="typeBasic" value="1">일반회원</button>
 					<button type="button" class="btn btn-outline-dark cls-type"
 						id="typeExpert" value="2">고수</button>
@@ -219,6 +221,9 @@
                         break;
                     case 2 :
                         $("#typeExpert").attr("class", "btn btn-dark");
+                        break;
+                    case 9 :
+                        $("#typeAll").attr("class", "btn btn-dark");
                         break;
                 }
             });

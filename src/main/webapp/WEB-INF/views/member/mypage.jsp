@@ -1,35 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="/WEB-INF/views/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="/resources/css/mypage.css">    <!-- 부트스트랩 적용시 부트스트랩 cdn을 가져온 뒤 css를 불러와야 레이아웃에 적용된다.-->
 <title>마이페이지</title>
 </head>
-<body>
-	<%@include file="/WEB-INF/views/header.jsp" %>
+<body>	
 	<!-- 마이 페이지 -->
     <div class="container">
         <div class="row header_mp">
             <div class="col-12">My Page</div>
-            <div class="col-12">${loginSession.user_nickname}님 환영합니다.</div>
+            <div class="col-12">${dto.user_nickname}님 환영합니다.</div>
         </div>
         <c:if test="${loginSession.type == 2}">
         	<div class="row expert_box">
 	            <div class="col-10 row activity_box">
 	                <div class="col-8">
-	                    <p>내 포인트 : 8900p</p>
+	                    <p>내 포인트 : ${point} P</p>
 	                    <p>총 게시글 : 0 개</p>
 	                </div>
 	                <div class="col-3">
-	                    <button type="button" class="btn btn-outline-dark">충전내역</button>
+	                    <button type="button" class="btn btn-outline-dark" id="toViewPointBtn">충전내역</button>
 	                </div>
 	            </div>
-	            <div class="col-2">
+	            <div class="col-1">
 	                <button type="button" class="btn btn-dark" id="toProfileBtn">프로필 바로가기</button>
 	            </div>
        		</div>
@@ -92,6 +91,21 @@
     </div>
     
     <script>
+    	// 충전내역버튼
+    	$("#toViewPointBtn").on("click", function(){
+    		let openUrl = "${pagecontext.request.contextPath}/pointlog/toViewPoint?user_id=${loginSession.user_id}";
+			let name = "포인트 내역 조회";
+			let option = "width=600, height=500, top=300";
+			
+			window.open(openUrl, name, option);
+    	})
+    	
+    	// 프로필 바로가기
+    	$("#toProfileBtn").on("click", function(){
+    		$(location).attr("href", "${pagecontext.request.contextPath}/member/toViewExpertInfo?expert_id=${loginSession.user_id}");
+    	})
+    	
+    
     	// 내정보
     	$("#toMyInfo").on("click", function(){
     		$(location).attr("href", "${pagecontext.request.contextPath}/member/toMyInf?user_id=${loginSession.user_id}");

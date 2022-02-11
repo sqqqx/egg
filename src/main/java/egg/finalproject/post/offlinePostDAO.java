@@ -14,9 +14,30 @@ public class offlinePostDAO {
 	@Autowired
 	private SqlSession session;
 
-	public List<PostDTO> selectByCg(String parent_group) throws Exception{
-		System.out.println("offlinePostDAO : " + parent_group);
-		return session.selectList("offlinePostMapper.selectByCg", parent_group);
+	/*
+	 * public List<PostDTO> selectByCg(String parent_group) throws Exception{
+	 * System.out.println("offlinePostDAO : " + parent_group); return
+	 * session.selectList("offlinePostMapper.selectByCg", parent_group); }
+	 */
+	
+	public List<PostDTO> selectByCg(Map<String, Object> map) throws Exception{
+		return session.selectList("offlinePostMapper.selectByCg", map);
+	}
+	
+	public int getPostCountAll(String parent_group) throws Exception {
+		int rs = session.selectOne("offlinePostMapper.getPostCountAll", parent_group);
+		System.out.println("dao rs : " + rs);
+		return rs;
+	}
+	
+	public List<PostDTO> getPostbySearch(Map<String, Object> map) throws Exception{
+		return session.selectList("offlinePostMapper.getPostbySearch", map);
+	}
+	
+	public int getPostCountSearch(Map<String, Object> map) throws Exception {
+		int rs = session.selectOne("offlinePostMapper.getPostCountSearch", map);
+		System.out.println("dao rs : " + rs);
+		return rs;
 	}
 	
 	public int insertPost(PostDTO dto) throws Exception{

@@ -4,5 +4,18 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="expertMapper">
-
+	<!-- (마이페이지) 능력자 전환신청 -->
+	<insert id="insertExpert" parameterType="expertDTO">
+		insert into tbl_expert values (#{expert_id}, #{active_area}, #{introduction}, 0)
+	</insert>
+	
+	<!-- (마이페이지) 능력자 정보 불러오기 -->
+	<select id="getExpertDTO" resultType="expertDTO">
+		select * from tbl_expert where expert_id = #{expert_id}
+	</select>
+	
+	<!-- (마이페이지) 포인트 수정 -->
+	<update id="modifyPoint" parameterType="map">
+		update tbl_expert set point = #{balance} where expert_id = #{expert_id}
+	</update>
 </mapper>

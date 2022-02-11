@@ -4,5 +4,13 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="careerMapper">
-
+	<!-- (마이페이지) 커리어 파일 추가 -->
+	<insert id="insertCareer" parameterType="careerDTO">
+		insert into tbl_career values (career_no.nextval, #{original_name}, #{system_name}, #{expert_id})
+	</insert>
+	
+	<!-- (마이페이지) 커리어 파일명 불러오기 -->
+	<select id="getCareerList" resultType="careerDTO">
+		select * from tbl_career where expert_id = #{expert_id}
+	</select>
 </mapper>

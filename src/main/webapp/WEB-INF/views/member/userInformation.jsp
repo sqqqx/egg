@@ -1,20 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="/WEB-INF/views/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="/resources/css/userInformation.css">    <!-- 부트스트랩 적용시 부트스트랩 cdn을 가져온 뒤 css를 불러와야 레이아웃에 적용된다.-->
 <link rel="stylesheet" href="/resources/css/profileSection.css">
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <title>회원정보조회</title>
 </head>
 <body>
-	<%@include file="/WEB-INF/views/header.jsp" %>
-	
+		
 	<!-- 회원 정보 조회 -->
     <div class="container-fluid" id="myInfo">
         <div class="row">
@@ -73,7 +72,7 @@
                                                 능력자
                                             </c:when>
                                             <c:otherwise>
-                                                외계인
+                                                능력자(진)
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
@@ -147,7 +146,15 @@
                     	</form>
                     
                     <div class="col" id="btnBox">
-                        <button type="button" id="usertypeConvertBtn" class="btn btn-success">능력자로 전환하기</button>
+                    	<c:choose>
+                            <c:when test="${dto.type eq 1}">
+                                <button type="button" id="usertypeConvertBtn" class="btn btn-success">능력자로 전환하기</button>
+                            </c:when>
+                            <c:otherwise>
+                                <button type="button" id="viewExpertBtn" class="btn btn-primary">능력자 정보 확인</button>
+                            </c:otherwise>
+                        </c:choose>
+                        
                         <button type="button" id="editProfileBtn" class="btn btn-warning">회원 정보 수정</button>
                     </div>
                     <div class="col" id="editBtnBox">
@@ -160,7 +167,20 @@
     </div>
     
     <script>
-    	console.log('${pagecontext.request.contextPath}/profilePhotos/${profile_path}');
+    	/* 능력자 관련 */
+    	// 능력자 전환 버튼
+    	$("#usertypeConvertBtn").on("click", function(){
+    		$(location).attr("href", "${pagecontext.request.contextPath}/member/toConvertExpert");
+    	})
+    	
+    	// 능력자 정보 확인
+    	$("#viewExpertBtn").on("click", function(){
+    		$(location).attr("href", "${pagecontext.request.contextPath}/member/toViewExpertInfo?expert_id=${loginSession.user_id}");
+    	})
+    	
+    	
+    
+    
     	/* 프로필사진 변경*/
     	// 프로필사진 변경 버튼
     	$("#showPhotoBtnBox").on("click", function(){

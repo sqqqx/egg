@@ -9,8 +9,9 @@ public class Paging {
 	
 	// getNavi
 	public Map<String, Object> getNavi(int currentIdx) throws Exception {
-		int rowCnt = this.totalCount; 
+		int rowCnt = totalCount;
 		int rowCntPage = 10; // 
+		System.out.println("rowCnt : " + rowCnt);
 		
 		int naviCnt = rowCnt % rowCntPage > 0 ? (rowCnt / rowCntPage) + 1 : (rowCnt / rowCntPage);
 		int naviCntPage = 10; // 

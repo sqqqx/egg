@@ -11,4 +11,13 @@
 		where b.expert_id=#{expert_id} group by b.category_no, a.parent_group
     </select>
 	
+	<!-- (마이페이지) 능력자 카테고리 번호 추가 -->
+	<insert id="insertExpertCN" parameterType="expert_categoryDTO">
+		insert into tbl_expert_category values (#{expert_id}, #{category_no})
+	</insert>
+	
+	<!-- (마이페이지) 카테고리 번호 가져오기 -->
+	<select id="noList" resultType="int">
+		select category_no from tbl_expert_category where expert_id = #{expert_id} 
+	</select>
 </mapper>

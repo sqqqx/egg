@@ -204,11 +204,8 @@
                     type: "post",
                     contentType: "application/json",
                     data: JSON.stringify(msgObj)
-                    //dataType: "json"
                 }).done(function (list) {
-                    // console.log(list);
                     for (let item of list) {
-                        // console.log(item.user_id);
                     }
                     insertUserInfo(list);
                 }).fail(function (e) {
@@ -228,6 +225,7 @@
                 $("#totalUserCount").empty();
                 $("#totalUserCount").append(totalUserCount);
                 for(let dto of list) {
+                	let address = dto.address.match(/[ㄱ-힣]+\s[ㄱ-힣]+/);
                     info = '<li id="li_' + dto.user_id + '">\
                         <a href="#" class="nav-link d-flex align-items-center" onclick="return false;">\
                             <div class="me-4">\
@@ -240,7 +238,7 @@
                             </div>\
                             <div>\
                                 <span class="d-block text-sm font-semibold">' + dto.user_nickname + '</span> <span class="d-block text-xs text-muted font-regular">\
-                                    Seoul, KR </span>\
+                                   ' + address + '</span>\
                             </div>\
                             <div class="ms-auto">\
                                 <i class="bi bi-trash remove" id="' + dto.user_id + '"></i>\
@@ -267,7 +265,6 @@
                 	const nLoginCount = parseInt($("#nLoginCount").html()) + 1;
                 	$("#nLoginCount").empty();
                 	$("#nLoginCount").append(nLoginCount);
-                	//location.href = "${pageContext.request.contextPath}/admin/toAdminMain";
             	}
             });
         </script>

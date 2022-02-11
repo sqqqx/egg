@@ -1,5 +1,9 @@
 package egg.finalproject.member;
 
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -17,6 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import egg.finalproject.career.CareerDTO;
+import egg.finalproject.career.CareerService;
+import egg.finalproject.expert.ExpertDTO;
+import egg.finalproject.expert.ExpertService;
+import egg.finalproject.expert_category.Expert_categoryService;
+import egg.finalproject.order.OrderService;
 import egg.finalproject.utils.EncryptionUtils;
 @Controller
 @RequestMapping("/member")
@@ -27,6 +37,14 @@ public class MemberController {
 	private HttpSession session;
 	@Autowired
 	private JavaMailSender mailSender;
+	@Autowired
+	private ExpertService expertService;
+	@Autowired
+	private CareerService careerService;
+	@Autowired
+	private Expert_categoryService expert_categoryService;
+	@Autowired
+	private OrderService orderService;
 	
 	// 아이디 중복검사
 	@RequestMapping(value="toIdCheck.do")
@@ -253,37 +271,46 @@ public class MemberController {
 /////↑↑↑↑↑↑회원가입 및 로그인↑↑↑↑↑↑/////////↓↓↓↓↓↓마이페이지↓↓↓↓↓↓///////////////////////////
 
 	// (마이페이지) 마이페이지 요청
-	@RequestMapping("toMyPage")
-	public String toMyPage() {
-		return "/member/mypage";
+	@RequestMapping("/toMyPage")
+	public String toMyPage(Model model) throws Exception {
+		System.out.println("MemberController / 마이페이지 요청");
+		MemberDTO dto = service.getDTOById(((MemberDTO)session.getAttribute("loginSession")).getUser_id());
+		System.out.println(dto);
+		model.addAttribute("dto", dto);
+		ExpertDTO eDTO = expertService.getExpertDTO(((MemberDTO)session.getAttribute("loginSession")).getUser_id());
+		long l = eDTO.getPoint();	// int 범위 초과 방지
+		String point = NumberFormat.getNumberInstance(Locale.US).format(l);
+		System.out.println(point);
+		model.addAttribute("point", point);
+		return "member/mypage";
 	}
 
 	// (마이페이지) 내 정보 페이지 요청
-	@RequestMapping("toMyInfo")
+	@RequestMapping("/toMyInfo")
 	public String toMyInfo(Model model, String user_id) throws Exception {
 		System.out.println("MemberController / 내 정보 페이지 요청 user_id - " + user_id);
 		MemberDTO dto = service.getDTOById(user_id);
 		System.out.println(dto);
 		model.addAttribute("dto", dto);
-		return "/member/myInfo";
+		return "member/myInfo";
 	}
 
 	// (마이페이지) 회원정보조회 페이지 요청
-	@RequestMapping("toUserInformation")
+	@RequestMapping("/toUserInformation")
 	public String toUserInformation(Model model, String user_id) throws Exception {
 		System.out.println("MemberController / 회원정보조회 user_id - " + user_id);
 		MemberDTO dto = service.getDTOById(user_id);
 		System.out.println(dto);
 		model.addAttribute("dto", dto);
-		return "/member/userInformation";
+		return "member/userInformation";
 	}
 
 	// (마이페이지) 회원탈퇴 요청
-	@RequestMapping("withdrawal.do")
+	@RequestMapping("/withdrawal.do")
 	public String widthdrawal(String user_id) throws Exception {
 		System.out.println("MemberController / 회원탈퇴 user_id - " + user_id);
 		service.withdrawal(user_id);
-		return "/home";
+		return "home";
 	}
 	
 	// (마이페이지) 회원정보 수정요청
@@ -302,7 +329,7 @@ public class MemberController {
 		// (마이페이지) 비밀번호변경 페이지 요청
 		@RequestMapping("/toModifyPw")
 		public String toModifyPw() {
-			return "/member/modifyPassword";
+			return "member/modifyPassword";
 		}
 		
 		// (마이페이지) 비밀번호 수정 요청
@@ -338,7 +365,7 @@ public class MemberController {
 			MemberDTO dto = service.getDTOById(user_id);
 			System.out.println(dto);
 			model.addAttribute("dto", dto);
-			return "/member/userInformation";
+			return "member/userInformation";
 		}
 		
 		// (마이페이지) 기본 프로필 사진 설정
@@ -348,6 +375,96 @@ public class MemberController {
 			// 기본 프로필 사진명이 myInfo.png라고 할 때
 			service.defaultPP(user_id);
 			model.addAttribute("dto", service.getDTOById(user_id));
-			return "/member/userInformation";
+			return "member/userInformation";
+		}
+		
+		// (마이페이지) 능력자 페이지 요청
+		@RequestMapping("/toConvertExpert")
+		public String toConvertExpert(Model model) throws Exception {
+			String user_id = ((MemberDTO)session.getAttribute("loginSession")).getUser_id();
+			System.out.println("MemberController / 능력자 페이지 요청 user_id - " + user_id);
+			MemberDTO dto = service.getDTOById(user_id);
+			System.out.println(dto);
+			model.addAttribute("dto", dto);
+			return "member/convertExpert";
+		}
+		
+		// (마이페이지) 능력자 전환신청
+		@RequestMapping("/convertExpert.do")
+		public String convertExpert(ExpertDTO eDTO, String[] categoryNumbers, MultipartFile[] careerFiles) throws Exception {
+			System.out.println("MemberController / 능력자 전환신청 - dto: " + eDTO);
+			ArrayList<Integer> cnList = new ArrayList<>();	// 카테고리 리스트
+			for(String c : categoryNumbers) {
+				cnList.add(Integer.parseInt(c));
+			}
+			System.out.println("카테고리 번호들:" + cnList.toString());
+			for(MultipartFile file : careerFiles) {
+				System.out.println("증명파일: " + file.getOriginalFilename());
+			}
+
+			/* 필요한 데이터 */
+			// expert_id - OK
+			// active_area - OK
+			// introduction - OK
+			// category_no - OK
+			// career (파일) - OK
+			
+			/* tbl_expert, tbl_career, tbl_category에 DB저장 */
+			// tbl_expert에 DB 추가
+			if(expertService.insertExpert(eDTO) > 0) {
+				System.out.println("능력자 테이블 추가 성공");
+			} else {
+				System.out.println("능력자 테이블 추가 실패");
+			}
+			// tbl_career에 DB 추가
+				// 저장 경로
+				String realPath = session.getServletContext().getRealPath("careerFiles");
+				System.out.println("증명파일 realPath: " + realPath);
+				for(int i = 0; i < careerFiles.length; i++) {
+					if(careerService.insertCareer(realPath, eDTO.getExpert_id(), careerFiles[i], cnList.get(i)) > 0) {
+						System.out.println(i + "번 증명파일 저장 성공");
+					} else {
+						System.out.println(i + "번 증명파일 저장 실패");
+					}
+				}
+			// tbl_expert_category에 DB 추가
+				for(int cn : cnList) {
+					if(expert_categoryService.insertExpertCN(eDTO.getExpert_id(), cn) > 0) {
+						System.out.println("전문가 카테고리 번호 추가 성공");
+					} else {
+						System.out.println("전문가 카테고리 번호 추가 실패");
+					}
+				}
+			// 멤버 type 수정
+				if(service.modifyType(eDTO.getExpert_id()) > 0) {
+					System.out.println("회원 타입 3으로 수정 성공");
+				} else {
+					System.out.println("회원 타입 수정 실패");
+				}
+			return "redirect:/member/toUserInformation?user_id="+eDTO.getExpert_id();
+		}
+		
+		// (마이페이지) 능력자 정보 확인
+		@RequestMapping("/toViewExpertInfo")
+		public String toViewExpertInfo(Model model, String expert_id) throws Exception {
+			System.out.println("MemberController / 능력자 정보 확인 - user_id: " + expert_id);
+			MemberDTO dto = service.getDTOById(expert_id);
+			System.out.println(dto);
+			model.addAttribute("dto", dto);
+			
+			// tbl_expert 정보 가져오기
+			ExpertDTO eDTO = expertService.getExpertDTO(expert_id);
+			model.addAttribute("eDTO", eDTO);
+			System.out.println("능력자 정보: " + eDTO);
+			// tbl_career 정보 가져오기
+			List<CareerDTO> careerList = careerService.getCareerList(expert_id);
+			model.addAttribute("careerList", careerList);
+			System.out.println("능력자 증명: " + careerList.toString());
+			// tbl_expert_category 정보 가져오기
+			List<String> categoryList = expert_categoryService.getCateList(expert_id);
+			model.addAttribute("categoryList", categoryList);
+			System.out.println("능력자 카테고리: " + categoryList);
+			
+			return "member/viewExpertInfo";
 		}
 }

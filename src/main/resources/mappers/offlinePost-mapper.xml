@@ -5,11 +5,42 @@
 
 <mapper namespace="offlinePostMapper">
 
-	<select id="selectByCg" resultType="map" parameterType="PostDTO">
+	<!-- <select id="selectByCg" resultType="map" parameterType="PostDTO">
          select * from tbl_post p inner join tbl_category c using(category_no) where type=2 and c.parent_group = #{parent_group}
+    </select> -->
+    
+    <!-- 전체 글 목록 -->
+    <select id="selectByCg" parameterType="map" resultType="PostDTO">
+    	SELECT * FROM (SELECT row_number() OVER (ORDER BY written_Date DESC) AS idx, tbl_post.* FROM tbl_post)
+		    INNER JOIN tbl_category c USING(category_no)
+	    WHERE idx BETWEEN #{startRange} AND #{endRange}
+			AND type = 2 AND c.parent_group = #{parent_group}
     </select>
     
     <insert id="insertPost" parameterType="PostDTO">
          INSERT INTO TBL_POST VALUES(POST_NO.NEXTVAL,#{type},#{user_id},#{user_nickname},#{category_no},#{title},#{content},#{product_no},0,SYSDATE,#{reservation_time})
     </insert>
+
+    <!-- 전체 글 COUNT -->
+    <select id="getPostCountAll" resultType="int">
+    	SELECT COUNT(*) FROM tbl_post p
+		    INNER JOIN tbl_category c USING(category_no)
+		WHERE type = 2 AND c.parent_group = #{parent_group}
+    </select>
+    
+    <!-- 검색 COUNT -->
+    <select id="getPostCountSearch" parameterType="map" resultType="int">
+    	SELECT COUNT(*) FROM tbl_post p
+		    INNER JOIN tbl_category c USING(category_no)
+		WHERE type = 2 AND c.parent_group = #{parent_group} AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+    </select>
+    
+    <!-- 검색 목록 가져오기 -->
+    <select id="getPostbySearch" parameterType="map" resultType="PostDTO">
+    	SELECT * FROM (SELECT row_number() OVER (ORDER BY written_Date DESC) AS idx, tbl_post.* FROM tbl_post)
+		    INNER JOIN tbl_category c USING(category_no)
+	    WHERE idx BETWEEN #{startRange} AND #{endRange}
+			AND type = 2 AND c.parent_group = #{parent_group} AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+    </select>
+    
 </mapper>

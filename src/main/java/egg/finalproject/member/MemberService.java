@@ -147,7 +147,6 @@ public class MemberService {
 	// (마이페이지) 회원정보 수정요청
 	public int modify(MemberDTO dto) throws Exception {
 		System.out.println("MemberService / 회원정보수정 dto - " + dto);
-		//return dao.modify(dto);
 		int rs = dao.modify(dto);
 		System.out.println("service 실행완료");
 		return rs;
@@ -201,4 +200,10 @@ public class MemberService {
 		System.out.println("MemberService / 기본 프로필 사진 설정 - user_id: " + user_id);
 		return dao.defaultPP(user_id);
 	}	
+	
+	// (마이페이지) 회원 타입 수정
+	public int modifyType(String user_id) throws Exception {
+		System.out.println("MemberService / 회원 타입 수정 - 아이디: " + user_id);
+		return dao.modifyType(user_id);
+	}
 }

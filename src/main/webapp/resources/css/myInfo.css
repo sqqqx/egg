@@ -1,6 +1,11 @@
 @charset "UTF-8";
 
-
+*{margin:0;}
+body{
+    width:1800px;
+    height: 1000px;
+    margin:0 auto;
+}
 
 /* 우측 회원 활동 부분*/
 .activityBox div {
