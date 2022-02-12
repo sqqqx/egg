@@ -1,7 +1,9 @@
 package egg.finalproject.expert_category;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +32,7 @@ public class Expert_categoryService {
 	}
 	
 	// (마이페이지) 카테고리 정보 가져오기
-	public List<String> getCateList(String expert_id) throws Exception {
+	public Map<String, Object> getCateList(String expert_id) throws Exception {
 		System.out.println("Expert_categoryService / 카테고리 정보 가져오기 - expert_id: " + expert_id);
 		ArrayList<String> categoryList = new ArrayList<>();
 		// 카테고리 번호 가져오기
@@ -41,7 +43,18 @@ public class Expert_categoryService {
 			System.out.println("카테고리명: " + cateName);
 			categoryList.add(cateName);
 		}
+//		return categoryList;
+		Map<String, Object> map = new HashMap<>();
+		map.put("categoryNo", noList);
+		map.put("categoryList", categoryList);
 		
-		return categoryList;
+		return map;
 	}
+	
+	// (마이페이지) 카테고리 정보 삭제
+	public int deleteExpertCN(String expert_id) throws Exception {
+		System.out.println("Expert_categoryService / 카테고리 정보 삭제 - expert_id: " + expert_id);
+		return dao.deleteExpertCN(expert_id);
+	}
+	
 }

@@ -12,6 +12,8 @@ public class CareerService {
 	@Autowired
 	private CareerDAO dao;
 	
+	
+	
 	// (마이페이지) 능력자 전환 - 커리어 파일 추가
 	public int insertCareer(String realPath, String expert_id, MultipartFile careerFile, int category_no) throws Exception {
 		System.out.println("CareerService / 커리어 파일 추가 - realPath: " + realPath + " / expert_id: " + expert_id + " / careerFile: " + careerFile);
@@ -50,5 +52,11 @@ public class CareerService {
 	public List<CareerDTO> getCareerList(String expert_id) throws Exception {
 		System.out.println("CareerService / 커리어DTO 불러오기 - expert_id: " + expert_id);
 		return dao.getCareerList(expert_id);
+	}
+	
+	// (마이페이지) 증명파일 전부 삭제
+	public int deleteCareer(String expert_id) throws Exception {
+		System.out.println("CareerService / 증명파일 전부 삭제 - expert_id: " + expert_id);
+		return dao.deleteCareer(expert_id);
 	}
 }

@@ -27,4 +27,10 @@ public class Expert_categoryDAO {
 		System.out.println("Expert_categoryDAO / 카테고리 번호 가져오기 - expert_id: " + expert_id);
 		return session.selectList("expertcategoryMapper.noList", expert_id);
 	}
+	
+	// (마이페이지) 카테고리 정보 삭제
+	public int deleteExpertCN(String expert_id) throws Exception {
+		System.out.println("Expert_categoryDAO / 카테고리 정보 삭제 - expert_id: " + expert_id);
+		return session.delete("expertcategoryMapper.deleteExpertCN", expert_id);
+	}
 }

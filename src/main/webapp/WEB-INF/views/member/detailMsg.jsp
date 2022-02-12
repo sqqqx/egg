@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,16 +71,18 @@
                 </div>
                 <div class="col-3"></div>
             </div>
-            <div class="row">
-                <div class="col-3"></div>
-                <div class="col-3">
-                    <button type="button" class="btn btn-danger" id="reportBtn">신고</button>
-                </div>
-                <div class="col-3">
-                    <button type="button" class="btn btn-success" id="towriteBtn">답장</button>
-                </div>
-                <div class="col-3"></div>
-            </div>
+            <c:if test="${dto.from_id ne loginSession.user_id}">
+	            <div class="row">
+	                <div class="col-3"></div>
+	                <div class="col-3">
+	                    <button type="button" class="btn btn-danger" id="reportBtn">신고</button>
+	                </div>
+	                <div class="col-3">
+	                    <button type="button" class="btn btn-success" id="towriteBtn">답장</button>
+	                </div>
+	                <div class="col-3"></div>
+	            </div>
+            </c:if>
         </form>
     </div>
 
@@ -89,7 +92,7 @@
 	        alert("신고");
 	    })
 	
-	    // 보내기 버튼
+	    // 답장 버튼
 	    $("#towriteBtn").on("click", function(){
 	    	$(location).attr("href", "${pagecontext.request.contextPath}/message/toSendMessage?to_id=${dto.to_id}&from_id=${dto.from_id}");
 	    })
