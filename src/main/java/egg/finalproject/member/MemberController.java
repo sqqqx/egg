@@ -429,11 +429,13 @@ public class MemberController {
 		MemberDTO dto = service.getDTOById(((MemberDTO)session.getAttribute("loginSession")).getUser_id());
 		System.out.println(dto);
 		model.addAttribute("dto", dto);
-		ExpertDTO eDTO = expertService.getExpertDTO(((MemberDTO)session.getAttribute("loginSession")).getUser_id());
-		long l = eDTO.getPoint();	// int 범위 초과 방지
-		String point = NumberFormat.getNumberInstance(Locale.US).format(l);
-		System.out.println(point);
-		model.addAttribute("point", point);
+		if(dto.getType() == 2) {
+			ExpertDTO eDTO = expertService.getExpertDTO(((MemberDTO)session.getAttribute("loginSession")).getUser_id());
+			long l = eDTO.getPoint();	// int 범위 초과 방지
+			String point = NumberFormat.getNumberInstance(Locale.US).format(l);
+			System.out.println(point);
+			model.addAttribute("point", point);
+		}
 		return "member/mypage";
 	}
 
