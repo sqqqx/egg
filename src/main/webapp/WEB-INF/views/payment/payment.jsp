@@ -75,7 +75,7 @@
     	    		}
     	    	}).done(function(rs) {
     	    		alert("결제에 성공했습니다.");
-    	    		if(rs.equals("pointCharged")){
+    	    		if(rs === "pointCharged"){
     	    			window.close();
     	    		} else {
     	    			$(location).attr("href", "${pagecontext.request.contextPath}/");	

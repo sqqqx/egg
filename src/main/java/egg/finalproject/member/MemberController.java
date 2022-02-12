@@ -2,8 +2,10 @@ package egg.finalproject.member;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import edu.emory.mathcs.backport.java.util.Collections;
 import egg.finalproject.career.CareerDTO;
 import egg.finalproject.career.CareerService;
 import egg.finalproject.expert.ExpertDTO;
@@ -551,6 +554,10 @@ public class MemberController {
 			for(String c : categoryNumbers) {
 				cnList.add(Integer.parseInt(c));
 			}
+			
+			for(int n : cnList) {
+				System.out.println("번호 출력: " + n);
+			}
 			System.out.println("카테고리 번호들:" + cnList.toString());
 			for(MultipartFile file : careerFiles) {
 				System.out.println("증명파일: " + file.getOriginalFilename());
@@ -615,10 +622,99 @@ public class MemberController {
 			model.addAttribute("careerList", careerList);
 			System.out.println("능력자 증명: " + careerList.toString());
 			// tbl_expert_category 정보 가져오기
-			List<String> categoryList = expert_categoryService.getCateList(expert_id);
-			model.addAttribute("categoryList", categoryList);
-			System.out.println("능력자 카테고리: " + categoryList);
+//			List<String> categoryList = expert_categoryService.getCateList(expert_id);
+//			model.addAttribute("categoryList", categoryList);
+//			System.out.println("능력자 카테고리: " + categoryList);
+			Map<String, Object> map = expert_categoryService.getCateList(expert_id);
+			model.addAttribute("categoryList", map.get("categoryList"));
+			model.addAttribute("cn", map.get("categoryNo"));
+			System.out.println("능력자 카테고리: " + map.get("categoryList"));
+			System.out.println("능력자 카테고리 번호: " + map.get("categoryNo"));
 			
 			return "member/viewExpertInfo";
+		}
+		
+		// (마이페이지) 능력자 정보 수정
+		@RequestMapping("/modifyExpert.do")
+		public String modifyExpert(ExpertDTO eDTO, String[] categoryNumbers, MultipartFile[] careerFiles) throws Exception {
+			System.out.println("MemberController / 능력자 정보수정 신청 - dto: " + eDTO);
+			ArrayList<Integer> cnList = new ArrayList<>();	// 카테고리 리스트
+			if(categoryNumbers != null) {
+				for(String c : categoryNumbers) {
+					cnList.add(Integer.parseInt(c));
+				}
+				cnList.sort(Comparator.naturalOrder());
+				System.out.println("카테고리 번호들:" + cnList.toString());
+			}
+			
+			// <input type="file">에 아무것도 안담아 보내면 null이 아니라 size가 0인 데이터가 담겨져 온다.
+			int fileSize = 0;
+			if(careerFiles != null) {
+				System.out.println("증명파일 개수: " + careerFiles.length);
+				for(MultipartFile file : careerFiles) {
+					fileSize += file.getSize();
+//					System.out.println("증명파일정보: " + file);
+//					if(file.getSize() != 0) {
+//						System.out.println("증명파일: " + file.getOriginalFilename());
+//					} else {
+//						System.out.println("증명파일 사이즈 0");
+//					}
+				}
+			} else {
+				System.out.println("증명파일이 없습니다.");
+			}
+			if(fileSize == 0) {
+				return null;
+			}
+			
+
+			/* 필요한 데이터 */
+			// expert_id - OK
+			// active_area - OK
+			// introduction - OK
+			// category_no - OK
+			// career (파일) - OK
+			
+			/* tbl_expert, tbl_career, tbl_category에 DB저장 */
+			// tbl_expert에 DB 수정
+			if(expertService.modifyExpert(eDTO) > 0) {
+				System.out.println("능력자 테이블 수정 성공");
+			} else {
+				System.out.println("능력자 테이블 수정 실패");
+			}
+			// tbl_career에 DB 수정
+				// 저장 경로
+				String realPath = session.getServletContext().getRealPath("careerFiles");
+				System.out.println("증명파일 realPath: " + realPath);
+				careerService.deleteCareer(eDTO.getExpert_id());	// 증명파일 전부 삭제
+				System.out.println("증명파일 전부 삭제");
+				for(int i = 0; i < careerFiles.length; i++) {
+					if(careerFiles[i].getSize() != 0) {	// 개별 파일이 비어있지 않다면
+						if(careerService.insertCareer(realPath, eDTO.getExpert_id(), careerFiles[i], cnList.get(i)) > 0) {
+							System.out.println(i + "번 증명파일 저장 성공");
+						} else {
+							System.out.println(i + "번 증명파일 저장 실패");
+						}
+					}
+				}
+				
+				
+			// tbl_expert_category에 DB 추가
+				expert_categoryService.deleteExpertCN(eDTO.getExpert_id());	// 카테고리 정보 삭제
+				System.out.println("전문가 카테고리 정보 삭제");
+				for(int cn : cnList) {
+					if(expert_categoryService.insertExpertCN(eDTO.getExpert_id(), cn) > 0) {
+						System.out.println("전문가 카테고리 번호 추가 성공");
+					} else {
+						System.out.println("전문가 카테고리 번호 추가 실패");
+					}
+				}
+//			// 멤버 type 수정
+//				if(service.modifyType(eDTO.getExpert_id()) > 0) {
+//					System.out.println("회원 타입 3으로 수정 성공");
+//				} else {
+//					System.out.println("회원 타입 수정 실패");
+//				}
+			return "redirect:/member/toUserInformation?user_id="+eDTO.getExpert_id();
 		}
 }
