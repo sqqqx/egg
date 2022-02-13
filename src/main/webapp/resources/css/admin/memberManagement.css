@@ -26,11 +26,7 @@
     width: 100%;
 }
 .searchArea select, input {
-	height: 100% !important;
-}
-#searchBtn {
-	position: static !important;
-	height: 55px !important;
+	/* height: 100% !important; */
 }
 
 /*** 테이블 영역 ***/

@@ -13,7 +13,9 @@
     <select id="getMyLikePost" parameterType="map" resultType="map">
     	<choose>
     		<when test="type == 3">
-    			SELECT *
+    			SELECT 
+    				pd.product_no, pd.name, to_char(pd.price, '999,999,999') "PRICE",
+    				pd.stock, pd.content, pd.image_path, l.type
 				FROM (SELECT row_number() OVER (ORDER BY like_date DESC) AS idx, tbl_like.* FROM tbl_like) l
 					INNER JOIN tbl_product pd ON(pd.product_no = l.post_no)
 				WHERE l.type = #{type}

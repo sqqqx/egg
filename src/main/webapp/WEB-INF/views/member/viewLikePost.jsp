@@ -32,6 +32,21 @@
 	   .cls-tr p {
 	   		margin: 0;
 	   }
+	   .cls-tr > td:nth-child(1) {
+	   		width: 10%;
+	   }
+	   .cls-tr > td:nth-child(2) {
+	   		width: 20%;
+	   }
+	   .cls-tr > td:nth-child(3) {
+	   		width: 60%;
+	   }
+	   .cls-tr > td:nth-child(4) {
+	   		width: 10%;
+	   }
+	   .cls-productName > p {
+	   		font-style: italic;
+	   }
 	</style>
 </head>
 <body>
@@ -91,7 +106,7 @@
 								    <tr>
 								    	<th><%-- 체크박스 --%></th>
 								    	<th><%-- 이미지 --%></th> 
-								    	<th colspan="2"><%-- 이름+가격 --%></th>
+								    	<th><%-- 이름+가격 --%></th>
 								    	<th><%--장바구니,삭제 버튼--%></th>
 								    </tr>
 								  </thead>
@@ -99,7 +114,7 @@
 								  	<c:choose>
 								  		<c:when test="${empty list}">
 								  			<tr>
-								  				<td colspan="4">글 작성 내역이 존재하지 않습니다.</td>
+								  				<td colspan="4">등록된 글이 없습니다.</td>
 								  			</tr>
 								  		</c:when>
 								  		<c:otherwise>
@@ -107,13 +122,13 @@
 								  				<tr class="cls-tr" id="${map.TYPE}">
 											    	<td>${map.PRODUCT_NO}</td>
 											    	<td><img src="/resources/img/${map.IMAGE_PATH}"></td>
-											    	<td colspan="2">
+											    	<td class="cls-productName">
 											    		<p>${map.NAME}</p>
-											    		<p>${map.PRICE}</p>
+											    		<p>₩ ${map.PRICE}</p>
 											    	</td>
-											    	<td>
+											    	<td style="width: 150px">
 											    		<button type="button" class="btn btn-outline-dark btnToCart" id="${map.PRODUCT_NO}">장바구니 담기</button>
-														<br><button type="button" class="btn btn-outline-dark btnDelete" id="${map.PRODUCT_NO}" style="width: 127.63px">삭제</button>
+														<br><button type="button" class="btn btn-outline-dark btnDelete" id="${map.PRODUCT_NO}" style="width: 127.63px;">삭제</button>
 											    	</td>
 											    </tr>
 								  			</c:forEach>
@@ -132,14 +147,14 @@
 								    	<th>번호</th>
 								    	<th>제목</th> 
 								    	<th>조회수</th>
-								    	<th>작성일</th>
+								    	<th>삭제</th>
 								    </tr>
 								  </thead>
 								  <tbody>
 								  	<c:choose>
 								  		<c:when test="${empty list}">
 								  			<tr>
-								  				<td colspan="4">글 작성 내역이 존재하지 않습니다.</td>
+								  				<td colspan="4">등록된 글이 없습니다.</td>
 								  			</tr>
 								  		</c:when>
 								  		<c:otherwise>
@@ -148,7 +163,9 @@
 											    	<td>${map.POST_NO}</td>
 											    	<td>${map.TITLE}</td>
 											    	<td>${map.VIEW_COUNT}</td>
-											    	<td>${map.LIKE_DATE}</td>
+											    	<td>
+											    	   <button type="button" class="btn btn-outline-dark btnDelete" id="${map.PRODUCT_NO}" style="width: 127.63px;">삭제</button>
+											    	</td>
 											    </tr>
 								  			</c:forEach>
 								  		</c:otherwise>
@@ -247,12 +264,18 @@
     		const user_id = "${loginSession.user_id}";
     		let post_no = $(e.target).parents(".cls-tr").children().eq(0).html();
     		let type = $(e.target).parents(".cls-tr").attr("id");
-    		post_no = parseInt(post_no);
-    		type = parseInt(type);
-    		console.log(typeof post_no);
-    		console.log(typeof type);
-    		console.log(user_id + " : " + post_no + " : " + type);
-    		//location.href = "${pageContext.request.contextPath}/like/minus.do?user_id="+user_id+"&type="+type+"&post_no"+post_no;
+    		$.ajax({
+                url: "${pageContext.request.contextPath}/like/minus.do?post_no=" + post_no + "&user_id=" + user_id + "&type=" + type,
+                type: "get"
+            }).done(function (data) {
+                if (data == "available") {
+                    location.href = "${pageContext.request.contextPath}/offlinePost/toLikePost?currentPage=1&type="+type;
+                    return;
+                } 
+                alert("삭제 실패");
+            }).fail(function (e) {
+                console.log(e);
+            })
     	});
     	<%-- 이동 --%>
     	$(".cls-tr > td:nth-child(2),td:nth-child(3)").on("click", function(e) {
