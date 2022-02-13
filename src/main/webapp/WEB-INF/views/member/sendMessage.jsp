@@ -36,10 +36,10 @@
                     <label for="to_id">수신자</label>
                 </div>
                 <div class="col-5">
-                    <input type="text" class="form-control" id="to_id" name="from_id" value="${dto.from_id}">
+                    <input type="text" class="form-control" id="from_id" name="to_id" value="${dto.from_id}">
                 </div>
                 <div class="col-3">
-                    <input type="text" class="form-control" id="from_id" name="to_id" value="${dto.to_id}" hidden>
+                	<input type="text" class="form-control" id="to_id" name="from_id" value="${dto.to_id}" hidden>
                 </div>
             </div>
             <div class="row">

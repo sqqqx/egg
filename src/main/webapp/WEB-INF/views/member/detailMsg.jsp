@@ -16,8 +16,8 @@
     #msg_head {
         font-size: 30pt;
     }
-    textarea {
-        resize: none;
+    #content {
+        overflow : auto;
         height: 300px;
     }
     button {
@@ -37,7 +37,7 @@
                     <label for="to_id">수신자</label>
                 </div>
                 <div class="col-5">
-                    <input type="text" class="form-control" id="to_id" name="to_id" value="${dto.to_id}">
+                    <input type="text" class="form-control" id="to_id" name="to_id" value="${dto.to_id}" readonly>
                 </div>
                 <div class="col-3"></div>
             </div>
@@ -47,7 +47,7 @@
                     <label for="to_id">송신자</label>
                 </div>
                 <div class="col-5">
-                    <input type="text" class="form-control" id="from_id" name="from_id" value="${dto.from_id}">
+                    <input type="text" class="form-control" id="from_id" name="from_id" value="${dto.from_id}" readonly>
                 </div>
                 <div class="col-3"></div>
             </div>
@@ -57,7 +57,7 @@
                     <label>제목</label>
                 </div>
                 <div class="col-5">
-                    <input type="text" class="form-control" id="title" value="${dto.title}">
+                    <input type="text" class="form-control" id="title" value="${dto.title}" readonly>
                 </div>
                 <div class="col-3"></div>
             </div>
@@ -67,7 +67,7 @@
                     <label for="content">내용</label>
                 </div>
                 <div class="col-5">
-                    <textarea class="form-control" id="content" name="content">${dto.content}</textarea>
+                    <div class="form-control" id="content" name="content">${dto.content}</div>
                 </div>
                 <div class="col-3"></div>
             </div>

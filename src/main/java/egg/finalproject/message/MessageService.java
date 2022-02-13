@@ -142,4 +142,10 @@ public class MessageService {
 		System.out.println("MessageService / 쪽지 상세보기 - message_no: " + message_no);
 		return dao.detailMsg(message_no);
 	}
+	
+	// (마이페이지) 쪽지 읽음처리(1개)
+	public int readMsg(int message_no) throws Exception {
+		System.out.println("MessageService / 쪽지 읽음처리 - message_no: " + message_no);
+		return dao.readMsg(message_no);
+	}
 }

@@ -80,7 +80,7 @@ public class MessageDAO {
 		return session.delete("messageMapper.checkedMsgDelete", checkedMsg);
 	}
 	
-	// (마이페이지) 체크된 쪽지 전부 삭제
+	// (마이페이지) 체크된 쪽지 전부 읽음처리
 	public int checkedMsgRead(int[] checkedMsg) throws Exception {
 		System.out.println("MessageDAO / 체크된 쪽지 전부 읽음처리 - checkedMsg: " + checkedMsg);
 		return session.update("messageMapper.checkedMsgRead", checkedMsg);
@@ -90,5 +90,11 @@ public class MessageDAO {
 	public MessageDTO detailMsg(int message_no) throws Exception {
 		System.out.println("MessageDAO / 쪽지 상세보기 - message_no: " + message_no);
 		return session.selectOne("messageMapper.detailMsg", message_no);
+	}
+	
+	// (마이페이지) 쪽지 읽음처리(1개)
+	public int readMsg(int message_no) throws Exception {
+		System.out.println("MessageService / 쪽지 읽음처리 - message_no: " + message_no);
+		return session.update("messageMapper.readMsg", message_no);
 	}
 }
