@@ -28,4 +28,10 @@ public class ExpertDAO {
 		System.out.println("ExpertDAO / 포인트 수정 - map: " + map);
 		return session.update("expertMapper.modifyPoint", map);
 	}
+	
+	// (마이페이지) 능력자 정보 수정
+	public int modifyExpert(ExpertDTO dto) throws Exception {
+		System.out.println("ExpertDAO / 능력자 정보수정 - ExpertDTO: " + dto);
+		return session.update("expertMapper.modifyExpert", dto);
+	} 
 }

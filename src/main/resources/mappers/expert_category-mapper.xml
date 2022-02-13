@@ -20,4 +20,9 @@
 	<select id="noList" resultType="int">
 		select category_no from tbl_expert_category where expert_id = #{expert_id} 
 	</select>
+	
+	<!-- (마이페이지) 카테고리 정보 삭제 -->
+	<delete id="deleteExpertCN">
+		delete from tbl_expert_category where expert_id = #{expert_id}
+	</delete>
 </mapper>

@@ -93,11 +93,11 @@
                 </div>
                 <div class="row justify-content-center">
                 	<button type="button" id="backBtn" class="btn btn-secondary eBtn">마이페이지로</but>
-                	<button type="button" id="modifyBtn" class="btn btn-warning eBtn">수정하기</but>
+                	<button type="button" id="toModifyBtn" class="btn btn-warning eBtn">수정하기</but>
                 </div>
             </div>
             <div class="col-8" id="expertBox">
-           		<form action="${pagecontext.request.contextPath}/member/convertExpert.do" enctype="multipart/form-data" method="post" id="ceForm">
+           		<form action="${pagecontext.request.contextPath}/member/modifyExpert.do" enctype="multipart/form-data" method="post" id="modifyExpertForm">
             		<div class="row eTitle"><p>능력자 정보 수정</p></div>
 	                <div class="row">
 	                    <div class="col-2">
@@ -325,12 +325,20 @@
                         	<button type="button" id="delCategoryBtn" class="btn btn-danger eBtn">카테고리 삭제</but>        
                    		</div>
                     <div class="row" id="cgListBox">
-						
+						<c:forEach var="i" begin="0" end="2">
+							<c:if test="${!empty categoryList.get(i)}">
+								<div id="cate${i+1}" class="row cateBox">
+									<input type="text" class="col-4" value="${i+1}번째 카테고리: ${categoryList.get(i)}"/>
+									<input type="checkbox" class="col-3" name="categoryNumbers" id="childCn" value="${cn.get(i)}" checked hidden/>
+									<input type="file" class="col-3 form-control searchFile" name="careerFiles" id="searchFile${i+1}"/>
+								</div>
+							</c:if>
+						</c:forEach>
 					</div>
            	  	</div>
                 <div class="row justify-content-center">
                     <button type="button" id="cancelBtn" class="btn btn-secondary eBtn">돌아가기</but>
-                    <button type="button" id="confirmBtn" class="btn btn-primary eBtn">전환신청</but>
+                    <button type="button" id="modifyBtn" class="btn btn-primary eBtn">수정신청</but>
                 </div>
                 <div class="row" hidden>
                     <div class="col">
@@ -350,7 +358,6 @@
 	        let childCn = $("." + parentCn + " option:selected").val();
 	        // 중복검사
 	        if($("#cgListBox #childCn2").val() === childCn || $("#cgListBox #childCn1").val() === childCn){
-	            console.log("중복된 카테고리 입니다.");
 	            alert("중복된 카테고리 입니다.");
 	            return ;
 	        }  
@@ -422,100 +429,105 @@
 		        + $(".category1 option:selected").html() + " > " 
 		        + $("." + parentCn + " option:selected").html() + "'/>"
 		        + "<input type='checkbox' class='col-3' name='categoryNumbers' id='childCn" + i + "' value='" + childCn + "' checked hidden/>"
-		        + "<input type='file' class='col-3 form-control' name='careerFiles" + "'/>"
+		        + "<input type='file' class='col-3 form-control searchFile' name='careerFiles" + "' id='searchFile" + i +"'/>"
 		        + "</div>"));
 		    }
    
 		
 	    
-		    /* 초기 수정내용 설정 */
-	   		$(function(){
-	   			// 활동지역
-	   			let addr = "${eDTO.active_area}";
-	            let addr1 = addr.substring(0, addr.indexOf(' '));
-	            let addr2 = addr.substring(addr.indexOf(' ')+1);
-	            console.log("addr1: " + addr1);
-	            console.log("addr2: " + addr2);
-	   			
-	   			if(addr1 === '서울특별시') {
-	                $("#location1").children("[value=seoul]").prop("selected", true);
-	                $(".seoul").children("[value=" + addr2 +"]").prop("selected", true);
-	                $(".seoul").css("display", "inline");
-	            } else if(addr1 === '부산광역시') {
-	            	$("#location1").children("[value=busan]").prop("selected", true);
-	            	$(".busan").children("[value=" + addr2 +"]").prop("selected", true);
-	            	$(".busan").css("display", "inline");
-	            } else if(addr1 === '대구광역시') {
-	            	$("#location1").children("[value=daegu]").prop("selected", true);
-	            	$(".daegu").children("[value=" + addr2 +"]").prop("selected", true);
-	    	        $(".daegu").css("display", "inline");
-	            } else if(addr1 === '인천광역시') {
-	            	$("#location1").children("[value=incheon]").prop("selected", true);
-	            	$(".incheon").children("[value=" + addr2 +"]").prop("selected", true);
-	            	$(".incheon").css("display", "inline");
-	            } else if(addr1 === '광주광역시') {
-	            	$("#location1").children("[value=gwangju]").prop("selected", true);
-	            	$(".gwangju").children("[value=" + addr2 +"]").prop("selected", true);
-	            	$(".gwangju").css("display", "inline");
-	            } else if(addr1 === '대전광역시') {
-	            	$("#location1").children("[value=daejeon]").prop("selected", true);
-	            	$(".daejeon").children("[value=" + addr2 +"]").prop("selected", true);
-	            	$(".daejeon").css("display", "inline");
-	            } else if(addr1 === '울산광역시') {
-	            	$("#location1").children("[value=ulsan]").prop("selected", true);
-	            	$(".ulsan").children("[value=" + addr2 +"]").prop("selected", true);
-	            	$(".ulsan").css("display", "inline");
-	            } else if(addr1 === '세종특별자치시') {
-	            	$("#location1").children("[value=sejong]").prop("selected", true);
-	            	$(".sejong").children("[value=" + addr2 +"]").prop("selected", true);
-	            	$(".sejong").css("display", "inline");
-	            } else if(addr1 === '경기도') {
-	            	$("#location1").children("[value=gyeonggi]").prop("selected", true);
-	            	$(".gyeonggi").children("[value=" + addr2 +"]").prop("selected", true);
-	            	$(".gyeonggi").css("display", "inline");
-	            } else if(addr1 === '강원도') {
-	            	$("#location1").children("[value=gangwon]").prop("selected", true);
-	            	$(".gangwon").children("[value=" + addr2 +"]").prop("selected", true);
-	            	$(".gangwon").css("display", "inline");
-	            } else if(addr1 === '충청북도') {
-	            	$("#location1").children("[value=chungbuk]").prop("selected", true);
-	            	$(".chungbuk").children("[value=" + addr2 +"]").prop("selected", true);
-	            	$(".chungbuk").css("display", "inline");
-	            } else if(addr1 === '충청남도') {
-	            	$("#location1").children("[value=chungnam]").prop("selected", true);
-	            	$(".chungnam").children("[value=" + addr2 +"]").prop("selected", true);
-	            	$(".chungnam").css("display", "inline");
-	            } else if(addr1 === '전라북도') {
-	            	$("#location1").children("[value=jeonbuk]").prop("selected", true);
-	            	$(".jeonbuk").children("[value=" + addr2 +"]").prop("selected", true);
-	            	$(".jeonbuk").css("display", "inline");
-	            } else if(addr1 === '전라남도') {
-	            	$("#location1").children("[value=jeonnam]").prop("selected", true);
-	            	$(".jeonnam").children("[value=" + addr2 +"]").prop("selected", true);
-	            	$(".jeonnam").css("display", "inline");
-	            } else if(addr1 === '경상북도') {
-	            	$("#location1").children("[value=gyeongbuk]").prop("selected", true);
-	            	$(".gyeongbuk").children("[value=" + addr2 +"]").prop("selected", true);
-	            	$(".gyeongbuk").css("display", "inline");
-	            } else if(addr1 === '경상남도') {
-	            	$("#location1").children("[value=gyeongnam]").prop("selected", true);
-	            	$(".gyeongnam").children("[value=" + addr2 +"]").prop("selected", true);
-	            	$(".gyeongnam").css("display", "inline");
-	            } else if(addr1 === 'jeju') {
-	            	$("#location1").children("[value=jeju]").prop("selected", true);
-	            	$(".jeju").children("[value=" + addr2 +"]").prop("selected", true);
-	            	$(".jeju").css("display", "inline");
-	            }
-	   			//$(".sub_location").children("[value=" + addr2 +"]").prop("selected", true);
-	   			
-	   			// 자기소개
-	   			$("#introduction").html("${eDTO.introduction}");
-	   			
-	   			// 카테고리 선택
-	   			// for문으로 List양만큼 append처리
-	   			
-	   			
-	   		})
+	    /* 초기 수정내용 설정 */
+	    $(function(){
+	    	initialization();
+	    })
+	    
+   		function initialization(){
+   			// 활동지역
+   			let addr = "${eDTO.active_area}";
+            let addr1 = addr.substring(0, addr.indexOf(' '));
+            let addr2 = addr.substring(addr.indexOf(' ')+1);
+            console.log("addr1: " + addr1);
+            console.log("addr2: " + addr2);
+   			
+            $(".sub_location").css("display", "none");
+            
+   			if(addr1 === '서울특별시') {
+                $("#location1").children("[value=seoul]").prop("selected", true);
+                $(".seoul").children("[value=" + addr2 +"]").prop("selected", true);
+                $(".seoul").css("display", "inline");
+            } else if(addr1 === '부산광역시') {
+            	$("#location1").children("[value=busan]").prop("selected", true);
+            	$(".busan").children("[value=" + addr2 +"]").prop("selected", true);
+            	$(".busan").css("display", "inline");
+            } else if(addr1 === '대구광역시') {
+            	$("#location1").children("[value=daegu]").prop("selected", true);
+            	$(".daegu").children("[value=" + addr2 +"]").prop("selected", true);
+    	        $(".daegu").css("display", "inline");
+            } else if(addr1 === '인천광역시') {
+            	$("#location1").children("[value=incheon]").prop("selected", true);
+            	$(".incheon").children("[value=" + addr2 +"]").prop("selected", true);
+            	$(".incheon").css("display", "inline");
+            } else if(addr1 === '광주광역시') {
+            	$("#location1").children("[value=gwangju]").prop("selected", true);
+            	$(".gwangju").children("[value=" + addr2 +"]").prop("selected", true);
+            	$(".gwangju").css("display", "inline");
+            } else if(addr1 === '대전광역시') {
+            	$("#location1").children("[value=daejeon]").prop("selected", true);
+            	$(".daejeon").children("[value=" + addr2 +"]").prop("selected", true);
+            	$(".daejeon").css("display", "inline");
+            } else if(addr1 === '울산광역시') {
+            	$("#location1").children("[value=ulsan]").prop("selected", true);
+            	$(".ulsan").children("[value=" + addr2 +"]").prop("selected", true);
+            	$(".ulsan").css("display", "inline");
+            } else if(addr1 === '세종특별자치시') {
+            	$("#location1").children("[value=sejong]").prop("selected", true);
+            	$(".sejong").children("[value=" + addr2 +"]").prop("selected", true);
+            	$(".sejong").css("display", "inline");
+            } else if(addr1 === '경기도') {
+            	$("#location1").children("[value=gyeonggi]").prop("selected", true);
+            	$(".gyeonggi").children("[value=" + addr2 +"]").prop("selected", true);
+            	$(".gyeonggi").css("display", "inline");
+            } else if(addr1 === '강원도') {
+            	$("#location1").children("[value=gangwon]").prop("selected", true);
+            	$(".gangwon").children("[value=" + addr2 +"]").prop("selected", true);
+            	$(".gangwon").css("display", "inline");
+            } else if(addr1 === '충청북도') {
+            	$("#location1").children("[value=chungbuk]").prop("selected", true);
+            	$(".chungbuk").children("[value=" + addr2 +"]").prop("selected", true);
+            	$(".chungbuk").css("display", "inline");
+            } else if(addr1 === '충청남도') {
+            	$("#location1").children("[value=chungnam]").prop("selected", true);
+            	$(".chungnam").children("[value=" + addr2 +"]").prop("selected", true);
+            	$(".chungnam").css("display", "inline");
+            } else if(addr1 === '전라북도') {
+            	$("#location1").children("[value=jeonbuk]").prop("selected", true);
+            	$(".jeonbuk").children("[value=" + addr2 +"]").prop("selected", true);
+            	$(".jeonbuk").css("display", "inline");
+            } else if(addr1 === '전라남도') {
+            	$("#location1").children("[value=jeonnam]").prop("selected", true);
+            	$(".jeonnam").children("[value=" + addr2 +"]").prop("selected", true);
+            	$(".jeonnam").css("display", "inline");
+            } else if(addr1 === '경상북도') {
+            	$("#location1").children("[value=gyeongbuk]").prop("selected", true);
+            	$(".gyeongbuk").children("[value=" + addr2 +"]").prop("selected", true);
+            	$(".gyeongbuk").css("display", "inline");
+            } else if(addr1 === '경상남도') {
+            	$("#location1").children("[value=gyeongnam]").prop("selected", true);
+            	$(".gyeongnam").children("[value=" + addr2 +"]").prop("selected", true);
+            	$(".gyeongnam").css("display", "inline");
+            } else if(addr1 === 'jeju') {
+            	$("#location1").children("[value=jeju]").prop("selected", true);
+            	$(".jeju").children("[value=" + addr2 +"]").prop("selected", true);
+            	$(".jeju").css("display", "inline");
+            }
+   			//$(".sub_location").children("[value=" + addr2 +"]").prop("selected", true);
+   			
+   			// 자기소개
+   			$("#introduction").html("${eDTO.introduction}");
+   			console.log("자기소개까지 초기화");
+   			console.log($("#introduction").html());
+   		}
+   		
+	   		
 		
 		    
 	   // 도/시 선택
@@ -535,17 +547,10 @@
         })
         
         // 수정하기 버튼
-        $("#modifyBtn").on("click", function(){
+        $("#toModifyBtn").on("click", function(){
         	
 			$("#expertViewBox").css("display", "none");
 			$("#expertBox").css("display", "block");
-        	// 버튼 교체
-        	
-        	// 활동지역 선택 창
-        	
-        	// 자기소개 textarea
-        	
-        	// 카테고리 선택 및 버튼
         	
         })
         
@@ -553,11 +558,32 @@
 		$("#cancelBtn").on("click", function(){
 			$("#expertBox").css("display", "none");
 			$("#expertViewBox").css("display", "block");
+			
+			// 카테고리 초기화
+   			// for문으로 List양만큼 append처리
+   			let cn = ${cn};
+   			for(i = 0; i < cn.length; i++){
+   				$("#cgListBox div").remove("#cate"+(i+1));
+   				let childCn = "" + cn[i];
+   				let parentCn = "c" + childCn.substring(0,1) + "0";
+   				reloadCt(i+1, parentCn, cn[i]);
+   				function reloadCt(i, parentCn, childCn) {
+   			        $("#cgListBox").append($("<div id='cate" + i + "' class='row'>"
+   			        + "<input type='text' class='col-4' value='"+ i + "번째 카테고리: " 
+   			        + $(".category1 [value=" + parentCn + "]").html() + " > " 
+   			        + $("." + parentCn + " option:selected").html() + "'/>"
+   			        + "<input type='checkbox' class='col-3' name='categoryNumbers' id='childCn" + i + "' value='" + childCn + "' checked hidden/>"
+   			        + "<input type='file' class='col-3 form-control' name='careerFiles" + "'/>"
+   			        + "</div>"));
+   			    }
+   				
+   			}
+			initialization();
 		})
         
-        // 전환신청 버튼
-        $("#confirmBtn").on("click", function(){
-        	console.log("전환신청버튼 클릭");
+        // 수정신청 버튼
+        $("#modifyBtn").on("click", function(){
+        	console.log("수정신청버튼 클릭");
         	sl = $(".main_location").val();
         	console.log("select Location: " + sl);
         	console.log("대도시: " + $("#location1").val());
@@ -599,7 +625,46 @@
             } else if($("#location1").val() === 'jeju'){
                 $("#active_area").val("제주특별자치도 " + $("."+sl).val());
             }
-        	$("#ceForm").submit();
+        	
+        	// 증명파일 유효성 검사
+        	filePath = $("#cgListBox #cate1 #searchFile1").val();
+        	console.log("첫번째 경로: " + filePath);
+        	let extn = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
+        	console.log("첫번째 확장자: " + extn);
+        	if(extn === "") {
+        		alert("첫 번째 카테고리 증명파일을 첨부해주세요.");
+        		return ;
+        	} else if (extn !== "gif" && extn !== "png" && extn !== "jpg" && extn !== "jpeg" && extn !== "pdf") {
+            	alert("gif, png, jpg, jpeg, pdf 파일만 선택가능합니다.");
+            	$("#cgListBox #cate1 #searchFile1").val("");
+            	return ;
+            }
+        	filePath = $("#cgListBox #cate2 #searchFile2").val();
+        	console.log("두번째 경로: " + filePath);
+        	extn = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
+        	console.log("두번째 확장자: " + extn);
+        	if(extn === "") {
+        		alert("두 번째 카테고리 증명파일을 첨부해주세요.");
+        		return ;
+        	} else if (extn !== "gif" && extn !== "png" && extn !== "jpg" && extn !== "jpeg" && extn !== "pdf") {
+            	alert("2222gif, png, jpg, jpeg, pdf 파일만 선택가능합니다.");
+            	$("#cgListBox #cate2 #searchFile2").val("");
+            	return ;
+            }
+        	filePath = $("#cgListBox #cate3 #searchFile3").val();
+        	console.log("세번째 경로: " + filePath);
+        	extn = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
+        	console.log("세번째 확장자: " + extn);
+        	if(extn === "") {
+        		alert("세 번째 카테고리 증명파일을 첨부해주세요.");
+        		return ;
+        	} else if (extn !== "gif" && extn !== "png" && extn !== "jpg" && extn !== "jpeg" && extn !== "pdf") {
+            	alert("gif, png, jpg, jpeg, pdf 파일만 선택가능합니다.");
+            	$("#cgListBox #cate3 #searchFile3").val("");
+            	return ;
+            }
+        	
+        	$("#modifyExpertForm").submit();        	
         })
         
     </script>

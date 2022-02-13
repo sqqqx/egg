@@ -31,4 +31,10 @@ public class ExpertService {
 		map.put("balance", balance);
 		return dao.modifyPoint(map);
 	}
+	
+	// (마이페이지) 능력자 정보 수정
+	public int modifyExpert(ExpertDTO dto) throws Exception {
+		System.out.println("ExpertService / 능력자 정보수정 - ExpertDTO: " + dto);
+		return dao.modifyExpert(dto);
+	} 
 }

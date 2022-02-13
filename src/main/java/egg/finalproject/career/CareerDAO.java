@@ -26,4 +26,10 @@ public class CareerDAO {
 		System.out.println("CareerDAO / 커리어 파일명 불러오기 - expert_id: " + expert_id);
 		return session.selectList("careerMapper.getCareerList", expert_id);
 	}
+	
+	// (마이페이지) 증명파일 전부 삭제
+	public int deleteCareer(String expert_id) throws Exception {
+		System.out.println("CareerDAO / 증명파일 전부 삭제 - expert_id: " + expert_id);
+		return session.delete("careerMapper.deleteCareer", expert_id);
+	}
 }
