@@ -64,6 +64,10 @@ public class onlinePostService {
 		return dao.selectCat(category_no);
 	}
 	//============================================================================
+	public int viewcount(int post_no) throws Exception {
+		return dao.viewcount(post_no);
+	}
+	
 	public List<Object> mainSearch(String search) throws Exception{
 		return dao.mainSearch(search);
 	}
