@@ -27,10 +27,15 @@
                   <ul><span id="toModifyPw" class="userTab">비밀번호 수정</span></ul>
                   <ul><a href="${pagecontext.request.contextPath}/member/toUserInformation?user_id=${loginSession.user_id}">회원정보 조회</a></ul>
                   <ul><span id="toViewMessage" class="userTab">쪽지함</span></ul>
-                  <ul>찜한 게시글</ul>
-                  <ul>내가 쓴 글</ul>
                   <ul>
-                  	<a href="${pagecontext.request.contextPath}/order/toMyOrder?currentPage=1">주문 결제 조회</a></ul>
+                  	<a href="${pagecontext.request.contextPath}/offlinePost/toLikePost?currentPage=1&type=1">찜한 게시글</a>
+                  </ul>
+                  <ul>
+                  	<a href="${pagecontext.request.contextPath}/offlinePost/toMyPost?currentPage=1">내가 쓴 글</a>
+                  </ul>
+                  <ul>
+                  	<a href="${pagecontext.request.contextPath}/order/toMyOrder?currentPage=1">주문 결제 조회</a>
+                  </ul>
                   <ul>
                   	<a href="${pagecontext.request.contextPath}/cart/selectCart.do?user_id=${loginSession.user_id}">장바구니</a>
                   </ul>

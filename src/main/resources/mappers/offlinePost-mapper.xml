@@ -9,6 +9,84 @@
          select * from tbl_post p inner join tbl_category c using(category_no) where type=2 and c.parent_group = #{parent_group}
     </select> -->
     
+    <!-- (마이페이지) 찜한 게시글 가져오기 -->
+    <select id="getMyLikePost" parameterType="map" resultType="map">
+    	<choose>
+    		<when test="type == 3">
+    			SELECT *
+				FROM (SELECT row_number() OVER (ORDER BY like_date DESC) AS idx, tbl_like.* FROM tbl_like) l
+					INNER JOIN tbl_product pd ON(pd.product_no = l.post_no)
+				WHERE l.type = #{type}
+					AND idx BETWEEN ${startRange} AND ${endRange}
+					AND l.user_id = #{user_id}
+				<if test="searchKeyword != null and searchOption == 'title'">
+					AND name LIKE '%'||#{searchKeyword}||'%'
+				</if>
+				<if test="searchKeyword != null and searchOption == 'content'">
+					AND content LIKE '%'||#{searchKeyword}||'%'
+				</if>
+    		</when>
+    		<otherwise>
+    			SELECT *
+				FROM (SELECT row_number() OVER (ORDER BY like_date DESC) AS idx, tbl_like.* FROM tbl_like) l
+					INNER JOIN tbl_post p ON(p.post_no = l.post_no)
+				WHERE l.type = #{type}
+					AND idx BETWEEN ${startRange} AND ${endRange}
+					AND l.user_id = #{user_id}
+				<if test="searchKeyword != null">
+					AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+				</if>
+    		</otherwise>
+    	</choose>
+    </select>
+    
+    <!-- (마이페이지) 찜한 게시글 COUNT -->
+    <select id="getMyLikePostCount" parameterType="map" resultType="int">
+    	<choose>
+    		<when test="type == 3">
+    			SELECT COUNT(*)
+    			FROM tbl_like l 
+    				INNER JOIN tbl_product pd ON(pd.product_no = l.post_no)
+    			WHERE l.user_id = #{user_id}
+    			<if test="searchKeyword != null and searchOption == 'title'">
+					AND name LIKE '%'||#{searchKeyword}||'%'
+				</if>
+				<if test="searchKeyword != null and searchOption == 'content'">
+					AND content LIKE '%'||#{searchKeyword}||'%'
+				</if>
+    		</when>
+    		<otherwise>
+    			SELECT COUNT(*)
+    			FROM tbl_like l 
+    				INNER JOIN tbl_post p ON(l.post_no = p.post_no)
+    			WHERE l.user_id = #{user_id}
+    			<if test="searchKeyword != null">
+					AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+				</if>
+    		</otherwise>
+    	</choose>
+    </select>
+    
+    <!-- (마이페이지) 내가 쓴 글 가져오기 -->
+    <select id="getMyPost" parameterType="map" resultType="PostDTO">
+    	SELECT * 
+    	FROM (SELECT row_number() OVER (ORDER BY written_date DESC) AS idx, tbl_post.* FROM tbl_post) 
+    	WHERE idx BETWEEN ${startRange} AND ${endRange}
+    		AND user_id = #{user_id} 
+   		<if test="searchKeyword != null and searchKeyword != ''">
+			AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+		</if>
+    </select>
+    
+    <!-- (마이페이지) 내가 쓴 글 COUNT -->
+    <select id="getMyPostCount" parameterType="map" resultType="int">
+    	SELECT COUNT(*) FROM tbl_post 
+    	WHERE user_id = #{user_id} 
+    	<if test="searchKeyword != null">
+			AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+		</if>
+    </select>
+    
     <!-- 전체 글 목록 -->
     <select id="selectByCg" parameterType="map" resultType="PostDTO">
     	SELECT * FROM (SELECT row_number() OVER (ORDER BY written_Date DESC) AS idx, tbl_post.* FROM tbl_post)

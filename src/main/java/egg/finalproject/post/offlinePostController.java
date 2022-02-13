@@ -47,6 +47,41 @@ public class offlinePostController {
 //		return "offline/offlineList";
 //	}
 	
+	// (마이페이지) 찜한 게시글 가져오기
+	@RequestMapping("/toLikePost")
+	public String toLikePost(int currentPage, String searchOption, String searchKeyword, int type, Model model) throws Exception {
+		MemberDTO dto = ((MemberDTO)session.getAttribute("loginSession"));
+		service.getMyLikePostCount(dto.getUser_id(), searchOption, searchKeyword, type);
+		Map<String, Object> navi = service.getNavi(currentPage);
+		Map<String, Object> range = service.getRange(currentPage);
+		List<Map<String, Object>> list = service.getMyLikePost(dto.getUser_id(), searchOption, searchKeyword, range, type);
+		
+		model.addAttribute("navi", navi);
+		model.addAttribute("list", list);
+		model.addAttribute("searchOption", searchOption);
+		model.addAttribute("searchKeyword", searchKeyword);
+		model.addAttribute("type", type);
+		model.addAttribute("dto", dto);
+		return "member/viewLikePost";
+	}
+	
+	// (마이페이지) 내가 쓴 글 가져오기
+	@RequestMapping("/toMyPost")
+	public String toMyOrder(int currentPage, String searchOption, String searchKeyword, Model model) throws Exception {
+		MemberDTO dto = ((MemberDTO)session.getAttribute("loginSession"));
+		service.getMyPostCount(dto.getUser_id(), searchOption, searchKeyword);
+		Map<String, Object> navi = service.getNavi(currentPage);
+		Map<String, Object> range = service.getRange(currentPage);
+		List<PostDTO> list = service.getMyPost(dto.getUser_id(), searchOption, searchKeyword, range);
+		
+		model.addAttribute("navi", navi);
+		model.addAttribute("list", list);
+		model.addAttribute("searchOption", searchOption);
+		model.addAttribute("searchKeyword", searchKeyword);
+		model.addAttribute("dto", dto);
+		return "member/viewPost";
+	}
+	
 	// 전체 목록 가져오기(게시글 리스트 페이지로 이동)
 	@RequestMapping("/toList.do")
 	public String toList(String parent_group, String expert_id, String currentPage, Model model) throws Exception{
