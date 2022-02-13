@@ -16,8 +16,8 @@
     #msg_head {
         font-size: 30pt;
     }
-    textarea {
-        resize: none;
+    #content {
+        overflow : auto;
         height: 300px;
     }
     button {
