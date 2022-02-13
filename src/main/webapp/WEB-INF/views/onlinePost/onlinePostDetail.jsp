@@ -12,7 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
 
     <title>게시글 조회</title>
     <style>
@@ -837,6 +838,7 @@
 
         //댓글 입력 시 댓글 글자수를 세어주는 기능
         $(document).ready(function () {
+        	
             $('#commentsInput').on('keyup', function () {
                 $('#commentsInput_cnt').html("(" + $(this).val().length + " / 150)");
 
@@ -1139,9 +1141,9 @@
             let type = 1;
             
             //실시간 알림
-           let typed = 3;
-           let btitle = '좋아요'
+           let typed = 2;
            let from_NN = '${loginSession.user_nickname}';
+           let sendType = 1;
 
                 
             if (content == "") { //입력창에 내용이 없다면
@@ -1161,7 +1163,7 @@
                 		console.log("닉넴뽑아오기 성공")
                 		let receiver = result
                         //실시간 알림
-          				let msg = typed+","+post_no+","+btitle+","+from_NN+","+receiver;
+          				let msg = typed+","+post_no+","+post_no+","+sendType+","+from_NN+","+receiver;
                         ws.send(msg);
                 	}).fail(function(e){
                 		console.log(e);
@@ -1283,9 +1285,9 @@
             let post_no = ${ PostDTO.post_no }
             
             //실시간 알림
-            let typed = 3;
-            let btitle = '좋아요'
+            let typed = 2;
             let from_NN = '${loginSession.user_nickname}';
+            let sendType=1;
             
             if (content == "") { //대댓글 입력창이 비어있는 경우
                 alert("답글을 입력해 주세요.");
@@ -1300,9 +1302,10 @@
                 		, type:"get"
                 	}).done(function(result){
                 		console.log("닉넴뽑아오기 성공")
+                		
                 		let receiver = result
                         //실시간 알림
-          				let msg = typed+","+post_no+","+btitle+","+from_NN+","+receiver;
+          				let msg = typed+","+post_no+","+post_no+","+sendType+","+from_NN+","+receiver;
                         ws.send(msg);
                 	}).fail(function(e){
                 		console.log(e);
@@ -1457,8 +1460,9 @@
         	//실시간 알림 요소 
         	let from_NN = '${loginSession.user_nickname}';
         	let receiver;
-        	let type=4
-        	let btitle='좋아요'
+        	let type=3;
+        	let sendPostNO='${PostDTO.post_no}';
+        	let sendType = 1;
         	
         	if(value=="0"){ //좋아요가 눌려있지 않는 경우
         		$("#likeBtn"+comment_no).css("color", "#e05885"); 
@@ -1473,7 +1477,7 @@
 						receiver= data
                         
 						//실시간 알림
-						let msg = type+","+post_no+","+btitle+","+from_NN+","+receiver;
+						let msg = type+","+post_no+","+sendPostNO+","+sendType+","+from_NN+","+receiver;
                         ws.send(msg);
                     } else {
                         alert("좋아요 요청 실패");

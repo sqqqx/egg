@@ -92,7 +92,7 @@ margin:0;
 #alarmContentBox{
 	position:absolute;
 	display:none;
-	width:500px;
+	width:600px;
 	height:200px;
 	background-color: white;
 	z-index: 2;
@@ -104,6 +104,9 @@ margin:0;
 #alarmContent{
 	width:100%;
 	height:100%;
+}
+#alarmContent>div{
+	height:100px;
 }
 .deleteAll{
 	width:100px;
@@ -206,12 +209,11 @@ li:hover > span::after {
 }
 
 #replyNew{
-	position:relative;
 	background-color: red;
 	text-align: center;
 	width:42px;
 	height:20px;
-	top:20px;
+
 }
 
 #alarmContent{

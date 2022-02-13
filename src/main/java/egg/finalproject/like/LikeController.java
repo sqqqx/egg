@@ -48,8 +48,22 @@ public class LikeController {
 		}
 		
 	}
+	 
+	//알람을 위한 좋아요 추가
+			@RequestMapping(value="/plusAlarm.do", produces = "application/text; charset=utf8")
+			@ResponseBody
+			public String plusAlarm(String user_id, int type, int post_no, Model model) throws Exception{
+				if(service.plus(user_id,type, post_no) ==1) {
+					String NN = service.getNNforPost(type,post_no);
+					return NN;
+				}else {
+					return "unavailable";
+				}
+				
+			}
+		
 	
-	//댓글좋아요 추가
+	//알람을 위한 좋아요 추가
 		@RequestMapping(value="/plusReply.do", produces = "application/text; charset=utf8")
 		@ResponseBody
 		public String plusReply(String user_id, int type, int post_no, Model model) throws Exception{

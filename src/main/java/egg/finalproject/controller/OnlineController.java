@@ -2,6 +2,8 @@ package egg.finalproject.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,8 @@ import egg.finalproject.post.onlinePostService;
 @RequestMapping("/online")
 public class OnlineController {
 
+	@Autowired
+	private HttpSession session;
 	@Autowired
 	private onlinePostService service;
 	
@@ -30,6 +34,7 @@ public class OnlineController {
 		model.addAttribute("listRecent", listRecent);
 		model.addAttribute("listLike", listLike);
 		model.addAttribute("listAdmin", listAdmin);
+		System.out.println("메인으로 가즈아");
 		return "online/onlineMain";
 	}
 	

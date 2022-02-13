@@ -28,4 +28,7 @@ public class LikeService {
 	public String getNN(int type, int post_no) throws Exception{
 		return dao.getNN(type, post_no);
 	}
+	public String getNNforPost(int type, int post_no) throws Exception{
+		return dao.getNNforPost(type, post_no);
+	}
 }

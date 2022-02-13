@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@include file="/WEB-INF/views/offHeader.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -285,19 +285,32 @@
         	let bid = '${loginSession.user_id}';
         	let post_no = ${PostDTO.post_no};
         	let value = $("#likeArea").attr("value");
+        	
+        	//실시간 알림 요소 
+        	let from_NN = '${loginSession.user_nickname}';
+        	let receiver;
+        	let type=1;
+        	let sendType=2;
+        	
+        	
         	if(value=="0"){ //좋아요가 눌려있지 않는 경우
         		$("#likeBtn").css("color", "#e05885"); 
                 $("#likeArea").attr("value","1");
                 console.log($("#likeArea").attr("value"));
             	$.ajax({
-                    url: "${pageContext.request.contextPath}/like/plus.do?post_no=" + post_no + "&user_id=" + bid + "&type=5",
+                    url: "${pageContext.request.contextPath}/like/plusAlarm.do?post_no=" + post_no + "&user_id=" + bid + "&type=5",
                     type: "get"
                 }).done(function (data) {
-                    if (data == "available") {
-                        console.log("좋아요 성공")
-                    } else if (data == "unavailable") {
-                        alert("좋아요 요청 실패");
-                    }
+                	 if (data != "unavailable") {
+                         console.log("좋아요 성공")
+ 						receiver= data
+                         console.log(receiver);
+ 						//실시간 알림
+ 						let msg = type+","+post_no+","+post_no+","+sendType+","+from_NN+","+receiver;
+                         ws.send(msg);
+                     } else {
+                         alert("좋아요 요청 실패");
+                     }
                     return;
                 }).fail(function (e) {
                     console.log(e);
