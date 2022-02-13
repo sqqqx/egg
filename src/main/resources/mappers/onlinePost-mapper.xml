@@ -84,6 +84,10 @@
    	ON P.CATEGORY_NO = C.CATEGORY_NO
    	WHERE C.CHILD_GROUP LIKE '%${search}%'
    	</select>
+   	
+   	<update id="viewcount" parameterType="int">
+   		update tbl_post set view_count = view_count + 1 where post_no = #{post_no}
+   	</update>
     
     
     

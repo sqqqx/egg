@@ -20,7 +20,8 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/toLogin.do")
-	public String toLogin() {
+	public String toLogin(Integer num, Model model) {
+		model.addAttribute("num",num);
 		return "user/login";
 	}
 	

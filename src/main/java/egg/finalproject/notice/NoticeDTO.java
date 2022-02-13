@@ -7,20 +7,22 @@ public class NoticeDTO {
 	private int notice_no;
 	private int type;
 	private int post_no;
-	private String content;
+	private int send_post_no;
+	private int send_type;
 	private Date notice_date;
 	private String from_id;
 	private String to_id;
 	
 	public NoticeDTO() {}
 
-	public NoticeDTO(int notice_no, int type, int post_no, String content, Date notice_date, String from_id,
-			String to_id) {
+	public NoticeDTO(int notice_no, int type, int post_no, int send_post_no, int send_type, Date notice_date,
+			String from_id, String to_id) {
 		super();
 		this.notice_no = notice_no;
 		this.type = type;
 		this.post_no = post_no;
-		this.content = content;
+		this.send_post_no = send_post_no;
+		this.send_type = send_type;
 		this.notice_date = notice_date;
 		this.from_id = from_id;
 		this.to_id = to_id;
@@ -50,12 +52,20 @@ public class NoticeDTO {
 		this.post_no = post_no;
 	}
 
-	public String getContent() {
-		return content;
+	public int getSend_post_no() {
+		return send_post_no;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setSend_post_no(int send_post_no) {
+		this.send_post_no = send_post_no;
+	}
+
+	public int getSend_type() {
+		return send_type;
+	}
+
+	public void setSend_type(int send_type) {
+		this.send_type = send_type;
 	}
 
 	public Date getNotice_date() {
@@ -81,6 +91,7 @@ public class NoticeDTO {
 	public void setTo_id(String to_id) {
 		this.to_id = to_id;
 	}
+
 	
 	
 }

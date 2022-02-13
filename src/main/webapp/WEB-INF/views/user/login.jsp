@@ -44,7 +44,7 @@
         <form id="loginForm">
         <div class="row mb-3">
             <div class="col-12">
-              <input type="text" class="form-control" id="user_id" name="user_id" placeholder="아이디 / 이메일을 입력해주세요.">
+              <input type="text" class="form-control" id="user_id" name="user_id" placeholder="아이디를 입력해주세요.">
             </div>
             
         </div>
@@ -102,7 +102,7 @@
     	
     	// 로그인 요청
     	$("#loginBtn").on("click", function(){
-    		
+    		let loc = '${location}'
     		// 아이디 기억하기 여부 검사
     		if($("#rememberId:checked").length == 1){ // 체크 됨.
     		 	rememberId();
@@ -111,7 +111,9 @@
     		}	
     		
     		let data = $("#loginForm").serialize();
-//     		console.log(data);
+    		let id = $("#user_id").val();
+    		console.log(id);
+ //    		console.log(data);
     		$.ajax({
     			url : "${pageContext.request.contextPath}/member/login.do"
     			, type : "post"
@@ -119,7 +121,15 @@
     		}).done(function(rs){
     			if(rs != "Y") {
     				if(rs == "성공") {
-    					location.href="${pageContext.request.contextPath}/online/toMain.do"
+    					if(loc == "on"){
+    						location.href="${pageContext.request.contextPath}/online/toMain.do"
+    					}else if(loc == "off"){
+    						if('${loginSession.type}==2'){
+    			        		 location.href="${pageContext.request.contextPath}/offline/toMainEx.do?expert_id="+id
+    						}else{
+    			        		 location.href="${pageContext.request.contextPath}/offline/toMain.do";
+    			        	 }
+    					}
     				}else if(rs == "관리자") {
     					location.href = "${pageContext.request.contextPath}/admin/toAdminMain"
     				}else if(rs == "실패"){
@@ -131,7 +141,7 @@
     				
     		}).fail(function(e){
     			console.log(e);
-    		})
+    		}) 
     	});
         
 
@@ -143,6 +153,9 @@
 		// 과거일 : 1월 1일
 		// Sat, 01 Jan 2022 00:00:10 GMT
 		document.cookie = "rememberId=;Expires=Sat, 01 Jan 2022 00:00:10 GMT";
+	}
+	function divideType(){
+		
 	}
 
 	// 로그인 쿠키 생성

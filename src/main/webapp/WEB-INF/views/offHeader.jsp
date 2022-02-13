@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	if(session.getAttribute("location")==null){
+		session.setAttribute("location","off");
+	}
+	if(session.getAttribute("location").equals("on")){
+		session.removeAttribute("location");
+		session.setAttribute("location","off");
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,7 +41,7 @@
 		                </a>
             		</c:when>
             		<c:otherwise>
-            			 <a href="/online/toMain.do">
+            			 <a href="/offline/toMain.do">
 		                	<img src="/resources/img/logo.png">
 		                </a>
             		</c:otherwise>
@@ -167,9 +176,12 @@
          ws = new WebSocket("ws://localhost/alarm");
          
        //처음 시작할때 저장돼있는 알람 불러옴
- 		$(document).ready(function(){
- 			selectAlarm();
- 		})
+  		$(document).ready(function(){
+  			console.log("알람불러오기");
+  			if("${loginSession}" != null){
+  				selectAlarm();
+  			}
+  		})
  		
        //알람 클릭시 알림창 뜨게함
  		$(".alarm").click(function(){
@@ -193,29 +205,32 @@
 			let msgObj = JSON.parse(e.data);
 			console.log(msgObj);
 			let newMsg= $("<div>")
+			let msg="";
 			if("${loginSession.user_nickname}" == msgObj.to_id){//본인 아이디일때만 알람이 감
 				//알림버튼 바꿈(빨간점 표시)
 				$("#alarmBtn").css("display","flex")
 				$("#noAlarmBtn").css("display","none")
 				//-----------------------------------
-				//메세지 삽입
-				let msg = "<div id='replyNew'>NEW</div>"
+				msg+="<div id='replyNew'><span>New</span></div>"
+				//메세지 삽입	
+				 if(msgObj.send_type==1){
+					msg += "<a href='${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no="+msgObj.send_post_no+"'>"
+				}else if(msgObj.send_type==2){
+					msg += "<a href='${pageContext.request.contextPath}/offlinePost/toPostDetail.do?post_no="+msgObj.send_post_no+"'>"
+				} 
+				
+				msg+="<span>"
 				msg+= msgObj.from_id
 				msg+= "님이 "
 				if(msgObj.type==1){ //좋아요의 경우
-					msg +="게시글에 좋아요를 눌렀습니다."
-				}else if(msgObj.type==2){ //댓글의 경우
-					msg +="게시글에 댓글을 달았습니다."
-				}else if(msgObj.type==3){
+					msg +="의뢰 게시글에 좋아요를 눌렀습니다."
+				}else if(msgObj.type==2){
 					msg +="댓글에 답글을 달았습니다."
-				}else if(msgObj.type==4){
+				}else if(msgObj.type==3){
 					msg +="댓글에 좋아요를 눌렀습니다."
 				}
-				msg+="<button type='button' class='btn btn-dark deleteNew' value='"+msgObj.type+"," +msgObj.post_no + "," +msgObj.to_id + "," +msgObj.from_id + "'>"
-				msg+="<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash-fill' viewBox='0 0 16 16'>"
-				msg+="<path d='M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z'/>"
-				msg+="</svg>"
-				msg+="</button>"
+				msg+="</span>"
+				 msg+="</a>" 
 			newMsg.append(msg);
 			$("#newAlarm").append(newMsg); 
 			}
@@ -229,7 +244,7 @@
 				type : "get"
 			}).done(function(rs){
 				if(rs == "available"){
-					$("#noAlarm").empty();
+					$("#newAlarm").empty();
 					$("#alarmContent").empty();
 				}else if(rs=="unavailable"){
 					alert("전체삭제 실패");
@@ -259,33 +274,7 @@
 			});
 		})
 		
-		//개별삭제처리(새로받은 알림)
-		$(document).on('click', '.deleteNew', function(e){
-			let str = e.target.value;
-			let mg = str.split(",");
-			
-			let type = mg[0];
-			let post_no = mg[1];
-			let to_id = mg[2];
-			let from_id = mg[3];
-			
-			
-			$.ajax({
-				//aJax 알림창 삭제
-				url : "${pageContext.request.contextPath}/notice/delete.do?type="+type+"&post_no="+post_no+"&to_id="+to_id+"&from_id="+from_id
-				, type : "get"				
-			}).done(function(rs){
-				if(rs == "available"){
-					$("#newAlarm").empty();
-					$("#alarmContent").empty();
-					selectAlarm();
-				}else if(rs == "unavailable"){
-					alert("알림 삭제에 실패했습니다."); // 알림 삭제에 실패하면 alert 
-				}				
-			}).fail(function(e){
-				console.log(e);
-			});
-		})
+		
 		
 		function selectAlarm(){
  			console.log("알람시동")
@@ -297,8 +286,14 @@
 				}).done(function(rs){
 					for(let notice of rs){
 						let newMsg=$("<div>")
-						let msg = notice.from_id
-						msg+= "님이 "
+						let msg="";
+						if(notice.send_type==1){
+							let msg = "<a href='${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no="+notice.send_post_no+"'>"
+						}else if(notice.send_type==2){
+							let msg = "<a href='${pageContext.request.contextPath}/offlinePost/toPostDetail.do?post_no="+notice.send_post_no+"'>"
+						} 
+						msg += notice.from_id
+						msg += "님이 "
 						if(notice.type==1){
 							msg +="게시글에 좋아요를 눌렀습니다."
 						}else if(notice.type==2){
@@ -308,6 +303,8 @@
 						}else if(notice.type==4){
 							msg +="댓글에 좋아요를 눌렀습니다."
 						}
+						msg+="</a>" 
+						
 						msg+="<button type='button' class='btn btn-dark delete' value='"+notice.notice_no+"'>"
 						msg+="<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash-fill' viewBox='0 0 16 16'>"
 						msg+="<path d='M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z'/>"

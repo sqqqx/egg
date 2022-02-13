@@ -59,6 +59,10 @@ public class onlinePostDAO {
 		return session.selectList("onlinePostMapper.selectCat", category_no);
 	}
 	//================================================================================
+	public int viewcount(int post_no) throws Exception{
+		return session.update("onlinePostMapper.viewcount", post_no);
+	}
+	
 	public List<Object> mainSearch(String search) throws Exception{
 		return session.selectList("onlinePostMapper.mainSearch", search);
 	}

@@ -36,4 +36,12 @@
 	where b.type=#{type} and b.post_no=#{post_no}
 	group by a.user_nickname
 </select>
+
+<select id="getNNforPost" parameterType="map" resultType="String">
+	select a.user_nickname 
+	from tbl_post a inner join tbl_like b 
+	on a.post_no = b.post_no 
+	where b.type=#{type} and b.post_no=#{post_no}
+	group by a.user_nickname
+</select>
 </mapper>

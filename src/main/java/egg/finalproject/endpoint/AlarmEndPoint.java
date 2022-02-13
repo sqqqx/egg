@@ -83,15 +83,17 @@ public class AlarmEndPoint {
 		if(mg[0].equals("1")||mg[0].equals("2")||mg[0].equals("3")||mg[0].equals("4")) {
 			int type = Integer.parseInt(mg[0]);
 			int post_no = Integer.parseInt(mg[1]);
-			String content = mg[2];
-			String from_id = mg[3];
-			String to_id = mg[4];
+			int send_post_no = Integer.parseInt(mg[2]);
+			int send_type = Integer.parseInt(mg[3]);
+			String from_id = mg[4];
+			String to_id = mg[5];
 
 			// userID와 message를 json을 이용해 하나의 데이터로 합쳐주는 작업
 			JsonObject obj = new JsonObject();
 			obj.addProperty("type", type);
 			obj.addProperty("post_no", post_no);
-			obj.addProperty("content", content);
+			obj.addProperty("send_post_no", send_post_no);
+			obj.addProperty("send_type", send_type);
 			obj.addProperty("from_id", from_id);
 			obj.addProperty("to_id", to_id);
 
@@ -113,7 +115,7 @@ public class AlarmEndPoint {
 			}
 			// 클라이언트로부터 받은 메세지를 데이터베이스에 저장하는 작업 -> NoticeService
 			try {
-				service.insert(new NoticeDTO(0, type, post_no, content, null, from_id, to_id));
+				service.insert(new NoticeDTO(0, type, post_no, send_post_no, send_type, null, from_id, to_id));
 				System.out.println("데이터 저장 완료");
 			} catch (Exception e) {
 				e.printStackTrace();

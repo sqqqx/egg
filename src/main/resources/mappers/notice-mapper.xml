@@ -6,7 +6,7 @@
 <mapper namespace="noticeMapper">
 
 	<insert id="insert" parameterType="noticeDTO">
-	insert into tbl_notice values(NOTICE_NO.NEXTVAL,#{type}, #{post_no}, #{content}, sysdate, #{from_id}, #{to_id})
+	insert into tbl_notice values(NOTICE_NO.NEXTVAL,#{type}, #{post_no}, #{send_post_no}, #{send_type}, sysdate, #{from_id}, #{to_id})
 	</insert>
 
 	<select id="countMessage">

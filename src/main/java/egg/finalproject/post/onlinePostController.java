@@ -72,6 +72,7 @@ public class onlinePostController {
 	
 	@RequestMapping("/toDetail.do")
 	public String toDetail(int post_no, Model model) throws Exception{
+		service.viewcount(post_no);
 		System.out.println("pont_no : " + post_no);
 //		ImageDTO imageDto = service.getThumbNail(post_no);
 		PostDTO dto = service.getPostInfo(post_no);
@@ -87,6 +88,28 @@ public class onlinePostController {
 		model.addAttribute("ImageDTO",imageDto);
 		model.addAttribute("ProductDTO",productDto);
 		model.addAttribute("CommentList",commentList);
+		return "onlinePost/onlinePostDetail";
+	}
+	
+	//해당 comment위치로 이동
+	@RequestMapping("/toDetailC.do")
+	public String toDetailC(int post_no, Model model) throws Exception{
+		System.out.println("pont_no : " + post_no);
+//		ImageDTO imageDto = service.getThumbNail(post_no);
+		PostDTO dto = service.getPostInfo(post_no);
+		System.out.println(dto);
+		ImageDTO imageDto = imageService.getThumbNail(post_no);
+		ProductDTO productDto = productService.getProduct(dto.getProduct_no());
+		List<CommentDTO> commentList = commentService.getAllComments(post_no,1);
+		if(commentList.size()!=0) {
+	         System.out.println(commentList.get(0).getContent());
+	      }
+		System.out.println("성공이야!!1"+productDto.getName());
+		model.addAttribute("PostDTO", dto);
+		model.addAttribute("ImageDTO",imageDto);
+		model.addAttribute("ProductDTO",productDto);
+		model.addAttribute("CommentList",commentList);
+		model.addAttribute("goComment","1");
 		return "onlinePost/onlinePostDetail";
 	}
 	
