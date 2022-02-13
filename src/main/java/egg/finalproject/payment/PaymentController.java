@@ -42,8 +42,11 @@ public class PaymentController {
 	public String toPayment(Model model, OrderDTO dto, String[] productNames, String[] productQuantities, String[] productNos, IamportPayment buyer_info) throws Exception {
 		/* 주문 내역을 DB 저장 - 결제 페이지로 이동(아직까지 결제 상태는 ready)*/
 		System.out.println("PaymentController / 결제페이지로 이동 접근");
-		// 주문 내용이 상품인 경우 tracking_no()에 0저장
-		dto.setTracking_no("0");
+		// 주문 내용이 상품인 경우(tracking_no()가 null일 경우 tracking_no()에 0저장)
+		if(dto.getTracking_no() == null) {
+			dto.setTracking_no("0");
+		}
+		
 		System.out.println("OrderDTO - " + dto);
 
 		// 상품이 여러개 인 경우
