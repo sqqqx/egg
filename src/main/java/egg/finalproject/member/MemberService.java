@@ -80,7 +80,7 @@ public class MemberService {
 	
 	// 휴대전화 중복검사
 	public boolean phoneCheckSignup(String phone) throws Exception{
-		if(dao.phoneCheckSignup(phone) == 1) { 
+		if(dao.phoneCheckSignup(phone) >= 1) { 
 			return false;
 		}else {
 			return true;
