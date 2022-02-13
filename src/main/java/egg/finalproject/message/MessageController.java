@@ -130,6 +130,10 @@ public class MessageController {
 	@RequestMapping("/detailMsg.do")
 	public String detailMsg(Model model, int message_no) throws Exception {
 		System.out.println("MessageController / detailMsg - message_no: " + message_no);
+		// 쪽지 클릭 시 쪽지 상태 바꾸기
+		service.readMsg(message_no);
+		
+		// 쪽지 불러오기
 		MessageDTO dto = service.detailMsg(message_no);
 		model.addAttribute("dto", dto);
 		return "/member/detailMsg";
