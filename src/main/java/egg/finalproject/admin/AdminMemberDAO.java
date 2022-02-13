@@ -60,4 +60,19 @@ public class AdminMemberDAO {
 	public List<MemberDTO> getUserInfo(Map<String, String> map) throws Exception {
 		return session.selectList("adminMemberMapper.getUserInfo", map);
 	}
+	
+	// 전문가 신청 리스트 가져오기
+	public List<MemberDTO> getExpertList(Map<String, Object> map) {
+		return session.selectList("adminMemberMapper.getExpertList", map);
+	}
+	
+	// 전문가 신청 리스트 COUNT
+	public int getExpertListCount(Map<String, Object> map) {
+		return session.selectOne("adminMemberMapper.getExpertListCount", map);
+	}
+	
+	// 능력자 전환
+	public int changeExpert(Map<String, String[]> map) throws Exception {
+		return session.update("adminMemberMapper.changeExpert", map);
+	}
 }
