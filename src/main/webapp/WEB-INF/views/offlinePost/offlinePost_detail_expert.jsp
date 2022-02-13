@@ -432,10 +432,19 @@
         
         //'견적 보내기' 버튼 누르면 견적 팝업 띄우기
         document.getElementById("sendingMessage").onclick=function(){
-        	const popup = document.querySelector('#popup_message');
-            popup.classList.add('has-filter');
-            popup.classList.remove('hide');
-            $("input:radio[name='report_title']:radio[value=1]").prop('checked', true); // 선택하기
+        	if(${loginSession.type==1}){
+        		alert("죄송합니다. 능력자만 견적을 보낼 수 있습니다.");
+        		return;
+        	}else if('${loginSesison.user_id}'=='${PostDTO.user_id}'){
+        		alert("자신이 쓴 요청에는 견적을 보낼 수 없습니다.");
+        		return;
+        	}else{
+        		const popup = document.querySelector('#popup_message');
+                popup.classList.add('has-filter');
+                popup.classList.remove('hide');
+                $("input:radio[name='report_title']:radio[value=1]").prop('checked', true); // 선택하기
+        	}
+        	
         }
       
         //취소 버튼 누르면 팝업 없애기
@@ -468,9 +477,10 @@
         				,data: {to_id:to_id, content:content}
         			}).done(function(data){
         				if(data=="success"){
-        					console.log(data);
+        				   alert("견적이 전송되었습니다.");
+        				   location.href="${pageContext.request.contextPath}/offline/toMainEx.do?expert_id="+'${loginSession.user_id}';
         				}else if(data="lessPoint"){
-        					
+        				   alert("포인트가 부족합니다. 포인트를 충전해 주세요. \n [마이페이지]-[충전내역]-[충전]")
         				}else if(data="fail"){
         					alert("알 수 없는 오류가 발생하였습니다. 관리자에게 문의 바랍니다.");
         				}

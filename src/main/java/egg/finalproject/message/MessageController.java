@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import egg.finalproject.expert.ExpertService;
 import egg.finalproject.member.MemberDTO;
 import egg.finalproject.member.MemberService;
 import egg.finalproject.pointlog.PointlogService;
@@ -26,6 +27,8 @@ public class MessageController {
 	private HttpSession session;
 	@Autowired
 	private PointlogService pointlogService;
+	@Autowired
+	private ExpertService expertService;
 	
 	
 
@@ -140,11 +143,17 @@ public class MessageController {
 		String from_id=((MemberDTO)session.getAttribute("loginSession")).getUser_id();
 		dto.setFrom_id(from_id);
 		dto.setTitle(from_id+"님의 견적서 입니다.");
-		return service.sendMessage(dto);
-		/*
-		 * if(pointlogService.balance(from_id)<500) { return "lessPoint"; }else { return
-		 * service.sendMessage(dto); }
-		 */
+		int balancePoint = pointlogService.balance(from_id);
+		System.out.println("balancePoint"+balancePoint);
+		if(balancePoint<500) {
+			return "lessPoint";
+		}else {
+			pointlogService.insertLog(from_id, -500);
+			balancePoint = pointlogService.balance(from_id);
+			System.out.println("balancePoint2"+balancePoint);
+			expertService.modifyPoint(from_id, balancePoint);
+			return service.sendMessage(dto);
+		}
 	}
 	
 }
