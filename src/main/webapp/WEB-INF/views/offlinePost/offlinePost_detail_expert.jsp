@@ -504,6 +504,13 @@
         	}
         }
         
+        $(document).on("keyup", "#classContent", function () {
+            if ($(this).val().length > 150) {
+                $(this).val($(this).val().substring(0, 150));
+                alert("150자 이상 입력하실 수 없습니다.");
+            }
+        });
+        
         
     </script>
 
