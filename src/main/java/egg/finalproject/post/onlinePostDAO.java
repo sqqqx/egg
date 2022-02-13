@@ -42,6 +42,9 @@ public class onlinePostDAO {
 	public List<Object> selectLike4() throws Exception{
 		return session.selectList("onlinePostMapper.selectLike4");
 	}
+	public List<Object> selectView4() throws Exception{
+		return session.selectList("onlinePostMapper.selectView4");
+	}
 	
 	public List<Object> selectAdmin() throws Exception{
 		return session.selectList("onlinePostMapper.selectAdmin");
@@ -54,7 +57,9 @@ public class onlinePostDAO {
 	public List<Object> selectLike() throws Exception{
 		return session.selectList("onlinePostMapper.selectLike");
 	}
-	
+	public List<Object> selectView() throws Exception{
+		return session.selectList("onlinePostMapper.selectView");
+	}
 	public List<Object> selectCat(int category_no) throws Exception{
 		return session.selectList("onlinePostMapper.selectCat", category_no);
 	}

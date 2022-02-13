@@ -53,7 +53,12 @@ body{
 	background-color: #ff7f00;
 	text-align: center;
 }
-#tolistLike, #tolistRecent{
+#view{
+	background-color: #00ADEE;
+	text-align:center;
+	margin-left:80px;
+}
+#tolistLike, #tolistRecent, #tolistView{
 	color:gray;
 	cursor:pointer;
 }

@@ -129,6 +129,8 @@
     						}else{
     			        		 location.href="${pageContext.request.contextPath}/offline/toMain.do";
     			        	 }
+    					}else{
+    						location.href="${pageContext.request.contextPath}/online/toMain.do"
     					}
     				}else if(rs == "관리자") {
     					location.href = "${pageContext.request.contextPath}/admin/toAdminMain"

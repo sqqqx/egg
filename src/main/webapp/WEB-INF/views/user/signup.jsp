@@ -35,7 +35,7 @@
             text-align: center;
         }
         img{
-            width:300px;
+            width:400px;
             height: 300px;;
         }
         .btnBox>div{

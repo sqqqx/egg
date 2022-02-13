@@ -127,7 +127,38 @@
 	                		</div>
                 	</c:forEach>
                 </div>
-            </div>      
+            </div>  
+            
+            <!-- 조회수강의 -->
+            <div class="col-12 mt-5 class">
+            	<div class="row titleBox">
+            		<div class="col-2 mt-2 mainTitle">
+            			<label>
+	            			<h4><b>최다 조회수 강의</b></h4>
+            			</label>	
+            		</div>
+            		<div class="col-9">
+            			<div class="plus" id="view">VIEW</div>
+            		</div>
+            		<div class="col-1 mt-2 mainbutton">
+            			<span id="tolistView">클래스 더보기</span>
+            		</div>	
+            	</div>
+                <div class="row mediaBox">
+                	<c:forEach items="${listView }" var="view">
+	                		<div class="col">
+	                			<a href="${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no=${view.POST_NO}">
+			                		<div class="row mediaPhoto">
+			                			<img class="photo" src="${pageContext.request.contextPath}/onlinePostThumbNail/${view.SYSTEM_NAME }">
+			                		</div>
+			                		<div class="row mediaText">
+			             				<span><b>${view.TITLE }</b></span>
+			                		</div>
+		                		</a>
+	                		</div>
+                	</c:forEach>
+                </div>
+            </div>    
         </div>
         <div class="row footer">
             푸터
@@ -140,6 +171,9 @@ $("#tolistLike").click(function(){
 })
 $("#tolistRecent").click(function(){
 	location.href="${pageContext.request.contextPath}/online/toRecent.do"
+})
+$("#tolistView").click(function(){
+	location.href="${pageContext.request.contextPath}/online/toView.do"
 })
 </script>
 </body>

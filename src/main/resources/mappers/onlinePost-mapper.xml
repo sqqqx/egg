@@ -61,6 +61,18 @@
 		where category_no=#{category_no}
     </select>
     
+    <select id="selectView4" resultType="map" parameterType="Object">
+    	select * from (select a.post_no, a.title, a.view_count, c.system_name, row_number() over(order by view_count DESC) as ranking 
+		from tbl_post a inner join tbl_image c on a.post_no = c.post_no
+		where type=1)
+		where ranking &lt; 5
+    </select>
+    
+    <select id="selectView" resultType="map" parameterType="Object">
+    	select a.post_no, a.title, a.view_count, c.system_name, row_number() over(order by a.view_count DESC) as ranking 
+		from tbl_post a inner join tbl_image c on a.post_no = c.post_no
+		where type=1
+    </select>
     <!-- ============================================================================================================================================ -->
     
     <select id="mainSearch" resultType="map" parameterType="String">

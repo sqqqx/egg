@@ -454,9 +454,9 @@
 						let newMsg=$("<div>")
 						let msg="";
 						if(notice.send_type==1){
-							let msg = "<a href='${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no="+notice.send_post_no+"'>"
+							msg += "<a href='${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no="+notice.send_post_no+"'>"
 						}else if(notice.send_type==2){
-							let msg = "<a href='${pageContext.request.contextPath}/offlinePost/toPostDetail.do?post_no="+notice.send_post_no+"'>"
+							msg += "<a href='${pageContext.request.contextPath}/offlinePost/toPostDetail.do?post_no="+notice.send_post_no+"'>"
 						} 
 						msg += notice.from_id
 						msg += "님이 "

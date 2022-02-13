@@ -81,7 +81,7 @@
             </div>
             <div class="col-4 menu_mp delivery">
                 <div>
-                	<a href="${pagecontext.request.contextPath}/cart/selectCart.do?user_id=${loginSession.user_id}">
+                	<a href="${pagecontext.request.contextPath}/cart/selectCartForMe.do?user_id=${loginSession.user_id}">
                 		<img src="/resources/img/cart.png">
                 	</a>
                 </div>
@@ -120,7 +120,7 @@
 		
 		// 장바구니
 		$("#toCart").on("click", function(){
-			$(location).attr("href", "${pagecontext.request.contextPath}/cart/selectCart.do?user_id=${loginSession.user_id}");
+			$(location).attr("href", "${pagecontext.request.contextPath}/cart/selectCartForMe.do?user_id=${loginSession.user_id}");
 		})
     </script>
 </body>
