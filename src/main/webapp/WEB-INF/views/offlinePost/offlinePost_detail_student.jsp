@@ -161,20 +161,22 @@
         $("#deleteBtn").on("click",function(){
         	let post_no = ${PostDTO.post_no};
         	console.log(post_no);
-        	$.ajax(function(){
-        		url : "${pageContext.request.contextPath}/offlinePost/deletePost.do?"
-        		,type : "post"
-        		,data : {post_no:post_no}
-        	}).done(function(data){
-        		if(data=="success"){
-        			location.href="마이페이지로"
-        		}else if(data=="fail"){
-        			alert("알 수 없는 오류가 발생하였습니다. 관리자에게 문의 바랍니다.");
-        		}
-        			
-        	}).fail(function(rs){
-        		alert("알 수 없는 오류가 발생하였습니다. 관리자에게 문의 바랍니다.");
-        	})    
+        	if(confirm("해당 요청을 삭제하시겠습니까?")){
+        		$.ajax({
+            		url:"${pageContext.request.contextPath}/offlinePost/deletePost.do"
+            	    , type: "post"
+            		,data:{post_no:post_no}
+            	}).done(function(data){
+            		if(data=="success"){
+            			console.log("success");,
+            			location.href="";
+            		}else if(data=="fail"){
+            			alert("알 수 없는 오류가 발생하였습니다. 관리자에게 문의 바랍니다.");
+            		}
+            	}).fail(function(rs){
+            		alert("알 수 없는 오류가 발생하였습니다. 관리자에게 문의 바랍니다.");
+            	})    
+        	}
         })
     </script>
 
