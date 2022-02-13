@@ -11,7 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import egg.finalproject.expert.ExpertService;
+import egg.finalproject.member.MemberDTO;
 import egg.finalproject.member.MemberService;
+import egg.finalproject.pointlog.PointlogService;
 
 @Controller
 @RequestMapping("/message")
@@ -22,6 +25,10 @@ public class MessageController {
 	private MemberService memberService;
 	@Autowired
 	private HttpSession session;
+	@Autowired
+	private PointlogService pointlogService;
+	@Autowired
+	private ExpertService expertService;
 	
 	
 
@@ -126,6 +133,27 @@ public class MessageController {
 		MessageDTO dto = service.detailMsg(message_no);
 		model.addAttribute("dto", dto);
 		return "/member/detailMsg";
+	}
+	
+	//(오프라인 게시판) 견적 전송하기
+	//TODO : 포인트 차감
+	@RequestMapping("/sendingExpertMessage.do")
+	@ResponseBody
+	public String sendingExpertMessage(MessageDTO dto) throws Exception{
+		String from_id=((MemberDTO)session.getAttribute("loginSession")).getUser_id();
+		dto.setFrom_id(from_id);
+		dto.setTitle(from_id+"님의 견적서 입니다.");
+		int balancePoint = pointlogService.balance(from_id);
+		System.out.println("balancePoint"+balancePoint);
+		if(balancePoint<500) {
+			return "lessPoint";
+		}else {
+			pointlogService.insertLog(from_id, -500);
+			balancePoint = pointlogService.balance(from_id);
+			System.out.println("balancePoint2"+balancePoint);
+			expertService.modifyPoint(from_id, balancePoint);
+			return service.sendMessage(dto);
+		}
 	}
 	
 }

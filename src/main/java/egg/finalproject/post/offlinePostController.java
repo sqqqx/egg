@@ -130,6 +130,26 @@ public class offlinePostController {
 		return "offlinePost/offlinePost_detail_expert";
 	}
 	
+	@RequestMapping("toStudentPostDetail.do")
+	public String toStudentPostDetail(int post_no, Model model) throws Exception{
+		PostDTO postDto = onlineService.getPostInfo(post_no);
+		CategoryDTO categoryDto = cService.getCategory(postDto.getCategory_no());
+		model.addAttribute("PostDTO", postDto);
+		model.addAttribute("CategoryDTO",categoryDto);
+		return "offlinePost/offlinePost_detail_student";
+	}
+	
+	//TODO : 프론트단 마이페이지로 연결하기.
+	@RequestMapping("/deletePost.do")
+	@ResponseBody
+	public String deletePost(int post_no) throws Exception{
+		System.out.println("post_no : "+post_no);
+		if(onlineService.deletePost(post_no)) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 	
 	/*
 	 * //게시글 삭제 처리 : written by 경민

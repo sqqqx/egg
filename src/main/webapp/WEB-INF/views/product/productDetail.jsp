@@ -1103,6 +1103,7 @@
                                 <button type='button' class='btn btn-secondary insertReplyBtn' name='"+ dto.comment_no + "' onclick='insertReply(" + dto.comment_no + ")'>답글 등록</button>\
                             </div>");
             }
+                var reference_no = dto.reference_no;
             selectLike_comment(dto.comment_no);
         })
 

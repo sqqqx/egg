@@ -132,7 +132,7 @@
         p{
             font-size: 20px;
         }
-         #popup {
+         #popup, #popup_message {
             text-align: left;
             display: flex;
             justify-content: center;
@@ -142,20 +142,24 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, .7);
+            background: rgba(0, 0, 0, .781);
             z-index: 1;
+            color : white;
+
         }
 
-        #popup.hide {
+
+        #popup.hide , #popup_message.hide{
             display: none;
         }
 
-        #popup.has-filter {
+        #popup.has-filter, #popup_message.has-filter {
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
+            
         }
 
-        #popup .content {
+        #popup.content, #popup_message.content {
             width: 500px;
             height: 500px;
             padding: 10px;
@@ -194,7 +198,21 @@
             text-align: center;
             margin-top: 10px;
         }
+
         
+        #popup_message div{
+            font-size : 20px;
+             margin-top : 15px;
+        }
+        
+        #popup_message input{
+            width:450px;
+        }
+        #popup_message textarea{
+            width : 450px;
+            height : 200px;
+            resize:none;
+        }
     </style>
 </head>
 
@@ -223,7 +241,7 @@
                 ${PostDTO.content}
             </div>
             <div class="buttons">
-              <button class="btn btn-warning">견적 보내기</button>
+              <button class="btn btn-warning" id="sendingMessage">견적 보내기</button>
               <button class="btn btn-secondary" id="cancelBtn">목록으로</button>
             </div>
         </div>
@@ -234,7 +252,7 @@
                     <input type="hidden" name="type" id="type" value=2>
                     <input type="hidden" name="target_no" id="target_no">
                     <div class="reportTitle">
-                        <p>신고하기</p>
+                        <h2>신고하기</h2>
                     </div>
                     <div class=" radios">
                         <input type="radio" class="reportType" name="report_title" value=1> <span>부적절한 언행 사용(욕설, 성적 발언,
@@ -263,6 +281,29 @@
                     </div>
                 </div>
             </div>
+        </form>
+        <form method="post" id="messageForm">
+        <div id="popup_message" class="hide">
+            <div class="content">
+                <h2>[ '피피' 님께 보내는 견적서 ]</h2>
+                <div class="expert_categoryDiv">
+                    <label>* 제공하는 서비스 : </label><br>
+                    <input type="text" class="expert_category" value="${CategoryDTO.parent_group} - ${CategoryDTO.child_group}" readonly> 
+                </div>
+                <div class="class_price">
+                    <label>* 견적 금액 : </label><br>
+                    <input type="type" id="price" placeholder="(예: 시간당 30000원 / 회당 20000원)">
+                </div>
+                <div class="specificContent">
+                    <label>* 제공할 수 있는 서비스에 관해 구체적으로 기입해 주세요: </label><br>
+                    <textarea id="classContent"></textarea>
+                </div>
+                <div class="buttons_message">
+                    <button type="button" class="btn btn-warning" id="message_submitBtn">견적 전송</button>
+                    <button type="button" class="btn btn-secondary" id="message_cancelBtn" onclick="messeage_closePopup()">취소</button>
+                </div>
+            </div>
+        </div>
         </form>
     </div>
     <script>
@@ -401,6 +442,69 @@
                 console.log(rs);
             });
         })
+        
+        //'견적 보내기' 버튼 누르면 견적 팝업 띄우기
+        document.getElementById("sendingMessage").onclick=function(){
+        	if(${loginSession.type==1}){
+        		alert("죄송합니다. 능력자만 견적을 보낼 수 있습니다.");
+        		return;
+        	}else if('${loginSesison.user_id}'=='${PostDTO.user_id}'){
+        		alert("자신이 쓴 요청에는 견적을 보낼 수 없습니다.");
+        		return;
+        	}else{
+        		const popup = document.querySelector('#popup_message');
+                popup.classList.add('has-filter');
+                popup.classList.remove('hide');
+                $("input:radio[name='report_title']:radio[value=1]").prop('checked', true); // 선택하기
+        	}
+        	
+        }
+      
+        //취소 버튼 누르면 팝업 없애기
+        function messeage_closePopup() {
+            const popup = document.querySelector('#popup_message');
+            popup.classList.add('hide');
+        }
+        
+        //견적보내기 버튼 클릭 시 
+        //유효성 검사 + 포인트 차감 처리
+        document.getElementById("message_submitBtn").onclick=function(){
+        	if($("#price").val()==""){
+        		alert("견적 금액을 입력해 주시길 바랍니다.");
+        		$("#price").focus();
+        		return;
+        	}else if($("#classContent").val()==""){
+        		alert("서비스에 관해 구체적인 설명을 적어주세요.");
+        		$("#classContent").focus();
+        		return;
+        	}else{
+        		if(confirm("견적 전송 시 500p가 차감됩니다. 진행하시겠습니까?")){
+        			let to_id = "${PostDTO.user_id}";
+        			console.log(to_id);
+                    let price = $("#price").val();
+                    let classContent = $("#classContent").val();
+                    let content = "<p style='text-align: left; '>* 제공 서비스 *</p><p style='text-align: left; '>: ${CategoryDTO.parent_group} - ${CategoryDTO.child_group}</p><p style='text-align: left; '><br></p><p style='text-align: left; '>*예상 견적 금액*</p><p style='text-align: left; '>: "+price+"</p><p style='text-align: left; '><br></p><p style='text-align: left; '>* 수업 관련 설명 *</p><p style='text-align: left; '>: "+classContent+"</p>"
+        			$.ajax({
+        				url : "/message/sendingExpertMessage.do"
+        				,type: "post"
+        				,data: {to_id:to_id, content:content}
+        			}).done(function(data){
+        				if(data=="success"){
+        				   alert("견적이 전송되었습니다.");
+        				   location.href="${pageContext.request.contextPath}/offline/toMainEx.do?expert_id="+'${loginSession.user_id}';
+        				}else if(data="lessPoint"){
+        				   alert("포인트가 부족합니다. 포인트를 충전해 주세요. \n [마이페이지]-[충전내역]-[충전]")
+        				}else if(data="fail"){
+        					alert("알 수 없는 오류가 발생하였습니다. 관리자에게 문의 바랍니다.");
+        				}
+        			}).fail(function(rs){
+        				alert("알 수 없는 오류가 발생하였습니다. 관리자에게 문의 바랍니다.");
+        			});
+        		}
+        	}
+        }
+        
+        
     </script>
 
 </body>
