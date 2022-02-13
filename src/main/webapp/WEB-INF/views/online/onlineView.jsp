@@ -15,7 +15,7 @@ body{
     height: auto;
     margin:auto;
 }
-	h2{text-align:center; padding-top:20px;}
+	h2{text-align:center;}
 	
 	.class{
    height: auto;
@@ -32,7 +32,7 @@ body{
 .content{
 	height:400px;
 	width:420px;
-	margin:10px;
+	margin:12px;
 	background-color:white;
 	padding-right:0;
 	padding-left:0;
@@ -75,10 +75,22 @@ a{
 	text-decoration-line: none;
 	color:black;
 }
+
+#view{
+	background-color: #00ADEE;
+	width:42px;
+	height:20px;
+	text-align: center;
+	margin:auto;
+	padding-left:0;
+	padding-right:0;
+	color:white;
+}
 </style>
 </head>
 <body>
 		<div class="row mt-3 littleTitle">
+			<div id="view">VIEW</div>
 			<h2> 조회수 순 강의 </h2>
 		</div> 
         <div class="row main">

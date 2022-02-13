@@ -33,7 +33,7 @@ h2{text-align:center;}
 .content{
 	height:400px;
 	width:420px;
-	margin:10px;
+	margin:12px;
 	background-color:white;
 	padding-right:0;
 	padding-left:0;

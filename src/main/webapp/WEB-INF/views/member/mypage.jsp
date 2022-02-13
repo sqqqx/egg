@@ -65,7 +65,9 @@
             </div>
             <div class="col-4 menu_mp postList">
                 <div>
+                	<a href="${pagecontext.request.contextPath}/offlinePost/toMyPost?currentPage=1">
                     <img src="/resources/img/Post.png">
+                    </a>
                 </div>
                 <div>
                     <span>내가 쓴 글</span>

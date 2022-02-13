@@ -133,3 +133,12 @@ background-color: rgb(241, 234, 234);
 #likePart, #adminPart{
 	background-color: #6DCEF520;
 }
+
+.footer{
+	height:100px;
+	width:1820px;
+	background-color:#00ADEE20;
+}
+.footer>div{
+	height:70px;
+}
