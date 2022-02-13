@@ -27,7 +27,7 @@ body{
 	width:100%;
 	 float:left;
 	 margin:auto;
-	 background-color:#f0f2ed;
+	 background-color:#6DCEF520;
 }
 .content{
 	height:400px;
