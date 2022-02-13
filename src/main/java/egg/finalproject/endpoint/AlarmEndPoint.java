@@ -174,7 +174,7 @@ public class AlarmEndPoint {
 	
 	// 관리자 전송
 	public void sendMsg(JsonObject obj) {
-		if(!admins.isEmpty() || admins == null) { // 왜 체크를 못하니..
+		if(!admins.isEmpty() || admins != null) { // 왜 체크를 못하니..
 			synchronized (admins) {
 				for (Session admin : admins) {
 					try {

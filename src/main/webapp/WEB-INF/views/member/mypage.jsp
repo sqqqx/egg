@@ -55,7 +55,9 @@
             </div>
             <div class="col-4 menu_mp likeList">
                 <div>
-                    <img src="/resources/img/like.png">
+                    <a href="${pagecontext.request.contextPath}/offlinePost/toLikePost?currentPage=1&type=1">
+                		<img src="/resources/img/like.png">
+                	</a>
                 </div>
                 <div>
                     <span>찜한 게시글</span>

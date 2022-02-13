@@ -29,23 +29,30 @@
                   <li><span id="toModifyPw" class="userTab">비밀번호 수정</span></li>
                   <li><span id="toUserInfomation">회원정보 조회</span></li>
                   <li><span id="toViewMessage" class="userTab">쪽지함</span></li>
-                  <li><span>찜한 게시글</span></li>
-                  <li><span>내가 쓴 글</span></li>
                   <li>
                   	<span>
-                  	<a href="${pagecontext.request.contextPath}/order/toMyOrder?currentPage=1">주문 결제 조회</a>
+                  		<a href="${pagecontext.request.contextPath}/offlinePost/toLikePost?currentPage=1&type=1">찜한 게시글</a>
+					</span>
+				  </li>
+                  <li>
+                  	<span>
+                  		<a href="${pagecontext.request.contextPath}/offlinePost/toMyPost?currentPage=1">내가 쓴 글</a>
                   	</span>
                   </li>
                   <li>
                   	<span>
-                  	<a href="${pagecontext.request.contextPath}/cart/selectCartForMe.do?user_id=${loginSession.user_id}">장바구니</a>
+                  		<a href="${pagecontext.request.contextPath}/order/toMyOrder?currentPage=1">주문 결제 조회</a>
+                  	</span>
+                  </li>
+                  <li>
+                  	<span>
+                  		<a href="${pagecontext.request.contextPath}/cart/selectCartForMe.do?user_id=${loginSession.user_id}">장바구니</a>
                   	</span>
                   </li>
                   <li><span id="withdrawal" class="userTab">회원탈퇴</span></li>
               </ul>
           </div>
       </div>
-	
 	<script>
 		// 회원탈퇴
 		$("#withdrawal").on("click", function(){
