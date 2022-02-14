@@ -83,31 +83,33 @@
 		            		<c:forEach items="${msgList}" var="msg">
 		            			<tr>
 				                    <td><input type="checkbox" name="checkedMsg" value="${msg.message_no}"></td>
-				                    <td>
+				                    
 				                    	<c:if test="${naviMap.get('type') eq 'received'}">
 				                    		<c:choose>
 					                    		<c:when test="${msg.message_check eq 'Y'}">
-					                    			<img src="https://cdn-icons-png.flaticon.com/512/3731/3731194.png">
+					                    			<td><img src="https://cdn-icons-png.flaticon.com/512/3731/3731194.png"></td>
 					                    		</c:when>
 					                    		<c:otherwise>
-					                    			<img src="https://cdn-icons-png.flaticon.com/512/2218/2218516.png">
+					                    			<td><img src="https://cdn-icons-png.flaticon.com/512/2218/2218516.png"></td>
 					                    		</c:otherwise> 
 					                    	</c:choose>
+					                    	<td></td>	<!-- <th><td>개수 맞는데 아이디 출력이 안되서 하나 추가 -->
 					                    	<td>${msg.from_id}</td>
 				                    	</c:if>
 				                    	<c:if test="${naviMap.get('type') eq 'sent'}">
 				                    		<c:choose>
 					                    		<c:when test="${msg.message_check eq 'Y'}">
-					                    			<img src="https://cdn-icons-png.flaticon.com/512/948/948593.png">
+					                    			<td><img src="https://cdn-icons-png.flaticon.com/512/948/948593.png"></td>
 					                    		</c:when>
 					                    		<c:otherwise>
-					                    			<img src="https://cdn-icons-png.flaticon.com/512/726/726619.png">
+					                    			<td><img src="https://cdn-icons-png.flaticon.com/512/726/726619.png"></td>
 					                    		</c:otherwise> 
 					                    	</c:choose>
+					                    	<td></td>	<!-- <th><td>개수 맞는데 아이디 출력이 안되서 하나 추가 -->
 					                    	<td>${msg.to_id}</td>
 				                    	</c:if>
-				                    </td>
-				                    <td><span class="msgTitle" msgNo="${msg.message_no}"}>${msg.title}</span></td> <!-- <a>로 적용시 파란밑줄이 안사라져 <span>으로 작성 -->
+				                    
+				                    <td><span class="msgTitle" msgNo="${msg.message_no}"}>${msg.title}</span></td>
 				                    <td>${msg.message_date}</td>
 				                    <td><button type="button" class="btn btn-danger deleteBtn" value="${msg.message_no}">삭제</button></td>
 		                		</tr>

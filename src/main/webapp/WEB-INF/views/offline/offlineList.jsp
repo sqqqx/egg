@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>오프라인 게시글 리스트</title>
 <style>
 	*{margin:0;}
 	body{
@@ -15,16 +15,67 @@
 		width:1800px;
     	height: 1000px;
 	}
-	.title{height:100px; border:1px solid blue;}
+	.title{height:100px; border:1px solid blue; position: relative;}
 	h1{text-align:center; padding-top:20px;}
 	.container{margin-left:0;}
 	.search{padding-top:10px;}
 	#textBox{padding-right:0;}
 	#selectBox{padding-left:0;}
+	.iconBox {
+		position: absolute;
+		left:650px;
+		top: 5px;
+		width: 90px;
+	}
+	.iconBox img {
+		width: 100%;
+	}
 </style>
 </head>
 <body>
 	<div class="title">
+		<c:choose>
+			<c:when test="${parent_group eq '운동'}">
+				<div class="iconBox">
+					<img src="/resources/img/health.png">
+				</div>
+			</c:when>
+			<c:when test="${parent_group eq 'IT'}">
+				<div class="iconBox">
+					<img src="/resources/img/IT.png">
+				</div>
+			</c:when>
+			<c:when test="${parent_group eq '드로잉'}">
+				<div class="iconBox">
+					<img src="/resources/img/drawing.png">
+				</div>
+			</c:when>
+			<c:when test="${parent_group eq '라이프'}">
+				<div class="iconBox">
+					<img src="/resources/img/life.png">
+				</div>
+			</c:when>
+			<c:when test="${parent_group eq '요리'}">
+				<div class="iconBox">
+					<img src="/resources/img/cook.png">
+				</div>
+			</c:when>
+			<c:when test="${parent_group eq '공예'}">
+				<div class="iconBox">
+					<img src="/resources/img/crafts.png">
+				</div>
+			</c:when>
+			<c:when test="${parent_group eq '외국어'}">
+				<div class="iconBox">
+					<img src="/resources/img/speaking.png">
+				</div>
+			</c:when>
+			<c:when test="${parent_group eq '아동교육'}">
+				<div class="iconBox">
+					<img src="/resources/img/baby.png">
+				</div>
+			</c:when>
+		</c:choose>
 		<h1>${parent_group}</h1>
 	</div>
 	<!-- 여기 아래에다가 테이블 만들어주시면 됩니다 헤헤;;; ^^;;;; -->
