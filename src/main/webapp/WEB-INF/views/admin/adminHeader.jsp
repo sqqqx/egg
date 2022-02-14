@@ -17,13 +17,13 @@
 		         </a>		
             </div>
             <!-- 검색창 -->
-            <div class="col-9 adminBox">
+            <div class="col-8 adminBox">
             	<h2>Admin Page</h2>
             </div>
                  
             <!-- 로그인과정 -->
        
-            <div class="col-1">
+            <div class="col-2">
 		          <button type="button" class="btn btn-outline-dark" id="toLogout">로그아웃</button>
 		    </div>         	
         </div>

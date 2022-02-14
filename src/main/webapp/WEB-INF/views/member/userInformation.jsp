@@ -127,7 +127,7 @@
                                    <td id="editAddress">
                                        <div class="row">
                                             <input type="text" id="edited_postcode" placeholder="우편번호" class="col-5">
-                                            <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" class="btn btn-warning col-2" id="postcodeBtn">
+                                            <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" class="btn btn-warning col-3" id="postcodeBtn">
                                         </div>
                                         <div class="row">
                                             <input type="text" id="edited_roadAddress" placeholder="도로명주소" class="col-5">
@@ -148,7 +148,9 @@
                     <div class="col mb-4" id="btnBox">
                     	<c:choose>
                             <c:when test="${dto.type eq 1}">
+                            	<c:if test ="${loginSession.type != 0}">
                                 <button type="button" id="usertypeConvertBtn" class="btn btn-success">능력자로 전환하기</button>
+                                </c:if>
                             </c:when>
                             <c:otherwise>
                                 <button type="button" id="viewExpertBtn" class="btn btn-primary">능력자 정보 확인</button>
@@ -157,7 +159,7 @@
                         
                         <button type="button" id="editProfileBtn" class="btn btn-warning">회원 정보 수정</button>
                     </div>
-                    <div class="col" id="editBtnBox">
+                    <div class="col mb-4" id="editBtnBox">
                     	<button type="button" id="cancelBtn" class="btn btn-secondary">취소</button>
                     	<button type="button" id="confirmBtn" class="btn btn-primary">수정완료</button>
                     </div>
