@@ -94,7 +94,7 @@
 									</c:when>
 									<c:otherwise>
 										<c:forEach items="${list}" var="map">
-											<tr>
+											<tr type="${map.TYPE}">
 												<td><input type="checkbox" value="${map.POST_NO}"
 													class="postCheckBox" name="postCheckBox" id="postCheckBox">
 												</td>
@@ -189,17 +189,22 @@
             $("#searchForm").on("submit");
             // 상세페이지 이동
             $(".toDetailPost").on("click", function (e) {
+            	const type = $(e.target).parents("tr").attr("type");
+                const post_no = $(e.target).parent().find("*").eq(0).children().val();
                 let checkViewCount = 1;
-                let post_no = $(e.target).parent().find("*").eq(0).children().val();
-                if (!getCookie(post_no)) {
+                /* if (!getCookie(post_no)) {
                     setCookie(post_no);
                     checkViewCount = 0;
+                } */
+                console.log("post_no : " + post_no + " : type : " + type);
+                if(type == 1) {
+                    location.href = "${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no=" + post_no;
+                	return;
                 }
-                post_no = parseInt(post_no);
-                location.href = "${pageContext.request.contextPath}/admin/toPostDetail?post_no=" + post_no + "&checkViewCount=" + checkViewCount;
+                location.href = "${pageContext.request.contextPath}/offlinePost/toPostDetail.do?post_no=" + post_no;
             });
             // 조회수 중복 방지
-            function setCookie(post_no) {
+            /* function setCookie(post_no) {
                 const expireDate = new Date();
                 expireDate.setDate(expireDate.getDate() + 1);
                 const key = "post_no_" + post_no;
@@ -210,7 +215,7 @@
                 const value = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
                 // console.log(value[2]);
                 return value ? true : false;
-            }
+            } */
             // 글 유형 선택
             $(".cls-type").on("click", function (e) {
                 const type = e.target.value;

@@ -241,6 +241,11 @@
 		// 배송지 변경
 		let order_no = "";
 		$(".changeAddress").on("click", function(e) {
+			const status = $(e.target).parents(".cls-tr").children().eq(3).html();
+			if(status == "canceled") {
+				alert("이미 취소 된 주문입니다");
+				return;
+			}
 			$(".address_input").val("");
 			const address = $(e.target).attr("addr");
 			const post = address.match(/[0-9]{5}/)[0];
@@ -355,9 +360,9 @@
 		}); */
 		// 결제 취소 (NEW)
 		$(".orderCancel").on("click", function(e) {
-			const status = e.target.parentNode.parentNode.childNodes[7];
-			if(status.innerText == "cancled") {
-				alert("이미 취소 된 결제입니다.");
+			const status = $(e.target).parents(".cls-tr").children().eq(3).html();
+			if(status == "canceled") {
+				alert("이미 취소 된 주문입니다");
 				return;
 			}
 			const payment_no = $(e.target).attr("pno"); // payment_no와 order_no은 동일(구분을 위한 명시)
