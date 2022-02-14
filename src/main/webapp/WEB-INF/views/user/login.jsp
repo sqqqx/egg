@@ -174,7 +174,14 @@
     
     
     $("#backBtn").click(function(){
-    	location.href="${pageContext.request.contextPath}/online/toMain.do"
+    	let loc = '${location}'
+    	if(loc == "on"){
+			location.href="${pageContext.request.contextPath}/online/toMain.do"
+		}else if(loc == "off"){
+        	location.href="${pageContext.request.contextPath}/offline/toMain.do";
+		}else{
+			location.href="${pageContext.request.contextPath}/online/toMain.do"
+		}
     }) 
     </script>
 </body>

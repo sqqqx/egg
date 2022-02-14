@@ -21,6 +21,7 @@
 
 	<title>클래스 등록</title>
 	<style>
+		*{margin:0;}
 		.container {
 			margin: 0 auto;
 			width: 900px;
@@ -32,6 +33,9 @@
 			margin: 0;
 		}
  */
+ 		.adminBox{
+ 			padding-top:20px;
+ 		}
 		.row {
 			text-align: center;
 		}

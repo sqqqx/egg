@@ -17,7 +17,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src =" https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js " > </script>
 <style>
-.imgBox>a>img{margin-top:0px;}
+.imgBox>a>img{margin-top:17px;}
 .header{height:100px;}
 .header>div{height:100px;}
 #toCart{
@@ -144,7 +144,12 @@
          
          //마이페이지 div창 눌렀을 경우 mypage.jsp로 이동(MemberController이용)
          $("#toMypage").click(function(){
-        	 location.href="${pageContext.request.contextPath}/member/toMyPage"
+        	 let type = '${loginSession.type}'
+            	 if(type==0){
+            		 location.href = "${pagecontext.request.contextPath}/member/toUserInformation?user_id=${loginSession.user_id}"
+            	 }else{
+            		 location.href="${pageContext.request.contextPath}/member/toMyPage"
+            	 }
          })
          //쪽지함 버튼 클릭시 쪽지함으로 이동 
          $("#toMessage").click(function(){

@@ -308,7 +308,12 @@
          
          //마이페이지 div창 눌렀을 경우 mypage.jsp로 이동(MemberController이용)
          $("#toMypage").click(function(){
-        	 location.href="${pageContext.request.contextPath}/member/toMyPage"
+        	 let type = '${loginSession.type}'
+        	 if(type==0){
+        		 location.href = "${pagecontext.request.contextPath}/member/toUserInformation?user_id=${loginSession.user_id}"
+        	 }else{
+        		 location.href="${pageContext.request.contextPath}/member/toMyPage"
+        	 }       	 
          })
          //장바구니 버튼 클릭시 장바구니로 이동 
          $("#cart").click(function(){

@@ -32,6 +32,6 @@ public class AdminProductController {
 	@RequestMapping("/deleteProduct.do")
 	public String deleteProduct(Model model, String[] productCheckBox) throws Exception {
 		service.deleteProduct(productCheckBox);
-		return "redirect:/getProductsList.do";
+		return "redirect:/admin/getProductsList.do?currentIdx=1";
 	}
 }

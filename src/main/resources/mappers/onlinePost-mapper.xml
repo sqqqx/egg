@@ -25,76 +25,78 @@
     <!-- ============================================================================================================================================ -->
     
     <select id="selectRecent" resultType="map" parameterType="Object">
-    	select a.post_no, a.title, b.system_name, rank() over(order by written_date DESC) as ranking from tbl_post a, tbl_image b where a.post_no = b.post_no
-    	 
+    	select a.post_no, a.title, a.type, a.view_count, b.system_name, nvl(c.likeCount, 0) as count, row_number() over (order by written_date desc) viewRank
+    	from tbl_post a left outer join tbl_image b on(a.post_no = b.post_no)
+        left outer join (select tb.post_no, likeCount from tbl_post ta inner join (select post_no, count(post_no) likeCount from tbl_like where type=1 group by post_no) tb on (ta.post_no = tb.post_no)) c on (a.post_no = c.post_no)
+        where a.type=1    	 
     </select>
     
     <select id="selectRecent4" resultType="map" parameterType="Object">
-    	select * from (select a.post_no, a.title, b.system_name, rank() over(order by written_date DESC) as ranking from tbl_post a, tbl_image b where a.post_no = b.post_no)
-    	 where ranking &lt; 5
+    	select * from
+    	(select a.post_no, a.title, a.type, a.view_count, b.system_name, nvl(c.likeCount, 0) as count, row_number() over (order by written_date desc) viewRank
+    	from tbl_post a left outer join tbl_image b on(a.post_no = b.post_no)
+        left outer join (select tb.post_no, likeCount from tbl_post ta inner join (select post_no, count(post_no) likeCount from tbl_like where type=1 group by post_no) tb on (ta.post_no = tb.post_no)) c on (a.post_no = c.post_no)
+        where a.type=1)
+    	 where viewRank &lt; 5
     </select>
     
     <select id="selectLike" resultType="map" parameterType="Object">
-    	select b.post_no, a.title, c.system_name, rank() over(order by count(b.post_no) DESC) as ranking 
-		from tbl_post a inner join tbl_like b on a.post_no = b.post_no 
-		inner join tbl_image c on a.post_no = c.post_no
-		where b.type=1 group by b.post_no, a.title, c.system_name
+    	select a.post_no, a.title, a.type, a.view_count, b.system_name, nvl(c.likeCount, 0) as count, row_number() over (order by nvl(c.likeCount, 0) desc) viewRank
+   		 from tbl_post a left outer join tbl_image b on(a.post_no = b.post_no)
+        left outer join (select tb.post_no, likeCount from tbl_post ta inner join (select post_no, count(post_no) likeCount from tbl_like where type=1 group by post_no) tb on (ta.post_no = tb.post_no)) c on (a.post_no = c.post_no)
+        where a.type=1
     </select>
     
     <select id="selectLike4" resultType="map" parameterType="Object">
-    	select * from(select b.post_no, a.title, c.system_name, rank() over(order by count(b.post_no) DESC) as ranking 
-		from tbl_post a inner join tbl_like b on a.post_no = b.post_no 
-		inner join tbl_image c on a.post_no = c.post_no
-		where b.type=1 group by b.post_no, a.title, c.system_name)
-		where ranking &lt; 5
+    	select * from(select a.post_no, a.title, a.type, a.view_count, b.system_name, nvl(c.likeCount, 0) as count, row_number() over (order by nvl(c.likeCount, 0) desc) viewRank
+    	from tbl_post a left outer join tbl_image b on(a.post_no = b.post_no)
+        left outer join (select tb.post_no, likeCount from tbl_post ta inner join (select post_no, count(post_no) likeCount from tbl_like where type=1 group by post_no) tb on (ta.post_no = tb.post_no)) c on (a.post_no = c.post_no)
+        where a.type=1)
+		where viewRank &lt; 5
     </select>
     
     <select id="selectAdmin" resultType="map" parameterType="Object">
-    	select * from (select a.post_no, a.title, b.system_name from tbl_post a, tbl_image b where a.post_no = b.post_no)
-   		 where post_no between 8 and 11
+    	select a.post_no, a.title, a.type, a.view_count, b.system_name, nvl(c.likeCount, 0) as count
+    	from tbl_post a left outer join tbl_image b on(a.post_no = b.post_no)
+        left outer join (select tb.post_no, likeCount from tbl_post ta inner join (select post_no, count(post_no) likeCount from tbl_like where type=1 group by post_no) tb on (ta.post_no = tb.post_no)) c on (a.post_no = c.post_no)
+        where a.type=1 and a.post_no between 8 and 11
     </select>
     
     <select id="selectCat" resultType="map" parameterType="Object">
-    	select a.post_no, a.title, b.child_group, c.system_name 
-		from tbl_post a inner join tbl_image c on a.post_no=c.post_no 
-		inner join tbl_category b using(category_no)
-		where category_no=#{category_no}
+    	select a.post_no, a.title, a.type, a.view_count, b.system_name, nvl(c.likeCount, 0) as count, g.child_group
+	    from tbl_post a left outer join tbl_image b on(a.post_no = b.post_no)
+	    left outer join tbl_category g on(a.category_no = g.category_no)
+        left outer join (select tb.post_no, likeCount from tbl_post ta inner join (select post_no, count(post_no) likeCount from tbl_like where type=1 group by post_no) tb on (ta.post_no = tb.post_no)) c on (a.post_no = c.post_no)
+        where a.type=1 and g.category_no=#{category_no}
     </select>
     
     <select id="selectView4" resultType="map" parameterType="Object">
-    	select * from (select a.post_no, a.title, a.view_count, c.system_name, row_number() over(order by view_count DESC) as ranking 
-		from tbl_post a inner join tbl_image c on a.post_no = c.post_no
-		where type=1)
-		where ranking &lt; 5
+    	select * from 
+		(select a.post_no, a.title, a.type, a.view_count, b.system_name, nvl(c.likeCount, 0) as count, row_number() over (order by view_count desc) viewRank
+   		 from tbl_post a left outer join tbl_image b on(a.post_no = b.post_no)
+        left outer join (select tb.post_no, likeCount from tbl_post ta inner join (select post_no, count(post_no) likeCount from tbl_like where type=1 group by post_no) tb on (ta.post_no = tb.post_no)) c on (a.post_no = c.post_no)
+        where a.type=1) where viewRank &lt; 5
     </select>
     
     <select id="selectView" resultType="map" parameterType="Object">
-    	select a.post_no, a.title, a.view_count, c.system_name, row_number() over(order by a.view_count DESC) as ranking 
-		from tbl_post a inner join tbl_image c on a.post_no = c.post_no
-		where type=1
+    	select a.post_no, a.title, a.type, a.view_count, b.system_name, nvl(c.likeCount, 0) as count, row_number() over (order by view_count desc) viewRank
+    	from tbl_post a left outer join tbl_image b on(a.post_no = b.post_no)
+        left outer join (select tb.post_no, likeCount from tbl_post ta inner join (select post_no, count(post_no) likeCount from tbl_like where type=1 group by post_no) tb on (ta.post_no = tb.post_no)) c on (a.post_no = c.post_no)
+        where a.type=1
     </select>
     <!-- ============================================================================================================================================ -->
     
     <select id="mainSearch" resultType="map" parameterType="String">
-    SELECT
-        P.POST_NO      
-        ,P.TITLE           
-        ,I.SYSTEM_NAME        
-   	FROM TBL_POST P INNER JOIN TBL_IMAGE I
-   	ON P.POST_NO = I.POST_NO 
-   	WHERE P.TITLE LIKE '%${search}%'
-
-   	UNION
-
-   	SELECT
-    	P.POST_NO            
-        ,P.TITLE                 
-        ,I.SYSTEM_NAME          	
-   	FROM  TBL_POST P INNER JOIN TBL_IMAGE I
-   	ON P.POST_NO = I.POST_NO
-   	INNER JOIN TBL_CATEGORY C
-   	ON P.CATEGORY_NO = C.CATEGORY_NO
-   	WHERE C.CHILD_GROUP LIKE '%${search}%'
+    select a.post_no, a.title, a.type, a.view_count, b.system_name, nvl(c.likeCount, 0) as count
+    from tbl_post a left outer join tbl_image b on(a.post_no = b.post_no)
+    left outer join (select tb.post_no, likeCount from tbl_post ta inner join (select post_no, count(post_no) likeCount from tbl_like where type=1 group by post_no) tb on (ta.post_no = tb.post_no)) c on (a.post_no = c.post_no)
+    where a.type=1 and a.title like '%${search}%'
+	union
+	select a.post_no, a.title, a.type, a.view_count, b.system_name, nvl(c.likeCount, 0) as count
+	from tbl_post a left outer join tbl_image b on(a.post_no = b.post_no)
+	left outer join tbl_category g on(a.category_no = g.category_no)
+    left outer join (select tb.post_no, likeCount from tbl_post ta inner join (select post_no, count(post_no) likeCount from tbl_like where type=1 group by post_no) tb on (ta.post_no = tb.post_no)) c on (a.post_no = c.post_no)
+    where a.type=1 and g.child_group like '%${search}%'
    	</select>
    	
    	<update id="viewcount" parameterType="int">

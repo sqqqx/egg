@@ -26,8 +26,11 @@
           </div>
           <div id="userTab">
               <ul>
+              	<c:if test="${loginSession.type !=0}">
                   <li><span id="toModifyPw" class="userTab">비밀번호 수정</span></li>
+                </c:if>
                   <li><span id="toUserInfomation">회원정보 조회</span></li>
+                <c:if test="${loginSession.type !=0}">
                   <li><span id="toViewMessage" class="userTab">쪽지함</span></li>
                   <li>
                   	<span>
@@ -50,6 +53,7 @@
                   	</span>
                   </li>
                   <li><span id="withdrawal" class="userTab">회원탈퇴</span></li>
+                  </c:if>
               </ul>
           </div>
       </div>
@@ -74,7 +78,8 @@
 		
 		// 쪽지함
 		$("#toViewMessage").on("click", function(){
-			$(location).attr("href", "${pagecontext.request.contextPath}/message/toViewMessage?type=received&user_id=${loginSession.user_id}&currentPage=1");
+				$(location).attr("href", "${pagecontext.request.contextPath}/message/toViewMessage?type=received&user_id=${loginSession.user_id}&currentPage=1");
+				
 		})
 		
 		//유저정보로 이동
