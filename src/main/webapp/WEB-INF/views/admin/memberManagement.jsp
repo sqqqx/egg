@@ -106,6 +106,9 @@
 													<c:when test="${dto.type eq 2}">
 														<td class="cls-expert cls-toMypage">능력자</td>
 													</c:when>
+													<c:when test="${dto.type eq 3}">
+														<td class="cls-expert cls-toMypage">능력자(대기)</td>
+													</c:when>
 												</c:choose>
 												<c:choose>
 													<c:when test="${dto.blacklist eq 0}">

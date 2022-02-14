@@ -4,6 +4,14 @@ body{
     height: 1000px;
     margin:0 auto;
 }
+@font-face {
+            font-family: 'BMHANNAAir';
+            src:
+                url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
 .caroBox{margin-left:0px; margin-right:0px; padding-left:0px; padding-right:0px;}
 #carouselExampleIndicators{
 	margin:0 auto;
@@ -53,7 +61,12 @@ body{
 	background-color: #ff7f00;
 	text-align: center;
 }
-#tolistLike, #tolistRecent{
+#view{
+	background-color: #00ADEE;
+	text-align:center;
+	margin-left:80px;
+}
+#tolistLike, #tolistRecent, #tolistView{
 	color:gray;
 	cursor:pointer;
 }
@@ -108,7 +121,16 @@ body{
 .mediaText>span{
 	display:table-cell;
 	font-size: large;
-	vertical-align: middle;
+	height:50px;
+}
+.titleBox{
+	height:70px;
+	padding-top:5px;
+}
+.seeBox{
+	height:30px;
+	text-align: left;
+	color:gray;
 }
 a{
 	text-decoration-line: none;
@@ -126,5 +148,14 @@ background-color: rgb(241, 234, 234);
 }
 
 #likePart, #adminPart{
-	background-color: #f0f2ed;
+	background-color: #6DCEF520;
+}
+
+.footer{
+	height:100px;
+	width:1820px;
+	background-color:#00ADEE20;
+}
+.footer>div{
+	height:70px;
 }

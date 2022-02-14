@@ -579,6 +579,9 @@
         #likeArea:hover i{
             color :#e05885;   
         }
+        .bottomBlank{
+            height : 200px;
+        }
     </style>
     <script>
     //유저가 좋아요 누른 댓글 좋아요 처리하기
@@ -610,8 +613,6 @@
         <i class="far fa-heart fa-2x" id="likefull"></i>
         <span id="likeFullBtnTitle">찜하기</span>
     </div>
-
-
     <div class="container mt-3">
         <c:if test="${loginSession.type==0}">
             <div class="buttons">
@@ -666,6 +667,7 @@
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="detail" role="tabpanel" aria-labelledby="detail-tab">
                     <div id="detailContent">${PostDTO.content}</div>
+                    <div class="bottomBlank"></div>
                 </div>
                 <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
                     <div class="comments">
@@ -788,7 +790,6 @@
                                     </div>
                                     
                             </c:forEach>
-
                         </div>
                     </div>
                 </div>

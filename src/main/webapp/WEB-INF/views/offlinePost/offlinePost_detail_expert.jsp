@@ -8,8 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -230,7 +229,7 @@
                 <div class="postInfo">
                     <div class="postCategory">${CategoryDTO.parent_group} - ${CategoryDTO.child_group}</div>
                     <div class="postTitle">"${CategoryDTO.child_group}"에 관한 요청 드립니다.</div>
-                    <div class="postWriter"><span>${PostDTO.user_id} &nbsp;|&nbsp; ${PostDTO.written_date}&nbsp;|&nbsp; 조회수 ${PostDTO.view_count}</span></div>
+                    <div class="postWriter"><span>${PostDTO.user_nickname} &nbsp;|&nbsp; ${PostDTO.written_date}&nbsp;|&nbsp; 조회수 ${PostDTO.view_count}</span></div>
                 </div>
                 <div class="postReaction">
                     <div class="reactionPic" id="likeArea" value=0 onclick="likePost()"><i id="likeBtn" class="fas fa-heart fa-2x"></i><p>찜하기</p></div>
@@ -285,7 +284,7 @@
         <form method="post" id="messageForm">
         <div id="popup_message" class="hide">
             <div class="content">
-                <h2>[ '피피' 님께 보내는 견적서 ]</h2>
+                <h2>[ '${PostDTO.user_nickname}' 님께 보내는 견적서 ]</h2>
                 <div class="expert_categoryDiv">
                     <label>* 제공하는 서비스 : </label><br>
                     <input type="text" class="expert_category" value="${CategoryDTO.parent_group} - ${CategoryDTO.child_group}" readonly> 

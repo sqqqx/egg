@@ -123,4 +123,9 @@
 			AND type = 2 AND c.parent_group = #{parent_group} AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
     </select>
     
+    <!-- 조회수 카운트 -->
+    <update id="viewcount" parameterType="int">
+    	update tbl_post set view_count = view_count + 1 where post_no = #{post_no} 
+    </update>
+    
 </mapper>

@@ -158,6 +158,7 @@ public class offlinePostController {
 	//게시글 상세 조회 페이지로 이동 : written by 경민
 	@RequestMapping("/toPostDetail.do")
 	public String toPostDetail(int post_no, Model model) throws Exception{
+		service.viewcount(post_no);
 		PostDTO postDto = onlineService.getPostInfo(post_no);
 		CategoryDTO categoryDto = cService.getCategory(postDto.getCategory_no());
 		model.addAttribute("PostDTO", postDto);
