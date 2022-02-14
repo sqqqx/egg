@@ -159,7 +159,12 @@
     </div>
     
     <script>
-    	<%-- 주문 취소 버튼 --%>
+    	<%-- 이동 --%>
+    	$(".cls-tr").on("click", function(e) {
+    		let post_no = $(this).children()[0]
+    		post_no=post_no.innerHTML;
+    		location.href = "${pageContext.request.contextPath}/offlinePost/toStudentPostDetail.do?post_no="+post_no;
+    	});
     	
     </script>
 </body>

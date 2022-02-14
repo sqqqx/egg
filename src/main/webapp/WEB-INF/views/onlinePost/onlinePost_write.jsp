@@ -33,9 +33,7 @@
 			margin: 0;
 		}
  */
- 		.adminBox{
- 			padding-top:20px;
- 		}
+
 		.row {
 			text-align: center;
 		}

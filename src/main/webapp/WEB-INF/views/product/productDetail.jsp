@@ -556,6 +556,9 @@
             border-top: 1px dotted grey;
             border-bottom: 1px dotted grey;
         }
+        .bottomBlank{
+            height : 200px;
+        }
     </style>
     <script>
     //유저가 좋아요 누른 댓글 좋아요 처리하기
@@ -655,6 +658,7 @@
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="detail" role="tabpanel" aria-labelledby="detail-tab">
                     <div id="detailContent">${ProductDTO.content}</div>
+                     <div class="bottomBlank"></div>
                 </div>
                 <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
                     <div class="comments">

@@ -34,14 +34,10 @@
             text-align: center;
         }
 
-        /* 		.note-editor {
-			height: 100%;
-			margin: 0;
+        .note-editable, .note-editor {
+			text-align:left;
 		}
- */
- 		.adminBox{
- 			padding-top:20px;
- 		}
+
         .row {
             text-align: center;
         }
