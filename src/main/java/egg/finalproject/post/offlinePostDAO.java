@@ -43,4 +43,9 @@ public class offlinePostDAO {
 	public int insertPost(PostDTO dto) throws Exception{
 		return session.insert("offlinePostMapper.insertPost",dto);
 	}
+	
+	// 조회수 카운트
+	public int viewcount(int post_no) throws Exception {
+		return session.update("offlinePostMapper.viewcount", post_no);
+	}
 }

@@ -72,4 +72,9 @@ public class offlinePostService extends Paging {
 	public int insertPost(PostDTO dto) throws Exception{
 		return dao.insertPost(dto);
 	}
+	
+	// 조회수 카운트
+	public int viewcount(int post_no) throws Exception {
+		return dao.viewcount(post_no);
+	}
 }
