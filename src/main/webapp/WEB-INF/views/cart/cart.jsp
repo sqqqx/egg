@@ -10,6 +10,8 @@
 <style>
 	body{margin:auto;}
 	h1{text-align:center;}
+	.table{width:1500px;margin:auto;}
+	.inputColor{margin-left:140px;}
 	#name{
 		border:none;
 		border-right:0px; 
@@ -22,13 +24,19 @@
 </style>
 </head>
 <body>
+
+	<div class="row">
+		<div class="col mt-4">
+			<span><h1>장바구니</h1></span>
+		</div>	
+	</div>	
+
 	<table class="table">
-		<h1 mt-2>장바구니</h1>
 		<thead>
 			<tr>
 				<th>상품명</th>
 				<th>가격</th>
-				<th >수량</th>
+				<th>수량</th>
 				<th></th>
 				<th></th>
 			</tr>
@@ -36,31 +44,42 @@
 		<tbody>
 		<c:set var="ttotal" value="0"/>
 			<c:set var="total" value="0"/>
-			<c:forEach items="${list}" var="dto">
-				<tr>
-					<td hidden><input type="text" value="${dto.name}" id="name" disabled></td>
-					<td hidden><input type="text" id="stock" value="${dto.stock}"></td>
-					<td>${dto.name}</td>
-					<td>${dto.price}</td>
-					<td><span><input type="number" value="${dto.quantity }" class="form-control quantityController"></span></td>
-					<td><button type="button" class="deleteCart" value="${dto.name}">장바구니삭제</button></td>
-					<td hidden>
-						<c:set var="total" value="${dto.price * dto.quantity}"/>
-						<c:set var="ttotal" value="${ttotal+total}"/>
-						<c:out value="${total }"/>
-					</td>
-				</tr>
-			</c:forEach>
+			<c:choose>
+				<c:when test="${empty list}">
+					<tr>
+						<td colspan="8">장바구니가 비어있습니다.</td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<c:forEach items="${list}" var="dto">
+						<tr>
+							<td hidden><input type="text" value="${dto.name}" id="name" disabled></td>
+							<td hidden><input type="text" id="stock" value="${dto.stock}"></td>
+							<td>${dto.name}</td>
+							<td>${dto.price}</td>
+							<td><span><input type="number" value="${dto.quantity }" class="form-control quantityController"></span></td>
+							<td><button type="button" class="btn btn-dark deleteCart" value="${dto.name}">
+							삭제
+							</button></td>
+							<td hidden>
+								<c:set var="total" value="${dto.price * dto.quantity}"/>
+								<c:set var="ttotal" value="${ttotal+total}"/>
+								<c:out value="${total }"/>
+							</td>
+						</tr>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>		
 		</tbody>
 	</table>
-	<div class="row inputColor">
+	<div class="row mt-3 inputColor">
 	<div class="col">
 		<h4><label>총 가격</label></h4>
 	</div>
 	</div>
 	<div class="row inputColor">
 	<div class="col">
-		<h4><c:out value="${ttotal }"/></h4>
+		<h4><c:out value="${ttotal }"/>원</h4>
 	</div>
 	</div>
 	<div id="btnBox">
@@ -122,7 +141,14 @@
 	$("#toOrder").click(function(){
 
 			let id = '${loginSession.user_id}';
-			location.href="${pageContext.request.contextPath}/cart/toOrder.do?user_id="+ id + "&route=cart";
+			let list='${list}'
+			
+			if(list != '[]'){
+				location.href="${pageContext.request.contextPath}/cart/toOrder.do?user_id="+ id + "&route=cart";
+			}else{
+				alert("장바구니에 들어있는 상품이 없습니다.")
+			}
+			//
 		
 	})
 	

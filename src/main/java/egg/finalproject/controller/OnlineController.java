@@ -31,9 +31,11 @@ public class OnlineController {
 		List<Object> listRecent = service.selectRecent4();
 		List<Object> listLike = service.selectLike4();
 		List<Object> listAdmin = service.selectAdmin();
+		List<Object> listView = service.selectView4();
 		model.addAttribute("listRecent", listRecent);
 		model.addAttribute("listLike", listLike);
 		model.addAttribute("listAdmin", listAdmin);
+		model.addAttribute("listView",listView);
 		System.out.println("메인으로 가즈아");
 		return "online/onlineMain";
 	}
@@ -71,6 +73,12 @@ public class OnlineController {
 			model.addAttribute("category", child_group);
 			return "online/onlineCat";
 		}
-	
+	//조회수순 게시글 조회 페이지로 이동
+		@RequestMapping("/toView.do")
+		public String toView(Model model) throws Exception{
+			List<Object> listView = service.selectView();
+			model.addAttribute("listView",listView);
+			return "online/onlineView";
+		}
 	
 }

@@ -14,8 +14,8 @@ body{
     line-height: 100px;
 }
 .imgBox>a>img{
-    width:34%;
-    height: 100px;
+    width:70%;
+    height: 75px;
     margin-left: 30%;
 }
 .searchBox{
@@ -33,6 +33,7 @@ body{
 	margin-top:10px;
 	height:40px;
 	right:90px;
+	font-size: smaller;
 }
 #searchBtn{
 	position:relative;
@@ -157,6 +158,7 @@ margin:0;
   
 
 }
+
 .category_small{
    background-color: white;
    position: absolute;
@@ -178,7 +180,7 @@ margin:0;
    transition:all .3s ease
 }
 .category_small>div>ul>li:hover{
-  color:#39d9c8; transition:all .3s ease 
+  color:#00ADEE; transition:all .3s ease 
 }
 li > span { position:relative }
 li > span::after {
@@ -189,7 +191,7 @@ li > span::after {
   display: block;
   position: absolute;
   margin-top: 3px;
-  border-bottom: 2px solid #39d9c8;
+  border-bottom: 2px solid #00ADEE;
   transition:all .3s ease;
 }
 li:hover > span::after {
@@ -200,7 +202,7 @@ li:hover > span::after {
   display: block;
   position: absolute;
   margin-top: 3px;
-  border-bottom: 2px solid #39d9c8;
+  border-bottom: 2px solid #00ADEE;
   transition:all .3s ease;
 }
 .adminBox{

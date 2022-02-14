@@ -19,6 +19,25 @@ public class offlinePostDAO {
 	 * System.out.println("offlinePostDAO : " + parent_group); return
 	 * session.selectList("offlinePostMapper.selectByCg", parent_group); }
 	 */
+	// (마이페이지) 찜한 게시글 가져오기
+	public List<Map<String, Object>> getMyLikePost(Map<String, Object> map) throws Exception {
+		return session.selectList("offlinePostMapper.getMyLikePost", map);
+	}
+	
+	// (마이페이지) 찜한 게시글 COUNT
+	public int getMyLikePostCount(Map<String, Object> map) throws Exception {
+		return session.selectOne("offlinePostMapper.getMyLikePostCount", map);
+	}
+	
+	// (마이페이지) 내가 쓴 글 가져오기
+	public List<PostDTO> getMyPost(Map<String, Object> map) throws Exception {
+		return session.selectList("offlinePostMapper.getMyPost", map);
+	}
+	
+	// (마이페이지) 내가 쓴 글 COUNT
+	public int getMyPostCount(Map<String, Object> map) throws Exception {
+		return session.selectOne("offlinePostMapper.getMyPostCount", map);
+	}
 	
 	public List<PostDTO> selectByCg(Map<String, Object> map) throws Exception{
 		return session.selectList("offlinePostMapper.selectByCg", map);

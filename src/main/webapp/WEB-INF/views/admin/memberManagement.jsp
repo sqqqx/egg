@@ -11,16 +11,16 @@
 </head>
 
 <body>
-	<%@include file="/WEB-INF/views/admin/adminHeader.jsp" %>
+	<%@include file="/WEB-INF/views/admin/adminHeader.jsp"%>
 	<div class="main-Wrapper d-flex justify-content-center pt-5">
 		<!--사이드 바-->
 		<div class="cls-sideBar">
 			<%@include file="/WEB-INF/views/admin/adminSidebar.jsp"%>
 		</div>
-		
+
 		<!-- 본문 -->
 		<div class="cls-main">
-		
+
 			<!-- 검색 영역 -->
 			<form id="searchForm"
 				action="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=1&userType=${userType}"
@@ -29,9 +29,12 @@
 					<div class="col-3 d-flex justify-content-end">
 						<select class="form-select" aria-label="Default select example"
 							name="searchOption">
-							<option selected value="user_id" ${searchOption == "user_id" ? 'selected="selected"' : ''}>아이디</option>
-							<option value="user_nickname" ${searchOption == "user_nickname" ? 'selected="selected"' : ''}>닉네임</option>
-							<option value="email" ${searchOption == "email" ? 'selected="selected"' : ''}>이메일</option>
+							<option selected value="user_id"
+								${searchOption == "user_id" ? 'selected="selected"' : ''}>아이디</option>
+							<option value="user_nickname"
+								${searchOption == "user_nickname" ? 'selected="selected"' : ''}>닉네임</option>
+							<option value="email"
+								${searchOption == "email" ? 'selected="selected"' : ''}>이메일</option>
 						</select>
 					</div>
 					<div class="col-6 d-flex justify-content-center">
@@ -39,11 +42,12 @@
 							name="searchKeyword" placeholder="" value="${searchKeyword}">
 					</div>
 					<div class="col-3 d-flex justify-content-start">
-						<button type="submit" class="btn btn-outline-dark" id="adminSearchBtn">검색</button>
+						<button type="submit" class="btn btn-outline-dark"
+							id="adminSearchBtn">검색</button>
 					</div>
 				</div>
 			</form>
-			
+
 			<!-- 회원 유형 -->
 			<div class="row cls-postType py-3">
 				<div class="col-4 d-flex">
@@ -52,12 +56,14 @@
 					<button type="button" class="btn btn-outline-dark cls-type"
 						id="typeBasic" value="1">일반회원</button>
 					<button type="button" class="btn btn-outline-dark cls-type"
-						id="typeExpert" value="2">고수</button>
+						id="typeExpert" value="2">능력자</button>
+					<button type="button" class="btn btn-outline-dark cls-type"
+						id="typeExpertApply" value="3">능력자 전환 신청</button>
 					<button type="button" class="btn btn-outline-dark cls-type"
 						id="typeAdmin" value="0">관리자</button>
 				</div>
 			</div>
-			
+
 			<!-- 회원정보 출력 -->
 			<form id="selectCheckbox" method="post"
 				class="d-flex justify-content-center">
@@ -119,7 +125,7 @@
 					</div>
 				</div>
 			</form>
-			
+
 			<!-- 페이징 영역 -->
 			<div class="row">
 				<div class="col-12 d-flex justify-content-center pt-5">
@@ -153,10 +159,12 @@
 					</nav>
 				</div>
 			</div>
-			
+
 			<!-- 하단 버튼 영역 -->
 			<div class="row">
 				<div class="col-12 d-flex justify-content-end px-0">
+					<button type="button" class="btn btn-outline-dark"
+						id="changeExpertBtn">능력자 전환</button>
 					<button type="button" class="btn btn-outline-dark"
 						id="blackListBtn">블랙리스트 추가</button>
 					<button type="button" class="btn btn-outline-dark"
@@ -208,6 +216,11 @@
          	// 회원 유형 선택
             $(".cls-type").on("click", function(e) {
             	const userType = e.target.value;
+            	console.log(userType);
+            	if(userType == 3) {
+            		location.href = "${pageContext.request.contextPath}/admin/getExpertList.do?currentIdx=1&userType="+userType;
+            		return;
+            	}
                 location.href = "${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=1&userType="+userType;
             });
             // 유형 버튼 변경
@@ -222,9 +235,19 @@
                     case 2 :
                         $("#typeExpert").attr("class", "btn btn-dark");
                         break;
+                    case 3 :
+                        $("#typeExpertApply").attr("class", "btn btn-dark");
+                        break;   
                     case 9 :
                         $("#typeAll").attr("class", "btn btn-dark");
                         break;
+                }
+            });
+            // 능력자 전환
+            $("#changeExpertBtn").on("click", function () {
+                if ($(".userCheckBox").is(":checked") && confirm("능력자로 전환시키겠습니까?")) {
+                    $("form").attr("action", "${pageContext.request.contextPath}/admin/changeExpert.do");
+                    $("#selectCheckbox").submit();
                 }
             });
         </script>

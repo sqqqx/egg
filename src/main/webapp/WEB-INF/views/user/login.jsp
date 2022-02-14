@@ -9,7 +9,7 @@
     <style>
         *{margin:0; text-align: center;}
         body{
-            background-color: lightgray;
+            background-color: #6DCEF520;
         }
         .container{
             background-color: white;
@@ -39,7 +39,7 @@
     <div class="container">
     	<button type="button" class="btn-close" id="backBtn" aria-label="Close"></button>
         <div class="row mb-4">
-            <img src="/resources/img/logo.png">
+            <img src="/resources/img/logoBig.png">
         </div>
         <form id="loginForm">
         <div class="row mb-3">
@@ -129,6 +129,8 @@
     						}else{
     			        		 location.href="${pageContext.request.contextPath}/offline/toMain.do";
     			        	 }
+    					}else{
+    						location.href="${pageContext.request.contextPath}/online/toMain.do"
     					}
     				}else if(rs == "관리자") {
     					location.href = "${pageContext.request.contextPath}/admin/toAdminMain"

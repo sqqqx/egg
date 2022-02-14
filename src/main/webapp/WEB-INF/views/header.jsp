@@ -153,6 +153,11 @@
                         <li class="cat" value=11><span>요가</span></li>
                         <li class="cat" value=12><span>필라테스</span></li>
                         <li class="cat" value=13><span>피트니스</span></li>
+                        <li class="cat" value=14><span>스트레칭</span></li>
+                        <li class="cat" value=15><span>발레</span></li>
+                        <li class="cat" value=16><span>사이클</span></li>
+                        <li class="cat" value=19><span>기타</span></li>
+                        
                      
                     </ul>
                 </div>
@@ -161,6 +166,10 @@
                         <li class="cat" value=21><span>아시안</span></li>
                         <li class="cat" value=22><span>서양</span></li>
                         <li class="cat" value=23><span>제빵</span></li>
+                        <li class="cat" value=24><span>비건</span></li>
+                        <li class="cat" value=25><span>음료</span></li>
+                        <li class="cat" value=26><span>다이어트식</span></li>
+                        <li class="cat" value=29><span>기타</span></li>
                         
                     </ul>
                 </div>
@@ -169,6 +178,10 @@
                         <li class="cat" value=31><span>영어</span></li>
                         <li class="cat" value=32><span>중국어</span></li>
                         <li class="cat" value=33><span>스페인어</span></li>
+                        <li class="cat" value=34><span>일본어</span></li>
+                        <li class="cat" value=35><span>불어</span></li>
+                        <li class="cat" value=36><span>독일어</span></li>
+                        <li class="cat" value=39><span>기타</span></li>
                   
                     </ul>
                 </div>
@@ -177,6 +190,10 @@
                         <li class="cat" value=41><span>프로그래밍</span></li>
                         <li class="cat" value=42><span>정보보안</span></li>
                         <li class="cat" value=43><span>모바일App개발</span></li>
+                        <li class="cat" value=44><span>머신러닝</span></li>
+                        <li class="cat" value=45><span>데이터분석</span></li>
+                        <li class="cat" value=46><span>게임개발</span></li>
+                        <li class="cat" value=49><span>기타</span></li>
                    
                     </ul>
                 </div>
@@ -185,7 +202,11 @@
                         <li class="cat" value=51><span>뷰티</span></li>
                         <li class="cat" value=52><span>명상</span></li>
                         <li class="cat" value=53><span>반려동물</span></li>
-           
+                        <li class="cat" value=54><span>타로, 사주</span></li>
+                        <li class="cat" value=55><span>댄스</span></li>
+                        <li class="cat" value=56><span>인문학</span></li>
+                        <li class="cat" value=59><span>기타</span></li>
+         
                     </ul>
                 </div>
                 <div class="col">
@@ -193,6 +214,11 @@
                         <li class="cat" value=61><span>펜, 연필</span></li>
                         <li class="cat" value=62><span>마카</span></li>
                         <li class="cat" value=63><span>색연필</span></li>
+                        <li class="cat" value=64><span>수채화</span></li>
+                        <li class="cat" value=65><span>캘리그라피</span></li>
+                        <li class="cat" value=66><span>아크릴화</span></li>
+                        <li class="cat" value=67><span>디지털드로잉</span></li>
+                        <li class="cat" value=69><span>기타</span></li>
                
                     </ul>
                 </div>
@@ -201,6 +227,11 @@
                         <li class="cat" value=71><span>뜨개질, 자수</span></li>
                         <li class="cat" value=72><span>패브릭공예</span></li>
                         <li class="cat" value=73><span>종이공예</span></li>
+                        <li class="cat" value=74><span>플라워공예</span></li>
+                        <li class="cat" value=75><span>비누캔들</span></li>
+                        <li class="cat" value=76><span>나무, 라탄공예</span></li>
+                        <li class="cat" value=79><span>기타</span></li>
+                        
   
                     </ul>
                 </div>
@@ -209,6 +240,7 @@
                         <li class="cat" value=81><span>자연, 과학</span></li>
                         <li class="cat" value=82><span>신체, 건강</span></li>
                         <li class="cat" value=83><span>수학, 코딩</span></li>
+                        <li class="cat" value=89><span>기타</span></li>
       
                     </ul>
                 </div>
@@ -336,9 +368,7 @@
 		
 		//메세지 수신
 		ws.onmessage = function(e){
-			console.log(e.data);
 			let msgObj = JSON.parse(e.data);
-			console.log(msgObj);
 			let newMsg= $("<div>")
 			let msg="";
 			if("${loginSession.user_nickname}" == msgObj.to_id){//본인 아이디일때만 알람이 감
@@ -424,9 +454,9 @@
 						let newMsg=$("<div>")
 						let msg="";
 						if(notice.send_type==1){
-							let msg = "<a href='${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no="+notice.send_post_no+"'>"
+							msg += "<a href='${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no="+notice.send_post_no+"'>"
 						}else if(notice.send_type==2){
-							let msg = "<a href='${pageContext.request.contextPath}/offlinePost/toPostDetail.do?post_no="+notice.send_post_no+"'>"
+							msg += "<a href='${pageContext.request.contextPath}/offlinePost/toPostDetail.do?post_no="+notice.send_post_no+"'>"
 						} 
 						msg += notice.from_id
 						msg += "님이 "

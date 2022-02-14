@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -120,6 +122,43 @@ public class AdminMemberService extends Paging {
 			System.out.println(dto);
 		}
 		return list;
+	}
+	
+	// 전문가 신청 리스트 가져오기
+	public List<MemberDTO> getExpertList(String searchOption, String searchKeyword, Map<String, Object> range, int type) throws Exception {
+		System.out.println("searchOption : " + searchOption + " : searchKeyword : " + searchKeyword + " : sRange : " + range.get("startRange") + " : eRange : " + range.get("endRange"));
+		Map<String, Object> map = new HashMap<>();
+		if(searchOption != null && searchKeyword != null) {
+			map.put("searchOption", searchOption);
+			map.put("searchKeyword", searchKeyword);
+		}
+		map.put("startRange", range.get("startRange"));
+		map.put("endRange", range.get("endRange"));
+		map.put("type", type);
+		List<MemberDTO> list = dao.getExpertList(map);
+		System.out.println("list.size : " + list.size());
+		return list;
+	}
+	
+	// 전문가 신청 리스트 COUNT
+	public void getExpertListCount(String searchOption, String searchKeyword, int type) throws Exception {
+		System.out.println("searchOption : " + searchOption + " : searchKeyword : " + searchKeyword);
+		Map<String, Object> map = new HashMap<>();
+		if(searchOption != null && searchKeyword != null) {
+			map.put("searchOption", searchOption);
+			map.put("searchKeyword", searchKeyword);
+		}
+		map.put("type", type);
+		int rs = dao.getExpertListCount(map);
+		System.out.println("COUNT : " + rs);
+		this.totalCount = rs;
+	}
+	
+	// 능력자 전환
+	public int changeExpert(String[] userCheckBox) throws Exception {
+		Map<String, String[]> map = new HashMap<>();
+		map.put("userCheckBox", userCheckBox);
+		return dao.changeExpert(map);
 	}
 
 }

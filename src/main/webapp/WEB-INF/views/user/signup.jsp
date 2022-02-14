@@ -10,7 +10,7 @@
     <style>
         *{margin: 0;}
         body{
-            background-color: lightgray;
+            background-color: #6DCEF520;
         }
         .container{
             background-color: white;
@@ -35,7 +35,7 @@
             text-align: center;
         }
         img{
-            width:300px;
+            width:400px;
             height: 300px;;
         }
         .btnBox>div{
@@ -54,7 +54,7 @@
     <div class="container">
         <div class="row mb-3 photoBox">
             <div class="col">
-               <img src="/resources/img/logo.png">
+               <img src="/resources/img/logoBig.png">
             </div>
         </div>
         <div class="row mb-2">
