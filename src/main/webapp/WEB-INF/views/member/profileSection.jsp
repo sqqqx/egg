@@ -5,9 +5,81 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="/resources/css/userInformation.css">    <!-- 부트스트랩 적용시 부트스트랩 cdn을 가져온 뒤 css를 불러와야 레이아웃에 적용된다.-->
-<link rel="stylesheet" href="/resources/css/profileSection.css">
 <title>프로필사진 및 회원메뉴</title>
+<style>
+/* 좌측 프로필 및 회원메뉴 탭 */
+#myInfo {
+    margin-top: 20px;
+    border: 1px solid black;
+}
+
+#profileBox {
+    
+    text-align: center;
+    margin-bottom: 20px;
+}
+#profilePhoto {
+    
+    padding: 10px;
+}
+#profilePhoto img{
+    width: 100%;
+}
+#profileInfo {
+    border-bottom: 2px double black;
+    height: 100px;
+}
+li {
+    list-style: none;
+}
+.userTab {
+	cursor: pointer;
+}
+ul a {
+	color: black;
+	text-decoration: none;
+}
+
+#userTab>ul>li{
+   height: 40px;
+   padding-top:5px;
+   list-style: none;
+   padding-right: 30px;
+   cursor: pointer;
+   transition:all .3s ease
+}
+#userTab>ul>li:hover{
+  color:#00ADEE; transition:all .3s ease 
+}
+
+#userTab>ul>li:hover a{
+  color:#00ADEE; transition:all .3s ease 
+}
+
+li > span { position:relative }
+li > span::after {
+  content: '';
+  width: 0%;
+  left: 50%;
+  height: 1px;
+  display: block;
+  position: absolute;
+  margin-top: 3px;
+  border-bottom: 2px solid #00ADEE;
+  transition:all .3s ease;
+}
+li:hover > span::after {
+  content: '';
+  width: 100%;
+  left: 0px;
+  height: 1px;
+  display: block;
+  position: absolute;
+  margin-top: 3px;
+  border-bottom: 2px solid #00ADEE;
+  transition:all .3s ease;
+}
+</style>
 </head>
 <body>
 	<div class="col-2 userBox">
@@ -25,7 +97,7 @@
           </div>
           </div>
           <div id="userTab">
-              <ul>
+             <ul>
               	<c:if test="${loginSession.type !=0}">
                   <li><span id="toModifyPw" class="userTab">비밀번호 수정</span></li>
                 </c:if>

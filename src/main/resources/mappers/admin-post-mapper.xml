@@ -16,23 +16,31 @@
 				AND type = ${type}
 			</if>
 		</trim>
-		
 	</select>
 
 	<!-- 게시글 목록 가져오기 -->
 	<select id="getPostList" parameterType="map" resultType="map">
-		SELECT * 
-		FROM (SELECT row_number() OVER (ORDER BY written_Date DESC) AS idx, tbl_post.* 
-			  FROM tbl_post) 
-   			LEFT OUTER JOIN (SELECT post_no, COUNT(*) "COUNT" 
-   							 FROM tbl_like GROUP BY post_no) USING(post_no)
+		SELECT *
+		FROM (SELECT 
+		          row_number() OVER (ORDER BY written_Date DESC) AS idx
+		          , p.post_no, p.type, p.user_id, p.user_nickname
+		          , p.title ,p.view_count, p.written_date
+		          , l.count
+		      FROM tbl_post p
+		          LEFT OUTER JOIN (SELECT post_no, COUNT(*) "COUNT" 
+		                           FROM tbl_like 
+		                           GROUP BY post_no) l
+		          ON(p.post_no = l.post_no)
+   			  <trim prefix="WHERE" prefixOverrides="AND">
+		  		  <if test="searchKeyword != null">
+	   			  	  ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+		   		  </if>
+		   		  <if test="type != null">
+		   			  AND type = #{type}
+		   		  </if>
+   			  </trim>
+			  ) 
    		WHERE idx BETWEEN #{startRange} AND #{endRange}
-   		<if test="searchKeyword != null and searchKeyword != ''">
-   			AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
-   		</if>
-   		<if test="type != null">
-   			AND type = #{type}
-   		</if>
 	</select>
 	
 	<!-- 글 삭제 -->

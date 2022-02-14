@@ -72,6 +72,7 @@ public class onlinePostController {
 	
 	@RequestMapping("/toDetail.do")
 	public String toDetail(int post_no, Model model) throws Exception{
+		System.out.println("post_no : " + post_no);
 		service.viewcount(post_no);
 		System.out.println("pont_no : " + post_no);
 //		ImageDTO imageDto = service.getThumbNail(post_no);
@@ -112,7 +113,6 @@ public class onlinePostController {
 		model.addAttribute("goComment","1");
 		return "onlinePost/onlinePostDetail";
 	}
-	
 	
 	@RequestMapping("/deletePost.do")
 	public String deletePost(int post_no) throws Exception{

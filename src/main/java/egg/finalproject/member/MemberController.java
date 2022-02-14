@@ -499,6 +499,7 @@ public class MemberController {
 		public String modifyPassword(String id, String pw) throws Exception {
 			System.out.println("요청 도착");
 			System.out.println("MemberController / 비밀번호수정 id & pw - " + id + " & " + pw);
+			pw = EncryptionUtils.getSHA512(pw); // 비밀번호 암호화
 			if(service.modifyPassword(id, pw) == 1) {
 				System.out.println("비밀번호 수정 성공");
 				return "success";

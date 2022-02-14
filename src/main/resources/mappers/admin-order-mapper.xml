@@ -7,20 +7,31 @@
 
 	<!-- 주문 수 가져오기 -->
 	<select id="getOrderCount" resultType="int">
-		SELECT COUNT(*) FROM tbl_order
-		<if test="searchKeyword != null and searchKeyword != ''">
-			WHERE ${searchOption} LIKE '%'||#{searchKeyword}||'%'
-		</if>
+		SELECT COUNT(*)
+		FROM (SELECT 
+				  row_number() OVER (ORDER BY order_time DESC) AS idx, 
+				  tbl_order.* 
+			  FROM tbl_order
+			  <if test="searchKeyword != null">
+	   			  WHERE ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+	   		  </if>
+			  )
 	</select>
 
 	<!-- 주문 목록 가져오기 -->
 	<select id="getOrderList" parameterType="map" resultType="map">
-		SELECT order_no, order_time, to_char(cost, '999,999,999') "COST", status, user_id, address
-		FROM (SELECT row_number() OVER (ORDER BY order_time DESC) AS idx, tbl_order.* FROM tbl_order)
+		SELECT 
+			order_no, order_time, to_char(cost, '999,999,999') "COST", 
+			status, user_id, address
+		FROM (SELECT 
+				  row_number() OVER (ORDER BY order_time DESC) AS idx, 
+				  tbl_order.* 
+			  FROM tbl_order
+			  <if test="searchKeyword != null">
+	   			  WHERE ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+	   		  </if>
+			  )
    		WHERE idx BETWEEN #{startRange} AND #{endRange}
-   		<if test="searchOption != null and searchKeyword != ''">
-   			AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
-   		</if>
 	</select>
 	
 	<!-- 구매 상품 목록 가져오기 -->
