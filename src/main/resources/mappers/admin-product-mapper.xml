@@ -8,6 +8,9 @@
 	<!-- 상품 수 가져오기 -->
 	<select id="getProductCount" parameterType="map" resultType="int">
 		SELECT COUNT(*) FROM tbl_product 
+	<if test="searchKeyword != null and searchKeyword != ''">
+		WHERE ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+	</if>
 	</select>
 	
 	<!-- 상품 목록 가져오기 -->
@@ -15,13 +18,15 @@
 		SELECT 
 			product_no, name, to_char(price, '999,999,999') "PRICE", 
 			stock, content, image_path 
-		FROM (SELECT row_number() OVER (ORDER BY product_no DESC) AS idx, tbl_product.* 
-			  FROM tbl_product)  
+		FROM (SELECT 
+				  row_number() OVER (ORDER BY product_no DESC) AS idx, 
+				  p.* 
+			  FROM tbl_product p
+			  <if test="searchKeyword != null and searchKeyword != ''">
+				  WHERE ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+			  </if>
+			 )  
 		WHERE idx BETWEEN #{startRange} AND #{endRange}
-		<if test="searchKeyword != null and searchKeyword != ''">
-			AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
-		</if>
-		order by 1 DESC
 	</select>
 	
 	<!-- 상품 삭제 -->

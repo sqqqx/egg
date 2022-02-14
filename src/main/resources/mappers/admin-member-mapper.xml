@@ -5,43 +5,55 @@
 
 <mapper namespace="adminMemberMapper">
 	
-	<!-- 전체 회원 수 가져오기 -->
+	<!-- 회원 수 가져오기 -->
 	<select id="getMemberCount" resultType="int">
-		SELECT COUNT(*) FROM tbl_member
-		<trim prefix="WHERE" prefixOverrides="AND">
-			<if test="searchOption != null">
-				${searchOption} LIKE '%'||#{searchKeyword}||'%'
-			</if>
-			<if test="userType != null">
-				AND type = ${userType}
-			</if>
-		</trim>
+		SELECT COUNT(*)
+		FROM (SELECT *
+			  FROM tbl_member m
+			  <trim prefix="WHERE" prefixOverrides="AND">
+				  <if test ="searchOption != null">
+			    	  ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+			      </if>
+			      <choose>
+			    	  <when test="userType == 0">
+			    		  AND type = 0
+			    	  </when>
+			    	  <when test="userType == 1">
+			    		  AND type = 1
+			    	  </when>
+			    	  <when test="userType == 2">
+			    		  AND type = 2
+			    	  </when>
+			      </choose>
+			  </trim>
+			 )
 	</select>
-	
-	<!-- 검색 한 회원 수 가져오기(위와 병합할 것) -->
-	<!-- <select id="getSearchCount" parameterType="map" resultType="int">
-		SELECT COUNT(*) FROM tbl_member 
-		WHERE ${searchOption} LIKE '%'||#{searchKeyword}||'%'
-	</select> -->
 	
 	<!-- 회원 목록 가져오기 -->
 	<select id="getMemberList" parameterType="map" resultType="memberDTO">
-		SELECT * FROM (SELECT row_number() OVER (ORDER BY signup_date DESC) AS idx, tbl_member.* FROM tbl_member) 
+		SELECT * 
+		FROM (SELECT 
+				  row_number() OVER (ORDER BY signup_date DESC) AS idx, 
+				  m.* 
+			  FROM tbl_member m
+			  <trim prefix="WHERE" prefixOverrides="AND">
+				  <if test ="searchOption != null">
+			    	  ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+			      </if>
+			      <choose>
+			    	  <when test="userType == 0">
+			    		  AND type = 0
+			    	  </when>
+			    	  <when test="userType == 1">
+			    		  AND type = 1
+			    	  </when>
+			    	  <when test="userType == 2">
+			    		  AND type = 2
+			    	  </when>
+			      </choose>
+			  </trim>
+			 ) 
 	    WHERE idx BETWEEN #{startRange} AND #{endRange}
-	    <if test ="searchOption != null">
-	    	AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
-	    </if>
-	    <choose>
-	    	<when test="userType == 0">
-	    		AND type = 0
-	    	</when>
-	    	<when test="userType == 1">
-	    		AND type = 1
-	    	</when>
-	    	<when test="userType == 2">
-	    		AND type = 2
-	    	</when>
-	    </choose>
 	</select>
 	
 	<!-- 회원 강제 탈퇴-->
@@ -111,28 +123,33 @@
 	
 	<!-- 전문가 신청 리스트 가져오기 -->
 	<select id="getExpertList" parameterType="map" resultType="memberDTO">
-		SELECT 
-		    m.user_id, m.user_nickname, m.email, 
-		    m.type, m.blacklist, m.signup_date
-		FROM (SELECT row_number() OVER (ORDER BY expert_id) AS idx, tbl_expert.* FROM tbl_expert) e
-		    INNER JOIN tbl_member m ON(e.expert_id = m.user_id)
+		SELECT *
+		FROM (  SELECT 
+		            row_number() OVER (ORDER BY expert_id) AS idx, 
+		            m.*
+		        FROM tbl_expert e
+		            INNER JOIN tbl_member m ON(e.expert_id = m.user_id)
+		        WHERE m.type != 2
+		        <if test="searchKeyword != null">
+					AND ${searchKeyword} LIKE '%'||#{searchKeyword}||'%'
+				</if>
+		        ORDER BY signup_date DESC  )
 		WHERE idx BETWEEN ${startRange} AND ${endRange}
-			AND m.type != 2
-		<if test="searchKeyword != null">
-			AND ${searchKeyword} LIKE '%'||#{searchKeyword}||'%'
-		</if>
-		ORDER BY signup_date DESC
 	</select>
 	
 	<!-- 전문가 신청 리스트 COUNT -->
 	<select id="getExpertListCount" parameterType="map" resultType="int">
 		SELECT COUNT(*)
-		FROM tbl_expert e
-		    INNER JOIN tbl_member m ON(e.expert_id = m.user_id)
-		WHERE m.type != 2
-	    <if test="searchKeyword != null">
-			AND ${searchKeyword} LIKE '%'||#{searchKeyword}||'%'
-		</if>
+		FROM (  SELECT 
+		            row_number() OVER (ORDER BY expert_id) AS idx, 
+		            m.*
+		        FROM tbl_expert e
+		            INNER JOIN tbl_member m ON(e.expert_id = m.user_id)
+		        WHERE m.type != 2
+		        <if test="searchKeyword != null">
+					AND ${searchKeyword} LIKE '%'||#{searchKeyword}||'%'
+				</if>
+		     )
 	</select>
 	
 	<!-- 능력자 전환-->

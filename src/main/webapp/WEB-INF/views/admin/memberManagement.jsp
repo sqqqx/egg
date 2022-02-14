@@ -129,34 +129,68 @@
 			<!-- 페이징 영역 -->
 			<div class="row">
 				<div class="col-12 d-flex justify-content-center pt-5">
-					<nav aria-label="Page navigation example">
-						<ul class="pagination">
-							<c:if test="${map.needPrev eq true}">
-								<li class="page-item"><a class="page-link"
-									href="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=${map.firstIdx-1}&userType=${userType}">Previous</a>
-								</li>
-							</c:if>
-							<c:forEach var="i" begin="${map.firstIdx}" end="${map.lastIdx}">
-								<c:choose>
-									<c:when test="${empty searchOption}">
+					<c:choose>
+						<c:when test="${userType eq 3}">
+							<nav aria-label="Page navigation example">
+								<ul class="pagination">
+									<c:if test="${navi.needPrev eq true}">
 										<li class="page-item"><a class="page-link"
-											href="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=${i}&userType=${userType}">${i}</a>
+											href="${pageContext.request.contextPath}/admin/getExpertList.do?currentIdx=${map.firstIdx-1}&userType=${userType}">Previous</a>
 										</li>
-									</c:when>
-									<c:otherwise>
+									</c:if>
+									<c:forEach var="i" begin="${navi.firstIdx}" end="${navi.lastIdx}">
+										<c:choose>
+											<c:when test="${empty searchOption}">
+												<li class="page-item"><a class="page-link"
+													href="${pageContext.request.contextPath}/admin/getExpertList.do?currentIdx=${i}&userType=${userType}">${i}</a>
+												</li>
+											</c:when>
+											<c:otherwise>
+												<li class="page-item"><a class="page-link"
+													href="${pageContext.request.contextPath}/admin/getExpertList.do?currentIdx=${i}&searchOption=${searchOption}&searchKeyword=${searchKeyword}&userType=${userType}">${i}</a>
+												</li>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+									<c:if test="${navi.needNext eq true}">
 										<li class="page-item"><a class="page-link"
-											href="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=${i}&searchOption=${searchOption}&searchKeyword=${searchKeyword}&userType=${userType}">${i}</a>
+											href="${pageContext.request.contextPath}/admin/getExpertList.do?currentIdx=${map.lastIdx+1}&userType=${userType}">Next</a>
 										</li>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-							<c:if test="${map.needNext eq true}">
-								<li class="page-item"><a class="page-link"
-									href="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=${map.lastIdx+1}&userType=${userType}">Next</a>
-								</li>
-							</c:if>
-						</ul>
-					</nav>
+									</c:if>
+								</ul>
+							</nav>
+						</c:when>
+						<c:otherwise>
+							<nav aria-label="Page navigation example">
+								<ul class="pagination">
+									<c:if test="${map.needPrev eq true}">
+										<li class="page-item"><a class="page-link"
+											href="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=${map.firstIdx-1}&userType=${userType}">Previous</a>
+										</li>
+									</c:if>
+									<c:forEach var="i" begin="${map.firstIdx}" end="${map.lastIdx}">
+										<c:choose>
+											<c:when test="${empty searchOption}">
+												<li class="page-item"><a class="page-link"
+													href="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=${i}&userType=${userType}">${i}</a>
+												</li>
+											</c:when>
+											<c:otherwise>
+												<li class="page-item"><a class="page-link"
+													href="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=${i}&searchOption=${searchOption}&searchKeyword=${searchKeyword}&userType=${userType}">${i}</a>
+												</li>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+									<c:if test="${map.needNext eq true}">
+										<li class="page-item"><a class="page-link"
+											href="${pageContext.request.contextPath}/admin/getMemberList.do?currentIdx=${map.lastIdx+1}&userType=${userType}">Next</a>
+										</li>
+									</c:if>
+								</ul>
+							</nav>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 
