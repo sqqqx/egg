@@ -46,7 +46,6 @@
         			<div class="col d-flex justify-content-center pt-3">
         				<h1>결제내역조회</h1>
         			</div>
-        			${list }
         		</div>
         		
         		<%-- 주문 검색 --%>
@@ -75,8 +74,7 @@
 						  <thead>
 						    <tr>
 						    	<th>주문번호</th>
-						    	<th><%-- 상품 이미지--%></th> 
-						    	<th>상품명</th>
+						    	<th colspan="2">상품명</th> <%-- 상품 이미지--%>
 						    	<th>수량</th>
 						    	<th>금액</th>
 						    	<th>주문일</th>
@@ -102,7 +100,7 @@
 									    	<td>₩ ${map.COST}</td>
 									    	<td>${map.ORDER_TIME}</td>
 									    	<c:choose>
-									    		<c:when test="${map.STATUS eq 'cancled'}">
+									    		<c:when test="${map.STATUS eq 'canceled'}">
 									    			<td>취소 완료</td>
 									    		</c:when>
 									    		<c:otherwise>
