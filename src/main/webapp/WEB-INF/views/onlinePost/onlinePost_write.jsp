@@ -32,6 +32,10 @@
 			margin: 0;
 		}
  */
+        .note-editable, .note-editor {
+			text-align:left;
+		}
+		
 		.row {
 			text-align: center;
 		}
