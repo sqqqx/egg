@@ -8,6 +8,15 @@
 <meta charset="UTF-8">
 <title>아이디 찾기</title>
 <style>
+	@font-face{
+    font-family: 'BMHANNAAir';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
+	body{background-color:#6DCEF520;font-family: 'BMHANNAAir';}
+	.container{background-color: white; height:540px;}
+	h2{margin:40px;}
 	.btnBox > div {
 		text-align: center;
 	}
@@ -15,8 +24,8 @@
 </style>
 </head>
 <body>
-	<h2 style="text-align:center;">아이디 찾기</h2>
 	<div class="container">
+		<h2 style="text-align:center;">아이디 찾기</h2>
 		<div class="row mb-2">
             <div class="col">
                 <label> 휴대전화</label>

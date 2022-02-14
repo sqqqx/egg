@@ -23,10 +23,10 @@
     	font-family: 'BMHANNAAir';
 	}
 	table{width:1400px; margin:auto;}
-	#header{margin-top:10px; height:100px; border-top: 1px solid black;}
+	#header{margin-top:10px; height:100px; border-top: 1px solid black; background-color:#6DCEF520; }
 	.category{height:400px;}
-	#btnBox{text-align:center; padding-bottom:30px;}
-	td{margin:auto;}
+	#btnBox{text-align:center; padding-bottom:30px;background-color:#6DCEF520;}
+	td{margin:auto; background-color: white}
 	img{width:300px; height:300px; margin:40px}
 	h2,h4{text-align:center; margin-top:10px;}
 	.contentBox{width:100%; height:100%;}

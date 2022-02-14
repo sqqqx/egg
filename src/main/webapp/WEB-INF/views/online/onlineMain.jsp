@@ -56,7 +56,7 @@
             		<div class="col-9">
             			<div class="plus" id="hot">HOT</div>
             		</div>
-            		<div class="col-1 mt-2 mainbutton">
+            		<div class="col-1 mt-5 mainbutton">
             			<span id="tolistLike">클래스 더보기</span>
             		</div>		
             	</div>
@@ -106,7 +106,7 @@
             		<div class="col-9">
             			<div class="plus" id="new">NEW</div>
             		</div>
-            		<div class="col-1 mt-2 mainbutton">
+            		<div class="col-1 mt-5 mainbutton">
             			<span id="tolistRecent">클래스 더보기</span>
             		</div>	
             	</div>
@@ -196,7 +196,7 @@
             		<div class="col-9">
             			<div class="plus" id="view">VIEW</div>
             		</div>
-            		<div class="col-1 mt-2 mainbutton">
+            		<div class="col-1 mt-5 mainbutton">
             			<span id="tolistView">클래스 더보기</span>
             		</div>	
             	</div>

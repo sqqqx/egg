@@ -7,10 +7,96 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="/resources/css/userInformation.css">    <!-- 부트스트랩 적용시 부트스트랩 cdn을 가져온 뒤 css를 불러와야 레이아웃에 적용된다.-->
-<link rel="stylesheet" href="/resources/css/profileSection.css">
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <title>회원정보조회</title>
+<style>
+*{margin:0;}
+body{
+    width:1800px;
+    height: 1000px;
+    margin:0 auto;
+}
+
+/* 회원 정보 */
+.userBox {
+    border-right: 1px solid black;    
+}
+
+#title {
+    text-align: center;
+    font-size: 30pt;
+    margin-bottom: 30px;
+    
+}
+#modifyProfilePhotoForm{
+	text-align:center;
+}
+#profileSection01 {
+    margin-bottom: 30px;
+}
+#userPhoto {
+    border: 1px solid lightgray;
+    width: 100%;
+    margin-bottom: 5px;
+}
+#userPhoto img{
+    width: 100%;
+    height: 175px;	
+}
+#photoBtnBox {
+	display: none;
+}
+#temp1 {
+    line-height: 50px;
+    border:1px solid black;
+     box-shadow: 5px 5px;
+}
+
+table {
+    margin-bottom: 30px;
+}
+table th {
+    line-height: 50px;
+    padding-left: 20px;
+    width: 20%;
+}
+#inputPhoneBox {
+    display: inline-block;
+}
+#inputPhoneBox * {
+    display: inline-block;
+    width: 155px;
+    height: 40px;
+}
+.verification {
+    display: none;
+}
+#editAddress div input {
+    margin: 0px 10px 10px 12px;
+}
+#inputAddress {
+	width: 80%;
+}
+#btnBox {
+    text-align: center;
+}
+#btnBox button {
+    width: 100%;
+    margin-top: 10px;
+}
+#editBtnBox {
+	text-align: center;
+	display: none;
+}
+#editBtnBox button {
+	width: 40%;
+	margin-top: 10px;
+	display: inline-block;
+}
+.editInput {
+	display: none;
+}
+</style>
 </head>
 <body>
 		
@@ -80,7 +166,7 @@
                                 <tr>
                                     <th>닉네임</th>
                                     <td id="viewUser_nickname">${dto.user_nickname}</td>
-                                    <td id="editUser_nickname">
+                                    <td id="editUser_nickname" class="editInput">
                                         <input type="text" placeholder="수정할 닉네임을 입력해주세요." id="inputUser_nickname" name="nickname" value="${dto.user_nickname}">
                                         <button type="button" class="btn btn-success" id="nicknameCheckBtn" disabled>중복검사</button>
                                         <div id="nickname_regex"></div>
@@ -90,7 +176,7 @@
                                 <tr>
                                     <th>휴대전화번호</th>
                                     <td id="viewPhone">${dto.phone}</td>
-                                    <td id="editPhone">
+                                    <td id="editPhone" class="editInput">
                                     	<div id="inputPhoneBox">
                                             <!--<input type="text" placeholder="수정할 전화번호를 입력해주세요." id="inputPhone" value="${dto.phone}">-->
                                             <select class="inputPhone" aria-label="Default select example" id="phone1" required>
@@ -114,7 +200,7 @@
                                 <tr>
                                     <th>이메일</th>
                                     <td id="viewEmail">${dto.email}</td>
-                                    <td id="editEmail">
+                                    <td id="editEmail" class="editInput">
                                         <input type="text" placeholder="수정할 이메일을 입력해주세요." id="inputEmail" value="${dto.email}">
                                         <button type="button" class="btn btn-success" id="emailCheckBtn" disabled>중복검사</button>
                                         <div id="email_regex"></div>
@@ -124,7 +210,7 @@
                                 <tr>
                                    <th>주소</th> 
                                    <td id="viewAddress">${dto.address}</td>
-                                   <td id="editAddress">
+                                   <td id="editAddress" class="editInput">
                                        <div class="row">
                                             <input type="text" id="edited_postcode" placeholder="우편번호" class="col-5">
                                             <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" class="btn btn-warning col-3" id="postcodeBtn">

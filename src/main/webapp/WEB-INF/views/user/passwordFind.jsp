@@ -8,6 +8,15 @@
 <meta charset="UTF-8">
 <title>비밀번호 찾기</title>
 <style>
+	@font-face{
+    font-family: 'BMHANNAAir';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
+	body{background-color:#6DCEF520;font-family: 'BMHANNAAir';}
+	.container{background-color: white; height:540px;}
+	h2{margin:40px;}
 	.btnBox>div{
     	text-align: center;
     }
@@ -17,11 +26,15 @@
     #backBtn{
         float: left;
     }
+    #pwBox{
+    	margin:0 auto;
+    }
 </style>
 </head>
 <body>
-	<h2 style="text-align:center;">비밀번호 찾기</h2>
+	
 	<div class="container">
+		<h2 style="text-align:center;">비밀번호 찾기</h2>
 		<div id="idBox">
 			<div class="row mb-2">
 	            <div class="col">
@@ -91,7 +104,7 @@
         </div>
         <div class="row mb-3">
             <div class="col-10">
-                <input type="text" class="form-control" id="em" name="em">
+                <input type="text" class="form-control" id="em" name="em" placeholder="이메일 입력">
             </div>
             <div class="col-2" id="emailSendBox">
                 <button type="button" class="btn btn-dark" id="mail_check_button">인증전송</button>
@@ -125,13 +138,13 @@
                 <label> 비밀번호(8자 이상 20자 이하의 영문, 숫자, 특수문자를 조합)</label>
             </div>
         </div>
-        <div class="row mb-1">
+        <div class="row mb-1 mid">
             <div class="col-10">
                 <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호 입력">
             </div>
         </div>
         <div id="pw_regex"></div>
-        <div class="row">
+        <div class="row mid">
             <div class="col-10">
                 <input type="password" class="form-control" id="checkPw" placeholder="비밀번호 확인">
             </div>
@@ -140,16 +153,17 @@
         <div id="pwcheck_regex"></div>
 		</div>
 		</form>
+		<div class="row my-5 btnBox">
+	        <div class="col-6" id="completeBtnBox">
+	            <button class="btn btn-dark btn-lg clsBtn" type="button" id="completeBtn" style="display:none;" disabled>완료</button>
+	        </div>
+	        <div class="col-6">
+	            <button class="btn btn-secondary btn-lg clsBtn" type="button" id="backBtn">닫기</button>
+	        </div>
+    	</div>
 	</div>
 	
-	<div class="row my-5 btnBox">
-        <div class="col-6" id="completeBtnBox">
-            <button class="btn btn-dark btn-lg clsBtn" type="button" id="completeBtn" style="display:none;" disabled>완료</button>
-        </div>
-        <div class="col-6">
-            <button class="btn btn-secondary btn-lg clsBtn" type="button" id="backBtn">닫기</button>
-        </div>
-    </div>
+	
 
 	<script>
 	$(document).ready(function(){
@@ -296,6 +310,7 @@
             return
         }
   		$("#pwForm").submit();
+  		window.close();
   	})
   	
  	// PW 정규식

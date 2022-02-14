@@ -523,24 +523,27 @@
             	return ;
             }
         	filePath = $("#cgListBox #cate2 #searchFile2").val();
-        	console.log("두번째 경로: " + filePath);
-        	extn = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
-        	console.log("두번째 확장자: " + extn);
-        	if (extn !== "gif" && extn !== "png" && extn !== "jpg" && extn !== "jpeg" && extn !== "pdf") {
-            	alert("gif, png, jpg, jpeg, pdf 파일만 선택가능합니다.");
-            	$("#cgListBox #cate2 #searchFile2").val("");
-            	return ;
-            }
+        	if(filePath !== undefined) {
+        		console.log("두번째 경로: " + filePath);
+            	extn = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
+            	console.log("두번째 확장자: " + extn);
+            	if (extn !== "gif" && extn !== "png" && extn !== "jpg" && extn !== "jpeg" && extn !== "pdf") {
+                	alert("gif, png, jpg, jpeg, pdf 파일만 선택가능합니다.");
+                	$("#cgListBox #cate2 #searchFile2").val("");
+                	return ;
+                }
+        	}
         	filePath = $("#cgListBox #cate3 #searchFile3").val();
-        	console.log("세번째 경로: " + filePath);
-        	extn = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
-        	console.log("세번째 확장자: " + extn);
-        	if (extn !== "gif" && extn !== "png" && extn !== "jpg" && extn !== "jpeg" && extn !== "pdf") {
-            	alert("gif, png, jpg, jpeg, pdf 파일만 선택가능합니다.");
-            	$("#cgListBox #cate3 #searchFile3").val("");
-            	return ;
-            }
-        	
+        	if(filePath !== undefined) {
+        		console.log("세번째 경로: " + filePath);
+            	extn = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
+            	console.log("세번째 확장자: " + extn);
+            	if (extn !== "gif" && extn !== "png" && extn !== "jpg" && extn !== "jpeg" && extn !== "pdf") {
+                	alert("gif, png, jpg, jpeg, pdf 파일만 선택가능합니다.");
+                	$("#cgListBox #cate3 #searchFile3").val("");
+                	return ;
+                }
+        	}
         	$("#ceForm").submit();
         })
         

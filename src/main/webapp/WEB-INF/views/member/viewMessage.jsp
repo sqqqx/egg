@@ -93,7 +93,6 @@
 					                    			<td><img src="https://cdn-icons-png.flaticon.com/512/2218/2218516.png"></td>
 					                    		</c:otherwise> 
 					                    	</c:choose>
-					                    	<td></td>	<!-- <th><td>개수 맞는데 아이디 출력이 안되서 하나 추가 -->
 					                    	<td>${msg.from_id}</td>
 				                    	</c:if>
 				                    	<c:if test="${naviMap.get('type') eq 'sent'}">
@@ -105,7 +104,6 @@
 					                    			<td><img src="https://cdn-icons-png.flaticon.com/512/726/726619.png"></td>
 					                    		</c:otherwise> 
 					                    	</c:choose>
-					                    	<td></td>	<!-- <th><td>개수 맞는데 아이디 출력이 안되서 하나 추가 -->
 					                    	<td>${msg.to_id}</td>
 				                    	</c:if>
 				                    

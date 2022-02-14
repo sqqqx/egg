@@ -259,7 +259,7 @@
     // 휴대전화 인증 엔터
     $("#phone3").on("keypress", function(e){
     	if(e.keyCode == "13"){
-    		$("#btn_phone").click();
+    		$("#btn_phoneCheck").click();
     	}
     });
     
@@ -660,7 +660,7 @@
 		
 		
 		$("#formSignup").submit();
-		alert("회원가입이 완료되었습니다. \n 앞으로 많은 이용 부탁드립니다. \n 감사합니다.");
+		alert("회원가입이 완료되었습니다. \n앞으로 많은 이용 부탁드립니다. \n감사합니다.");
 	})
 	
 	// 뒤로가기 버튼
