@@ -46,6 +46,7 @@
         			<div class="col d-flex justify-content-center pt-3">
         				<h1>결제내역조회</h1>
         			</div>
+        			${list }
         		</div>
         		
         		<%-- 주문 검색 --%>

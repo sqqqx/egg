@@ -25,7 +25,7 @@
           </div>
           </div>
           <div id="userTab">
-              <ul>
+             <ul>
               	<c:if test="${loginSession.type !=0}">
                   <li><span id="toModifyPw" class="userTab">비밀번호 수정</span></li>
                 </c:if>

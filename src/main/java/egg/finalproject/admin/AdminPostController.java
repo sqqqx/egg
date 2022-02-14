@@ -30,14 +30,14 @@ public class AdminPostController {
 	}
 	
 	// 글 상세페이지 이동
-	@RequestMapping("toPostDetail")
-	public String toPostDetail(int post_no, int checkViewCount) throws Exception {
-		System.out.println("post_no : " + post_no + " : checkViewCount : " + checkViewCount);
-		if(checkViewCount == 0) {
-			service.addViewCount(post_no);
-		}
-		return "redirect:/onlinePost/toDetail.do?post_no="+post_no;
-	}
+//	@RequestMapping("toPostDetail")
+//	public String toPostDetail(int post_no, int checkViewCount) throws Exception {
+//		System.out.println("post_no : " + post_no + " : checkViewCount : " + checkViewCount);
+//		if(checkViewCount == 0) {
+//			service.addViewCount(post_no);
+//		}
+//		return "redirect:/onlinePost/toDetail.do?post_no="+post_no;
+//	}
 	
 	// 글 작성
 	@RequestMapping("toPostWrite")
