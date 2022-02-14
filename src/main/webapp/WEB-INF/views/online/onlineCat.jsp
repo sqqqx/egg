@@ -15,8 +15,17 @@ body{
     height: auto;
     margin:auto;
 }
-	h2{text-align:center; padding-top:20px;}
-	
+@font-face {
+    font-family: 'BMHANNAAir';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+h2{
+	text-align:center;
+	font-family: 'BMHANNAAir';
+	font-size:xx-large;
+}
 	.class{
    height: auto;
    width:1800px;
@@ -74,6 +83,8 @@ body{
 .titleBox{
 	height:70px;
 	padding-top:5px;
+	font-family: 'BMHANNAAir';
+	font-size:large
 }
 .seeBox{
 	height:30px;

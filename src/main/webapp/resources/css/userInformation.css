@@ -6,7 +6,12 @@ body{
     height: 1000px;
     margin:0 auto;
 }
-
+@font-face{
+    font-family: 'BMHANNAAir';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 /* 회원 정보 */
 .userBox {
     border-right: 1px solid black;    
@@ -16,7 +21,11 @@ body{
     text-align: center;
     font-size: 30pt;
     margin-bottom: 30px;
-    
+    font-family: 'BMHANNAAir';
+}
+#title>p{
+	font-family: 'BMHANNAAir';
+	font-size:xxx-large;
 }
 #modifyProfilePhotoForm{
 	text-align:center;
@@ -44,6 +53,7 @@ body{
 
 table {
     margin-bottom: 30px;
+    
 }
 table th {
     line-height: 50px;

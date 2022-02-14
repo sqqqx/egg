@@ -71,12 +71,12 @@
 			        <table class="table">
 			            <thead>
 			                <tr>
-			                    <th>체크</th>
-			                    <th>확인여부</th>
-			                    <th>ID</th>
-			                    <th>제목</th>
-			                    <th>날짜</th>    
-			                    <th>삭제버튼</th>
+			                    <th style="width:10%">체크</th>
+			                    <th style="width:10%">확인여부</th>
+			                    <th style="width:30%">ID</th>
+			                    <th style="width:30%">제목</th>
+			                    <th style="width:10%">날짜</th>    
+			                    <th style="width:10%">삭제</th>
 			                </tr>
 			            </thead>
 			            <tbody>

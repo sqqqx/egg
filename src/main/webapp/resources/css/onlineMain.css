@@ -40,6 +40,7 @@ body{
 }
 .mainTitle{
 	padding-left:30px;
+	font-size:xx-large;
 
 }
 .mainTitle>label{
@@ -47,7 +48,7 @@ body{
 }
 .plus{
 	position:relative;
-	right:170px;
+	right:190px;
 	top:12px;
 	width:42px;
 	height:20px;
@@ -65,6 +66,7 @@ body{
 	background-color: #00ADEE;
 	text-align:center;
 	margin-left:80px;
+	width:45px;
 }
 #tolistLike, #tolistRecent, #tolistView{
 	color:gray;
@@ -126,6 +128,8 @@ body{
 .titleBox{
 	height:70px;
 	padding-top:5px;
+	font-family: 'BMHANNAAir';
+	font-size:large
 }
 .seeBox{
 	height:30px;
@@ -155,6 +159,8 @@ background-color: rgb(241, 234, 234);
 	height:100px;
 	width:1820px;
 	background-color:#00ADEE20;
+	font-family: 'BMHANNAAir';
+	font-size:large
 }
 .footer>div{
 	height:70px;

@@ -17,6 +17,17 @@
 <link rel="stylesheet" href="/resources/css/header.css"> 
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src =" https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js " > </script>
+<style>
+@font-face{
+    font-family: 'BMHANNAAir';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+body{
+	font-family: 'BMHANNAAir';
+}
+</style>
 </head>
 <body>
  <div class="container-fluid">

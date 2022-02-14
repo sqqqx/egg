@@ -11,10 +11,17 @@
 <title>내가 쓴 글</title>
 	<style>
 		*{margin:0;}
+		@font-face{
+		    font-family: 'BMHANNAAir';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
 		body{
 		    width:1800px;
 		    height: 1000px;
 		    margin:0 auto;
+		    font-family: 'BMHANNAAir';
 		}
 		table, p{
 	   		text-align:center;

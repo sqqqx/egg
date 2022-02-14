@@ -10,10 +10,17 @@
 <title>Insert title here</title>
 <style>
 	*{margin:0;}
+	@font-face{
+	    font-family: 'BMHANNAAir';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
+	}
 	body{
 		margin:0 auto;
 		width:1800px;
     	height: 1000px;
+    	font-family: 'BMHANNAAir';
 	}
 	.title{height:100px; border:1px solid blue;}
 	h1{text-align:center; padding-top:20px;}
@@ -72,8 +79,9 @@
 				</div>
 			</div>
 		</form>
+		
 		<div class="row">
-			<div class="col-12">
+			<div class="col d-flex justify-content-center">
 				<nav aria-label="Page navigation example">
 					<ul class="pagination">
 						<c:if test="${navi.needPrev eq true}">

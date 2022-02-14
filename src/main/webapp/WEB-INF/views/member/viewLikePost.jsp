@@ -15,6 +15,13 @@
 		    width:1800px;
 		    height: 1000px;
 		    margin:0 auto;
+		    font-family: 'BMHANNAAir';
+		}
+		@font-face{
+		    font-family: 'BMHANNAAir';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
 		}
 		table, p{
 	   		text-align:center;

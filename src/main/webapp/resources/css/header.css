@@ -7,13 +7,12 @@ body{
     margin:0 auto;
 }
 
-@font-face {
-            font-family: 'BMHANNAAir';
-            src:
-                url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
+@font-face{
+    font-family: 'BMHANNAAir';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 .header{
 	height:100px;
@@ -69,6 +68,8 @@ body{
    z-index: 2;
    padding-left:0;
    padding-right:0;
+   font-family: 'BMHANNAAir';
+   font-size:large;
 }
 #accountInfoBox>div{
 margin:0;
@@ -156,6 +157,8 @@ margin:0;
    height: 50px;
    border-top: 1px solid black;
    font-weight: 600;
+   font-family: 'BMHANNAAir';
+   font-size: large;
    
 }
 .category_big>div{
@@ -233,3 +236,5 @@ li:hover > span::after {
 #alarmContent{
 	border-top: 1px solid black;
 }
+
+

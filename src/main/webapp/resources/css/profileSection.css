@@ -1,5 +1,11 @@
 @charset "UTF-8";
 
+@font-face{
+    font-family: 'BMHANNAAir';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 /* 좌측 프로필 및 회원메뉴 탭 */
 #myInfo {
     margin-top: 20px;
@@ -21,9 +27,13 @@
 #profileInfo {
     border-bottom: 2px double black;
     height: 100px;
+    font-family: 'BMHANNAAir';
+    font-size:xx-large;
 }
 li {
     list-style: none;
+    font-family: 'BMHANNAAir';
+    font-size:large;
 }
 .userTab {
 	cursor: pointer;
