@@ -170,6 +170,7 @@ table, tr, td {
                 setCookie(target_no);
                 checkViewCount = 0;
             }
+			//opener.location.href = "${pageContext.request.contextPath}/admin/toPostDetail?post_no="+target_no+"&checkViewCount="+checkViewCount;
 			opener.location.href = "${pageContext.request.contextPath}/admin/toPostDetail?post_no="+target_no+"&checkViewCount="+checkViewCount;
 			window.close();
         }
