@@ -18,9 +18,11 @@ body{
 	height:100px;
 
 }
+
 .header>div{
     line-height: 100px;
 }
+
 .imgBox>a>img{
     width:80%;
     height: 80px;
@@ -103,14 +105,14 @@ margin:0;
 #alarmContentBox{
 	position:absolute;
 	display:none;
-	width:600px;
-	height:200px;
+	width:380px;
+	height:260px;
 	background-color: white;
 	z-index: 2;
 	top:100px;
 	left:1050px;
 	border:1px solid black;
-	overflow: scroll;
+	overflow: auto;
 	}
 #alarmContent{
 	width:100%;
@@ -225,16 +227,48 @@ li:hover > span::after {
     text-align:center;
 }
 
+
 #replyNew{
+	padding-top : 10px;
 	background-color: red;
 	text-align: center;
-	width:42px;
+	width:60px;
 	height:20px;
-
+    word-break : break-all;
+    line-height: 0px;
+    margin-bottom:15px;
+    margin-top : 8px;
+}
+#newAlarm{
+	border-top : 1px dotted black;
+}
+#newAlarm>div{
+	height : 58px;
+	border-bottom : 1px dotted black;
+}
+#newAlarm span {
+	padding-bottom:10px;
 }
 
-#alarmContent{
-	border-top: 1px solid black;
+#newAlarm div{
+	line-height:0px;
+}
+
+#alarmContent>div{
+	padding-top : 8px;
+	line-height:8px;
+	height : 60px;
+	border-bottom:1px dotted black;
+}
+a{
+	margin-right : 10px;
+	margin-left : 10px;
+}
+.deleteBtnDiv{
+	line-height : 0px;
+	margin-bottom : 7px;
+	margin-left : 7px;
+	margin-top : 7px;
 }
 
 

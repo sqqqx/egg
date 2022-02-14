@@ -77,7 +77,9 @@ body{
 						</svg>
 					</button>
 					<div id="alarmContentBox">
-						<button type="button" class="btn btn-dark deleteAll" id="deleteAll">전체삭제</button>
+					    <div class="deleteBtnDiv">
+					       <button type="button" class="btn btn-warning btn-sm deleteAll" id="deleteAll">전체삭제</button>
+					    </div> 
 						<div id="newAlarm"></div>
 						<div id="alarmContent"></div>
 					</div>
@@ -392,7 +394,7 @@ body{
 				$("#alarmBtn").css("display","flex")
 				$("#noAlarmBtn").css("display","none")
 				//-----------------------------------
-				msg+="<div id='replyNew'><span>New</span></div>"
+				msg+="<div id='replyNew'>New</div>"
 				//메세지 삽입	
 				 if(msgObj.send_type==1){
 					msg += "<a href='${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no="+msgObj.send_post_no+"'>"
@@ -469,6 +471,7 @@ body{
 					for(let notice of rs){
 						let newMsg=$("<div>")
 						let msg="";
+						msg+="<div class='noticeMessage'>"
 						if(notice.send_type==1){
 							msg += "<a href='${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no="+notice.send_post_no+"'>"
 						}else if(notice.send_type==2){
@@ -485,13 +488,14 @@ body{
 						}else if(notice.type==4){
 							msg +="댓글에 좋아요를 눌렀습니다."
 						}
-						msg+="</a>" 
-						
+						msg+="</a>"
 						msg+="<button type='button' class='btn btn-dark delete' value='"+notice.notice_no+"'>"
 						msg+="<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash-fill' viewBox='0 0 16 16'>"
 						msg+="<path d='M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z'/>"
 						msg+="</svg>"
 						msg+="</button>"
+						msg+="</div>"
+						
 						newMsg.append(msg);
 						$("#alarmContent").append(newMsg); 
 					}
