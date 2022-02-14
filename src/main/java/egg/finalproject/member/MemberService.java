@@ -71,10 +71,10 @@ public class MemberService {
 	
 	// 이메일 중복검사
 	public boolean emailCheck(String email) throws Exception{
-		if(dao.emailCheck(email) == 1) { 
-			return true;
-		}else {
+		if(dao.emailCheck(email) >= 1) { 
 			return false;
+		}else {
+			return true;
 		}
 	}
 	
