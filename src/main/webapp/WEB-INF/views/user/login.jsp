@@ -7,33 +7,114 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <title>login</title>
     <style>
-        *{margin:0; text-align: center;}
-        body{
-            background-color: #6DCEF520;
-        }
-        .container{
-            background-color: white;
-            width:800px;
-            padding:120px;
-            border: 1px solid black;
-            border-radius: 10px;
-        }
-        a{
-            color: black;
-            text-decoration: none;
-        }
-        #backBtn{
-        	position:absolute;
-        	top:10px;
-        }
-        #loginBtn{
-        	width:165px;
-        	height:44px;
-        }
-        #kakaoLoginBtn{
-        	cursor: pointer;
-        }
-    </style>
+* {
+	margin: 0;
+	text-align: center;
+}
+
+body {
+	background-color: #6DCEF520;
+}
+
+.container {
+	background-color: white;
+	width: 800px;
+	padding: 120px;
+	border: 1px solid black;
+	border-radius: 10px;
+}
+
+a {
+	color: black;
+	text-decoration: none;
+}
+
+#backBtn {
+	position: absolute;
+	top: 10px;
+}
+
+#loginBtn {
+	width: 165px;
+	height: 44px;
+}
+
+#kakaoLoginBtn {
+	cursor: pointer;
+}
+
+
+
+	label {
+		line-height: 40px;
+		position: absolute;
+		right: 120px;
+		top: 0;
+		bottom: 0;
+		-moz-transition: 0.3s right ease;
+		-ms-transition: 0.3s right ease;
+		-o-transition: 0.3s right ease;
+		-webkit-transition: 0.3s right ease;
+		transition: 0.3s right ease;
+		z-index: 0
+	}
+	
+	input {
+		color: transparent;
+		font-size: 12px;
+		height: 35px;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+		-moz-transition: 0.3s all ease;
+		-ms-transition: 0.3s all ease;
+		-o-transition: 0.3s all ease;
+		-webkit-transition: 0.3s all ease;
+		transition: 0.3s all ease;
+	}
+	
+	input[type="text"], input[type="password"] {
+		border: 1px solid #ccc;
+		height: 35px;
+		padding: 0 10px;
+		width: 550px;
+		position: relative;
+		-moz-box-shadow: inset 0 0 10px rgba(0, 0, 0, .06);
+		-webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, .06);
+		box-shadow: inset 0 0 10px rgba(0, 0, 0, .06);
+		z-index: 2;
+	}
+	
+	input[type="text"], input[type="password"] {
+		color: rgba(47, 130, 194, .8);
+	}
+	
+	input[type="text"]:-moz-placeholder {
+		color: rgba(47, 130, 194, .6);
+	}
+	
+	input[type="text"]:-ms-input-placeholder {
+		color: rgba(47, 130, 194, .6);
+	}
+	
+	input[type="text"]::-webkit-input-placeholder {
+		color: rgba(47, 130, 194, .6);
+	}
+	
+	input[type="password"]:-moz-placeholder {
+		color: rgba(47, 130, 194, .6);
+	}
+	
+	input[type="password"]:-ms-input-placeholder {
+		color: rgba(47, 130, 194, .6);
+	}
+	
+	input[type="password"]::-webkit-input-placeholder {
+		color: rgba(47, 130, 194, .6);
+	}
+	
+	
+</style>
 </head>
 <body>
     <div class="container">
