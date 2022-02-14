@@ -8,8 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import egg.finalproject.member.MemberDTO;
+import egg.finalproject.member.MemberService;
 import egg.finalproject.order.TempOrderDTO;
-import egg.finalproject.product.ProductDTO;
 
 @Controller
 @RequestMapping(value="/cart")
@@ -17,6 +18,8 @@ public class CartController {
 
 	@Autowired
 	private CartService service;
+	@Autowired
+	private MemberService mService;
 	
 	@RequestMapping(value="/insertCart.do")
 	@ResponseBody
@@ -36,10 +39,27 @@ public class CartController {
 		return "cart/cart";
 	}
 	
+	@RequestMapping(value="/selectCartForMe.do")
+	public String selectCartForMe(String user_id, Model model) throws Exception{
+		List<TempOrderDTO> list = service.selectCart(user_id);
+		MemberDTO dto = mService.getDTOById(user_id);
+		model.addAttribute("dto", dto);
+		model.addAttribute("list", list);
+		return "member/memberCart";
+	}
+	
 	@RequestMapping(value="/deleteCart.do")
 	public String deleteCart(String name, String user_id) throws Exception{
 		service.deleteCart(name);
 		return "redirect:/cart/selectCart.do?user_id="+user_id;
+	}
+	
+	@RequestMapping(value="/deleteCartForMe.do")
+	public String deleteCartForMe(String name, String user_id, Model model) throws Exception{
+		service.deleteCart(name);
+		MemberDTO dto = mService.getDTOById(user_id);
+		model.addAttribute("dto", dto);
+		return "redirect:/cart/selectCartForMe.do?user_id="+user_id;
 	}
 	
 	@RequestMapping(value="/updateQuantity.do")

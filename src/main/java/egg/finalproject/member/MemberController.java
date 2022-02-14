@@ -74,6 +74,10 @@ public class MemberController {
 		@RequestMapping(value="/login.do", produces="text/html;charset=UTF-8")
 		@ResponseBody
 		public String login(String user_id, String password) throws Exception{
+			
+			String location = (String) session.getAttribute("location");
+			System.out.println("location : " + location);
+			
 			password = EncryptionUtils.getSHA512(password);
 			if(service.isLoginOk(user_id, password)) {
 				MemberDTO dto = service.getMember(user_id);

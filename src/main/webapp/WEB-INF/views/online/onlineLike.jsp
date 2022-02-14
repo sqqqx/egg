@@ -15,9 +15,9 @@ body{
     height: auto;
     margin:auto;
 }
-	h2{text-align:center; padding-top:20px;}
+	h2{text-align:center;}
 	
-	.class{
+.class{
    height: auto;
    width:1800px;
 }
@@ -26,13 +26,13 @@ body{
 	height:auto;
 	width:100%;
 	 float:left;
-	 margin:auto;
-	 background-color:#f0f2ed;
+	 margin:0 auto;
+	 background-color:#6DCEF520;
 }
 .content{
 	height:400px;
 	width:420px;
-	margin:10px;
+	margin:12px;
 	background-color:white;
 	padding-right:0;
 	padding-left:0;
@@ -75,10 +75,22 @@ a{
 	text-decoration-line: none;
 	color:black;
 }
+#hot{
+	background-color: red;
+	width:42px;
+	height:20px;
+	text-align: center;
+	margin:auto;
+	padding-left:0;
+	padding-right:0;
+	color:white;
+}
+
 </style>
 </head>
 <body>
 		<div class="row mt-3 littleTitle">
+			<div id="hot">HOT</div>
 			<h2> 인기 강의 </h2>
 		</div> 
         <div class="row main">

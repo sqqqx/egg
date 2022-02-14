@@ -50,6 +50,9 @@ public class onlinePostService {
 	public List<Object> selectLike4() throws Exception{
 		return dao.selectLike4();
 	}
+	public List<Object> selectView4() throws Exception{
+		return dao.selectView4();
+	}
 	
 	public List<Object> selectAdmin() throws Exception{
 		return dao.selectAdmin();
@@ -59,6 +62,9 @@ public class onlinePostService {
 	}
 	public List<Object> selectLike() throws Exception{
 		return dao.selectLike();
+	}
+	public List<Object> selectView() throws Exception{
+		return dao.selectView();
 	}
 	public List<Object> selectCat(int category_no) throws Exception{
 		return dao.selectCat(category_no);

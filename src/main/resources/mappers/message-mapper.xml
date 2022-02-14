@@ -187,4 +187,9 @@
 		select * from tbl_message where message_no = #{message_no}
 	</select>
 	
+	<!-- (마이페이지) 쪽지 읽음처리(1개) -->
+	<update id="readMsg">
+		update tbl_message set message_check = 'Y' where message_no = #{message_no}
+	</update>
+	
 </mapper>

@@ -91,5 +91,27 @@ public class AdminMemberController {
 		List<MemberDTO> list = service.getUserInfo(map);
 		return list;
 	}
-
+	
+	// 전문가 신청 리스트 가져오기
+	@RequestMapping("/getExpertList.do")
+	public String getExpertList(Model model, String searchOption, String searchKeyword, int currentIdx, int userType) throws Exception {
+		service.getExpertListCount(searchOption, searchKeyword, userType);
+		Map<String, Object> navi = service.getNavi(currentIdx);
+		Map<String, Object> range = service.getRange(currentIdx);
+		List<MemberDTO> list = service.getExpertList(searchOption, searchKeyword, range, userType);
+		
+		model.addAttribute("navi", navi);
+		model.addAttribute("list", list);
+		model.addAttribute("userType", userType);
+		model.addAttribute("searchOption", searchOption);
+		model.addAttribute("searchKeyword", searchKeyword);
+		return "admin/memberManagement"; 
+	}
+	
+	// 능력자 전환
+	@RequestMapping("/changeExpert.do")
+	public String changeExpert(String[] userCheckBox) throws Exception {
+		service.changeExpert(userCheckBox);
+		return "redirect:/admin/toMemberManagement";
+	}
 }

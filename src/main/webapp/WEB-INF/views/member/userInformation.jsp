@@ -145,7 +145,7 @@
                     		</table>
                     	</form>
                     
-                    <div class="col" id="btnBox">
+                    <div class="col mb-4" id="btnBox">
                     	<c:choose>
                             <c:when test="${dto.type eq 1}">
                                 <button type="button" id="usertypeConvertBtn" class="btn btn-success">능력자로 전환하기</button>

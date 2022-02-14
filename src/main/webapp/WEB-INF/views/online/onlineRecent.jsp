@@ -29,12 +29,12 @@ h2{text-align:center;}
 	width:100%;
 	 float:left;
 	 margin:auto;
-	 background-color:#f0f2ed;
+	 background-color:#6DCEF520;
 }
 .content{
 	height:400px;
 	width:420px;
-	margin:10px;
+	margin:12px;
 	background-color:white;
 	padding-right:0;
 	padding-left:0;
@@ -77,10 +77,23 @@ a{
 	text-decoration-line: none;
 	color:black;
 }
+
+#new{
+	position:relative;
+	background-color: #ff7f00;
+	width:42px;
+	height:20px;
+	text-align: center;
+	margin:auto;
+	padding-left:0;
+	padding-right:0;
+	color:white;
+}
 </style>
 </head>
 <body>
 		<div class="row mt-3 littleTitle">
+			<div id="new">NEW</div>
 			<h2> 최신 강의 </h2>
 		</div>       
         <div class="row main">

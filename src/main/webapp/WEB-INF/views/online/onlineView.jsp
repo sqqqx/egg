@@ -15,7 +15,7 @@ body{
     height: auto;
     margin:auto;
 }
-	h2{text-align:center; padding-top:20px;}
+	h2{text-align:center;}
 	
 	.class{
    height: auto;
@@ -75,24 +75,36 @@ a{
 	text-decoration-line: none;
 	color:black;
 }
+
+#view{
+	background-color: #00ADEE;
+	width:42px;
+	height:20px;
+	text-align: center;
+	margin:auto;
+	padding-left:0;
+	padding-right:0;
+	color:white;
+}
 </style>
 </head>
 <body>
 		<div class="row mt-3 littleTitle">
-			<h2> ${category} </h2>
+			<div id="view">VIEW</div>
+			<h2> 조회수 순 강의 </h2>
 		</div> 
         <div class="row main">
-         <!-- 카테고리별 강의 -->
+         <!-- 인기 강의 -->
             <div class="col-12 mt-5 class">
                 <div class="row mediaBox">
-                	<c:forEach items="${listCat }" var="cat">
+                	<c:forEach items="${listView }" var="view">
                 		<div class="col-3 content">
-	                			<a href="${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no=${cat.POST_NO}">
+	                			<a href="${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no=${view.POST_NO}">
 			                		<div class="row mediaPhoto">
-			                			<img class="photo" src="${pageContext.request.contextPath}/onlinePostThumbNail/${cat.SYSTEM_NAME }">
+			                			<img class="photo" src="${pageContext.request.contextPath}/onlinePostThumbNail/${view.SYSTEM_NAME }">
 			                		</div>
 			                		<div class="row mediaText">
-			             				<span>${cat.TITLE }</span>
+			             				<span>${view.TITLE }</span>
 			                		</div>
 		                		</a>
 	                		</div>

@@ -109,4 +109,39 @@
 		</foreach>
 	</select>
 	
+	<!-- 전문가 신청 리스트 가져오기 -->
+	<select id="getExpertList" parameterType="map" resultType="memberDTO">
+		SELECT 
+		    m.user_id, m.user_nickname, m.email, 
+		    m.type, m.blacklist, m.signup_date
+		FROM (SELECT row_number() OVER (ORDER BY expert_id) AS idx, tbl_expert.* FROM tbl_expert) e
+		    INNER JOIN tbl_member m ON(e.expert_id = m.user_id)
+		WHERE idx BETWEEN ${startRange} AND ${endRange}
+			AND m.type != 2
+		<if test="searchKeyword != null">
+			AND ${searchKeyword} LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY signup_date DESC
+	</select>
+	
+	<!-- 전문가 신청 리스트 COUNT -->
+	<select id="getExpertListCount" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM tbl_expert e
+		    INNER JOIN tbl_member m ON(e.expert_id = m.user_id)
+		WHERE m.type != 2
+	    <if test="searchKeyword != null">
+			AND ${searchKeyword} LIKE '%'||#{searchKeyword}||'%'
+		</if>
+	</select>
+	
+	<!-- 능력자 전환-->
+	<update id="changeExpert" parameterType="map">
+		UPDATE tbl_member SET type = 2
+		WHERE user_id IN
+		<foreach collection="userCheckBox" item="user_id" open="(" close=")" separator=",">
+			#{user_id}
+		</foreach>
+	</update>
+	
 </mapper>

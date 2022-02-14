@@ -19,16 +19,20 @@
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
             </div>
             <div class="carousel-inner">
               <div class="carousel-item active slidePhoto">
-                <img src="https://cdn.crowdpic.net/detail-thumb/thumb_d_6E6E61E02B8D4E21B92E5143A00F6CB5.jpg" class="d-block w-100" alt="...">
+                <img src="/resources/img/main1.png" class="d-block w-100" alt="...">
               </div>
               <div class="carousel-item slidePhoto">
-                <img src="https://st4.depositphotos.com/20894472/41692/v/600/depositphotos_416924958-stock-illustration-clayware-crafting-hobby-online-classes.jpg" class="d-block w-100" alt="...">
+                <img src="/resources/img/main2.png" class="d-block w-100" alt="...">
               </div>
               <div class="carousel-item slidePhoto">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNT3bHsIQRqBcpkXu2Ca1rskQmXJzt7xIi6w&usqp=CAU" class="d-block w-100" alt="...">
+                <img src="/resources/img/main3.png" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item slidePhoto">
+                <img src="/resources/img/main4.png" class="d-block w-100" alt="...">
               </div>
             </div>
             <button class="carousel-control-prev iconBox" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -127,10 +131,44 @@
 	                		</div>
                 	</c:forEach>
                 </div>
-            </div>      
+            </div>  
+            
+            <!-- 조회수강의 -->
+            <div class="col-12 mt-5 class">
+            	<div class="row titleBox">
+            		<div class="col-2 mt-2 mainTitle">
+            			<label>
+	            			<h4><b>최다 조회수 강의</b></h4>
+            			</label>	
+            		</div>
+            		<div class="col-9">
+            			<div class="plus" id="view">VIEW</div>
+            		</div>
+            		<div class="col-1 mt-2 mainbutton">
+            			<span id="tolistView">클래스 더보기</span>
+            		</div>	
+            	</div>
+                <div class="row mediaBox">
+                	<c:forEach items="${listView }" var="view">
+	                		<div class="col">
+	                			<a href="${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no=${view.POST_NO}">
+			                		<div class="row mediaPhoto">
+			                			<img class="photo" src="${pageContext.request.contextPath}/onlinePostThumbNail/${view.SYSTEM_NAME }">
+			                		</div>
+			                		<div class="row mediaText">
+			             				<span><b>${view.TITLE }</b></span>
+			                		</div>
+		                		</a>
+	                		</div>
+                	</c:forEach>
+                </div>
+            </div>    
         </div>
-        <div class="row footer">
-            푸터
+        <div class="row mt-2 footer">
+      		<div class="row">
+      			<span>(주)능력자들 | 대표 : 나승완 | 사업자등록번호 : 421-22-00218 </span>
+      			<span>주소 : 올림픽로 92길 40-3 3층 (주)능력자들</span>
+      		</div>    
         </div>
     </div> 
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -140,6 +178,9 @@ $("#tolistLike").click(function(){
 })
 $("#tolistRecent").click(function(){
 	location.href="${pageContext.request.contextPath}/online/toRecent.do"
+})
+$("#tolistView").click(function(){
+	location.href="${pageContext.request.contextPath}/online/toView.do"
 })
 </script>
 </body>

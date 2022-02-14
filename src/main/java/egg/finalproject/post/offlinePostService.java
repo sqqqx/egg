@@ -14,6 +14,71 @@ public class offlinePostService extends Paging {
 	
 	@Autowired
 	private offlinePostDAO dao;
+	
+	// (마이페이지) 찜한 게시글 가져오기
+	public List<Map<String, Object>> getMyLikePost(String user_id, String searchOption, String searchKeyword, Map<String, Object> range, int type) throws Exception {
+		System.out.println("user_id : " + user_id + " : searchOption : " + searchOption + " : searchKeyword : " + searchKeyword + " : sRange : " + range.get("startRange") + " : eRange : " + range.get("endRange"));
+		Map<String, Object> map = new HashMap<>();
+		if(searchOption != null && searchKeyword != null) {
+			map.put("searchOption", searchOption);
+			map.put("searchKeyword", searchKeyword);
+		}
+		map.put("user_id", user_id);
+		map.put("startRange", range.get("startRange"));
+		map.put("endRange", range.get("endRange"));
+		map.put("type", type);
+		List<Map<String, Object>> list = dao.getMyLikePost(map);
+		System.out.println("list.size : " + list.size());
+		for(Map<String, Object> item : list) {
+			System.out.println(item);
+		}
+		return list;
+	}
+	
+	// (마이페이지) 찜한 게시글 COUNT
+	public void getMyLikePostCount(String user_id, String searchOption, String searchKeyword, int type) throws Exception {
+		System.out.println("user_id : " + user_id + " : searchOption : " + searchOption + " : searchKeyword : " + searchKeyword);
+		Map<String, Object> map = new HashMap<>();
+		if(searchOption != null && searchKeyword != null) {
+			map.put("searchOption", searchOption);
+			map.put("searchKeyword", searchKeyword);
+		}
+		map.put("user_id", user_id);
+		map.put("type", type);
+		int rs = dao.getMyLikePostCount(map);
+		System.out.println("내가 쓴 글 COUNT : " + rs);
+		this.totalCount = rs;
+	}
+	
+	// (마이페이지) 내가 쓴 글 가져오기
+	public List<PostDTO> getMyPost(String user_id, String searchOption, String searchKeyword, Map<String, Object> range) throws Exception {
+		System.out.println("user_id : " + user_id + " : searchOption : " + searchOption + " : searchKeyword : " + searchKeyword + " : sRange : " + range.get("startRange") + " : eRange : " + range.get("endRange"));
+		Map<String, Object> map = new HashMap<>();
+		if(searchOption != null && searchKeyword != null) {
+			map.put("searchOption", searchOption);
+			map.put("searchKeyword", searchKeyword);
+		}
+		map.put("user_id", user_id);
+		map.put("startRange", range.get("startRange"));
+		map.put("endRange", range.get("endRange"));
+		List<PostDTO> list = dao.getMyPost(map);
+		System.out.println("list.size : " + list.size());
+		return list;
+	}
+	
+	// (마이페이지) 내가 쓴 글 COUNT
+	public void getMyPostCount(String user_id, String searchOption, String searchKeyword) throws Exception {
+		System.out.println("user_id : " + user_id + " : searchOption : " + searchOption + " : searchKeyword : " + searchKeyword);
+		Map<String, Object> map = new HashMap<>();
+		if(searchOption != null && searchKeyword != null) {
+			map.put("searchOption", searchOption);
+			map.put("searchKeyword", searchKeyword);
+		}
+		map.put("user_id", user_id);
+		int rs = dao.getMyPostCount(map);
+		System.out.println("내가 쓴 글 COUNT : " + rs);
+		this.totalCount = rs;
+	}
 
 	// 전체 목록 가져오기
 	public List<PostDTO> selectByCg(String parent_group, Map<String, Object> range) throws Exception{
@@ -22,19 +87,13 @@ public class offlinePostService extends Paging {
 		map.put("parent_group", parent_group);
 		map.put("startRange", range.get("startRange"));
 		map.put("endRange", range.get("endRange"));
-//		System.out.println("parent_group : " + parent_group + " : startRange : " + range.get("startRange") + " : endRange : " + range.get("endRange"));
 		List<PostDTO> list = dao.selectByCg(map);
-//		if(!list.isEmpty()) {
-//			System.out.println("list size : " + list.size());
-//		}
 		return list;
 	}
-	
 
 	// 전체 글 COUNT
 	public void getPostCountAll(String parent_group) throws Exception {
 		int rs =  dao.getPostCountAll(parent_group);
-//		System.out.println("rs : " + rs);
 		this.totalCount = rs;
 	}
 	
@@ -54,7 +113,6 @@ public class offlinePostService extends Paging {
 	
 	// 검색 결과 COUNT
 	public void getPostCountSearch(String parent_group, String searchOption, String searchKeyword) throws Exception {
-		parent_group = "요리, 베이킹"; // exam
 		Map<String, Object> map = new HashMap<>();
 		map.put("searchOption", searchOption);
 		map.put("searchKeyword", searchKeyword);
