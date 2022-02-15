@@ -10,16 +10,23 @@
 <title>Offline</title>
 <style>
 	*{margin:0;}
+	@font-face{
+    font-family: 'BMHANNAAir';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
 	body{
 		margin:0 auto;
 		width:1800px;
     	height: 1000px;
+    	font-family: 'BMHANNAAir';
 	}
 	table{width:1400px; margin:auto;}
-	#header{margin-top:10px; height:100px;}
+	#header{margin-top:10px; height:100px; border-top: 1px solid black; background-color:#6DCEF520; }
 	.category{height:400px;}
-	#btnBox{text-align:center}
-	td{margin:auto;}
+	#btnBox{text-align:center; padding-bottom:30px;background-color:#6DCEF520;}
+	td{margin:auto; background-color: white}
 	img{width:300px; height:300px; margin:40px}
 	h2,h4{text-align:center; margin-top:10px;}
 	.contentBox{width:100%; height:100%;}

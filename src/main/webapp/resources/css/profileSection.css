@@ -1,0 +1,85 @@
+@charset "UTF-8";
+
+@font-face{
+    font-family: 'BMHANNAAir';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+/* 좌측 프로필 및 회원메뉴 탭 */
+#myInfo {
+    margin-top: 20px;
+    border: 1px solid black;
+}
+
+#profileBox {
+    
+    text-align: center;
+    margin-bottom: 20px;
+}
+#profilePhoto {
+    
+    padding: 10px;
+}
+#profilePhoto img{
+    width: 100%;
+}
+#profileInfo {
+    border-bottom: 2px double black;
+    height: 100px;
+    font-family: 'BMHANNAAir';
+    font-size:xx-large;
+}
+li {
+    list-style: none;
+    font-family: 'BMHANNAAir';
+    font-size:large;
+}
+.userTab {
+	cursor: pointer;
+}
+ul a {
+	color: black;
+	text-decoration: none;
+}
+
+#userTab>ul>li{
+   height: 40px;
+   padding-top:5px;
+   list-style: none;
+   padding-right: 30px;
+   cursor: pointer;
+   transition:all .3s ease
+}
+#userTab>ul>li:hover{
+  color:#00ADEE; transition:all .3s ease 
+}
+
+#userTab>ul>li:hover a{
+  color:#00ADEE; transition:all .3s ease 
+}
+
+li > span { position:relative }
+li > span::after {
+  content: '';
+  width: 0%;
+  left: 50%;
+  height: 1px;
+  display: block;
+  position: absolute;
+  margin-top: 3px;
+  border-bottom: 2px solid #00ADEE;
+  transition:all .3s ease;
+}
+li:hover > span::after {
+  content: '';
+  width: 100%;
+  left: 0px;
+  height: 1px;
+  display: block;
+  position: absolute;
+  margin-top: 3px;
+  border-bottom: 2px solid #00ADEE;
+  transition:all .3s ease;
+}
+a{margin-left:0; margin-right:0;}

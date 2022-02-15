@@ -1,0 +1,101 @@
+@charset "UTF-8";
+
+*{margin:0;}
+body{
+    width:1800px;
+    height: 1000px;
+    margin:0 auto;
+}
+@font-face{
+    font-family: 'BMHANNAAir';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+/* 회원 정보 */
+.userBox {
+    border-right: 1px solid black;    
+}
+
+#title {
+    text-align: center;
+    font-size: 30pt;
+    margin-bottom: 30px;
+    font-family: 'BMHANNAAir';
+}
+#title>p{
+	font-family: 'BMHANNAAir';
+	font-size:xxx-large;
+}
+#modifyProfilePhotoForm{
+	text-align:center;
+}
+#profileSection01 {
+    margin-bottom: 30px;
+}
+#userPhoto {
+    border: 1px solid lightgray;
+    width: 100%;
+    margin-bottom: 5px;
+}
+#userPhoto img{
+    width: 100%;
+    height: 175px;	
+}
+#photoBtnBox {
+	display: none;
+}
+#temp1 {
+    line-height: 50px;
+    border:1px solid black;
+     box-shadow: 5px 5px;
+}
+
+table {
+    margin-bottom: 30px;
+    
+}
+table th {
+    line-height: 50px;
+    padding-left: 20px;
+    width: 20%;
+}
+table td:nth-child(3) {
+    display: none;
+}
+#inputPhoneBox {
+    display: inline-block;
+}
+#inputPhoneBox * {
+    display: inline-block;
+    width: 155px;
+    height: 40px;
+}
+.verification {
+    display: none;
+}
+#editAddress div input {
+    margin: 0px 10px 10px 12px;
+}
+#inputAddress {
+	width: 80%;
+}
+#btnBox {
+    text-align: center;
+}
+#btnBox button {
+    width: 100%;
+    margin-top: 10px;
+}
+#editBtnBox {
+	text-align: center;
+	display: none;
+}
+#editBtnBox button {
+	width: 40%;
+	margin-top: 10px;
+	display: inline-block;
+}
+
+
+

@@ -7,19 +7,27 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <title>프로필사진 및 회원메뉴</title>
 <style>
+
+body{
+	font-family: 'BMHANNAAir';
+}
 /* 좌측 프로필 및 회원메뉴 탭 */
+@font-face{
+    font-family: 'BMHANNAAir';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 #myInfo {
     margin-top: 20px;
     border: 1px solid black;
 }
 
 #profileBox {
-    
     text-align: center;
     margin-bottom: 20px;
 }
-#profilePhoto {
-    
+#profilePhoto { 
     padding: 10px;
 }
 #profilePhoto img{
@@ -28,9 +36,13 @@
 #profileInfo {
     border-bottom: 2px double black;
     height: 100px;
+    font-family: 'BMHANNAAir';
+    font-size:xx-large;
 }
 li {
     list-style: none;
+     font-family: 'BMHANNAAir';
+    font-size:large;
 }
 .userTab {
 	cursor: pointer;
@@ -38,6 +50,7 @@ li {
 ul a {
 	color: black;
 	text-decoration: none;
+	margin-left:0; margin-right:0;
 }
 
 #userTab>ul>li{

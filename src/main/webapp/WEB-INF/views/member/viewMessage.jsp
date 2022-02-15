@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="/resources/css/profileSection.css">
 <link rel="stylesheet" href="/resources/css/viewMessage.css">
 <title>쪽지함</title>
 </head>
@@ -71,12 +70,12 @@
 			        <table class="table">
 			            <thead>
 			                <tr>
-			                    <th>체크</th>
-			                    <th>확인여부</th>
-			                    <th>ID</th>
-			                    <th>제목</th>
-			                    <th>날짜</th>    
-			                    <th>삭제버튼</th>
+			                    <th style="width:10%">체크</th>
+			                    <th style="width:10%">확인여부</th>
+			                    <th style="width:30%">ID</th>
+			                    <th style="width:30%">제목</th>
+			                    <th style="width:10%">날짜</th>    
+			                    <th style="width:10%">삭제</th>
 			                </tr>
 			            </thead>
 			            <tbody>

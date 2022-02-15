@@ -7,14 +7,20 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="/resources/css/profileSection.css">
 <title>내가 쓴 글</title>
 	<style>
 		*{margin:0;}
+		@font-face{
+		    font-family: 'BMHANNAAir';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
 		body{
 		    width:1800px;
 		    height: 1000px;
 		    margin:0 auto;
+		    font-family: 'BMHANNAAir';
 		}
 		table, p{
 	   		text-align:center;

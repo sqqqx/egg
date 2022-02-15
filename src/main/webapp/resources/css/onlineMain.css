@@ -3,6 +3,7 @@ body{
     width:1800px;
     height: 1000px;
     margin:0 auto;
+    font-family: 'BMHANNAAir';
 }
 @font-face {
             font-family: 'BMHANNAAir';
@@ -40,6 +41,7 @@ body{
 }
 .mainTitle{
 	padding-left:30px;
+	font-size:xx-large;
 
 }
 .mainTitle>label{
@@ -47,7 +49,7 @@ body{
 }
 .plus{
 	position:relative;
-	right:170px;
+	right:190px;
 	top:12px;
 	width:42px;
 	height:20px;
@@ -65,6 +67,7 @@ body{
 	background-color: #00ADEE;
 	text-align:center;
 	margin-left:80px;
+	width:45px;
 }
 #tolistLike, #tolistRecent, #tolistView{
 	color:gray;
@@ -95,7 +98,7 @@ body{
    width:100%;
    margin-right:0;
    margin-left:0;
-   overflow: hidden;   
+   overflow: hidden;
 }
 .photo{
 	width:100%;
@@ -126,6 +129,8 @@ body{
 .titleBox{
 	height:70px;
 	padding-top:5px;
+	font-family: 'BMHANNAAir';
+	font-size:large
 }
 .seeBox{
 	height:30px;
@@ -135,6 +140,8 @@ body{
 a{
 	text-decoration-line: none;
 	color:black;
+	margin-left:0;
+	margin-right:0;
 }
 .itemBox{
 height: 450px;
@@ -155,6 +162,8 @@ background-color: rgb(241, 234, 234);
 	height:100px;
 	width:1820px;
 	background-color:#00ADEE20;
+	font-family: 'BMHANNAAir';
+	font-size:large
 }
 .footer>div{
 	height:70px;

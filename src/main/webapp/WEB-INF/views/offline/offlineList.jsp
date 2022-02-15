@@ -10,12 +10,19 @@
 <title>오프라인 게시글 리스트</title>
 <style>
 	*{margin:0;}
+	@font-face{
+	    font-family: 'BMHANNAAir';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
+	}
 	body{
 		margin:0 auto;
 		width:1800px;
     	height: 1000px;
+    	font-family: 'BMHANNAAir';
 	}
-	.title{height:100px; border:1px solid blue; position: relative;}
+	.title{height:100px; position: relative;}
 	h1{text-align:center; padding-top:20px;}
 	.container{margin-left:0;}
 	.search{padding-top:10px;}
@@ -23,7 +30,7 @@
 	#selectBox{padding-left:0;}
 	.iconBox {
 		position: absolute;
-		left:650px;
+		left:750px;
 		top: 5px;
 		width: 90px;
 	}
@@ -123,8 +130,9 @@
 				</div>
 			</div>
 		</form>
+		
 		<div class="row">
-			<div class="col-12">
+			<div class="col d-flex justify-content-center">
 				<nav aria-label="Page navigation example">
 					<ul class="pagination">
 						<c:if test="${navi.needPrev eq true}">
