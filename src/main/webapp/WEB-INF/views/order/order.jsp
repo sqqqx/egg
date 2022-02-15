@@ -194,7 +194,7 @@
 			$("#name").val(nn)
 			$("#email").val(email)
 			document.getElementById("phone22").value = phone.substring(3,7);
-			document.getElementById("phone33").value = phone.substring(7,10);
+			document.getElementById("phone33").value = phone.substring(7,11);
 		}else{
 			$("#name").val("")
 			$("#email").val("")

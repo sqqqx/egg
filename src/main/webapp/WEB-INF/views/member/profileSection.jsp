@@ -98,11 +98,13 @@ li:hover > span::after {
 	<div class="col-2 userBox">
 	<div id="profileBox">
     	<div id="profilePhoto">
-        	<c:if test="${dto.profile_path == 'myInfo.png'}">
-           		<img src="${pagecontext.request.contextPath}/resources/img/${dto.profile_path}">
-           	</c:if>
-           	<c:if test="${dto.profile_path != 'myInfo.png'}">
-           		<img src="${pagecontext.request.contextPath}/profilePhotos/${dto.profile_path}">
+    		<c:if test="${loginSession.type !=0}">
+	        	<c:if test="${dto.profile_path == 'myInfo.png'}">
+	           		<img src="${pagecontext.request.contextPath}/resources/img/${dto.profile_path}">
+	           	</c:if>
+	           	<c:if test="${dto.profile_path != 'myInfo.png'}">
+	           		<img src="${pagecontext.request.contextPath}/profilePhotos/${dto.profile_path}">
+	           	</c:if>
            	</c:if>
        </div>
        <div id="profileInfo">

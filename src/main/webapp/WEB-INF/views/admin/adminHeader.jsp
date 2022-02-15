@@ -39,7 +39,7 @@
          })
               
          //websocket 주소->endpoint로 이동[본인의 포트번호로 바꿀것]
-         ws = new WebSocket("ws://localhost/alarm");
+         ws = new WebSocket("ws://13.209.48.56:8080/alarm");
     </script>
 </body>
 </html>

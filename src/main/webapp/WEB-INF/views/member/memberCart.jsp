@@ -10,6 +10,15 @@
 <link rel="stylesheet" href="/resources/css/userInformation.css">    <!-- 부트스트랩 적용시 부트스트랩 cdn을 가져온 뒤 css를 불러와야 레이아웃에 적용된다.-->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <title>회원정보조회</title>
+<style>
+table td:nth-child(3) {
+    display: block;
+    height:55.5px;
+}
+#btnbtn{
+	text-align:center;
+}
+</style>
 </head>
 <body>
 		
@@ -28,11 +37,11 @@
                 	<table class="table">
 						<thead>
 							<tr>
-								<th>상품명</th>
-								<th>가격</th>
-								<th>수량</th>
-								<th></th>
-								<th></th>
+								<th style="width:40%">상품명</th>
+								<th style="width:20%">가격</th>
+								<th style="width:10%">수량</th>
+								<th style="width:30%"></th>
+								
 							</tr>
 						</thead>
 						<tbody>
@@ -52,7 +61,7 @@
 											<td>${dto.name}</td>
 											<td>${dto.price}</td>
 											<td><span><input type="number" value="${dto.quantity }" class="form-control quantityController"></span></td>
-											<td><button type="button" class="btn btn-dark deleteCart" value="${dto.name}">
+											<td id="btnbtn"><button type="button" class="btn btn-dark deleteCart" value="${dto.name}">
 											삭제
 											</button></td>
 											<td hidden>

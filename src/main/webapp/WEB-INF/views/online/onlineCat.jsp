@@ -95,6 +95,8 @@ h2{
 a{
 	text-decoration-line: none;
 	color:black;
+	margin-left:0;
+	margin-right:0;
 }
 </style>
 </head>

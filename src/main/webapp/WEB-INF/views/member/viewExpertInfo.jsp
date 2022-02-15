@@ -8,6 +8,20 @@
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
 <style>
+		*{margin:0;}
+		body{
+		    width:1800px;
+		    height: 1000px;
+		    margin:0 auto;
+		    font-family: 'BMHANNAAir';
+		}
+		@font-face {
+		            font-family: 'BMHANNAAir';
+		            src:
+		                url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+		            font-weight: normal;
+		            font-style: normal;
+        }
 		#expertBox {
 			display: none;
 		}
@@ -29,9 +43,7 @@
             resize: none;
         }
 
-        .row {
-            margin-bottom: 20px;
-        }
+        
         .eBtn {
             margin-left: 20px;
             width: 15%;
@@ -57,7 +69,7 @@
 <body>
 		<!-- 회원 정보 조회 -->
     <div class="container-fluid" id="myInfo">
-        <div class="row">
+        <div class="row mb-3">
         	<!-- 좌측 프로필 부분 -->
             <%@include file="/WEB-INF/views/member/profileSection.jsp" %>
             
@@ -65,18 +77,18 @@
             
             <!-- 우측 능력자 전환 부분 -->
             <div class="col-8" id="expertViewBox">
-            	<div class="row eTitle"><p>능력자 정보 확인</p></div>
-            	<div class="row">
+            	<div class="row mb-3 eTitle"><p>능력자 정보 확인</p></div>
+            	<div class="row mb-3">
             		<div class="col-2">활동지역</div>
             		<div class="col-2">${eDTO.active_area}</div>
             	</div>
-            	<div class="row">
+            	<div class="row mb-3">
                   	<div class="col-2">자기소개</div>
                   	<div class="col-8">
                        <textarea name="introduction" disabled>${eDTO.introduction}</textarea>
   	                </div>
       	        </div>
-      	        <div class="row">
+      	        <div class="row mb-3">
                 	<div class="col-2">카테고리 선택</div>
                 	<div class="col-4">
                 		<c:forEach items="${categoryList}" var="cate">
@@ -91,15 +103,15 @@
                 		</c:forEach>
                 	</div>
                 </div>
-                <div class="row justify-content-center">
+                <div class="row mb-3 justify-content-center">
                 	<button type="button" id="backBtn" class="btn btn-secondary eBtn">마이페이지로</but>
                 	<button type="button" id="toModifyBtn" class="btn btn-warning eBtn">수정하기</but>
                 </div>
             </div>
             <div class="col-8" id="expertBox">
            		<form action="${pagecontext.request.contextPath}/member/modifyExpert.do" enctype="multipart/form-data" method="post" id="modifyExpertForm">
-            		<div class="row eTitle"><p>능력자 정보 수정</p></div>
-	                <div class="row">
+            		<div class="row mb-3 eTitle"><p>능력자 정보 수정</p></div>
+	                <div class="row mb-3">
 	                    <div class="col-2">
 	                        활동지역
 	                    </div>
@@ -256,7 +268,7 @@
 	                        </select>
 	                    </div>
 	                </div>
-                	<div class="row">
+                	<div class="row mb-3">
                     	<div class="col-2">
                         	자기소개
                     	</div>
@@ -265,7 +277,7 @@
     	                </div>
         	        </div>
             	    <div id="categoryBox">
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-2">카테고리 선택</div>
                         <div class="col-2">
                             <select name="category1" class="category1">
@@ -324,7 +336,7 @@
                         	<button type="button" id="addCategoryBtn" class="btn btn-success eBtn">카테고리 추가</but>
                         	<button type="button" id="delCategoryBtn" class="btn btn-danger eBtn">카테고리 삭제</but>        
                    		</div>
-                    <div class="row" id="cgListBox">
+                    <div class="row mb-3" id="cgListBox">
 						<c:forEach var="i" begin="0" end="2">
 							<c:if test="${!empty categoryList.get(i)}">
 								<div id="cate${i+1}" class="row cateBox">
@@ -336,11 +348,11 @@
 						</c:forEach>
 					</div>
            	  	</div>
-                <div class="row justify-content-center">
+                <div class="row mb-3 justify-content-center">
                     <button type="button" id="cancelBtn" class="btn btn-secondary eBtn">돌아가기</but>
                     <button type="button" id="modifyBtn" class="btn btn-primary eBtn">수정신청</but>
                 </div>
-                <div class="row" hidden>
+                <div class="row mb-3" hidden>
                     <div class="col">
                     	<input type="text" name="expert_id" value="${loginSession.user_id}"/>
                         <input type="text" id="active_area" name="active_area"/>
@@ -543,7 +555,16 @@
 	    
         // 마이페이지로 버튼
         $("#backBtn").on("click", function(){
-        	$(location).attr("href", "${pagecontext.request.contextPath}/member/toUserInformation?user_id=${loginSession.user_id}");
+        	let postID='${dto.user_id}'
+        	let type = '${loginSession.type}'
+        	console.log(postID)
+        	console.log(type)
+        	if(type !='0'){
+        		$(location).attr("href", "${pagecontext.request.contextPath}/member/toUserInformation?user_id=${loginSession.user_id}");
+			}else{
+				location.href="${pageContext.request.contextPath}/member/toUserInformation?user_id="+postID				
+			}
+        	
         })
         
         // 수정하기 버튼

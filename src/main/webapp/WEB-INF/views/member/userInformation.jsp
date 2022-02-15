@@ -95,6 +95,7 @@ table th {
 }
 .editInput {
 	display: none;
+	margin-top:10px;
 }
 </style>
 </head>
@@ -263,7 +264,16 @@ table th {
     	
     	// 능력자 정보 확인
     	$("#viewExpertBtn").on("click", function(){
-    		$(location).attr("href", "${pagecontext.request.contextPath}/member/toViewExpertInfo?expert_id=${loginSession.user_id}");
+    		let postID='${dto.user_id}'
+    		let type = '${loginSession.type}'
+    		console.log(postID);
+			if(type !='0'){
+				$(location).attr("href", "${pagecontext.request.contextPath}/member/toViewExpertInfo?expert_id=${loginSession.user_id}");
+			}else{
+				location.href="${pageContext.request.contextPath}/member/toViewExpertInfo?expert_id="+postID
+				
+			}
+    		
     	})
     	
     	
