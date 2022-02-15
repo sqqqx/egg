@@ -37,7 +37,9 @@ public class OrderService extends Paging {
 			System.out.println("결제 미완료 건 삭제");
 			List<String> merchant_uid = new ArrayList<>();
 			Map<String, String> info = new HashMap<>();
-			info.put("user_id", odto.getUser_id());
+			SimpleDateFormat sdfTemp = new SimpleDateFormat("yy/MM/dd");
+			String order_time = sdfTemp.format(System.currentTimeMillis());
+			info.put("order_time", order_time);
 			// 상품인 경우
 			info.put("tracking_no", "PRODUCT");
 			System.out.println("결제 미완료 건 삭제 - 상품: " + info);
@@ -45,7 +47,7 @@ public class OrderService extends Paging {
 			
 			// 포인트인 경우
 			System.out.println("결제 미완료 건 삭제 - 포인트: " + info);
-			info.put("tracking_no", "POINT");
+			info.put("tracking_no", "point");
 			merchant_uid.add(dao.getLastOrder_no(info));
 			
 			for(String m : merchant_uid) {
@@ -107,7 +109,9 @@ public class OrderService extends Paging {
 						System.out.println("결제 미완료 건 삭제");
 						List<String> merchant_uid = new ArrayList<>();
 						Map<String, String> info = new HashMap<>();
-						info.put("user_id", user_id);
+						SimpleDateFormat sdfTemp = new SimpleDateFormat("yy/MM/dd");
+						String order_time = sdfTemp.format(System.currentTimeMillis());
+						info.put("order_time", order_time);
 						// 상품인 경우
 						info.put("tracking_no", "PRODUCT");
 						System.out.println("결제 미완료 건 삭제 - 상품: " + info);
@@ -115,7 +119,7 @@ public class OrderService extends Paging {
 						
 						// 포인트인 경우
 						System.out.println("결제 미완료 건 삭제 - 포인트: " + info);
-						info.put("tracking_no", "POINT");
+						info.put("tracking_no", "point");
 						merchant_uid.add(dao.getLastOrder_no(info));
 						
 						for(String m : merchant_uid) {

@@ -151,6 +151,13 @@
         </div>
         <!-- 비밀번호 일치시 초록글씨, 불일치시 빨간글씨-->
         <div id="pwcheck_regex"></div>
+        <div class="row my-5 btnBox">
+	        <div class="col-6" id="completeBtnBox">
+	            <button class="btn btn-dark btn-lg clsBtn" type="button" id="completeBtn" style="display:none;" disabled>완료</button>
+	        </div>
+	        <div class="col-6">
+	            <button class="btn btn-secondary btn-lg clsBtn" type="button" id="backBtn">닫기</button>
+	        </div>
 		</div>
 	</div>
 	
@@ -191,6 +198,7 @@
                 			}else{
                 				$("#phoneCheck").attr("disabled",false);
                 				alert("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
+                				$("#phoneCkBox").css("display", "flex");
                 				code2 = rs;
                 			}
             			}
@@ -233,6 +241,7 @@
             				alert("가입시 입력한 이메일과 일치하지 않습니다.");
             			}else{
                     	alert("이메일을 확인후 인증번호를 입력해주세요.");
+                    	$("#emailCkBox").css("display", "flex");
                     	code = rs;
             			}
                     }
