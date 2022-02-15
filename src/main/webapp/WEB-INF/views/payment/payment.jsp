@@ -57,7 +57,6 @@
           buyer_postcode: "${iamdto.buyer_postcode}"
       }, function (rsp) { // callback
     	  if ( rsp.success ) {	// 결제 성공 시
-    		  alert("결제 성공 후 DB저장");
     		  // ajax로 결제내역 저장하기
     	    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
     	    	$.ajax({
@@ -78,7 +77,7 @@
     	    		if(rs === "pointCharged"){
     	    			window.close();
     	    		} else {
-    	    			$(location).attr("href", "${pagecontext.request.contextPath}/");	
+    	    			$(location).attr("href", "${pagecontext.request.contextPath}/order/toMyOrder?currentPage=1");	
     	    		}
     	    		
     	    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우

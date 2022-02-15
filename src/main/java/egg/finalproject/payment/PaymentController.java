@@ -82,8 +82,12 @@ public class PaymentController {
 		// 주문 테이블 저장
 		if(orderService.insertOrder(dto) >0) {
 			System.out.println("주문테이블 저장 성공");
+			
 			// 방금 저장한 마지막 주문번호
-			String merchant_uid = orderService.getLastOrder_no(dto.getUser_id());
+			Map<String, String> info = new HashMap<>();
+			info.put("user_id", dto.getUser_id());
+			info.put("tracking_no", dto.getTracking_no());
+			String merchant_uid = orderService.getLastOrder_no(info);
 			System.out.println("방금 저장한 마지막 주문번호: " + merchant_uid);
 
 			// 주문상품 테이블에 저장(상품일 경우에만, 포인트인 경우에 거치지 않음)

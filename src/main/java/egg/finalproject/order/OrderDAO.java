@@ -50,9 +50,9 @@ public class OrderDAO {
 	}
 	
 	// (마이페이지) 마지막 주문번호 불러오기
-	public String getLastOrder_no(String user_id) throws Exception {
-		System.out.println("OrderDAO / 마지막 주문 번호 불러오기 - user_id: " + user_id);
-		return session.selectOne("orderMapper.getLastOrder_no", user_id);
+	public String getLastOrder_no(Map info) throws Exception {
+		System.out.println("OrderDAO / 마지막 주문 번호 불러오기 - info: " + info);
+		return session.selectOne("orderMapper.getLastOrder_no", info);
 	}
 	
 	// (마이페이지) 마지막 주문 건 삭제
@@ -84,4 +84,23 @@ public class OrderDAO {
 		public int getOrderCount(Map<String, Object> map) throws Exception {
 			return session.selectOne("orderMapper.getOrderCount", map);
 		}
+
+		//////////////////////////////////////////////////////////////
+	// (마이페이지) 결제완료 확인
+	public int checkPayment(String merchant_uid) throws Exception {
+		System.out.println("OrderDAO / 결제완료 확인 - merchant_uid: " + merchant_uid);
+		return session.selectOne("orderMapper.checkPayment", merchant_uid);
+	}
+	
+	// (마이페이지) 모든 주문번호 불러오기
+	public List<String> getAllOrder(String user_id) throws Exception {
+		System.out.println("OrderDAO / 모든 주문번호 불러오기 - user_id: " + user_id);
+		return session.selectList("orderMapper.getAllOrder", user_id);
+	}
+	
+	// (마이페이지) 주문상품 삭제
+	public int deleteOrderproduct(String merchant_uid) throws Exception {
+		System.out.println("OrderDAO / 주문상품 삭제 - merchnat_uid: " + merchant_uid);
+		return session.delete("orderMapper.deleteOrderproduct", merchant_uid);
+	}
 }

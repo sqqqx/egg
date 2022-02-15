@@ -1,6 +1,7 @@
 package egg.finalproject.order;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,34 @@ public class OrderService extends Paging {
 	// (마이페이지) 주문정보 저장
 		public int insertOrder(OrderDTO odto) throws Exception {
 			System.out.println("OrderService / 주문정보저장 - OrderDTO: " + odto);
+			// (추가) 결제 미완료 건 삭제
+			// 마지막 주문번호 불러오기(user_id, tracking_no)
+			System.out.println("결제 미완료 건 삭제");
+			List<String> merchant_uid = new ArrayList<>();
+			Map<String, String> info = new HashMap<>();
+			info.put("user_id", odto.getUser_id());
+			// 상품인 경우
+			info.put("tracking_no", "PRODUCT");
+			System.out.println("결제 미완료 건 삭제 - 상품: " + info);
+			merchant_uid.add(dao.getLastOrder_no(info));
+			
+			// 포인트인 경우
+			System.out.println("결제 미완료 건 삭제 - 포인트: " + info);
+			info.put("tracking_no", "POINT");
+			merchant_uid.add(dao.getLastOrder_no(info));
+			
+			for(String m : merchant_uid) {
+				System.out.println("결제테이블 검색 merchant_uid: " + m);
+				// 주문테이블에 있는 주문번호가 결제테이블에 없는 경우 주문번호 삭제
+				if(dao.checkPayment(m) == 0) {
+					if(dao.deleteLastOrder(m) > 0) {
+						System.out.println("주문번호 " + m + " 삭제완료");
+					};
+					if(dao.deleteOrderproduct(m) > 0) {
+						System.out.println("주문상품 주문번호 " + m + " 삭제완료");
+					}
+				}
+			}
 			
 			// OrderDTO order_no 설정
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -46,9 +75,9 @@ public class OrderService extends Paging {
 		}
 		
 	// (마이페이지) 마지막 주문번호 불러오기
-		public String getLastOrder_no(String user_id) throws Exception {
-			System.out.println("OrderService / 마지막 주문번호 불러오기 - user_id: " + user_id);
-			return dao.getLastOrder_no(user_id);
+		public String getLastOrder_no(Map info) throws Exception {
+			System.out.println("OrderService / 마지막 주문번호 불러오기 - info: " + info);
+			return dao.getLastOrder_no(info);
 		}
 		
 	// (마이페이지) 마지막 주문 건 삭제
@@ -68,6 +97,35 @@ public class OrderService extends Paging {
 		// 이용자 별 주문정보 가져오기
 		public List<Map<String, Object>> getOrderList(String user_id, String searchOption, String searchKeyword, Map<String, Object> range) throws Exception {
 			System.out.println("user_id : " + user_id + " : searchOption : " + searchOption + " : searchKeyword : " + searchKeyword + " : sRange : " + range.get("startRange") + " : eRange : " + range.get("endRange"));
+			// (추가) 결제 미완료 건 삭제
+						// 마지막 주문번호 불러오기(user_id, tracking_no)
+						System.out.println("결제 미완료 건 삭제");
+						List<String> merchant_uid = new ArrayList<>();
+						Map<String, String> info = new HashMap<>();
+						info.put("user_id", user_id);
+						// 상품인 경우
+						info.put("tracking_no", "PRODUCT");
+						System.out.println("결제 미완료 건 삭제 - 상품: " + info);
+						merchant_uid.add(dao.getLastOrder_no(info));
+						
+						// 포인트인 경우
+						System.out.println("결제 미완료 건 삭제 - 포인트: " + info);
+						info.put("tracking_no", "POINT");
+						merchant_uid.add(dao.getLastOrder_no(info));
+						
+						for(String m : merchant_uid) {
+							System.out.println("결제테이블 검색 merchant_uid: " + m);
+							// 주문테이블에 있는 주문번호가 결제테이블에 없는 경우 주문번호 삭제
+							if(dao.checkPayment(m) == 0) {
+								if(dao.deleteLastOrder(m) > 0) {
+									System.out.println("주문번호 " + m + " 삭제완료");
+								};
+								if(dao.deleteOrderproduct(m) > 0) {
+									System.out.println("주문상품 주문번호 " + m + " 삭제완료");
+								}
+							}
+						}
+						
 			Map<String, Object> map = new HashMap<>();
 			if(searchOption != null && searchKeyword != null) {
 				map.put("searchOption", searchOption);
