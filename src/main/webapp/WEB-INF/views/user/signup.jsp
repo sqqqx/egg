@@ -195,6 +195,7 @@
                 <label> 주소</label>
             </div>
         </div>
+        
          <!--주소 영역-->
          <div class="row" id="daum-postcode">
             <div class="col-12 col-md-6 my-2">
