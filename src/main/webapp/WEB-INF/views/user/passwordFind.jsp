@@ -121,11 +121,11 @@
             </div>
         </div>
 	        <div class="row">
-	        	<div class="col-3">
-	        		<input type="checkbox" class="form-check-input" name="emailCheckBox2" id="emailCheckBox2">이메일 인증
-	        	</div>
-	        	<div class="col-3">
-	        		<input type="checkbox" class="form-check-input" name="phoneCheckBox2" id="phoneCheckBox2">휴대전화 인증
+	        	<div class="col-5">
+	        		<input type="radio" class="form-check-input" name="CheckBox2" id="emailCheckBox2">이메일 인증
+	        	
+	        	
+	        		<input type="radio" class="form-check-input" name="CheckBox2" id="phoneCheckBox2">휴대전화 인증
 	        	</div>
 	        </div>
         
@@ -170,19 +170,16 @@
 	    $("#emailCheckBox2").change(function(){
 	        if($("#emailCheckBox2").is(":checked")){
 	            $("#emailCkBox").css("display", "flex");
-	        }else{
-	        	$("#emailCkBox").css("display", "none");
+	            $("#phoneCkBox").css("display", "none");
 	        }
 	    });
 	    
 	    $("#phoneCheckBox2").change(function(){
 	        if($("#phoneCheckBox2").is(":checked")){
 	            $("#phoneCkBox").css("display", "flex");
-	        }else{
-	        	$("#phoneCkBox").css("display", "none");
+	            $("#emailCkBox").css("display", "none");
 	        }
 	    });
-	    
 	});
 	
 	// 문자인증
@@ -308,9 +305,25 @@
             $("#password").val("");
             $("#password").focus();
             return
+        }else {
+        	let user_id = $("#user_id").val();
+        	let password = $("#password").val();
+        	var data = {"user_id" : user_id, "password" : password}
+	        $.ajax({
+	    		url : "${pageContext.request.contextPath}/member/toPwfind.do"
+	    		, type : "post"
+	    		, data : data
+	    		, success:function(rs){
+		    		console.log(rs);
+		    		if(rs == "available"){
+		    			alert("다시입력해주세요.");
+		    		}else if(rs == "unavailable"){
+		    			alert("비밀번호 변경이 완료되었습니다.");
+		    			window.close();
+	    			}
+    			}
+    		});
         }
-  		$("#pwForm").submit();
-  		window.close();
   	})
   	
  	// PW 정규식
