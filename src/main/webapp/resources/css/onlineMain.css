@@ -21,7 +21,7 @@ body{
    width:100%;
    height: 700px;
 }
-/*캐러샐 화살표영역(메뉴바 영역에 걸려서 선택이 안될시 조정할것)*/
+
 .iconBox{
    margin-top: 200px;
 }
@@ -106,8 +106,8 @@ body{
     transition: transform .5s; 
 }
 .photo:hover{
-   transform:scale(1.1);            /* 이미지 확대 */
-   transition: transform .5s; 	/*  시간 설정  */
+   transform:scale(1.1);           
+   transition: transform .5s; 	
 }
 .mediaText{
    display:table;

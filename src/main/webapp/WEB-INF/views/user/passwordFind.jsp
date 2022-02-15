@@ -117,7 +117,7 @@
 	        </div>
         
         </div>
-        <form id="pwForm" action="${pageContext.request.contextPath}/member/toPwfind.do" method="post">
+        
         <input type="text" class="form-control" id="user_id" name="user_id" hidden>
         <div id="pwBox" style="display:none;">
 			<div class="row mb-2">
@@ -139,7 +139,7 @@
         <!-- 비밀번호 일치시 초록글씨, 불일치시 빨간글씨-->
         <div id="pwcheck_regex"></div>
 		</div>
-		</form>
+		
 	</div>
 	
 	<div class="row my-5 btnBox">
@@ -294,9 +294,28 @@
             $("#password").val("");
             $("#password").focus();
             return
+        }else {
+        	let user_id = $("#user_id").val();
+        	let password = $("#password").val();
+        	var data = {"user_id" : user_id, "password" : password}
+	        $.ajax({
+	    		url : "${pageContext.request.contextPath}/member/toPwfind.do"
+	    		, type : "post"
+	    		, data : data
+	    		, success:function(rs){
+		    		console.log(rs);
+		    		if(rs == "available"){
+		    			alert("다시입력해주세요.");
+		    		}else if(rs == "unavailable"){
+		    			alert("비밀번호 변경이 완료되었습니다.");
+		    			window.close();
+	    			}
+    			}
+    		});
         }
-  		$("#pwForm").submit();
   	})
+  	
+  	
   	
  	// PW 정규식
     $("#password").on("keyup", function(){

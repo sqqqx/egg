@@ -178,10 +178,14 @@ public class MemberController {
 		
 		// 비밀번호 찾기 완료버튼 클릭
 		@RequestMapping(value="toPwfind.do")
+		@ResponseBody
 		public String toPwFind(String password, String user_id) throws Exception {
 			password = EncryptionUtils.getSHA512(password);
-			service.toPwFind(password, user_id);
-			return "user/login";
+			if(service.toPwFind(password, user_id) == 1) {
+				return "unavailable";
+			}else {
+				return "available";
+			}
 		}
 		
 		// 비밀번호찾기 문자인증
@@ -213,7 +217,7 @@ public class MemberController {
 		        /* 이메일 보내기 */
 		        String setFrom = "jak3995@naver.com";
 		        String toMail = email;
-		        String title = "능력자들 인증 이메일 입니다.";
+		        String title = "능력자들 인증 이메일 입니다.[인증번호:"+checkNum.substring(0,1)+checkNum.substring(1,2)+checkNum.substring(2,3)+checkNum.substring(3)+"]";
 		        String content = 
 		        		"<div class=\"row\" style=\"height : 70px; width: 700px; background-color: #5194e4; text-align: center; border-bottom: 3px solid black;\">" +
 		        			
@@ -283,7 +287,7 @@ public class MemberController {
 			        /* 이메일 보내기 */
 			        String setFrom = "jak3995@naver.com";
 			        String toMail = email;
-			        String title = "능력자들 인증 이메일 입니다.";
+			        String title = "능력자들 인증 이메일 입니다.[인증번호:"+checkNum.substring(0,1)+checkNum.substring(1,2)+checkNum.substring(2,3)+checkNum.substring(3)+"]";
 			        String content = 
 			        		"<div class=\"row\" style=\"height : 70px; width: 700px; background-color: #5194e4; text-align: center; border-bottom: 3px solid black;\">" +
 			        			
@@ -374,7 +378,7 @@ public class MemberController {
 	        /* 이메일 보내기 */
 	        String setFrom = "jak3995@naver.com";
 	        String toMail = email;
-	        String title = "능력자들 인증 이메일 입니다.";
+	        String title = "능력자들 인증 이메일 입니다.[인증번호:"+checkNum.substring(0,1)+checkNum.substring(1,2)+checkNum.substring(2,3)+checkNum.substring(3)+"]";
 	        String content = 
 	        		"<div class=\"row\" style=\"height : 70px; width: 700px; background-color: #5194e4; text-align: center; border-bottom: 3px solid black;\">" +
 	        			
