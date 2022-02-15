@@ -310,7 +310,7 @@
             return
         }
   		$("#pwForm").submit();
-  		window.close();
+  		
   	})
   	
  	// PW 정규식

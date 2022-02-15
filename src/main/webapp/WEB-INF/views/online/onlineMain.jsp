@@ -10,6 +10,8 @@
 <title>Online</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="/resources/css/onlineMain.css"> 
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
 <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -65,7 +67,7 @@
                 		<div class="col">
 	                			<a href="${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no=${like.POST_NO}">
 			                		<div class="row mediaPhoto">
-			                			<img class="photo" src="${pageContext.request.contextPath}/onlinePostThumbNail/${like.SYSTEM_NAME }">
+			                			<img class="photo" src="${pageContext.request.contextPath}onlinePostThumbNail/${like.SYSTEM_NAME }">
 			                		</div>
 			                		<div class="row mediaText">
 			             				<div class="row titleBox">

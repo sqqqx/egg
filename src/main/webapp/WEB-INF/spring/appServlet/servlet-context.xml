@@ -19,6 +19,7 @@
 	<resources mapping="/file/**" location="/resources/file/" />
 	<resources mapping="/onlinePostThumbNail/**" location="/onlinePostThumbNail/"/>
 	<resources mapping="/productThumbnail/**" location="/productThumbnail/"/>
+	<resources mapping="/profilePhotos/**" location="/profilePhotos/"/>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
