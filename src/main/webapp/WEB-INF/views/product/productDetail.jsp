@@ -738,7 +738,7 @@
                                                 <div class="icon" id="replyIcon">
                                                     <i class="far fa-comment-dots fa-2x"></i>
                                                 </div>
-                                                <div class="title" id="replyTitle">답글</div>
+                                                <div class="title" id="replyTitle">관리자 답글</div>
                                             </div>
                                             <div class="reaction" id="likeArea${dto.comment_no}" value="0" onclick="likeComment(${dto.comment_no})">
                                                 <div class="icon" id="likeIcon">
@@ -777,6 +777,7 @@
 
                         </div>
                     </div>
+                    <div class="bottomBlank"></div>
                 </div>
             </div>
         </div>

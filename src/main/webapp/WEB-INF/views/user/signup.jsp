@@ -181,13 +181,13 @@
         </div>
         
         <div class="row">
-        	<div class="col-2">
-        		<input type="checkbox" class="form-check-input" name="emailCheckBox2" id="emailCheckBox2">이메일 인증
-        	</div>
-        	<div class="col-3">
-        		<input type="checkbox" class="form-check-input" name="phoneCheckBox2" id="phoneCheckBox2">휴대전화 인증
-        	</div>
-        </div>
+	        <div class="col-5">
+	        	<input type="radio" class="form-check-input" name="CheckBox2" id="emailCheckBox2">이메일 인증
+	        	
+	        	
+	        	<input type="radio" class="form-check-input" name="CheckBox2" id="phoneCheckBox2">휴대전화 인증
+	      	</div>
+	    </div>
 		
 
         <div class="row mb-2">
@@ -280,21 +280,21 @@
 //     });
     
     $(document).ready(function(){
-    $("#emailCheckBox2").change(function(){
-        if($("#emailCheckBox2").is(":checked")){
-            $("#emailCkBox").css("display", "flex");
-        }else{
-        	$("#emailCkBox").css("display", "none");
-        }
-    });
-    
-    $("#phoneCheckBox2").change(function(){
-        if($("#phoneCheckBox2").is(":checked")){
-            $("#phoneCkBox").css("display", "flex");
-        }else{
-        	$("#phoneCkBox").css("display", "none");
-        }
-    });
+    	$(document).ready(function(){
+    	    $("#emailCheckBox2").change(function(){
+    	        if($("#emailCheckBox2").is(":checked")){
+    	            $("#emailCkBox").css("display", "flex");
+    	            $("#phoneCkBox").css("display", "none");
+    	        }
+    	    });
+    	    
+    	    $("#phoneCheckBox2").change(function(){
+    	        if($("#phoneCheckBox2").is(":checked")){
+    	            $("#phoneCkBox").css("display", "flex");
+    	            $("#emailCkBox").css("display", "none");
+    	        }
+    	    });
+    	});
     
 	});
     
