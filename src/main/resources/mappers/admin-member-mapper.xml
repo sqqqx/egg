@@ -102,7 +102,7 @@
 	<!-- 일별 가입자 수 -->
 	<select id="getUserCount" resultType="map">
 		SELECT to_char(signup_date, 'MM/DD') AS signup_date, COUNT(*) AS CNT 
-		FROM (SELECT * FROM tbl_member WHERE signup_date >= '20200101' AND signup_date <![CDATA[<= '20220219')]]>
+		FROM (SELECT * FROM tbl_member WHERE signup_date >= TO_DATE('20200210', 'YYYYMMDD') AND signup_date <![CDATA[<= TO_DATE('20220301', 'YYYYMMDD'))]]>
 		GROUP BY to_char(signup_date, 'MM/DD') 
 		ORDER BY signup_date
 	</select>
