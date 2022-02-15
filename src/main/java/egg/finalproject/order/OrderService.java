@@ -26,10 +26,10 @@ public class OrderService extends Paging {
 		
 	// (마이페이지) 주문정보 저장
 		public int insertOrder(OrderDTO odto) throws Exception {
-			System.out.println("OrderService / 주문정보저장 - OrderDTO: " + odto);
+			System.out.println("OrderService / insertOrder - OrderDTO: " + odto);
 			// (추가) 결제 미완료 건 삭제
 			// 마지막 주문번호 불러오기(user_id, tracking_no)
-			System.out.println("결제 미완료 건 삭제");
+			System.out.println("Delete uncompleted order_no");
 			List<String> merchant_uid = new ArrayList<>();
 			Map<String, String> info = new HashMap<>();
 			SimpleDateFormat sdfTemp = new SimpleDateFormat("yy/MM/dd");
@@ -37,24 +37,30 @@ public class OrderService extends Paging {
 			info.put("order_time", order_time);
 			// 상품인 경우
 			info.put("tracking_no", "PRODUCT");
-			System.out.println("결제 미완료 건 삭제 - 상품: " + info);
-			merchant_uid.add(dao.getLastOrder_no(info));
+			System.out.println("If it's product, map: " + info);
+			String temp = dao.getLastOrder_no(info);
+			System.out.println("Last Order_no on PRODUCT is: " + temp);
+			merchant_uid.add(temp);
 			
 			// 포인트인 경우
-			System.out.println("결제 미완료 건 삭제 - 포인트: " + info);
 			info.put("tracking_no", "point");
-			merchant_uid.add(dao.getLastOrder_no(info));
+			System.out.println("If it's point, map: " + info);
+			temp = dao.getLastOrder_no(info);
+			System.out.println("Last Order_no on POINT is: " + temp);
+			merchant_uid.add(temp);
 			
 			for(String m : merchant_uid) {
-				System.out.println("결제테이블 검색 merchant_uid: " + m);
+				System.out.println("searching merchant_uid: " + m);
 				// 주문테이블에 있는 주문번호가 결제테이블에 없는 경우 주문번호 삭제
 				if(dao.checkPayment(m) == 0) {
 					if(dao.deleteLastOrder(m) > 0) {
-						System.out.println("주문번호 " + m + " 삭제완료");
+						System.out.println("tbl_order merchant_uid " + m + " deleted");
 					};
 					if(dao.deleteOrderproduct(m) > 0) {
-						System.out.println("주문상품 주문번호 " + m + " 삭제완료");
+						System.out.println("tbl_orderproduct merchant_uid " + m + " deleted");
 					}
+				} else {
+					System.out.println("THRER IS NO DATA TO DELETE");
 				}
 			}
 			
@@ -78,19 +84,19 @@ public class OrderService extends Paging {
 		
 	// (마이페이지) 마지막 주문번호 불러오기
 		public String getLastOrder_no(Map info) throws Exception {
-			System.out.println("OrderService / 마지막 주문번호 불러오기 - info: " + info);
+			System.out.println("OrderService / getLastOrder_no - info: " + info);
 			return dao.getLastOrder_no(info);
 		}
 		
 	// (마이페이지) 마지막 주문 건 삭제
 		public int deleteLastOrder(String merchant_uid) throws Exception {
-			System.out.println("OrderService / 마지막 주문 건 삭제 - merchant_uid: " + merchant_uid);
+			System.out.println("OrderService / deleteLastOrder - merchant_uid: " + merchant_uid);
 			return dao.deleteLastOrder(merchant_uid);
 		}
 		
 	// (마이페이지) 주문상품 저장
 		public int insertOrderProduct(Map map) throws Exception {
-			System.out.println("OrderService / 주문상품 저장 - map: " + map.toString());
+			System.out.println("OrderService / insertOrderProduct - map: " + map.toString());
 			return dao.insertOrderProduct(map);
 		}
 		
@@ -101,7 +107,7 @@ public class OrderService extends Paging {
 			System.out.println("user_id : " + user_id + " : searchOption : " + searchOption + " : searchKeyword : " + searchKeyword + " : sRange : " + range.get("startRange") + " : eRange : " + range.get("endRange"));
 			// (추가) 결제 미완료 건 삭제
 						// 마지막 주문번호 불러오기(user_id, tracking_no)
-						System.out.println("결제 미완료 건 삭제");
+						System.out.println("Delete uncompleted order_no");
 						List<String> merchant_uid = new ArrayList<>();
 						Map<String, String> info = new HashMap<>();
 						SimpleDateFormat sdfTemp = new SimpleDateFormat("yy/MM/dd");
@@ -109,11 +115,11 @@ public class OrderService extends Paging {
 						info.put("order_time", order_time);
 						// 상품인 경우
 						info.put("tracking_no", "PRODUCT");
-						System.out.println("결제 미완료 건 삭제 - 상품: " + info);
+						System.out.println("If it's product, map: " + info);
 						merchant_uid.add(dao.getLastOrder_no(info));
 						
 						// 포인트인 경우
-						System.out.println("결제 미완료 건 삭제 - 포인트: " + info);
+						System.out.println("If it's point, map: " + info);
 						info.put("tracking_no", "point");
 						merchant_uid.add(dao.getLastOrder_no(info));
 						
@@ -122,10 +128,10 @@ public class OrderService extends Paging {
 							// 주문테이블에 있는 주문번호가 결제테이블에 없는 경우 주문번호 삭제
 							if(dao.checkPayment(m) == 0) {
 								if(dao.deleteLastOrder(m) > 0) {
-									System.out.println("주문번호 " + m + " 삭제완료");
+									System.out.println("tbl_order merchant_uid " + m + " deleted");
 								};
 								if(dao.deleteOrderproduct(m) > 0) {
-									System.out.println("주문상품 주문번호 " + m + " 삭제완료");
+									System.out.println("tbl_orderproduct merchant_uid " + m + " deleted");
 								}
 							}
 						}
@@ -152,7 +158,7 @@ public class OrderService extends Paging {
 			}
 			map.put("user_id", user_id);
 			int rs = dao.getOrderCount(map);
-			System.out.println("주문정보 COUNT : " + rs);
+			System.out.println("orderInfo COUNT : " + rs);
 			this.totalCount = rs;
 		}
 }
