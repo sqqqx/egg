@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.websocket.Session;
 import javax.servlet.http.HttpSession;
@@ -28,7 +30,8 @@ import egg.finalproject.notice.NoticeService;
 public class AlarmEndPoint {
 	// 모든 클라이언트의 session 값을 저장하는 저장소
 	private static List<Session> clients = Collections.synchronizedList(new ArrayList<>());
-	private static List<Session> admins = Collections.synchronizedList(new ArrayList<>()); // 어드민 모음
+	//private static List<Session> admins = Collections.synchronizedList(new ArrayList<>()); // 어드민 모음
+	private static Map<String, Session> admins = Collections.synchronizedMap(new HashMap<>());
 	private static Map<String, HttpSession> hMap = new HashMap<>(); // 로그인 유저만
 	private static int totalUserCount; // 전체 접속자 수
 	private static int loginUserCount; // 로그인 유저 수
@@ -63,8 +66,10 @@ public class AlarmEndPoint {
 			loginUserCount++; // 로그인 유저 수 +1
 		}
 		// 관리자 판별
-		if(checkLogin && dto.getType() == 0) {
-			admins.add(session);
+		if(checkLogin && dto.getType() == 0 && admins.get(dto.getUser_id()) == null) {
+			System.out.println("관리자 판별 메서드 실행");
+			//admins.add(session);
+			admins.put(dto.getUser_id(), session);
 		}
 		// 접속자 수 확인
 		this.getUserCount();
@@ -136,13 +141,20 @@ public class AlarmEndPoint {
 		System.out.println("(웹소켓)클라이언트의 접속이 끊어졌습니다.");
 		totalUserCount--;
 		
+		// 관리자 세션 정리
+		if(checkLogin && hMap.get(dto.getUser_id()) != null && admins.get(dto.getUser_id()) != null) {
+			System.out.println("관리자 세션 정리 메서드 실행");
+			admins.remove(dto.getUser_id());
+		}
+		
 		// 세션 정리
 		if(checkLogin && hMap.get(dto.getUser_id()) != null) {
-			admins.remove(session);
+			//admins.remove(session);
 			hMap.remove(dto.getUser_id());
 			checkLogin = false;
 			loginUserCount--; 
 		}
+		
 		// 접속자 수 확인
 		this.getUserCount();
 		// 로그인 유저 명단 확인
@@ -174,11 +186,12 @@ public class AlarmEndPoint {
 	
 	// 관리자 전송
 	public void sendMsg(JsonObject obj) {
-		if(!admins.isEmpty() || admins != null) { // 왜 체크를 못하니..
+		System.out.println("admin접속여부(true=없음) : " + admins.isEmpty() + " & size체크 : " + admins.size());
+		if(!admins.isEmpty()) {
 			synchronized (admins) {
-				for (Session admin : admins) {
+				for(String key : admins.keySet()){ 
 					try {
-						admin.getBasicRemote().sendText(obj.toString());
+						admins.get(key).getBasicRemote().sendText(obj.toString());
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -186,5 +199,20 @@ public class AlarmEndPoint {
 			}
 		}
 	}
+	
+//	public void sendMsg(JsonObject obj) {
+//		System.out.println("admin접속여부(true=없음) : " + admins.isEmpty() + " & size체크 : " + admins.size());
+//		if(!admins.isEmpty() || admins != null) {
+//			synchronized (admins) {
+//				for (Session admin : admins) {
+//					try {
+//						admin.getBasicRemote().sendText(obj.toString());
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			}
+//		}
+//	}
 
 }

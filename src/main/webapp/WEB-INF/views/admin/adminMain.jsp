@@ -129,6 +129,7 @@
         <script>
             // 접속자 수 & 명단
             let totalUserCount = 0;
+            let loginUserCount = 0;
             ws.onmessage = function (e) {
                 let msgObj = JSON.parse(e.data);
                 //console.log(msgObj);
@@ -141,6 +142,7 @@
                     $("#nLoginCount").append(nLoginCount);
                     $("#loginCount").append(msgObj.loginUserCount);
                     totalUserCount = msgObj.totalUserCount;
+                    loginUserCount = msgObj.loginUserCount
                 }
                 if (msgObj.type == "user_id") {
                     getUserInfo(msgObj);
@@ -218,12 +220,12 @@
                 let info = '<li>\
                                 <div class="nav-link text-xs font-semibold text-uppercase text-muted ls-wide" href="#">\
                                     접속자 명단 \
-                                    <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-4" id="totalUserCount">13</span>\
+                                    <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-4" id="loginUserCount">13</span>\
                                 </div>\
                             </li>';
                 $("#userInfo_Wrapper").append(info);
-                $("#totalUserCount").empty();
-                $("#totalUserCount").append(totalUserCount);
+                $("#loginUserCount").empty();
+                $("#loginUserCount").append(loginUserCount);
                 for(let dto of list) {
                 	let address = dto.address.match(/[ㄱ-힣]+\s[ㄱ-힣]+/);
                     info = '<li id="li_' + dto.user_id + '">\
