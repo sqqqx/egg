@@ -224,7 +224,7 @@ table th {
                                             <input type="text" id="edited_detailAddress" placeholder="상세주소" class="col-5">
                                             <input type="text" id="edited_extraAddress" placeholder="참고항목" class="col-5">
                                         </div>
-                                        <input type="text" id="inputAddress" name="address" value="${dto.address}"/>
+                                        <input type="text" id="inputAddress" name="address" value="${dto.address}" readonly/>
                                    </td>
                                 </tr>
                                 <input type="text" value="${loginSession.user_id}" name="user_id" hidden/>
