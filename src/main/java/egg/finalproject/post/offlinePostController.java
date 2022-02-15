@@ -73,7 +73,6 @@ public class offlinePostController {
 		Map<String, Object> navi = service.getNavi(currentPage);
 		Map<String, Object> range = service.getRange(currentPage);
 		List<PostDTO> list = service.getMyPost(dto.getUser_id(), searchOption, searchKeyword, range);
-		
 		model.addAttribute("navi", navi);
 		model.addAttribute("list", list);
 		model.addAttribute("searchOption", searchOption);
