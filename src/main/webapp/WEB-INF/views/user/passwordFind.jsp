@@ -151,6 +151,13 @@
         </div>
         <!-- 비밀번호 일치시 초록글씨, 불일치시 빨간글씨-->
         <div id="pwcheck_regex"></div>
+        <div class="row my-5 btnBox">
+	        <div class="col-6" id="completeBtnBox">
+	            <button class="btn btn-dark btn-lg clsBtn" type="button" id="completeBtn" style="display:none;" disabled>완료</button>
+	        </div>
+	        <div class="col-6">
+	            <button class="btn btn-secondary btn-lg clsBtn" type="button" id="backBtn">닫기</button>
+	        </div>
 		</div>
 	</div>
 	
