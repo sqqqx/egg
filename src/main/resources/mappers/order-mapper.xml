@@ -33,7 +33,18 @@
     
     <!-- (마이페이지) 마지막 주문번호 불러오기 -->
     <select id="getLastOrder_no" resultType="string">
-    	select order_no from (select row_number() over (order by order_no desc) r, o.* from tbl_order o where user_id=#{user_id}) where r=1
+    	select order_no from (select row_number() over (order by order_no desc) r, o.* from tbl_order o where user_id=#{user_id} and order_no like
+    		<choose>
+    			<!-- 포인트 충전인 경우 -->
+    			<when test="tracking_no == 'POINT'">
+    				'POINT%'
+    			</when>
+    			<!-- 상품 주문인 경우 -->
+    			<otherwise>
+    				'ORD%'
+    			</otherwise>
+    		</choose>
+    	) where r=1
     </select>
     
     <!-- (마이페이지) 마지막 주문 건 삭제 -->
@@ -87,4 +98,19 @@
 			  </if>
 		      )
     </select>
+    
+    <!-- (마이페이지) 결제완료 확인 -->
+    <select id="checkPayment" resultType="int">
+    	SELECT COUNT(*) FROM TBL_PAYMENT WHERE PAYMENT_NO = #{merchant_uid}
+    </select>
+    
+    <!-- (마이페이지) 모든 주문정보 불러오기 -->
+    <select id="getAllOrder" resultType="string">
+    	SELECT ORDER_NO FROM TBL_ORDER WHERE USER_ID = #{user_id}
+    </select>
+    
+    <!-- (마이페이지) 주문상품 삭제 -->
+    <delete id="deleteOrderproduct">
+    	delete from tbl_orderproduct where order_no = #{merchant_uid}
+    </delete>
 </mapper>

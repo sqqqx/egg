@@ -66,7 +66,7 @@ table th {
 #inputPhoneBox * {
     display: inline-block;
     width: 155px;
-    height: 40px;
+    height: 30px;
 }
 .verification {
     display: none;
@@ -93,6 +93,7 @@ table th {
 	margin-top: 10px;
 	display: inline-block;
 }
+
 .editInput {
 	display: none;
 }
@@ -581,8 +582,8 @@ table th {
 	    
     	// 회원정보수정 화면 및 버튼 전환
     	let convertModify = function(){
-	    	$("table td:nth-child(2)").css("display", "none");
-	        $("table td:last-child").css("display", "block");
+	    	$("table td:nth-child(2)").hide();
+	        $("table td:last-child").show();
 	        $("#btnBox").css("display", "none");
 	        $("#editBtnBox").css("display", "inline-block");
 	        
@@ -593,8 +594,8 @@ table th {
     	
     	// 회원정보조회 화면 및 버튼 전환
     	let convertView = function(){
-    		$("table td:nth-child(2)").css("display", "block");
-	        $("table td:last-child:not(#viewType)").css("display", "none");
+    		$("table td:nth-child(2)").show();
+	        $("table td:last-child:not(#viewType)").hide();
 	        $("#btnBox").css("display", "block");
 	        $("#editBtnBox").css("display", "none");
     	}
