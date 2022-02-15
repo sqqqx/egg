@@ -67,7 +67,7 @@
                 		<div class="col">
 	                			<a href="${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no=${like.POST_NO}">
 			                		<div class="row mediaPhoto">
-			                			<img class="photo" src="${pageContext.request.contextPath}onlinePostThumbNail/${like.SYSTEM_NAME }">
+			                			<img class="photo" src="${pageContext.request.contextPath}/onlinePostThumbNail/${like.SYSTEM_NAME }">
 			                		</div>
 			                		<div class="row mediaText">
 			             				<div class="row titleBox">
@@ -237,7 +237,7 @@
         </div>
         <div class="row mt-2 footer">
       		<div class="row">
-      			<span>(주)능력자들 | 대표 : 나승완 | 사업자등록번호 : 421-22-00218 </span>
+      			<span>(주)능력자들 | 대표 : 류호진 | 사업자등록번호 : 421-22-00218 </span>
       			<span>주소 : 올림픽로 92길 40-3 3층 (주)능력자들</span>
       		</div>    
         </div>

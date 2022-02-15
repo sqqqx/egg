@@ -166,5 +166,7 @@ background-color: rgb(241, 234, 234);
 	font-size:large
 }
 .footer>div{
+	padding-top:20px;
 	height:70px;
+	text-align:center;
 }
