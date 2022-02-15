@@ -6,15 +6,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import egg.finalproject.admin.Paging;
+import egg.finalproject.member.MemberDTO;
 
 @Service
 public class OrderService extends Paging {
 	@Autowired
 	private OrderDAO dao;
+	@Autowired
+	private HttpSession session;
 	
 	//TempOrderDTO : ProductDTO(상품정보) + quantity(구매 수량)
 		//(product_no에 해당하는 상품 정보 + 고객 구매 희망 수량)

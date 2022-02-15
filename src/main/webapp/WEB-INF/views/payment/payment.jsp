@@ -48,6 +48,7 @@
           pg: "kakaopay",
           pay_method: "card",
           merchant_uid: "${iamdto.merchant_uid}",
+          //merchant_uid: "ORD20220000-0001",
           name: "${iamdto.name}",
           amount: "${iamdto.amount}",
           buyer_email: "${iamdto.buyer_email}",
@@ -56,6 +57,7 @@
           buyer_addr: "${iamdto.buyer_addr}",
           buyer_postcode: "${iamdto.buyer_postcode}"
       }, function (rsp) { // callback
+    	  console.log(rsp);
     	  if ( rsp.success ) {	// 결제 성공 시
     		  // ajax로 결제내역 저장하기
     	    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
