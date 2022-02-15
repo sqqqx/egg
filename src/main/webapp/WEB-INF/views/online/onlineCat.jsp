@@ -37,6 +37,7 @@ h2{
 	 float:left;
 	 margin:auto;
 	 background-color:#6DCEF520;
+	 margin-bottom:30px;
 }
 .content{
 	height:400px;

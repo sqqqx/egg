@@ -82,3 +82,4 @@ li:hover > span::after {
   border-bottom: 2px solid #00ADEE;
   transition:all .3s ease;
 }
+a{margin-left:0; margin-right:0;}

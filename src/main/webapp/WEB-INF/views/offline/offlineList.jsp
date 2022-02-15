@@ -22,7 +22,7 @@
     	height: 1000px;
     	font-family: 'BMHANNAAir';
 	}
-	.title{height:100px; border:1px solid blue; position: relative;}
+	.title{height:100px; position: relative;}
 	h1{text-align:center; padding-top:20px;}
 	.container{margin-left:0;}
 	.search{padding-top:10px;}
@@ -30,7 +30,7 @@
 	#selectBox{padding-left:0;}
 	.iconBox {
 		position: absolute;
-		left:650px;
+		left:750px;
 		top: 5px;
 		width: 90px;
 	}
