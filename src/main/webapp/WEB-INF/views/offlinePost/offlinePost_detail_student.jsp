@@ -169,7 +169,7 @@
             	}).done(function(data){
             		if(data=="success"){
             			console.log("success");
-            			location.href="";
+            			location.href="${pageContext.request.contextPath}/offlinePost/toMyPost?currentPage=1";
             		}else if(data=="fail"){
             			alert("알 수 없는 오류가 발생하였습니다. 관리자에게 문의 바랍니다.");
             		}
