@@ -168,7 +168,7 @@
             		,data:{post_no:post_no}
             	}).done(function(data){
             		if(data=="success"){
-            			console.log("success");,
+            			console.log("success");
             			location.href="";
             		}else if(data=="fail"){
             			alert("알 수 없는 오류가 발생하였습니다. 관리자에게 문의 바랍니다.");
