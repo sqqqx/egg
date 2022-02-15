@@ -198,6 +198,7 @@
                 			}else{
                 				$("#phoneCheck").attr("disabled",false);
                 				alert("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
+                				$("#phoneCkBox").css("display", "flex");
                 				code2 = rs;
                 			}
             			}
@@ -240,6 +241,7 @@
             				alert("가입시 입력한 이메일과 일치하지 않습니다.");
             			}else{
                     	alert("이메일을 확인후 인증번호를 입력해주세요.");
+                    	$("#emailCkBox").css("display", "flex");
                     	code = rs;
             			}
                     }
