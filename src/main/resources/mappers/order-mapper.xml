@@ -39,7 +39,7 @@
     	select order_no from (select row_number() over (order by order_no desc) r, o.* from tbl_order o where order_no like
     		<choose>
     			<!-- 포인트 충전인 경우 -->
-    			<when test="tracking_no == 'point'">
+    			<when test='tracking_no == "point"'>
     				'POINT%'
     			</when>
     			<!-- 상품 주문인 경우 -->

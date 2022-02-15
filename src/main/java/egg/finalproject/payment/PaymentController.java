@@ -41,7 +41,7 @@ public class PaymentController {
 	@RequestMapping("/toPayment")
 	public String toPayment(Model model, OrderDTO dto, String[] productNames, String[] productQuantities, String[] productNos, IamportPayment buyer_info) throws Exception {
 		/* 주문 내역을 DB 저장 - 결제 페이지로 이동(아직까지 결제 상태는 ready)*/
-		System.out.println("PaymentController / 결제페이지로 이동 접근");
+		System.out.println("PaymentController / toPayment");
 		// 주문 내용이 상품인 경우(tracking_no()가 null일 경우 tracking_no()에 0저장)
 		if(dto.getTracking_no() == null) {
 			dto.setTracking_no("0");
@@ -54,26 +54,26 @@ public class PaymentController {
 		int i = 0;
 		if(productNos != null) {
 			for(String n : productNos) {
-				System.out.println(++i + "상품 번호: " + n);
+				System.out.println(++i + "productNo: " + n);
 			}
 		}
 		
 		// 이름
 		String productName = "";
 		if(productNames != null) {
-			System.out.println("productName 개수: " + productNames.length);
+			System.out.println("productName count: " + productNames.length);
 			i = 0;
 			for(String p : productNames) {
-				System.out.println(++i + "상품명: " + p);
+				System.out.println(++i + "productName: " + p);
 			}
 		}
 		
 		// 개수
 		if(productQuantities != null) {
-			System.out.println("productQuntaties 개수: " + productQuantities.length);
+			System.out.println("productQuntaties count: " + productQuantities.length);
 			i = 0;
 			for(String q : productQuantities) {
-				System.out.println(++i + "상품개수: " + q);
+				System.out.println(++i + "producntQuantity: " + q);
 			}
 		}
 		
@@ -81,20 +81,20 @@ public class PaymentController {
 		
 		// 주문 테이블 저장
 		if(orderService.insertOrder(dto) >0) {
-			System.out.println("주문테이블 저장 성공");
+			System.out.println("Completed insert tbl_order");
 			
 			// 방금 저장한 마지막 주문번호
 			Map<String, String> info = new HashMap<>();
 			info.put("user_id", dto.getUser_id());
 			info.put("tracking_no", dto.getTracking_no());
 			String merchant_uid = orderService.getLastOrder_no(info);
-			System.out.println("방금 저장한 마지막 주문번호: " + merchant_uid);
+			System.out.println("Last order_no saved right before: " + merchant_uid);
 
 			// 주문상품 테이블에 저장(상품일 경우에만, 포인트인 경우에 거치지 않음)
 			if(productNames != null) {
 				if(productNames.length > 1) {	// 상품이 여러개일 경우
 					// payment.jsp에 넘길 상품명 지정
-					productName = productNames[0] + "외 " + (productNames.length-1) + "개";
+					productName = productNames[0] + "excluded " + (productNames.length-1) + "ea";
 					
 					for(i = 0; i < productNos.length; i++) {
 						Map<String, Object> map = new HashMap<>();
@@ -106,7 +106,7 @@ public class PaymentController {
 						// 수량
 						map.put("quantity", Integer.parseInt(productQuantities[i]));
 						
-						System.out.println(i + "번째 상품추가 / 주문번호" + merchant_uid + ", 상품번호: " + productNos[i] + ", 수량: " + productQuantities[i]);
+						System.out.println(i + "th product add / merchant_uid" + merchant_uid + ", productNo: " + productNos[i] + ", quantity: " + productQuantities[i]);
 						orderService.insertOrderProduct(map);
 					}
 					
@@ -123,7 +123,7 @@ public class PaymentController {
 					// 수량
 					map.put("quantity", Integer.parseInt(productQuantities[0]));
 					
-					System.out.println(i + "번째 상품추가 / 주문번호" + merchant_uid + ", 상품번호: " + productNos[0] + ", 수량: " + productQuantities[0]);
+					System.out.println(i + "th product add / merchant_uid" + merchant_uid + ", productNo: " + productNos[0] + ", quantity: " + productQuantities[0]);
 					orderService.insertOrderProduct(map);
 				}
 			}
@@ -162,40 +162,40 @@ public class PaymentController {
 	@RequestMapping(value="/completePaid.do", produces="application/json;charset=UTF-8")
 	@ResponseBody()
 	public String completePaid(PaymentDTO dto, String route) throws Exception {
-		System.out.println("PaymentController / 결제내역 저장 - PaymentDTO : " + dto);
-		System.out.println("구매경로가 장바구니?: " + route);
+		System.out.println("PaymentController / comeletePaid.do - PaymentDTO : " + dto);
+		System.out.println("route?: " + route);
 		
 		if(service.completePaid(dto) > 0) {	// 결제 성공 시
-			System.out.println("결제 성공");
+			System.out.println("completed insert tbl_payment");
 			if(route.equals("point")) {	// 포인트인 경우
 				String user_id = ((MemberDTO)session.getAttribute("loginSession")).getUser_id();
 				// tbl_pointlog에 저장
 				pointlogService.insertLog(user_id, dto.getCost());
-				System.out.println("포인트 내역 조정 마침");
+				System.out.println("completed insert tbl_pointlog");
 				// tbl_expert에서 포인트 수정
 				int balance = pointlogService.balance(user_id);
 				expertService.modifyPoint(user_id, balance);
-				System.out.println("능력자 포인트 잔액 조정 마침");
+				System.out.println("completed modifyPoint");
 				return "pointCharged";
 			} else { // 상품인 경우
 				// 재고 수량 수정
 				productService.modifyStock(dto.getPayment_no(), 0);	// 매개변수1: 주문번호, 매개변수2: 0(감소) / 1(증가)
-				System.out.println("재고 수량 조정 마침");
+				System.out.println("completed adjusting stock");
 				// 장바구니 비우기(장바구니 구매일 경우)
 				if(route.equals("cart")) {
 					cartService.clearCart(((MemberDTO)session.getAttribute("loginSession")).getUser_id());
-					System.out.println("장바구니 비우기 마침");
+					System.out.println("completed clearCart");
 				}
 			}
 			
 			return "success";
 		} else {
-			System.out.println("결제 실패");
+			System.out.println("Failed payment");
 			if(orderService.deleteLastOrder(dto.getPayment_no()) > 0) {
-				System.out.println("추가했던 주문테이블에 데이터 삭제완료");
+				System.out.println("Deleted LastOrder");
 				return "fail";
 			} else {
-				System.out.println("주문 테이블 데이터 삭제 실패");
+				System.out.println("Failed to delete LastOrder");
 				return null;
 			}
 		}
