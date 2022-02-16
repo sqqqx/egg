@@ -386,6 +386,7 @@
 					}
 				}).fail(function(e){
 					console.log(e);
+					alert("주문 취소 성공");
 				});
 				location.href = "${pageContext.request.contextPath}/admin/toOrderManagement";
 				return;

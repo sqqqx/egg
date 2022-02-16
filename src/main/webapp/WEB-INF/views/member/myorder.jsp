@@ -97,7 +97,7 @@
 									    	</td>
 									    	<td>${map.NAME}</td>
 									    	<td>${map.QUANTITY}</td>
-									    	<td>₩ ${map.COST}</td>
+									    	<td>${map.COST} 원</td>
 									    	<td>${map.ORDER_TIME}</td>
 									    	<c:choose>
 									    		<c:when test="${map.STATUS eq 'canceled'}">
@@ -190,6 +190,8 @@
 					alert("주문 취소 실패");
 				}).fail(function(e){
 					console.log(e);
+					alert("주문 취소 성공");
+					location.href = "${pageContext.request.contextPath}/order/toMyOrder?currentPage=1";
 				});
 				return;
 			} 
