@@ -93,7 +93,7 @@
 						  				<tr class="cls-tr">
 									    	<td>${map.ORDER_NO}</td>
 									    	<td>
-									    		<img src="/resources/img/${map.IMAGE_PATH}">
+									    		<img src="${pagecontext.request.contextPath}/productThumbnail/${map.IMAGE_PATH}">
 									    	</td>
 									    	<td>${map.NAME}</td>
 									    	<td>${map.QUANTITY}</td>

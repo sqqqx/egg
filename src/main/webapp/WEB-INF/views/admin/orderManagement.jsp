@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 
@@ -246,7 +247,7 @@
 				alert("이미 취소 된 주문입니다");
 				return;
 			}
-			$(".address_input").val("");
+			/* $(".address_input").val("");
 			const address = $(e.target).attr("addr");
 			const post = address.match(/[0-9]{5}/)[0];
 			const roadAddr = address.match(/[ㄱ-힣](.*?)(로|길).[1-9]{1,2}/)[0];
@@ -265,7 +266,7 @@
 			$("#sample4_roadAddress").val(roadAddr);
 			$("#sample4_jibunAddress").val(jibunAddr);
 			$("#sample4_extraAddress").val(extraAddr);
-			$("#sample4_detailAddress").val(detailAddr);
+			$("#sample4_detailAddress").val(detailAddr); */
 			
 			order_no = e.target.id;
 			$('#exampleModalCenteredScrollable').modal('toggle');
@@ -304,6 +305,11 @@
 		// 주문 상세 정보
 		$(".orderDetailView").on("click", function(e) {
      		const order_no = e.target.id;
+     		const rs = order_no.indexOf("POINT");
+     		if(rs == 0) {
+     			alert("포인트 결제는 조회가 불가합니다.");
+     			return;
+     		}
 			window.open("${pageContext.request.contextPath}/admin/orderDetailView?order_no="+order_no, "orderDetailView", "width=400,height=800");
 		});
 		// 전체 체크박스 ON / OFF
@@ -375,12 +381,13 @@
 					console.log(rs);
 					if(rs == "success") {
 						alert("주문 취소 성공");
-						location.href = "${pageContext.request.contextPath}/admin/toOrderManagement";
+					} else {
+						alert("주문 취소 실패");
 					}
-					alert("주문 취소 실패");
 				}).fail(function(e){
 					console.log(e);
 				});
+				location.href = "${pageContext.request.contextPath}/admin/toOrderManagement";
 				return;
 			} 
 		});

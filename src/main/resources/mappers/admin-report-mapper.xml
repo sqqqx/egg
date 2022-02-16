@@ -57,10 +57,10 @@
 	
 	<!-- 신고 상세 페이지 관련 -->
 	<select id="getReportDetail" parameterType="map" resultType="map">
-		SELECT r.report_no, r.user_id, r.type, r.report_content,
+		SELECT r.report_no, r.user_id, r.type "TYPE", r.report_content,
 			   r.report_date, r.target_no, i.report_content "I_REPORT_CONTENT",
 			<if test="type == '게시글'">
-				p.*
+				p.*, p.type "POSTTYPE"
 			</if>
 			<if test="type == '댓글'">
 				c.*

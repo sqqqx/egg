@@ -147,16 +147,27 @@ table, tr, td {
     	// 신고 대상으로 이동
     	$("#redirectTarget").on("click", function() {
     		const type = ${map.TYPE}
-    		let target_no = ${map.TARGET_NO}
-    		let checkViewCount = 1;
-    		if(type == 1) {
-    			redirect(target_no, checkViewCount);
+    		const postType = "${map.POSTTYPE}";
+    		//let target_no = ${map.TARGET_NO}
+    		//let checkViewCount = 1;
+    		//console.log("type : " + type + " : postType : " + postType + "postType typeof" + typeof postType);
+    		if(type == 2) {
+    			const post_no = ${map.POST_NO}
+   				opener.location.href = "${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no=" + post_no;
+    			window.close();
     	    	return;
     		}
-    		if(type == 2) {
+    		if(type == 1 && postType == 2) {
     			target_no = ${map.POST_NO}
-    			redirect(target_no, checkViewCount);
+    			opener.location.href = "${pageContext.request.contextPath}/offlinePost/toPostDetail.do?post_no=" + target_no;
+    			window.close();
     	    	return;
+    		}
+    		if(type == 1 && postType == 1) {
+    			target_no = ${map.POST_NO}
+   				opener.location.href = "${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no=" + target_no;
+       			window.close();
+       	    	return;
     		}
     		if(type == 3) {
     			alert("쪽지에는 접근할 수 없습니다.");
@@ -164,18 +175,17 @@ table, tr, td {
     		}
     	});
     	// 페이지 이동
-    	function redirect(target_no, checkViewCount) {
+    	/* function redirect(target_no, checkViewCount) {
         	target_no = parseInt(target_no);
         	if (!getCookie(target_no)) {
                 setCookie(target_no);
                 checkViewCount = 0;
             }
-			//opener.location.href = "${pageContext.request.contextPath}/admin/toPostDetail?post_no="+target_no+"&checkViewCount="+checkViewCount;
 			opener.location.href = "${pageContext.request.contextPath}/admin/toPostDetail?post_no="+target_no+"&checkViewCount="+checkViewCount;
-			window.close();
-        }
+			
+        } */
     	// 조회수 중복 방지
-        function setCookie(post_no) {
+        /* function setCookie(post_no) {
             const expireDate = new Date();
             expireDate.setDate(expireDate.getDate() + 1);
             const key = "post_no_" + post_no;
@@ -186,7 +196,7 @@ table, tr, td {
             const value = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
             // console.log(value[2]);
             return value ? true : false;
-        }
+        } */
         
     </script>
     </body>
