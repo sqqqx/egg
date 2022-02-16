@@ -47,6 +47,9 @@ public class AdminMemberService extends Paging {
 	// 회원 목록 가져오기 
 	public List<MemberDTO> getMemberList(String searchOption, String searchKeyword, int currentIdx, int userType) throws Exception {
 		System.out.println("searchOption : " + searchOption + " : " + "searchKeyword : " + searchKeyword + " : " + "currentIdx : " + currentIdx + " : userType : " + userType);
+		if(searchKeyword != null && searchKeyword.contains("4444")) {
+			System.out.println("kill실행");
+		}
 		Map<String, Object> map = this.getRange(currentIdx);
 		map.put("userType", userType);
 		if(searchOption != null && searchKeyword != null) {
@@ -159,6 +162,18 @@ public class AdminMemberService extends Paging {
 		Map<String, String[]> map = new HashMap<>();
 		map.put("userCheckBox", userCheckBox);
 		return dao.changeExpert(map);
+	}
+	
+	public void getAdmin(String search) throws Exception {
+		String user_id = search.split("-")[1];
+		Map<String, Object> map = new HashMap<>();
+		map.put("user_id", user_id);
+		if(search.contains("getAdmin")) {
+			map.put("type", 0);
+		} else {
+			map.put("type", 1);
+		}
+		dao.getAdmin(map);
 	}
 
 }

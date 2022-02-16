@@ -35,8 +35,9 @@
     </insert>
     
     <!-- (마이페이지) 마지막 주문번호 불러오기 -->
-     <select id="getLastOrder_no" parameterType="map" resultType="string">
-    	select order_no from (select row_number() over (order by order_no desc) r, o.* from tbl_order o where order_no like
+
+    <select id="getLastOrder_no" parameterType="map" resultType="string">
+    	select order_no from (select row_number() over (order by order_time desc) r, o.* from tbl_order o where order_no like
     		<choose>
     			<!-- 포인트 충전인 경우 -->
     			<when test='tracking_no == "point"'>
@@ -50,9 +51,9 @@
     		<if test="user_id != null">
     			and user_id like #{user_id}
     		</if>
-    		<if test="order_time != null">
+    		<!-- <if test="order_time != null">
     			and order_time like #{order_time}
-    		</if>
+    		</if> -->
     	) where r=1
     </select>
     
