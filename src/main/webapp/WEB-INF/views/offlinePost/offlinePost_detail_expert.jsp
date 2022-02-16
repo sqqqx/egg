@@ -338,7 +338,7 @@
                 $("#likeArea").attr("value","1");
                 console.log($("#likeArea").attr("value"));
             	$.ajax({
-                    url: "${pageContext.request.contextPath}/like/plusAlarm.do?post_no=" + post_no + "&user_id=" + bid + "&type=5",
+                    url: "${pageContext.request.contextPath}/like/plusAlarm.do?post_no=" + post_no + "&user_id=" + bid + "&type=2",
                     type: "get"
                 }).done(function (data) {
                 	 if (data != "unavailable") {
@@ -360,7 +360,7 @@
                 $("#likeArea").attr("value","0");
                 console.log($("#likeArea").attr("value"));
                 $.ajax({
-                    url: "${pageContext.request.contextPath}/like/minus.do?post_no=" + post_no + "&user_id=" + bid + "&type=5",
+                    url: "${pageContext.request.contextPath}/like/minus.do?post_no=" + post_no + "&user_id=" + bid + "&type=2",
                     type: "get"
                 }).done(function (data) {
                     if (data == "available") {
@@ -382,7 +382,7 @@
             let bid = '${loginSession.user_id}'
             let post_no = '${PostDTO.post_no}'
             $.ajax({
-                url: "${pageContext.request.contextPath}/like/selectLike.do?post_no=" + post_no + "&user_id=" + bid + "&type=5",
+                url: "${pageContext.request.contextPath}/like/selectLike.do?post_no=" + post_no + "&user_id=" + bid + "&type=2",
                 type: "get"
             }).done(function (data) {
                 if (data == "available") {
