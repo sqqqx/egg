@@ -56,7 +56,6 @@
 	</style>
 </head>
 <body>
-		
 	<!-- 내가 쓴 글 -->
     <div class="container-fluid" id="myInfo">
     	<!-- 좌측 프로필 부분 -->
@@ -126,11 +125,11 @@
 								  		<c:otherwise>
 								  			<c:forEach items="${list}" var="map">
 								  				<tr class="cls-tr" id="${map.TYPE}">
-											    	<td>${map.PRODUCT_NO}</td>
+											    	<td>${map.IDX}</td>
 											    	<td><img src="/resources/img/${map.IMAGE_PATH}"></td>
 											    	<td class="cls-productName">
 											    		<p>${map.NAME}</p>
-											    		<p>₩ ${map.PRICE}</p>
+											    		<p>${map.PRICE} 원</p>
 											    	</td>
 											    	<td style="width: 150px">
 											    		<button type="button" class="btn btn-outline-dark btnToCart" id="${map.PRODUCT_NO}">장바구니 담기</button>
@@ -166,7 +165,7 @@
 								  		<c:otherwise>
 								  			<c:forEach items="${list}" var="map">
 								  				<tr class="cls-tr" id="${map.TYPE}">
-											    	<td>${map.POST_NO}</td>
+											    	<td>${map.IDX}</td>
 											    	<td>${map.TITLE}</td>
 											    	<td>${map.VIEW_COUNT}</td>
 											    	<td>

@@ -228,18 +228,15 @@
                 $("#loginUserCount").append(loginUserCount);
                 for(let dto of list) {
                 	let address = dto.address.match(/[ㄱ-힣]+\s[ㄱ-힣]+/);
-                	let profilePhotoPath = "";
+                	let profilePhotoPath = "${pagecontext.request.contextPath}/profilePhotos/" + dto.profile_path;
                 	if(dto.profile_path == "myInfo.png") {
                 		profilePhotoPath = "${pagecontext.request.contextPath}/resources/img/" + dto.profile_path;
-                	} else {
-                		profilePhotoPath = "${pagecontext.request.contextPath}/profilePhotos/" + dto.profile_path;
-                	}
+                	} 
                     info = '<li id="li_' + dto.user_id + '">\
                         <a href="#" class="nav-link d-flex align-items-center" onclick="return false;">\
                             <div class="me-4">\
                                 <div class="position-relative d-inline-block text-white">\
                                     <img alt="Image Placeholder"\
-                                        //src="/resources/img/' + dto.profile_path + '"\
                                         src="' + profilePhotoPath + '"\
                                         class="avatar rounded-circle"> <span\
                                             class="position-absolute bottom-2 end-2 transform translate-x-1/2 translate-y-1/2 border-2 border-solid border-current w-3 h-3 bg-success rounded-circle"></span>\

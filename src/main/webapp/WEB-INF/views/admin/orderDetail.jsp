@@ -144,6 +144,10 @@
             margin-top: 135px;
             color: #aaa
         }
+        #product_img {
+        	width: 50px;
+        	height: 50px;
+        }
     </style>
 </head>
 
@@ -171,7 +175,7 @@
         <div class="details">
             <!-- <h3> 상품 </h3> -->
             <div class="product">
-                <img src="/resources/img/${map.IMAGE_PATH}" alt="">
+                <img src="{pageContext.request.contextPath}/productThumbnail/${map.IMAGE_PATH}" id="product_img">
                 <div class="info">
                     <h4> ${map.PRODUCT_NAME} </h4>
                     <p> 가격: <span> ₩ ${map.PRICE} </span> </p>

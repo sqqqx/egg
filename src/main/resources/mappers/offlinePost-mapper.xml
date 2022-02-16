@@ -17,7 +17,7 @@
     				to_char(a.price, '999,999,999') "PRICE"
     				, a.*
 				FROM (SELECT 
-						  row_number() OVER (ORDER BY like_date DESC) AS idx
+						  row_number() OVER (ORDER BY like_date) AS idx
 						  , l.*, p.*
 					  FROM tbl_like l
 					  	  INNER JOIN tbl_product p ON(p.product_no = l.post_no)
@@ -29,13 +29,14 @@
 					  <if test="searchKeyword != null and searchOption == 'content'">
 						  AND content LIKE '%'||#{searchKeyword}||'%'
 					  </if>
+					  ORDER BY idx DESC
 					  ) a
 				WHERE idx BETWEEN ${startRange} AND ${endRange}
     		</when>
     		<otherwise>
     			SELECT *
 				FROM (SELECT 
-				          row_number() OVER (ORDER BY like_date DESC) AS idx
+				          row_number() OVER (ORDER BY like_date) AS idx
 				          , l.user_id "USER_ID", l.post_no "POST_NO", l.type "TYPE"
 				          , p.view_count, p.title
 					  FROM tbl_like l
@@ -45,6 +46,7 @@
 			  	  	  <if test="searchKeyword != null">
 						  AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
 					  </if>
+					  ORDER BY idx DESC
 					 )
 				WHERE idx BETWEEN ${startRange} AND ${endRange}
     		</otherwise>
@@ -93,13 +95,14 @@
     <select id="getMyPost" parameterType="map" resultType="PostDTO">
     	SELECT * 
     	FROM (SELECT 
-    			  row_number() OVER (ORDER BY written_date DESC) AS idx
+    			  row_number() OVER (ORDER BY written_date) AS idx
     			  , p.* 
    			  FROM tbl_post p
    			  WHERE user_id = #{user_id}
    			  <if test="searchKeyword != null">
 				  AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
 			  </if>
+			  ORDER BY idx DESC
    			 ) 
     	WHERE idx BETWEEN ${startRange} AND ${endRange}
     </select>
