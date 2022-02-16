@@ -98,6 +98,19 @@ a{
 	margin-left:0;
 	margin-right:0;
 }
+.footer{
+	height:170px;
+	width:1820px;
+	background-color:#00ADEE20;
+	font-family: 'BMHANNAAir';
+	font-size:medium;
+}
+.footer>div{
+	padding-top:25px;
+	height:70px;
+	text-align:center;
+	color:gray;
+}
 </style>
 </head>
 <body>
@@ -133,6 +146,15 @@ a{
                 	</c:forEach>
                 </div>
             </div>             
-
+</div>
+<div class="row mt-2 footer">
+      		<div class="row">
+      			<span>(주)능력자들 | 대표 : 류호진 | 사업자등록번호 : 421-22-00218 | 통신판매업신고 : 2019-서울중구-0087</span>
+      			<span>주소 : 올림픽로 92길 40-3 3층 (주)능력자들</span>
+      			<span>주식회사 클래스101은 전자상거래 등에서의 소비자보호에 관한 법률에 따른 통신판매업과 통신판매중개업을 영위하고 있습니다.</span> 
+      			<span>주식회사 클래스101은 통신판매중개자로서 중개하는 통신판매에 관하여서는 통신판매의 당사자가 아니므로 어떠한 책임도 부담하지 아니합니다.</span>
+      		</div>    
+     </div>
+</div>
 </body>
 </html>

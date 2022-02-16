@@ -110,6 +110,19 @@ a{
 	padding-right:0;
 	color:white;
 }
+.footer{
+	height:170px;
+	width:1820px;
+	background-color:#00ADEE20;
+	font-family: 'BMHANNAAir';
+	font-size:large
+}
+.footer>div{
+	padding-top:25px;
+	height:70px;
+	text-align:center;
+	color:gray;
+}
 </style>
 </head>
 <body>
@@ -152,6 +165,12 @@ a{
                 	</c:forEach>
                 </div>
             </div>             
-
+</div>
+<div class="row mt-2 footer">
+      		<div class="row">
+      			<span>(주)능력자들 | 대표 : 류호진 | 사업자등록번호 : 421-22-00218 </span>
+      			<span>주소 : 올림픽로 92길 40-3 3층 (주)능력자들</span>
+      		</div>    
+ </div>
 </body>
 </html>

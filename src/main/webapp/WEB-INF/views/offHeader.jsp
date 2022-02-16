@@ -24,8 +24,33 @@
 	position:relative;
 	left:270px;
 }
+.alarm{
+	position:relative;
+	left:162px;
+	width:50px;
+}
 #alarmContentBox{
-	left:1300px;
+	left:1470px;
+}
+#toMessage{
+	position:relative;
+	left:80px;
+}
+.account{
+	position:relative;
+	right:10px;
+}
+#accountInfoBox{
+   background-color: white;
+   position: absolute;
+   width:200px;
+   right: 25px;
+   top:100px;
+   z-index: 2;
+   padding-left:0;
+   padding-right:0;
+   font-family: 'BMHANNAAir';
+   font-size:large;
 }
 </style>
 </head>

@@ -28,6 +28,15 @@
 body{
 	font-family: 'BMHANNAAir';
 }
+.alarm{
+	position:relative;
+	left:147px;
+	width:50px;
+}
+#toMessage{
+	position:relative;
+	left:72px;
+}
 </style>
 </head>
 <body>
