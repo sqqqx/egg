@@ -13,7 +13,10 @@
     
     <!-- (마이페이지) 당일 주문량 조회 -->
 	<select id="countOrder" parameterType="map" resultType="int">
-		select count(*) from tbl_order where order_time like #{today}
+		select count(*) 
+		from tbl_order where TO_CHAR(order_time,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+	
+		<!-- select count(*) from tbl_order where order_time like #{today} -->
 		
 		<if test="tracking_no == 'point'">
 			and order_no like 'POINT%'

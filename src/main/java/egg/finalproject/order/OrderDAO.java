@@ -33,9 +33,14 @@ public class OrderDAO {
 			today = today.substring(0,2) + "/" + today.substring(2,4) + "/" + today.substring(4);
 			map.put("today", today);
 			map.put("tracking_no", tracking_no);
+			System.out.println("dh-today : " + today);
+			System.out.println("dh-tracking_no : " + tracking_no);
 			
 			// 맵으로 만들어 포인트인 경우 조건 하나 더 추가하기
-			return session.selectOne("orderMapper.countOrder", map);
+//			return session.selectOne("orderMapper.countOrder", map);
+			int rs = session.selectOne("orderMapper.countOrder", map);
+			System.out.println("dh-rs: " + rs);
+			return rs;
 		}
 	
 	// (마이페이지) 환불 처리
