@@ -19,8 +19,13 @@
     <style>
         * {
             word-break: break-all;
+            margin:0;
         }
-
+		body{
+		    width:1800px;
+		    height: 1000px;
+		    margin:0 auto;
+		}
         @font-face {
             font-family: 'BMHANNAAir';
             src:

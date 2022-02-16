@@ -24,7 +24,7 @@ body{
 }
 
 .imgBox>a>img{
-    width:80%;
+    width:83%;
     height: 80px;
     margin-left: 30%;
 }
@@ -74,19 +74,19 @@ body{
    font-size:large;
 }
 #accountInfoBox>div{
-margin:0;
-	width:100%;
+   margin:0;
+   width:100%;
    height: 60px;
    border: 1px solid gray;
    cursor:pointer;
 }
 #toMessage{
 	position:relative;
-	left:90px;
+	left:72px;
 }
 .alarm{
 	position:relative;
-	left:170px;
+	left:147px;
 	width:50px;
 }
 #noAlarmBtn{
@@ -130,7 +130,7 @@ margin:0;
 }
 #cart{
 	position:relative;
-	left:270px;
+	left:250px;
 }
 #toOffline{
 	position:relative;

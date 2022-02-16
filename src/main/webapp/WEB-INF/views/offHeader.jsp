@@ -24,8 +24,33 @@
 	position:relative;
 	left:270px;
 }
+.alarm{
+	position:relative;
+	left:162px;
+	width:50px;
+}
 #alarmContentBox{
-	left:1300px;
+	left:1470px;
+}
+#toMessage{
+	position:relative;
+	left:80px;
+}
+.account{
+	position:relative;
+	right:10px;
+}
+#accountInfoBox{
+   background-color: white;
+   position: absolute;
+   width:200px;
+   right: 25px;
+   top:100px;
+   z-index: 2;
+   padding-left:0;
+   padding-right:0;
+   font-family: 'BMHANNAAir';
+   font-size:large;
 }
 </style>
 </head>
@@ -178,7 +203,7 @@
          
           //========================================== 알람 영역 ===============================================
          //websocket 주소->endpoint로 이동
-         ws = new WebSocket("ws://13.209.48.56:8080/alarm");
+         ws = new WebSocket("ws://13.125.213.211:8080/alarm");
          
        //처음 시작할때 저장돼있는 알람 불러옴
   		$(document).ready(function(){

@@ -159,14 +159,15 @@ background-color: rgb(241, 234, 234);
 }
 
 .footer{
-	height:100px;
+	height:170px;
 	width:1820px;
 	background-color:#00ADEE20;
 	font-family: 'BMHANNAAir';
-	font-size:large
+	font-size:medium;
 }
 .footer>div{
-	padding-top:20px;
+	padding-top:25px;
 	height:70px;
 	text-align:center;
+	color:gray;
 }
