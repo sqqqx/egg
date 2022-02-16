@@ -74,8 +74,10 @@ public class OrderService extends Paging {
 			String today = sdf.format(System.currentTimeMillis());
 			if(!odto.getTracking_no().equals("point")) {	// 상품인 경우
 				odto.setOrder_no("ORD" + today + "-" + String.format("%04d", (dao.countOrder(odto.getTracking_no())+1)));
+				System.out.println("dh : " + String.format("%04d", (dao.countOrder(odto.getTracking_no())+1)));
 			} else {	// 포인트인 경우
 				odto.setOrder_no("POINT" + today + "-" + String.format("%04d", (dao.countOrder(odto.getTracking_no())+1)));
+				System.out.println("dh : " + String.format("%04d", (dao.countOrder(odto.getTracking_no())+1)));
 			}
 			System.out.println("insertOrder / DTO - " + odto);
 			return dao.insertOrder(odto);
