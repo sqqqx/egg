@@ -95,7 +95,7 @@
         }
 
         #storeLink {
-            height: 250px;
+           height: 300px;
             /* border: 1px solid black; */
             text-align: center;
             padding-left: 35%;
