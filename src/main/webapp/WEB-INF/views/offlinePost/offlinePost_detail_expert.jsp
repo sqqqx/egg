@@ -444,10 +444,12 @@
         
         //'견적 보내기' 버튼 누르면 견적 팝업 띄우기
         document.getElementById("sendingMessage").onclick=function(){
+    	    let user_id = '${loginSession.user_id}';
+    	    let writer_id = '${PostDTO.user_id}';
         	if(${loginSession.type==1}){
         		alert("죄송합니다. 능력자만 견적을 보낼 수 있습니다.");
         		return;
-        	}else if('${loginSesison.user_id}'=='${PostDTO.user_id}'){
+        	}else if(user_id==writer_id){
         		alert("자신이 쓴 요청에는 견적을 보낼 수 없습니다.");
         		return;
         	}else{
