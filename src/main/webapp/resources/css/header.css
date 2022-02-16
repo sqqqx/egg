@@ -24,7 +24,7 @@ body{
 }
 
 .imgBox>a>img{
-    width:80%;
+    width:83%;
     height: 80px;
     margin-left: 30%;
 }
@@ -82,11 +82,11 @@ margin:0;
 }
 #toMessage{
 	position:relative;
-	left:90px;
+	left:70px;
 }
 .alarm{
 	position:relative;
-	left:170px;
+	left:147px;
 	width:50px;
 }
 #noAlarmBtn{
@@ -130,7 +130,7 @@ margin:0;
 }
 #cart{
 	position:relative;
-	left:270px;
+	left:250px;
 }
 #toOffline{
 	position:relative;

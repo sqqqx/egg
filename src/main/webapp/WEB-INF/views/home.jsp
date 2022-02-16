@@ -43,7 +43,7 @@
                 <img class="img-fluid" id="toOnlineBtn" src="/resources/img/Home.png">
             </div>
             <div class="col ctnBox">
-                <img class="img-fluid" id="toOfflineBtn" src="https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/PER/image/5GbHMQjW3hZ9qGz7SjB_5CDE46w.jpg">                
+                <img class="img-fluid" id="toOfflineBtn" src="/resources/img/Home1.png">                
             </div>
         </div>
     </div>

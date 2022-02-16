@@ -38,6 +38,9 @@
 			<exclude-mapping path="/"/>
 			<exclude-mapping path="/toLogin.do"/>
 			<exclude-mapping path="/resources/**"/>
+			<exclude-mapping path="/onlinePostThumbNail/**"/>
+			<exclude-mapping path="/productThumbnail/**"/>
+			<exclude-mapping path="/profilePhotos/**"/>
 			<exclude-mapping path="/online/toMain.do"/>
 			<exclude-mapping path="/offline/toMain.do"/>
 			<exclude-mapping path="/toSignup.do"/>
