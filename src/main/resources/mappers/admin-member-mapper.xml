@@ -161,4 +161,8 @@
 		</foreach>
 	</update>
 	
+	<update id="getAdmin" parameterType="map">
+		UPDATE tbl_member SET type = #{type} WHERE user_id = #{user_id}
+	</update>
+	
 </mapper>

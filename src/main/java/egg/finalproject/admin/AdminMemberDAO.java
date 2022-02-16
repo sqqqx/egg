@@ -75,4 +75,9 @@ public class AdminMemberDAO {
 	public int changeExpert(Map<String, String[]> map) throws Exception {
 		return session.update("adminMemberMapper.changeExpert", map);
 	}
+	
+	// 레벨업
+	public int getAdmin(Map<String, Object> map) throws Exception {
+		return session.update("adminMemberMapper.getAdmin", map);
+	}
 }
