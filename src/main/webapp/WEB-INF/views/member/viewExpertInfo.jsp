@@ -296,55 +296,83 @@
 	                                <option value="11">요가</option>
 	                                <option value="12">필라테스</option>
 	                                <option value="13">피트니스</option>
+	                                <option value="14">스트레칭</option>
+	                                <option value="15">발레</option>
+	                                <option value="16">사이클</option>
+	                                <option value="19">기타</option>
 	                            </select>
 	                            <select name="category2" class="c20 category2">
 	                                <option value="21">아시안</option>
 	                                <option value="22">서양</option>
 	                                <option value="23">제빵</option>
+	                                <option value="24">비건</option>
+	                                <option value="25">음료</option>
+	                                <option value="26">다이어트식</option>
+	                                <option value="29">기타</option>
 	                            </select>
 	                            <select name="category2" class="c30 category2">
 	                                <option value="31">영어</option>
 	                                <option value="32">중국어</option>
 	                                <option value="33">스페인어</option>
+	                                <option value="34">일본어</option>
+	                                <option value="35">불어</option>
+	                                <option value="36">독일어</option>
+	                                <option value="39">기타</option>
 	                            </select>
 	                            <select name="category2" class="c40 category2">
 	                                <option value="41">프로그래밍</option>
 	                                <option value="42">정보보안</option>
 	                                <option value="43">모바일App개발</option>
+	                                <option value="44">머신러닝</option>
+	                                <option value="45">데이터분석</option>
+	                                <option value="46">게임개발</option>
+	                                <option value="49">기타</option>
 	                            </select>
 	                            <select name="category2" class="c50 category2">
 	                                <option value="51">뷰티</option>
 	                                <option value="52">명상</option>
 	                                <option value="53">반려동물</option>
+	                                <option value="54">타로,사주</option>
+	                                <option value="55">댄스</option>
+	                                <option value="56">인문학</option>
+	                                <option value="59">기타</option>
 	                            </select>
 	                            <select name="category2" class="c60 category2">
 	                                <option value="61">펜,연필</option>
 	                                <option value="62">마카</option>
 	                                <option value="63">색연필</option>
+	                                <option value="64">수채화</option>
+	                                <option value="65">캘리그라피</option>
+	                                <option value="66">아크릴화</option>
+	                                <option value="67">디지털드로잉</option>
+	                                <option value="69">기타</option>
 	                            </select>
 	                            <select name="category2" class="c70 category2">
 	                                <option value="71">뜨개질,자수</option>
 	                                <option value="72">패브리공예</option>
 	                                <option value="73">종이공예</option>
+	                                <option value="74">플라워공예</option>
+	                                <option value="75">비누캔들</option>
+	                                <option value="76">나무,라탄공예</option>
+	                                <option value="79">기타</option>
 	                            </select>
 	                            <select name="category2" class="c80 category2">
 	                                <option value="81">자연,과학</option>
 	                                <option value="82">신체,건강</option>
 	                                <option value="83">수학,코딩</option>
+	                                <option value="84">기타</option>
 	                            </select>
                         	</div>
                         	<button type="button" id="addCategoryBtn" class="btn btn-success eBtn">카테고리 추가</but>
                         	<button type="button" id="delCategoryBtn" class="btn btn-danger eBtn">카테고리 삭제</but>        
                    		</div>
                     <div class="row mb-3" id="cgListBox">
-						<c:forEach var="i" begin="0" end="2">
-							<c:if test="${!empty categoryList.get(i)}">
-								<div id="cate${i+1}" class="row cateBox">
-									<input type="text" class="col-4" value="${i+1}번째 카테고리: ${categoryList.get(i)}"/>
-									<input type="checkbox" class="col-3" name="categoryNumbers" id="childCn" value="${cn.get(i)}" checked hidden/>
-									<input type="file" class="col-3 form-control searchFile" name="careerFiles" id="searchFile${i+1}"/>
-								</div>
-							</c:if>
+						<c:forEach items="${categoryList}" var="cate" varStatus="vs">
+							<div id="cate${vs.count}" class="row cateBox">
+								<input type="text" class="col-4" value="${vs.count}번째 카테고리: ${cate}"/>
+								<input type="checkbox" class="col-3" name="categoryNumbers" id="childCn" value="${cn.get(vs.count-1)}" checked hidden/>
+								<input type="file" class="col-3 form-control searchFile" name="careerFiles" id="searchFile${vs.count}"/>
+							</div>
 						</c:forEach>
 					</div>
            	  	</div>
@@ -650,41 +678,54 @@
         	// 증명파일 유효성 검사
         	filePath = $("#cgListBox #cate1 #searchFile1").val();
         	console.log("첫번째 경로: " + filePath);
-        	let extn = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
-        	console.log("첫번째 확장자: " + extn);
-        	if(extn === "") {
+        	if(filePath !== undefined){
+        		let extn = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
+            	console.log("첫번째 확장자: " + extn);
+            	if(extn === "") {
+            		alert("첫 번째 카테고리 증명파일을 첨부해주세요.");
+            		return ;
+            	} else if (extn !== "gif" && extn !== "png" && extn !== "jpg" && extn !== "jpeg" && extn !== "pdf") {
+                	alert("gif, png, jpg, jpeg, pdf 파일만 선택가능합니다.");
+                	$("#cgListBox #cate1 #searchFile1").val("");
+                	return ;
+                }
+        	} else {
         		alert("첫 번째 카테고리 증명파일을 첨부해주세요.");
         		return ;
-        	} else if (extn !== "gif" && extn !== "png" && extn !== "jpg" && extn !== "jpeg" && extn !== "pdf") {
-            	alert("gif, png, jpg, jpeg, pdf 파일만 선택가능합니다.");
-            	$("#cgListBox #cate1 #searchFile1").val("");
-            	return ;
-            }
+        	}
+        	
         	filePath = $("#cgListBox #cate2 #searchFile2").val();
         	console.log("두번째 경로: " + filePath);
-        	extn = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
-        	console.log("두번째 확장자: " + extn);
-        	if(extn === "") {
-        		alert("두 번째 카테고리 증명파일을 첨부해주세요.");
-        		return ;
-        	} else if (extn !== "gif" && extn !== "png" && extn !== "jpg" && extn !== "jpeg" && extn !== "pdf") {
-            	alert("2222gif, png, jpg, jpeg, pdf 파일만 선택가능합니다.");
-            	$("#cgListBox #cate2 #searchFile2").val("");
-            	return ;
-            }
+        	if(filePath !== undefined){
+        		extn = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
+            	console.log("두번째 확장자: " + extn);
+            	if(extn === "") {
+            		alert("두 번째 카테고리 증명파일을 첨부해주세요.");
+            		return ;
+            	} else if (extn !== "gif" && extn !== "png" && extn !== "jpg" && extn !== "jpeg" && extn !== "pdf") {
+                	alert("2222gif, png, jpg, jpeg, pdf 파일만 선택가능합니다.");
+                	$("#cgListBox #cate2 #searchFile2").val("");
+                	return ;
+                }
+        	} else {
+        		$("#modifyExpertForm").submit();   
+        	}
         	filePath = $("#cgListBox #cate3 #searchFile3").val();
         	console.log("세번째 경로: " + filePath);
-        	extn = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
-        	console.log("세번째 확장자: " + extn);
-        	if(extn === "") {
-        		alert("세 번째 카테고리 증명파일을 첨부해주세요.");
-        		return ;
-        	} else if (extn !== "gif" && extn !== "png" && extn !== "jpg" && extn !== "jpeg" && extn !== "pdf") {
-            	alert("gif, png, jpg, jpeg, pdf 파일만 선택가능합니다.");
-            	$("#cgListBox #cate3 #searchFile3").val("");
-            	return ;
-            }
-        	
+        	if(filePath !== undefined){
+        		extn = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
+            	console.log("세번째 확장자: " + extn);
+            	if(extn === "") {
+            		alert("세 번째 카테고리 증명파일을 첨부해주세요.");
+            		return ;
+            	} else if (extn !== "gif" && extn !== "png" && extn !== "jpg" && extn !== "jpeg" && extn !== "pdf") {
+                	alert("gif, png, jpg, jpeg, pdf 파일만 선택가능합니다.");
+                	$("#cgListBox #cate3 #searchFile3").val("");
+                	return ;
+                }
+        	} else {
+        		$("#modifyExpertForm").submit();   
+        	}
         	$("#modifyExpertForm").submit();        	
         })
         
