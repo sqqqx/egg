@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@include file="/WEB-INF/views/header.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -337,7 +338,7 @@
                         	<button type="button" id="delCategoryBtn" class="btn btn-danger eBtn">카테고리 삭제</but>        
                    		</div>
                     <div class="row mb-3" id="cgListBox">
-						<c:forEach var="i" begin="0" end="2">
+                    	<c:forEach var="i" begin="0" end="${fn:length(categoryList)-1}">
 							<c:if test="${!empty categoryList.get(i)}">
 								<div id="cate${i+1}" class="row cateBox">
 									<input type="text" class="col-4" value="${i+1}번째 카테고리: ${categoryList.get(i)}"/>
