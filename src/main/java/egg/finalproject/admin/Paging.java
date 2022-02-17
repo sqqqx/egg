@@ -14,7 +14,7 @@ public class Paging {
 		System.out.println("rowCnt : " + rowCnt);
 		
 		int naviCnt = rowCnt % rowCntPage > 0 ? (rowCnt / rowCntPage) + 1 : (rowCnt / rowCntPage);
-		int naviCntPage = 5; // 
+		int naviCntPage = 10; // 
 		System.out.println("naviCnt : " + naviCnt);
 		
 		if(currentIdx < 1) {

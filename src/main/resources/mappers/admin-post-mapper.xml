@@ -9,7 +9,7 @@
 	<select id="getPostCount" resultType="int">
 		SELECT COUNT(*) FROM tbl_post
 		<trim prefix="WHERE" prefixOverrides="AND">
-			<if test="searchKeyword != null and searchKeyword != ''">
+			<if test="searchKeyword != null">
 				${searchOption} LIKE '%'||#{searchKeyword}||'%'
 			</if>
 			<if test="type != null">

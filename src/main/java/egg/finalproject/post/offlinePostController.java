@@ -35,23 +35,11 @@ public class offlinePostController {
 	@Autowired
 	private HttpSession session;
 	
-	//게시글 리스트 페이지로 이동
-//	@RequestMapping("/toList.do")
-//	public String toList(String parent_group,String expert_id, Model model) throws Exception{
-//		System.out.println(parent_group);
-//		List<PostDTO> list = service.selectByCg(parent_group);
-//		List<Object> Exlist = exService.ExpertCategory(expert_id);
-//		model.addAttribute("ExpertCategory",list);
-//		model.addAttribute("list", list);
-//		model.addAttribute("parent_group", parent_group);
-//		return "offline/offlineList";
-//	}
-	
 	// (마이페이지) 찜한 게시글 가져오기
 	@RequestMapping("/toLikePost")
 	public String toLikePost(int currentPage, String searchOption, String searchKeyword, int type, Model model) throws Exception {
 		MemberDTO dto = ((MemberDTO)session.getAttribute("loginSession"));
-		service.getMyLikePostCount(dto.getUser_id(), searchOption, searchKeyword, type);
+		int count = service.getMyLikePostCount(dto.getUser_id(), searchOption, searchKeyword, type);
 		Map<String, Object> navi = service.getNavi(currentPage);
 		Map<String, Object> range = service.getRange(currentPage);
 		List<Map<String, Object>> list = service.getMyLikePost(dto.getUser_id(), searchOption, searchKeyword, range, type);
@@ -62,6 +50,8 @@ public class offlinePostController {
 		model.addAttribute("searchKeyword", searchKeyword);
 		model.addAttribute("type", type);
 		model.addAttribute("dto", dto);
+		model.addAttribute("count", count);
+		model.addAttribute("currentPage", currentPage);
 		return "member/viewLikePost";
 	}
 	
@@ -69,7 +59,7 @@ public class offlinePostController {
 	@RequestMapping("/toMyPost")
 	public String toMyOrder(int currentPage, String searchOption, String searchKeyword, Model model) throws Exception {
 		MemberDTO dto = ((MemberDTO)session.getAttribute("loginSession"));
-		service.getMyPostCount(dto.getUser_id(), searchOption, searchKeyword);
+		int count = service.getMyPostCount(dto.getUser_id(), searchOption, searchKeyword);
 		Map<String, Object> navi = service.getNavi(currentPage);
 		Map<String, Object> range = service.getRange(currentPage);
 		List<PostDTO> list = service.getMyPost(dto.getUser_id(), searchOption, searchKeyword, range);
@@ -78,37 +68,22 @@ public class offlinePostController {
 		model.addAttribute("searchOption", searchOption);
 		model.addAttribute("searchKeyword", searchKeyword);
 		model.addAttribute("dto", dto);
+		model.addAttribute("count", count);
+		model.addAttribute("currentPage", currentPage);
 		return "member/viewPost";
 	}
 	
-	// 전체 목록 가져오기(게시글 리스트 페이지로 이동)
-	@RequestMapping("/toList.do")
-	public String toList(String parent_group, String expert_id, String currentPage, Model model) throws Exception{
-		int currentIdx = service.currentPageReform(currentPage);
-		service.getPostCountAll(parent_group); 
-		Map<String, Object> navi = service.getNavi(currentIdx);
-		Map<String, Object> range = service.getRange(currentIdx);
-		
-		List<PostDTO> list = service.selectByCg(parent_group, range);
-		List<Object> Exlist = exService.ExpertCategory(expert_id);
-		
-		model.addAttribute("navi", navi);
-		model.addAttribute("ExpertCategory", Exlist);
-		model.addAttribute("ExpertCategory",Exlist);
-		model.addAttribute("list", list);
-		model.addAttribute("expert_id", expert_id);
-		model.addAttribute("parent_group", parent_group);
-		return "offline/offlineList";
-	}
+	////////////////////////////////////////////////
 	
-	// 검색 목록 가져오기
-	@RequestMapping("/getPostbySearch.do")
-	public String getPostbySearch(String searchKeyword, String searchOption, String parent_group, String expert_id, int currentIdx, Model model) throws Exception {
-		service.getPostCountSearch(parent_group, searchOption, searchKeyword); 
+	// (오프라인) 글 목록 가져오기
+	@RequestMapping("/toList.do")
+	public String getOffPost(int currentIdx, String parent_group, String expert_id, String searchOption, String searchKeyword, Model model) throws Exception {
+		System.out.println("toList.do - " + parent_group + " : " + searchOption + " : " + searchKeyword);
+		int count = service.getOffPostCount(parent_group, searchOption, searchKeyword); 
 		Map<String, Object> navi = service.getNavi(currentIdx);
 		Map<String, Object> range = service.getRange(currentIdx);
 		
-		List<PostDTO> list = service.getPostbySearch(parent_group, range, searchOption, searchKeyword);
+		List<PostDTO> list = service.getOffPost(parent_group, range, searchOption, searchKeyword);
 		List<Object> Exlist = exService.ExpertCategory(expert_id);
 		
 		model.addAttribute("navi", navi);
@@ -118,6 +93,8 @@ public class offlinePostController {
 		model.addAttribute("parent_group", parent_group);
 		model.addAttribute("searchOption", searchOption);
 		model.addAttribute("searchKeyword", searchKeyword);
+		model.addAttribute("count", count);
+		model.addAttribute("currentPage", currentIdx);
 		return "offline/offlineList";
 	}
 	
