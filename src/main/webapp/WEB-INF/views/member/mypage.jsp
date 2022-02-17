@@ -22,7 +22,6 @@
 	            <div class="col-10 row activity_box">
 	                <div class="col-8">
 	                    <p>내 포인트 : ${point} P</p>
-	                    <p>총 게시글 : 0 개</p>
 	                </div>
 	                <div class="col-3">
 	                    <button type="button" class="btn btn-outline-dark" id="toViewPointBtn">충전내역</button>

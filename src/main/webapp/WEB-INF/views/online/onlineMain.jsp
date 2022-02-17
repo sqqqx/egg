@@ -13,6 +13,21 @@
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
 <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
+<style>
+.footer{
+	height:170px;
+	width:1820px;
+	background-color:#00ADEE20;
+	font-family: 'BMHANNAAir';
+	font-size:medium;
+}
+.footer>div{
+	padding-top:25px;
+	height:70px;
+	text-align:center;
+	color:gray;
+}
+</style>
 </head>
 <body>
     <div class="container caroBox">

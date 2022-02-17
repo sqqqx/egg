@@ -59,7 +59,7 @@
     	select a.post_no, a.title, a.type, a.view_count, b.system_name, nvl(c.likeCount, 0) as count
     	from tbl_post a left outer join tbl_image b on(a.post_no = b.post_no)
         left outer join (select tb.post_no, likeCount from tbl_post ta inner join (select post_no, count(post_no) likeCount from tbl_like where type=1 group by post_no) tb on (ta.post_no = tb.post_no)) c on (a.post_no = c.post_no)
-        where a.type=1 and a.post_no =1 or a.post_no=3 or a.post_no=5 or a.post_no=11
+        where a.type=1 and a.post_no =74 or a.post_no=50 or a.post_no=105 or a.post_no=268
     </select>
     
     <select id="selectCat" resultType="map" parameterType="Object">
