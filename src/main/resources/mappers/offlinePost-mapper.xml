@@ -116,12 +116,33 @@
 		</if>
     </select>
     
-    <!-- 전체 글 목록 -->
-    <select id="selectByCg" parameterType="map" resultType="PostDTO">
-    	SELECT * FROM (SELECT row_number() OVER (ORDER BY written_Date DESC) AS idx, tbl_post.* FROM tbl_post)
-		    INNER JOIN tbl_category c USING(category_no)
+    <!-- (오프라인) 글 목록 가져오기 -->
+    <select id="getOffPost" parameterType="map" resultType="PostDTO">
+    	SELECT * 
+    	FROM (SELECT 
+    			  row_number() OVER (ORDER BY written_Date DESC) AS idx, 
+    			  p.* 
+    		  FROM tbl_post p
+    		  	  INNER JOIN tbl_category c ON(p.category_no = c.category_no)
+    		  WHERE p.type = 2 
+    		  	  AND c.parent_group = #{parent_group}
+    		  <if test="searchKeyword != null">
+    		  	  AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+    		  </if>
+    		  )
 	    WHERE idx BETWEEN #{startRange} AND #{endRange}
-			AND type = 2 AND c.parent_group = #{parent_group}
+    </select>
+    
+    <!-- (오프라인) 글 목록 COUNT -->
+    <select id="getOffPostCount" parameterType="map" resultType="int">
+    	SELECT COUNT(*)
+ 		FROM tbl_post p
+ 		  	INNER JOIN tbl_category c ON(p.category_no = c.category_no)
+ 		WHERE p.type = 2 
+ 		  	AND c.parent_group = #{parent_group}
+	  	<if test="searchKeyword != null">
+		  	AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
+	    </if>
     </select>
     
     <insert id="insertPost" parameterType="PostDTO">
@@ -129,26 +150,26 @@
     </insert>
 
     <!-- 전체 글 COUNT -->
-    <select id="getPostCountAll" resultType="int">
+    <!-- <select id="getPostCountAll" resultType="int">
     	SELECT COUNT(*) FROM tbl_post p
 		    INNER JOIN tbl_category c USING(category_no)
 		WHERE type = 2 AND c.parent_group = #{parent_group}
-    </select>
+    </select> -->
     
     <!-- 검색 COUNT -->
-    <select id="getPostCountSearch" parameterType="map" resultType="int">
+    <!-- <select id="getPostCountSearch" parameterType="map" resultType="int">
     	SELECT COUNT(*) FROM tbl_post p
 		    INNER JOIN tbl_category c USING(category_no)
 		WHERE type = 2 AND c.parent_group = #{parent_group} AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
-    </select>
+    </select> -->
     
     <!-- 검색 목록 가져오기 -->
-    <select id="getPostbySearch" parameterType="map" resultType="PostDTO">
+   <!--  <select id="getPostbySearch" parameterType="map" resultType="PostDTO">
     	SELECT * FROM (SELECT row_number() OVER (ORDER BY written_Date DESC) AS idx, tbl_post.* FROM tbl_post)
 		    INNER JOIN tbl_category c USING(category_no)
 	    WHERE idx BETWEEN #{startRange} AND #{endRange}
 			AND type = 2 AND c.parent_group = #{parent_group} AND ${searchOption} LIKE '%'||#{searchKeyword}||'%'
-    </select>
+    </select> -->
     
     <!-- 조회수 카운트 -->
     <update id="viewcount" parameterType="int">

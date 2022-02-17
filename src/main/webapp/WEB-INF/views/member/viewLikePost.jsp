@@ -123,17 +123,20 @@
 								  			</tr>
 								  		</c:when>
 								  		<c:otherwise>
-								  			<c:forEach items="${list}" var="map">
+								  			<c:forEach items="${list}" var="map" varStatus="i">
 								  				<tr class="cls-tr" id="${map.TYPE}">
-											    	<td>${map.IDX}</td>
-											    	<td><img src="/resources/img/${map.IMAGE_PATH}"></td>
+								  					<%-- <td hidden>${map.PRODUCT_NO}</td> --%>
+								  					<td no=${map.PRODUCT_NO}>
+								  						${count - ((currentPage-1) * 10 + i.index) }
+								  					</td>
+											    	<td><img src="${pageContext.request.contextPath}/productThumbnail/${map.IMAGE_PATH}"></td>
 											    	<td class="cls-productName">
 											    		<p>${map.NAME}</p>
 											    		<p>${map.PRICE} 원</p>
 											    	</td>
 											    	<td style="width: 150px">
 											    		<button type="button" class="btn btn-outline-dark btnToCart" id="${map.PRODUCT_NO}">장바구니 담기</button>
-														<br><button type="button" class="btn btn-outline-dark btnDelete" id="${map.PRODUCT_NO}" style="width: 127.63px;">삭제</button>
+														<br><button type="button" class="btn btn-outline-dark btnDelete" id="${map.PRODUCT_NO}" style="width: 107.49px;">삭제</button>
 											    	</td>
 											    </tr>
 								  			</c:forEach>
@@ -163,13 +166,16 @@
 								  			</tr>
 								  		</c:when>
 								  		<c:otherwise>
-								  			<c:forEach items="${list}" var="map">
-								  				<tr class="cls-tr" id="${map.TYPE}">
-											    	<td>${map.IDX}</td>
+								  			<c:forEach items="${list}" var="map" varStatus="i">
+								  				<tr class="cls-trPost" id="${map.TYPE}">
+								  					<%-- <td hidden>${map.IDX}</td> --%>
+								  					<td no="${map.POST_NO }">
+								  						${count - ((currentPage-1) * 10 + i.index) }
+								  					</td>
 											    	<td>${map.TITLE}</td>
-											    	<td>${map.VIEW_COUNT}</td>
+											    	<td id="postViewCount">${map.VIEW_COUNT}</td>
 											    	<td>
-											    	   <button type="button" class="btn btn-outline-dark btnDelete" id="${map.PRODUCT_NO}" style="width: 127.63px;">삭제</button>
+											    	   <button type="button" class="btn btn-outline-dark btnDeletePost" id="${map.PRODUCT_NO}" style="width: 127.63px;">삭제</button>
 											    	</td>
 											    </tr>
 								  			</c:forEach>
@@ -264,10 +270,11 @@
                 console.log(e);
             })
     	});
-    	<%-- 삭제 --%>
+    	<%-- 상품 삭제 --%>
     	$(".btnDelete").on("click", function(e) {
     		const user_id = "${loginSession.user_id}";
-    		let post_no = $(e.target).parents(".cls-tr").children().eq(0).html();
+    		let post_no = $(e.target).parents(".cls-tr").children().eq(0).attr("no");
+    		console.log(post_no);
     		let type = $(e.target).parents(".cls-tr").attr("id");
     		$.ajax({
                 url: "${pageContext.request.contextPath}/like/minus.do?post_no=" + post_no + "&user_id=" + user_id + "&type=" + type,
@@ -280,12 +287,50 @@
                 alert("삭제 실패");
             }).fail(function (e) {
                 console.log(e);
-            })
+            }) 
+    	});
+    	<%-- 포스트 삭제 --%>
+    	$(".btnDeletePost").on("click", function(e) {
+    		const user_id = "${loginSession.user_id}";
+    		let post_no = $(e.target).parents(".cls-trPost").children().eq(0).attr("no");
+    		console.log(post_no);
+    		let type = $(e.target).parents(".cls-trPost").attr("id");
+    		$.ajax({
+                url: "${pageContext.request.contextPath}/like/minus.do?post_no=" + post_no + "&user_id=" + user_id + "&type=" + type,
+                type: "get"
+            }).done(function (data) {
+                if (data == "available") {
+                    location.href = "${pageContext.request.contextPath}/offlinePost/toLikePost?currentPage=1&type="+type;
+                    return;
+                } 
+                alert("삭제 실패");
+            }).fail(function (e) {
+                console.log(e);
+            }) 
     	});
     	<%-- 이동 --%>
     	$(".cls-tr > td:nth-child(2),td:nth-child(3)").on("click", function(e) {
-    		const post_no = $(e.target).parents(".cls-tr").children().eq(0).html();
+    		const post_no = $(e.target).parents(".cls-tr").children().eq(0).attr("no");
     		const type = $(e.target).parents(".cls-tr").attr("id");
+    		console.log(post_no);
+    		console.log(type);
+    		if(type == 1) {
+    			location.href = "${pageContext.request.contextPath}/onlinePost/toDetail.do?post_no="+post_no;
+    			return;
+    		}
+    		if(type == 2) {
+    			location.href = "${pageContext.request.contextPath}/offlinePost/toPostDetail.do?post_no="+post_no;
+    			return;
+    		}
+    		if(type == 3) {
+    			location.href = "${pageContext.request.contextPath}/product/toProductDetail.do?product_no="+post_no;
+    			return;
+    		}
+    	});
+    	<%-- 이동 --%>
+    	$(".cls-trPost > td:nth-child(2),td:nth-child(3)").on("click", function(e) {
+    		const post_no = $(e.target).parents(".cls-trPost").children().eq(0).attr("no");
+    		const type = $(e.target).parents(".cls-trPost").attr("id");
     		console.log(post_no);
     		console.log(type);
     		if(type == 1) {

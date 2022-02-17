@@ -136,7 +136,9 @@
 		let text = e.target.value;
 		let id = '${loginSession.user_id}'
 		console.log(text)
-		location.href="${pageContext.request.contextPath}/offlinePost/toList.do?parent_group="+text+"&expert_id="+id;
+		//location.href="${pageContext.request.contextPath}/offlinePost/toList.do?parent_group="+text+"&expert_id="+id;
+		location.href="${pageContext.request.contextPath}/offlinePost/toList.do?currentIdx=1&parent_group="+text+"&expert_id="+id;
+
 	})
 </script>
 </body>
