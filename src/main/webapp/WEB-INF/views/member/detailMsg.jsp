@@ -10,7 +10,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <style>
     div {
-        border: 1px solid grey;
         text-align: center;
     }
     #msg_head {
@@ -23,6 +22,12 @@
     button {
         width: 100%;
     }
+    .row {
+    	margin-bottom: 10px;
+    }
+    .row:not(div:first-child, div:last-child) {
+    	border: 1px solid grey;
+    }
 </style>
 </head>
 <body>
@@ -32,44 +37,36 @@
                 <div class="col" id="msg_head"><p>쪽지 상세보기</p></div>
             </div>
             <div class="row">
-                <div class="col-3"></div>
-                <div class="col-1">
+                <div class="col-2">
                     <label for="to_id">수신자</label>
                 </div>
-                <div class="col-5">
+                <div class="col">
                     <input type="text" class="form-control" id="to_id" name="to_id" value="${dto.to_id}" readonly>
                 </div>
-                <div class="col-3"></div>
             </div>
             <div class="row">
-                <div class="col-3"></div>
-                <div class="col-1">
+                <div class="col-2">
                     <label for="to_id">송신자</label>
                 </div>
-                <div class="col-5">
+                <div class="col">
                     <input type="text" class="form-control" id="from_id" name="from_id" value="${dto.from_id}" readonly>
                 </div>
-                <div class="col-3"></div>
             </div>
             <div class="row">
-                <div class="col-3"></div>
-                <div class="col-1">
+                <div class="col-2">
                     <label>제목</label>
                 </div>
-                <div class="col-5">
+                <div class="col">
                     <input type="text" class="form-control" id="title" value="${dto.title}" readonly>
                 </div>
-                <div class="col-3"></div>
             </div>
             <div class="row">
-                <div class="col-3"></div>
-                <div class="col-1">
+                <div class="col-2">
                     <label for="content">내용</label>
                 </div>
-                <div class="col-5">
+                <div class="col">
                     <div class="form-control" id="content" name="content">${dto.content}</div>
                 </div>
-                <div class="col-3"></div>
             </div>
             <c:if test="${dto.from_id ne loginSession.user_id}">
 	            <div class="row">
