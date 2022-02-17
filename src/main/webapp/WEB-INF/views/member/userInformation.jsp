@@ -159,6 +159,9 @@ table th {
                                             <c:when test="${dto.type eq 2}">
                                                 능력자
                                             </c:when>
+                                            <c:when test="${dto.type eq 0}">
+                                                외계인
+                                            </c:when>
                                             <c:otherwise>
                                                 능력자(진)
                                             </c:otherwise>

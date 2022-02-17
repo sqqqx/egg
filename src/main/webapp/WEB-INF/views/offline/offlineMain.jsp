@@ -126,8 +126,8 @@
       		<div class="row">
       			<span>(주)능력자들 | 대표 : 류호진 | 사업자등록번호 : 421-22-00218 | 통신판매업신고 : 2019-서울중구-0087</span>
       			<span>주소 : 올림픽로 92길 40-3 3층 (주)능력자들</span>
-      			<span>주식회사 클래스101은 전자상거래 등에서의 소비자보호에 관한 법률에 따른 통신판매업과 통신판매중개업을 영위하고 있습니다.</span> 
-      			<span>주식회사 클래스101은 통신판매중개자로서 중개하는 통신판매에 관하여서는 통신판매의 당사자가 아니므로 어떠한 책임도 부담하지 아니합니다.</span>
+      			<span>주식회사 능력자들은 전자상거래 등에서의 소비자보호에 관한 법률에 따른 통신판매업과 통신판매중개업을 영위하고 있습니다.</span> 
+      			<span>주식회사 능력자들은 통신판매중개자로서 중개하는 통신판매에 관하여서는 통신판매의 당사자가 아니므로 어떠한 책임도 부담하지 아니합니다.</span>
       		</div>    
      </div>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -136,7 +136,7 @@
 		let text = e.target.value;
 		let id = '${loginSession.user_id}'
 		console.log(text)
-		location.href="${pageContext.request.contextPath}/offlinePost/toList.do?parent_group="+text+"&expert_id="+id;
+		location.href="${pageContext.request.contextPath}/offlinePost/toList.do?parent_group="+text+"&expert_id="+id+"&currentPage=1";
 	})
 </script>
 </body>

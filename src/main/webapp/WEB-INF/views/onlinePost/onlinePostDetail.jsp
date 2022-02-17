@@ -1292,7 +1292,7 @@
             let post_no = ${ PostDTO.post_no }
             
             //실시간 알림
-            let typed = 2;
+            let typed = 3;
             let from_NN = '${loginSession.user_nickname}';
             let sendType=1;
             
@@ -1467,7 +1467,7 @@
         	//실시간 알림 요소 
         	let from_NN = '${loginSession.user_nickname}';
         	let receiver;
-        	let type=3;
+        	let type=4;
         	let sendPostNO='${PostDTO.post_no}';
         	let sendType = 1;
         	
