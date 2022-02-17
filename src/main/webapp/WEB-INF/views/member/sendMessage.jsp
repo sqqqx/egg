@@ -9,7 +9,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <style>
     div {
-        border: 1px solid grey;
         text-align: center;
     }
     #msg_head {
@@ -22,6 +21,13 @@
     button {
         width: 100%;
     }
+    .row {
+    	margin-bottom: 10px;
+    }
+    .row:not(div:first-child, div:last-child) {
+    	border: 1px solid grey;
+    }
+    
 </style>
 </head>
 <body>
