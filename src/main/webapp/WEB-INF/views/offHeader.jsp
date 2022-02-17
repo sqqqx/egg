@@ -52,6 +52,18 @@
    font-family: 'BMHANNAAir';
    font-size:large;
 }
+#replyNew{
+	padding-top : 10px;
+	background-color: red;
+	text-align: center;
+	width:60px;
+	height:20px;
+    word-break : break-all;
+    line-height: 0px;
+    margin-bottom:15px;
+    margin-top : 8px;
+    font-style: white
+}
 </style>
 </head>
 <body>
@@ -252,13 +264,13 @@
 				msg+="<span>"
 				msg+= msgObj.from_id
 				msg+= "님이 "
-					if(notice.type==1){
+					if(msgObj.type==1){
 						msg +="게시글에 좋아요를 눌렀습니다."
-					}else if(notice.type==2){
+					}else if(msgObj.type==2){
 						msg +="댓글에 답글을 달았습니다."
-					}else if(notice.type==3){
+					}else if(msgObj.type==3){
 						msg +="답글에 대댓글을 달았습니다."
-					}else if(notice.type==4){
+					}else if(msgObj.type==4){
 						msg +="댓글에 좋아요를 눌렀습니다."
 					}
 				msg+="</span>"

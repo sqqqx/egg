@@ -30,7 +30,8 @@ body{
     padding: 10px;
 }
 #toProfileBtn {
-	height: 112px;
+	height: 132px;
+	width: 190px;
 }
 .box_mp {
     border: 3px solid grey;

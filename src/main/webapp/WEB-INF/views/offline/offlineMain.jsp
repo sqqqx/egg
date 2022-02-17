@@ -136,7 +136,13 @@
 		let text = e.target.value;
 		let id = '${loginSession.user_id}'
 		console.log(text)
+<<<<<<< HEAD
 		location.href="${pageContext.request.contextPath}/offlinePost/toList.do?parent_group="+text+"&expert_id="+id+"&currentPage=1";
+=======
+		//location.href="${pageContext.request.contextPath}/offlinePost/toList.do?parent_group="+text+"&expert_id="+id;
+		location.href="${pageContext.request.contextPath}/offlinePost/toList.do?currentIdx=1&parent_group="+text+"&expert_id="+id;
+
+>>>>>>> 3b25d1e2730bb3e567b4aef0cee7fe132fda8bf9
 	})
 </script>
 </body>

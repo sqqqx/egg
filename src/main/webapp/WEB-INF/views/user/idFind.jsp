@@ -21,6 +21,7 @@
 		text-align: center;
 	}
 	
+	
 </style>
 </head>
 <body>
@@ -109,7 +110,7 @@
         </div>
        
         
-        <div class="row my-5 btnBox">
+        <div class="row my-2 btnBox">
         <div class="col">
             <button class="btn btn-secondary btn-lg clsBtn" type="button" id="backBtn">닫기</button>
         </div>

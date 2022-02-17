@@ -93,9 +93,12 @@
 						  			</tr>
 						  		</c:when>
 						  		<c:otherwise>
-						  			<c:forEach items="${list}" var="dto">
+						  			<c:forEach items="${list}" var="dto" varStatus="i">
 						  				<tr class="cls-tr">
-									    	<td>${dto.post_no}</td>
+						  					<td>
+						  						${count - ((currentPage-1) * 10 + i.index) }
+						  					</td>
+									    	<%-- <td>${dto.post_no}</td> --%>
 									    	<td>${dto.title}</td>
 									    	<td>${dto.view_count}</td>
 									    	<td>${dto.written_date}</td>
@@ -113,7 +116,7 @@
         			<div class="col d-flex justify-content-center">
         				<nav aria-label="Page navigation example">
 							<ul class="pagination">
-								<c:if test="${map.needPrev eq true}">
+								<c:if test="${navi.needPrev eq true}">
 									<c:choose>
 										<c:when test="${empty searchOption && empty searchKeyword}">
 											<li class="page-item"><a class="page-link"
@@ -141,7 +144,7 @@
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
-								<c:if test="${map.needNext eq true}">
+								<c:if test="${navi.needNext eq true}">
 									<c:choose>
 										<c:when test="${empty searchOption && empty searchKeyword}">
 											<li class="page-item"><a class="page-link"

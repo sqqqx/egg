@@ -39,25 +39,35 @@ public class offlinePostDAO {
 		return session.selectOne("offlinePostMapper.getMyPostCount", map);
 	}
 	
-	public List<PostDTO> selectByCg(Map<String, Object> map) throws Exception{
-		return session.selectList("offlinePostMapper.selectByCg", map);
+	// (오프라인) 글 목록 가져오기
+	public List<PostDTO> getOffPost(Map<String, Object> map) throws Exception{
+		return session.selectList("offlinePostMapper.getOffPost", map);
 	}
 	
-	public int getPostCountAll(String parent_group) throws Exception {
-		int rs = session.selectOne("offlinePostMapper.getPostCountAll", parent_group);
-		System.out.println("dao rs : " + rs);
-		return rs;
+	// (오프라인) 글 목록 COUNT
+	public int getOffPostCount(Map<String, Object> map) throws Exception{
+		return session.selectOne("offlinePostMapper.getOffPostCount", map);
 	}
 	
-	public List<PostDTO> getPostbySearch(Map<String, Object> map) throws Exception{
-		return session.selectList("offlinePostMapper.getPostbySearch", map);
-	}
-	
-	public int getPostCountSearch(Map<String, Object> map) throws Exception {
-		int rs = session.selectOne("offlinePostMapper.getPostCountSearch", map);
-		System.out.println("dao rs : " + rs);
-		return rs;
-	}
+//	public List<PostDTO> selectByCg(Map<String, Object> map) throws Exception{
+//		return session.selectList("offlinePostMapper.selectByCg", map);
+//	}
+//	
+//	public int getPostCountAll(String parent_group) throws Exception {
+//		int rs = session.selectOne("offlinePostMapper.getPostCountAll", parent_group);
+//		System.out.println("dao rs : " + rs);
+//		return rs;
+//	}
+//	
+//	public List<PostDTO> getPostbySearch(Map<String, Object> map) throws Exception{
+//		return session.selectList("offlinePostMapper.getPostbySearch", map);
+//	}
+//	
+//	public int getPostCountSearch(Map<String, Object> map) throws Exception {
+//		int rs = session.selectOne("offlinePostMapper.getPostCountSearch", map);
+//		System.out.println("dao rs : " + rs);
+//		return rs;
+//	}
 	
 	public int insertPost(PostDTO dto) throws Exception{
 		return session.insert("offlinePostMapper.insertPost",dto);

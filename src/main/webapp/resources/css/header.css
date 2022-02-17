@@ -238,7 +238,7 @@ li:hover > span::after {
     line-height: 0px;
     margin-bottom:15px;
     margin-top : 8px;
-    color:white
+    font-style: white
 }
 #newAlarm{
 	border-top : 1px dotted black;

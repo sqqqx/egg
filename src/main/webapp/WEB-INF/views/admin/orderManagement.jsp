@@ -388,7 +388,8 @@
 					console.log(e);
 					alert("주문 취소 성공");
 				});
-				location.href = "${pageContext.request.contextPath}/admin/toOrderManagement";
+				//location.href = "${pageContext.request.contextPath}/admin/toOrderManagement";
+				location.reload();
 				return;
 			} 
 		});

@@ -182,7 +182,7 @@
 	let phone = "${loginSession.phone}"
 	console.log(phone);
 	document.getElementById("phone2").value = phone.substring(3,7);
-	document.getElementById("phone3").value = phone.substring(3,7);
+	document.getElementById("phone3").value = phone.substring(7,11);
 	$("#phone3").value = phone.substring(7);
 	
 	
