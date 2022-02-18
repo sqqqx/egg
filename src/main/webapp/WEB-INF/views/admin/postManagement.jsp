@@ -252,12 +252,12 @@
             // 글 수정
             $("#btnModify").on("click", function () {
                 const checkBoxLength = $("input:checkbox[name=postCheckBox]:checked").length;
-                if ($("#postCheckBox").is(":checked") && checkBoxLength == 1) {
+                if (checkBox.length == 1) {
                     $("#selectCheckbox").attr("action", "${pageContext.request.contextPath}/admin/toModify");
                     $("#selectCheckbox").submit();
                     return;
                 }
-                if (checkBoxLength == 0) {
+                if (checkBox.length == 0) {
                     alert("한 개 이상의 글을 선택해주세요.");
                     return;
                 }

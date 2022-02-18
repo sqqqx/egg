@@ -152,12 +152,12 @@
      	// 상품 수정
      	$("#btnModify").on("click", function() {
      		const checkBox = $("input:checkbox[name=productCheckBox]:checked");
-           if($("#productCheckBox").is(":checked") && checkBox.length == 1) {
+           if(checkBox.length == 1) {
         	   const product_no = parseInt(checkBox.val());
         	   location.href = "${pageContext.request.contextPath}/product/toModify.do?product_no="+product_no;
                return;
             }
-            if (checkBoxLength == 0) {
+            if (checkBox.length == 0) {
                 alert("한 개 이상의 글을 선택해주세요.");
                 return;
             }
