@@ -268,7 +268,7 @@ table th {
     	
     	// 능력자 정보 확인
     	$("#viewExpertBtn").on("click", function(){
-    		if("${dto.type}" === "2" || "${dto.type == 0}") {
+    		if("${dto.type}" === "2" || "${dto.type}" === "0") {
     			let postID='${dto.user_id}'
    	    		let type = '${loginSession.type}'
    	    		console.log(postID);
