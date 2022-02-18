@@ -268,15 +268,20 @@ table th {
     	
     	// 능력자 정보 확인
     	$("#viewExpertBtn").on("click", function(){
-    		let postID='${dto.user_id}'
-    		let type = '${loginSession.type}'
-    		console.log(postID);
-			if(type !='0'){
-				$(location).attr("href", "${pagecontext.request.contextPath}/member/toViewExpertInfo?expert_id=${loginSession.user_id}");
-			}else{
-				location.href="${pageContext.request.contextPath}/member/toViewExpertInfo?expert_id="+postID
-				
-			}
+    		if("${dto.type}" === "2" || "${dto.type == 0}") {
+    			let postID='${dto.user_id}'
+   	    		let type = '${loginSession.type}'
+   	    		console.log(postID);
+   				if(type !='0'){
+   					$(location).attr("href", "${pagecontext.request.contextPath}/member/toViewExpertInfo?expert_id=${loginSession.user_id}");
+   				}else{
+   					location.href="${pageContext.request.contextPath}/member/toViewExpertInfo?expert_id="+postID
+   					
+   				}
+    		} else {
+    			alert("능력자인 경우에만 조회가 가능합니다.");
+    		}
+    		
     		
     	})
     	

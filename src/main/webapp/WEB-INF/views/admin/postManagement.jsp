@@ -252,7 +252,8 @@
             // 글 수정
             $("#btnModify").on("click", function () {
                 const checkBoxLength = $("input:checkbox[name=postCheckBox]:checked").length;
-                if ($("#postCheckBox").is(":checked") && checkBoxLength == 1) {
+                console.log(checkBoxLength);
+                if (checkBoxLength == 1) {
                     $("#selectCheckbox").attr("action", "${pageContext.request.contextPath}/admin/toModify");
                     $("#selectCheckbox").submit();
                     return;
